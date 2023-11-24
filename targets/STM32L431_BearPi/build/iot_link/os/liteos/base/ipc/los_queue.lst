@@ -1,0 +1,3400 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"los_queue.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.osQueueInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	osQueueInit
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	osQueueInit:
+  26              	.LFB287:
+  27              		.file 1 "../../iot_link/os/liteos/base/ipc/los_queue.c"
+   1:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * All rights reserved.
+   4:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * permission.
+  14:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * ===============================================
+  29:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 2
+
+
+  32:../../iot_link/os/liteos/base/ipc/los_queue.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/base/ipc/los_queue.c **** #include "string.h"
+  35:../../iot_link/os/liteos/base/ipc/los_queue.c **** #include "los_queue.ph"
+  36:../../iot_link/os/liteos/base/ipc/los_queue.c **** #include "los_membox.ph"
+  37:../../iot_link/os/liteos/base/ipc/los_queue.c **** #include "los_memory.ph"
+  38:../../iot_link/os/liteos/base/ipc/los_queue.c **** #include "los_priqueue.ph"
+  39:../../iot_link/os/liteos/base/ipc/los_queue.c **** #include "los_task.ph"
+  40:../../iot_link/os/liteos/base/ipc/los_queue.c **** #if (LOSCFG_PLATFORM_EXC == YES)
+  41:../../iot_link/os/liteos/base/ipc/los_queue.c **** #include "los_exc.ph"
+  42:../../iot_link/os/liteos/base/ipc/los_queue.c **** #endif
+  43:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  44:../../iot_link/os/liteos/base/ipc/los_queue.c **** #ifdef __cplusplus
+  45:../../iot_link/os/liteos/base/ipc/los_queue.c **** #if __cplusplus
+  46:../../iot_link/os/liteos/base/ipc/los_queue.c **** extern "C"{
+  47:../../iot_link/os/liteos/base/ipc/los_queue.c **** #endif
+  48:../../iot_link/os/liteos/base/ipc/los_queue.c **** #endif /* __cplusplus */
+  49:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  50:../../iot_link/os/liteos/base/ipc/los_queue.c **** #if (LOSCFG_BASE_IPC_QUEUE == YES)
+  51:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  52:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*lint -save -e64*/
+  53:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_BSS      QUEUE_CB_S       *g_pstAllQueue;
+  54:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_BSS      LOS_DL_LIST      g_stFreeQueueList;
+  55:../../iot_link/os/liteos/base/ipc/los_queue.c **** #if ((LOSCFG_PLATFORM_EXC == YES) && (LOSCFG_SAVE_EXC_INFO == YES))
+  56:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_BSS      UINT32           g_uwExcQueueMaxNum;
+  57:../../iot_link/os/liteos/base/ipc/los_queue.c **** #endif
+  58:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  59:../../iot_link/os/liteos/base/ipc/los_queue.c **** /**************************************************************************
+  60:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : osQueueInit
+  61:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : queue initial
+  62:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : None
+  63:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : None
+  64:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+  65:../../iot_link/os/liteos/base/ipc/los_queue.c **** **************************************************************************/
+  66:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT_INIT UINT32 osQueueInit(VOID)
+  67:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+  28              		.loc 1 67 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  68:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueNode;
+  69:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT16   usIndex;
+  70:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  71:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (0 == LOSCFG_BASE_IPC_QUEUE_LIMIT)   /*lint !e506*/
+  72:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+  73:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_MAXNUM_ZERO;
+  74:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+  75:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  76:../../iot_link/os/liteos/base/ipc/los_queue.c ****     g_pstAllQueue = (QUEUE_CB_S *)LOS_MemAlloc(m_aucSysMem0, LOSCFG_BASE_IPC_QUEUE_LIMIT * sizeof(Q
+  32              		.loc 1 76 0
+  33 0000 134B     		ldr	r3, .L6
+  67:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueNode;
+  34              		.loc 1 67 0
+  35 0002 10B5     		push	{r4, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 4, -8
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 3
+
+
+  39              		.cfi_offset 14, -4
+  40              		.loc 1 76 0
+  41 0004 4FF4DC71 		mov	r1, #440
+  42 0008 1868     		ldr	r0, [r3]
+  43 000a 124C     		ldr	r4, .L6+4
+  44 000c FFF7FEFF 		bl	LOS_MemAlloc
+  45              	.LVL0:
+  46 0010 2060     		str	r0, [r4]
+  77:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (NULL == g_pstAllQueue)
+  47              		.loc 1 77 0
+  48 0012 D0B1     		cbz	r0, .L4
+  78:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+  79:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_NO_MEMORY;
+  80:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+  81:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  82:../../iot_link/os/liteos/base/ipc/los_queue.c ****     (VOID)memset(g_pstAllQueue, 0, LOSCFG_BASE_IPC_QUEUE_LIMIT * sizeof(QUEUE_CB_S));
+  49              		.loc 1 82 0
+  50 0014 4FF4DC72 		mov	r2, #440
+  51 0018 0021     		movs	r1, #0
+  52 001a FFF7FEFF 		bl	memset
+  53              	.LVL1:
+  54              	.LBB30:
+  55              	.LBB31:
+  56              		.file 2 "../../iot_link/os/liteos/include/los_list.h"
+   1:../../iot_link/os/liteos/include/los_list.h **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/include/los_list.h ****  * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/include/los_list.h ****  * All rights reserved.
+   4:../../iot_link/os/liteos/include/los_list.h ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/include/los_list.h ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/include/los_list.h ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/include/los_list.h ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/include/los_list.h ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/include/los_list.h ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/include/los_list.h ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/include/los_list.h ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/include/los_list.h ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/include/los_list.h ****  * permission.
+  14:../../iot_link/os/liteos/include/los_list.h ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/include/los_list.h ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/include/los_list.h ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/include/los_list.h ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/include/los_list.h ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/include/los_list.h ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/include/los_list.h ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/include/los_list.h ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/include/los_list.h ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/include/los_list.h ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/include/los_list.h ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/include/los_list.h ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/include/los_list.h **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/include/los_list.h ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/include/los_list.h ****  * ===============================================
+  29:../../iot_link/os/liteos/include/los_list.h ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/include/los_list.h ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/include/los_list.h ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:../../iot_link/os/liteos/include/los_list.h ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/include/los_list.h ****  *---------------------------------------------------------------------------*/
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 4
+
+
+  34:../../iot_link/os/liteos/include/los_list.h **** 
+  35:../../iot_link/os/liteos/include/los_list.h ****  /** @defgroup los_list Doubly linked list
+  36:../../iot_link/os/liteos/include/los_list.h ****  * @ingroup kernel
+  37:../../iot_link/os/liteos/include/los_list.h ****  */
+  38:../../iot_link/os/liteos/include/los_list.h **** 
+  39:../../iot_link/os/liteos/include/los_list.h **** #ifndef _LOS_LIST_H
+  40:../../iot_link/os/liteos/include/los_list.h **** #define _LOS_LIST_H
+  41:../../iot_link/os/liteos/include/los_list.h **** 
+  42:../../iot_link/os/liteos/include/los_list.h **** #include "los_typedef.h"
+  43:../../iot_link/os/liteos/include/los_list.h **** 
+  44:../../iot_link/os/liteos/include/los_list.h **** #ifdef __cplusplus
+  45:../../iot_link/os/liteos/include/los_list.h **** #if __cplusplus
+  46:../../iot_link/os/liteos/include/los_list.h **** extern "C" {
+  47:../../iot_link/os/liteos/include/los_list.h **** #endif /* __cplusplus */
+  48:../../iot_link/os/liteos/include/los_list.h **** #endif /* __cplusplus */
+  49:../../iot_link/os/liteos/include/los_list.h **** 
+  50:../../iot_link/os/liteos/include/los_list.h **** 
+  51:../../iot_link/os/liteos/include/los_list.h **** /**
+  52:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+  53:../../iot_link/os/liteos/include/los_list.h ****  *Structure of a node in a doubly linked list.
+  54:../../iot_link/os/liteos/include/los_list.h ****  */
+  55:../../iot_link/os/liteos/include/los_list.h **** typedef struct LOS_DL_LIST
+  56:../../iot_link/os/liteos/include/los_list.h **** {
+  57:../../iot_link/os/liteos/include/los_list.h ****     struct LOS_DL_LIST *pstPrev;            /**< Current node's pointer to the previous node*/
+  58:../../iot_link/os/liteos/include/los_list.h ****     struct LOS_DL_LIST *pstNext;            /**< Current node's pointer to the next node*/
+  59:../../iot_link/os/liteos/include/los_list.h **** } LOS_DL_LIST;
+  60:../../iot_link/os/liteos/include/los_list.h **** 
+  61:../../iot_link/os/liteos/include/los_list.h **** /**
+  62:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+  63:../../iot_link/os/liteos/include/los_list.h ****  *@brief Initialize a doubly linked list.
+  64:../../iot_link/os/liteos/include/los_list.h ****  *
+  65:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+  66:../../iot_link/os/liteos/include/los_list.h ****  *This API is used to initialize a doubly linked list.
+  67:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+  68:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+  69:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameter passed in should be ensured to be a legal pointer.</li>
+  70:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+  71:../../iot_link/os/liteos/include/los_list.h ****  *
+  72:../../iot_link/os/liteos/include/los_list.h ****  *@param pstList    [IN] Node in a doubly linked list.
+  73:../../iot_link/os/liteos/include/los_list.h ****  *
+  74:../../iot_link/os/liteos/include/los_list.h ****  *@retval None.
+  75:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+  76:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+  77:../../iot_link/os/liteos/include/los_list.h ****  *@see
+  78:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+  79:../../iot_link/os/liteos/include/los_list.h ****  */
+  80:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE VOID LOS_ListInit(LOS_DL_LIST *pstList)
+  81:../../iot_link/os/liteos/include/los_list.h **** {
+  82:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstNext = pstList;
+  57              		.loc 2 82 0
+  58 001e 0E4A     		ldr	r2, .L6+8
+  59 0020 2368     		ldr	r3, [r4]
+  83:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstPrev = pstList;
+  60              		.loc 2 83 0
+  61 0022 C2E90022 		strd	r2, r2, [r2]
+  62              	.LVL2:
+  63 0026 1C33     		adds	r3, r3, #28
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 5
+
+
+  64              	.LBE31:
+  65              	.LBE30:
+  83:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  84:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_ListInit(&g_stFreeQueueList);
+  85:../../iot_link/os/liteos/base/ipc/los_queue.c ****     for (usIndex = 0; usIndex < LOSCFG_BASE_IPC_QUEUE_LIMIT; usIndex++)
+  86:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+  87:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstQueueNode = ((QUEUE_CB_S *)g_pstAllQueue) + usIndex;
+  66              		.loc 1 87 0
+  67 0028 0021     		movs	r1, #0
+  68              	.LVL3:
+  69              	.L3:
+  88:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstQueueNode->usQueueID = usIndex;
+  89:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_ListTailInsert(&g_stFreeQueueList, &pstQueueNode->stReadWriteList[OS_QUEUE_WRITE]);
+  70              		.loc 1 89 0 discriminator 3
+  71 002a 1068     		ldr	r0, [r2]
+  72              	.LVL4:
+  88:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstQueueNode->usQueueID = usIndex;
+  73              		.loc 1 88 0 discriminator 3
+  74 002c 23F8121C 		strh	r1, [r3, #-18]	@ movhi
+  75              	.LBB32:
+  76              	.LBB33:
+  77              	.LBB34:
+  84:../../iot_link/os/liteos/include/los_list.h **** }
+  85:../../iot_link/os/liteos/include/los_list.h **** 
+  86:../../iot_link/os/liteos/include/los_list.h **** /**
+  87:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+  88:../../iot_link/os/liteos/include/los_list.h ****  *@brief Point to the next node pointed to by the current node.
+  89:../../iot_link/os/liteos/include/los_list.h ****  *
+  90:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+  91:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+  92:../../iot_link/os/liteos/include/los_list.h ****  *<li>This API is used to point to the next node pointed to by the current node.</li>
+  93:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+  94:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+  95:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+  96:../../iot_link/os/liteos/include/los_list.h ****  *<li>None.</li>
+  97:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+  98:../../iot_link/os/liteos/include/los_list.h ****  *
+  99:../../iot_link/os/liteos/include/los_list.h ****  *@param pstObject  [IN] Node in the doubly linked list.
+ 100:../../iot_link/os/liteos/include/los_list.h ****  *
+ 101:../../iot_link/os/liteos/include/los_list.h ****  *@retval None.
+ 102:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 103:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 104:../../iot_link/os/liteos/include/los_list.h ****  *@see
+ 105:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 106:../../iot_link/os/liteos/include/los_list.h ****  */
+ 107:../../iot_link/os/liteos/include/los_list.h **** #define LOS_DL_LIST_FIRST(pstObject) ((pstObject)->pstNext)
+ 108:../../iot_link/os/liteos/include/los_list.h **** 
+ 109:../../iot_link/os/liteos/include/los_list.h **** /**
+ 110:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+ 111:../../iot_link/os/liteos/include/los_list.h ****  *@brief Insert a new node to a doubly linked list.
+ 112:../../iot_link/os/liteos/include/los_list.h ****  *
+ 113:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+ 114:../../iot_link/os/liteos/include/los_list.h ****  *This API is used to insert a new node to a doubly linked list.
+ 115:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+ 116:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 117:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameters passed in should be ensured to be legal pointers.</li>
+ 118:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 6
+
+
+ 119:../../iot_link/os/liteos/include/los_list.h ****  *
+ 120:../../iot_link/os/liteos/include/los_list.h ****  *@param pstList    [IN]   Doubly linked list where the new node is inserted.
+ 121:../../iot_link/os/liteos/include/los_list.h ****  *@param pstNode    [IN]   New node to be inserted.
+ 122:../../iot_link/os/liteos/include/los_list.h ****  *
+ 123:../../iot_link/os/liteos/include/los_list.h ****  *@retval None
+ 124:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 125:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 126:../../iot_link/os/liteos/include/los_list.h ****  *@see LOS_ListDelete
+ 127:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 128:../../iot_link/os/liteos/include/los_list.h ****  */
+ 129:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE VOID LOS_ListAdd(LOS_DL_LIST *pstList, LOS_DL_LIST *pstNode)
+ 130:../../iot_link/os/liteos/include/los_list.h **** {
+ 131:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstNext = pstList->pstNext;
+  78              		.loc 2 131 0 discriminator 3
+  79 0030 4468     		ldr	r4, [r0, #4]
+ 132:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev = pstList;
+  80              		.loc 2 132 0 discriminator 3
+  81 0032 C3E90004 		strd	r0, r4, [r3]
+  82 0036 0131     		adds	r1, r1, #1
+  83              	.LVL5:
+ 133:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstNext->pstPrev = pstNode;
+  84              		.loc 2 133 0 discriminator 3
+  85 0038 4468     		ldr	r4, [r0, #4]
+  86              	.LBE34:
+  87              	.LBE33:
+  88              	.LBE32:
+  85:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+  89              		.loc 1 85 0 discriminator 3
+  90 003a 0A29     		cmp	r1, #10
+  91              	.LBB37:
+  92              	.LBB36:
+  93              	.LBB35:
+  94              		.loc 2 133 0 discriminator 3
+  95 003c 2360     		str	r3, [r4]
+ 134:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstNext = pstNode;
+  96              		.loc 2 134 0 discriminator 3
+  97 003e 4360     		str	r3, [r0, #4]
+  98              	.LVL6:
+  99 0040 03F12C03 		add	r3, r3, #44
+ 100              	.LVL7:
+ 101              	.LBE35:
+ 102              	.LBE36:
+ 103              	.LBE37:
+  85:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 104              		.loc 1 85 0 discriminator 3
+ 105 0044 F1D1     		bne	.L3
+  90:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+  91:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  92:../../iot_link/os/liteos/base/ipc/los_queue.c **** #if ((LOSCFG_PLATFORM_EXC == YES) && (LOSCFG_SAVE_EXC_INFO == YES))
+  93:../../iot_link/os/liteos/base/ipc/los_queue.c ****     g_uwExcQueueMaxNum = LOSCFG_BASE_IPC_QUEUE_LIMIT;
+  94:../../iot_link/os/liteos/base/ipc/los_queue.c ****     osExcRegister(OS_EXC_TYPE_QUE, (EXC_INFO_SAVE_CALLBACK)LOS_QueueInfoGet, &g_uwExcQueueMaxNum);
+  95:../../iot_link/os/liteos/base/ipc/los_queue.c **** #endif
+  96:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+  97:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return LOS_OK;
+ 106              		.loc 1 97 0
+ 107 0046 0020     		movs	r0, #0
+ 108              	.LVL8:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 7
+
+
+ 109              	.L1:
+  98:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 110              		.loc 1 98 0
+ 111 0048 10BD     		pop	{r4, pc}
+ 112              	.L4:
+  79:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 113              		.loc 1 79 0
+ 114 004a 0448     		ldr	r0, .L6+12
+ 115 004c FCE7     		b	.L1
+ 116              	.L7:
+ 117 004e 00BF     		.align	2
+ 118              	.L6:
+ 119 0050 00000000 		.word	m_aucSysMem0
+ 120 0054 00000000 		.word	g_pstAllQueue
+ 121 0058 00000000 		.word	g_stFreeQueueList
+ 122 005c 01060002 		.word	33555969
+ 123              		.cfi_endproc
+ 124              	.LFE287:
+ 126              		.section	.text.LOS_QueueCreate,"ax",%progbits
+ 127              		.align	1
+ 128              		.global	LOS_QueueCreate
+ 129              		.syntax unified
+ 130              		.thumb
+ 131              		.thumb_func
+ 132              		.fpu fpv4-sp-d16
+ 134              	LOS_QueueCreate:
+ 135              	.LFB288:
+  99:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 100:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 101:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueCreate
+ 102:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Create a queue
+ 103:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : pcQueueName  --- Queue name, less than 4 characters
+ 104:../../iot_link/os/liteos/base/ipc/los_queue.c ****                usLen        --- Queue lenth
+ 105:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwFlags      --- Queue type, FIFO or PRIO
+ 106:../../iot_link/os/liteos/base/ipc/los_queue.c ****                usMaxMsgSize --- Maximum message size in byte
+ 107:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : puwQueueID   --- Queue ID
+ 108:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 109:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 110:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT_INIT UINT32 LOS_QueueCreate(CHAR *pcQueueName,
+ 111:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                           UINT16 usLen,
+ 112:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                           UINT32 *puwQueueID,
+ 113:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                           UINT32 uwFlags,
+ 114:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                           UINT16 usMaxMsgSize )
+ 115:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 136              		.loc 1 115 0
+ 137              		.cfi_startproc
+ 138              		@ args = 4, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              	.LVL9:
+ 141 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 142              	.LCFI1:
+ 143              		.cfi_def_cfa_offset 32
+ 144              		.cfi_offset 3, -32
+ 145              		.cfi_offset 4, -28
+ 146              		.cfi_offset 5, -24
+ 147              		.cfi_offset 6, -20
+ 148              		.cfi_offset 7, -16
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 8
+
+
+ 149              		.cfi_offset 8, -12
+ 150              		.cfi_offset 9, -8
+ 151              		.cfi_offset 14, -4
+ 152              		.loc 1 115 0
+ 153 0004 0E46     		mov	r6, r1
+ 154 0006 BDF82030 		ldrh	r3, [sp, #32]
+ 155              	.LVL10:
+ 116:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S      *pstQueueCB;
+ 117:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINTPTR         uvIntSave;
+ 118:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_DL_LIST     *pstUnusedQueue;
+ 119:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT8           *pucQueue;
+ 120:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT16          usMsgSize = usMaxMsgSize + sizeof(UINT32);
+ 121:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 122:../../iot_link/os/liteos/base/ipc/los_queue.c ****     (VOID)pcQueueName;
+ 123:../../iot_link/os/liteos/base/ipc/los_queue.c ****     (VOID)uwFlags;
+ 124:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 125:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (NULL == puwQueueID)
+ 156              		.loc 1 125 0
+ 157 000a 9046     		mov	r8, r2
+ 158 000c 002A     		cmp	r2, #0
+ 159 000e 4CD0     		beq	.L11
+ 126:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 127:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_CREAT_PTR_NULL;
+ 128:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 129:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 130:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(usMaxMsgSize > OS_NULL_SHORT -4)
+ 160              		.loc 1 130 0
+ 161 0010 4FF6FB72 		movw	r2, #65531
+ 162              	.LVL11:
+ 163 0014 9342     		cmp	r3, r2
+ 164 0016 4AD8     		bhi	.L12
+ 131:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 132:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_SIZE_TOO_BIG;
+ 133:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 134:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 135:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if ((0 == usLen) || (0 == usMaxMsgSize))
+ 165              		.loc 1 135 0
+ 166 0018 0029     		cmp	r1, #0
+ 167 001a 4AD0     		beq	.L14
+ 168              		.loc 1 135 0 is_stmt 0 discriminator 1
+ 169 001c 002B     		cmp	r3, #0
+ 170 001e 48D0     		beq	.L14
+ 120:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 171              		.loc 1 120 0 is_stmt 1
+ 172 0020 0433     		adds	r3, r3, #4
+ 173              	.LVL12:
+ 136:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 137:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_PARA_ISZERO;
+ 138:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 139:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 140:../../iot_link/os/liteos/base/ipc/los_queue.c ****     /* Memory allocation is time-consuming, to shorten the time of disable interrupt,
+ 141:../../iot_link/os/liteos/base/ipc/los_queue.c ****        move the memory allocation to here. */
+ 142:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pucQueue = (UINT8 *)LOS_MemAlloc(m_aucSysMem0, usLen * usMsgSize);
+ 174              		.loc 1 142 0
+ 175 0022 DFF8B090 		ldr	r9, .L16+24
+ 120:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 176              		.loc 1 120 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 9
+
+
+ 177 0026 9DB2     		uxth	r5, r3
+ 178              		.loc 1 142 0
+ 179 0028 6943     		muls	r1, r5, r1
+ 180              	.LVL13:
+ 181 002a D9F80000 		ldr	r0, [r9]
+ 182              	.LVL14:
+ 183 002e FFF7FEFF 		bl	LOS_MemAlloc
+ 184              	.LVL15:
+ 143:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (NULL == pucQueue)
+ 185              		.loc 1 143 0
+ 186 0032 0746     		mov	r7, r0
+ 187 0034 0028     		cmp	r0, #0
+ 188 0036 3ED0     		beq	.L15
+ 144:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 145:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_CREATE_NO_MEMORY;
+ 146:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 147:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 148:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uvIntSave = LOS_IntLock();
+ 189              		.loc 1 148 0
+ 190 0038 FFF7FEFF 		bl	LOS_IntLock
+ 191              	.LVL16:
+ 192              	.LBB48:
+ 193              	.LBB49:
+ 135:../../iot_link/os/liteos/include/los_list.h **** }
+ 136:../../iot_link/os/liteos/include/los_list.h **** 
+ 137:../../iot_link/os/liteos/include/los_list.h **** /**
+ 138:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+ 139:../../iot_link/os/liteos/include/los_list.h ****  *@brief Insert a node to the tail of a doubly linked list.
+ 140:../../iot_link/os/liteos/include/los_list.h ****  *
+ 141:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+ 142:../../iot_link/os/liteos/include/los_list.h ****  *This API is used to insert a new node to the tail of a doubly linked list.
+ 143:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+ 144:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 145:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameters passed in should be ensured to be legal pointers.</li>
+ 146:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 147:../../iot_link/os/liteos/include/los_list.h ****  *
+ 148:../../iot_link/os/liteos/include/los_list.h ****  *@param pstList     [IN] Doubly linked list where the new node is inserted.
+ 149:../../iot_link/os/liteos/include/los_list.h ****  *@param pstNode     [IN] New node to be inserted.
+ 150:../../iot_link/os/liteos/include/los_list.h ****  *
+ 151:../../iot_link/os/liteos/include/los_list.h ****  *@retval None.
+ 152:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 153:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 154:../../iot_link/os/liteos/include/los_list.h ****  *@see LOS_ListAdd | LOS_ListHeadInsert
+ 155:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 156:../../iot_link/os/liteos/include/los_list.h ****  */
+ 157:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE VOID LOS_ListTailInsert(LOS_DL_LIST *pstList, LOS_DL_LIST *pst
+ 158:../../iot_link/os/liteos/include/los_list.h **** {
+ 159:../../iot_link/os/liteos/include/los_list.h ****     LOS_ListAdd(pstList->pstPrev, pstNode);
+ 160:../../iot_link/os/liteos/include/los_list.h **** }
+ 161:../../iot_link/os/liteos/include/los_list.h **** 
+ 162:../../iot_link/os/liteos/include/los_list.h **** /**
+ 163:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+ 164:../../iot_link/os/liteos/include/los_list.h ****  *@brief Delete a specified node from a doubly linked list.
+ 165:../../iot_link/os/liteos/include/los_list.h ****  *
+ 166:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+ 167:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 168:../../iot_link/os/liteos/include/los_list.h ****  *<li>This API is used to delete a specified node from a doubly linked list.</li>
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 10
+
+
+ 169:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 170:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+ 171:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 172:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameter passed in should be ensured to be a legal pointer.</li>
+ 173:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 174:../../iot_link/os/liteos/include/los_list.h ****  *
+ 175:../../iot_link/os/liteos/include/los_list.h ****  *@param pstNode    [IN] Node to be deleted.
+ 176:../../iot_link/os/liteos/include/los_list.h ****  *
+ 177:../../iot_link/os/liteos/include/los_list.h ****  *@retval None.
+ 178:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 179:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 180:../../iot_link/os/liteos/include/los_list.h ****  *@see LOS_ListAdd
+ 181:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 182:../../iot_link/os/liteos/include/los_list.h ****  */
+ 183:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE VOID LOS_ListDelete(LOS_DL_LIST *pstNode)
+ 184:../../iot_link/os/liteos/include/los_list.h **** {
+ 185:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstNext->pstPrev = pstNode->pstPrev;
+ 186:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev->pstNext = pstNode->pstNext;
+ 187:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstNext = (LOS_DL_LIST *)NULL;
+ 188:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev = (LOS_DL_LIST *)NULL;
+ 189:../../iot_link/os/liteos/include/los_list.h **** }
+ 190:../../iot_link/os/liteos/include/los_list.h **** 
+ 191:../../iot_link/os/liteos/include/los_list.h **** /**
+ 192:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+ 193:../../iot_link/os/liteos/include/los_list.h ****  *@brief Identify whether a specified doubly linked list is empty.
+ 194:../../iot_link/os/liteos/include/los_list.h ****  *
+ 195:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+ 196:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 197:../../iot_link/os/liteos/include/los_list.h ****  *<li>This API is used to return whether a doubly linked list is empty.</li>
+ 198:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 199:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+ 200:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 201:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameter passed in should be ensured to be a legal pointer.</li>
+ 202:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 203:../../iot_link/os/liteos/include/los_list.h ****  *
+ 204:../../iot_link/os/liteos/include/los_list.h ****  *@param pstList  [IN] Doubly linked list.
+ 205:../../iot_link/os/liteos/include/los_list.h ****  *
+ 206:../../iot_link/os/liteos/include/los_list.h ****  *@retval TRUE The doubly linked list is empty.
+ 207:../../iot_link/os/liteos/include/los_list.h ****  *@retval FALSE The doubly linked list is not empty.
+ 208:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 209:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 210:../../iot_link/os/liteos/include/los_list.h ****  *@see
+ 211:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 212:../../iot_link/os/liteos/include/los_list.h ****  */
+ 213:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE BOOL LOS_ListEmpty(LOS_DL_LIST *pstNode)
+ 214:../../iot_link/os/liteos/include/los_list.h **** {
+ 215:../../iot_link/os/liteos/include/los_list.h ****     return (BOOL)(pstNode->pstNext == pstNode);
+ 194              		.loc 2 215 0
+ 195 003c 1F4B     		ldr	r3, .L16
+ 196 003e 5C68     		ldr	r4, [r3, #4]
+ 197              	.LVL17:
+ 198              	.LBE49:
+ 199              	.LBE48:
+ 149:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (LOS_ListEmpty(&g_stFreeQueueList))
+ 200              		.loc 1 149 0
+ 201 0040 9C42     		cmp	r4, r3
+ 202 0042 09D1     		bne	.L10
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 11
+
+
+ 150:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 151:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 203              		.loc 1 151 0
+ 204 0044 FFF7FEFF 		bl	LOS_IntRestore
+ 205              	.LVL18:
+ 152:../../iot_link/os/liteos/base/ipc/los_queue.c ****         (VOID)LOS_MemFree(m_aucSysMem0, pucQueue);
+ 206              		.loc 1 152 0
+ 207 0048 3946     		mov	r1, r7
+ 208 004a D9F80000 		ldr	r0, [r9]
+ 209 004e FFF7FEFF 		bl	LOS_MemFree
+ 210              	.LVL19:
+ 153:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_CB_UNAVAILABLE;
+ 211              		.loc 1 153 0
+ 212 0052 1B48     		ldr	r0, .L16+4
+ 213              	.LVL20:
+ 214              	.L8:
+ 154:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 155:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 156:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstUnusedQueue = LOS_DL_LIST_FIRST(&(g_stFreeQueueList));
+ 157:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_ListDelete(pstUnusedQueue);
+ 158:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB = (GET_QUEUE_LIST(pstUnusedQueue));
+ 159:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueLen = usLen;
+ 160:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueSize = usMsgSize;
+ 161:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->pucQueue = pucQueue;
+ 162:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueState = OS_QUEUE_INUSED;
+ 163:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usReadWriteableCnt[OS_QUEUE_READ]  = 0;
+ 164:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usReadWriteableCnt[OS_QUEUE_WRITE] = usLen;
+ 165:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueHead = 0;
+ 166:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueTail = 0;
+ 167:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_ListInit(&pstQueueCB->stReadWriteList[OS_QUEUE_READ]);
+ 168:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_ListInit(&pstQueueCB->stReadWriteList[OS_QUEUE_WRITE]);
+ 169:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_ListInit(&pstQueueCB->stMemList);
+ 170:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_IntRestore(uvIntSave);
+ 171:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 172:../../iot_link/os/liteos/base/ipc/los_queue.c ****     *puwQueueID = pstQueueCB->usQueueID;
+ 173:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 174:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return LOS_OK;
+ 175:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 215              		.loc 1 175 0
+ 216 0054 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 217              	.LVL21:
+ 218              	.L10:
+ 219              	.LBB50:
+ 220              	.LBB51:
+ 185:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev->pstNext = pstNode->pstNext;
+ 221              		.loc 2 185 0
+ 222 0058 D4E90023 		ldrd	r2, r3, [r4]
+ 223 005c 1A60     		str	r2, [r3]
+ 186:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstNext = (LOS_DL_LIST *)NULL;
+ 224              		.loc 2 186 0
+ 225 005e 2268     		ldr	r2, [r4]
+ 226 0060 5360     		str	r3, [r2, #4]
+ 227              	.LVL22:
+ 228              	.LBE51:
+ 229              	.LBE50:
+ 162:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usReadWriteableCnt[OS_QUEUE_READ]  = 0;
+ 230              		.loc 1 162 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 12
+
+
+ 231 0062 0123     		movs	r3, #1
+ 232 0064 24F8183C 		strh	r3, [r4, #-24]	@ movhi
+ 167:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_ListInit(&pstQueueCB->stReadWriteList[OS_QUEUE_WRITE]);
+ 233              		.loc 1 167 0
+ 234 0068 A4F10803 		sub	r3, r4, #8
+ 235              	.LVL23:
+ 160:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->pucQueue = pucQueue;
+ 236              		.loc 1 160 0
+ 237 006c 24F8145C 		strh	r5, [r4, #-20]	@ movhi
+ 238              	.LBB52:
+ 239              	.LBB53:
+  83:../../iot_link/os/liteos/include/los_list.h **** }
+ 240              		.loc 2 83 0
+ 241 0070 44E90233 		strd	r3, r3, [r4, #-8]
+ 242              	.LVL24:
+ 243              	.LBE53:
+ 244              	.LBE52:
+ 163:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usReadWriteableCnt[OS_QUEUE_WRITE] = usLen;
+ 245              		.loc 1 163 0
+ 246 0074 0025     		movs	r5, #0
+ 169:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_IntRestore(uvIntSave);
+ 247              		.loc 1 169 0
+ 248 0076 04F10803 		add	r3, r4, #8
+ 249              	.LBB54:
+ 250              	.LBB55:
+  83:../../iot_link/os/liteos/include/los_list.h **** }
+ 251              		.loc 2 83 0
+ 252 007a C4E90233 		strd	r3, r3, [r4, #8]
+ 253              	.LBE55:
+ 254              	.LBE54:
+ 159:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueSize = usMsgSize;
+ 255              		.loc 1 159 0
+ 256 007e 24F8166C 		strh	r6, [r4, #-22]	@ movhi
+ 161:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueState = OS_QUEUE_INUSED;
+ 257              		.loc 1 161 0
+ 258 0082 44F81C7C 		str	r7, [r4, #-28]
+ 163:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usReadWriteableCnt[OS_QUEUE_WRITE] = usLen;
+ 259              		.loc 1 163 0
+ 260 0086 24F80C5C 		strh	r5, [r4, #-12]	@ movhi
+ 164:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueHead = 0;
+ 261              		.loc 1 164 0
+ 262 008a 24F80A6C 		strh	r6, [r4, #-10]	@ movhi
+ 165:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueTail = 0;
+ 263              		.loc 1 165 0
+ 264 008e 24F8105C 		strh	r5, [r4, #-16]	@ movhi
+ 166:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_ListInit(&pstQueueCB->stReadWriteList[OS_QUEUE_READ]);
+ 265              		.loc 1 166 0
+ 266 0092 24F80E5C 		strh	r5, [r4, #-14]	@ movhi
+ 267              	.LBB56:
+ 268              	.LBB57:
+  83:../../iot_link/os/liteos/include/los_list.h **** }
+ 269              		.loc 2 83 0
+ 270 0096 C4E90044 		strd	r4, r4, [r4]
+ 271              	.LVL25:
+ 272              	.LBE57:
+ 273              	.LBE56:
+ 170:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 13
+
+
+ 274              		.loc 1 170 0
+ 275 009a FFF7FEFF 		bl	LOS_IntRestore
+ 276              	.LVL26:
+ 172:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 277              		.loc 1 172 0
+ 278 009e 34F8123C 		ldrh	r3, [r4, #-18]
+ 279 00a2 C8F80030 		str	r3, [r8]
+ 174:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 280              		.loc 1 174 0
+ 281 00a6 2846     		mov	r0, r5
+ 282 00a8 D4E7     		b	.L8
+ 283              	.LVL27:
+ 284              	.L11:
+ 127:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 285              		.loc 1 127 0
+ 286 00aa 0648     		ldr	r0, .L16+8
+ 287              	.LVL28:
+ 288 00ac D2E7     		b	.L8
+ 289              	.LVL29:
+ 290              	.L12:
+ 132:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 291              		.loc 1 132 0
+ 292 00ae 0648     		ldr	r0, .L16+12
+ 293              	.LVL30:
+ 294 00b0 D0E7     		b	.L8
+ 295              	.LVL31:
+ 296              	.L14:
+ 137:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 297              		.loc 1 137 0
+ 298 00b2 0648     		ldr	r0, .L16+16
+ 299              	.LVL32:
+ 300 00b4 CEE7     		b	.L8
+ 301              	.LVL33:
+ 302              	.L15:
+ 145:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 303              		.loc 1 145 0
+ 304 00b6 0648     		ldr	r0, .L16+20
+ 305              	.LVL34:
+ 306 00b8 CCE7     		b	.L8
+ 307              	.L17:
+ 308 00ba 00BF     		.align	2
+ 309              	.L16:
+ 310 00bc 00000000 		.word	g_stFreeQueueList
+ 311 00c0 04060002 		.word	33555972
+ 312 00c4 0C060002 		.word	33555980
+ 313 00c8 03060002 		.word	33555971
+ 314 00cc 0D060002 		.word	33555981
+ 315 00d0 02060002 		.word	33555970
+ 316 00d4 00000000 		.word	m_aucSysMem0
+ 317              		.cfi_endproc
+ 318              	.LFE288:
+ 320              		.section	.text.osQueueOperate,"ax",%progbits
+ 321              		.align	1
+ 322              		.global	osQueueOperate
+ 323              		.syntax unified
+ 324              		.thumb
+ 325              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 14
+
+
+ 326              		.fpu fpv4-sp-d16
+ 328              	osQueueOperate:
+ 329              	.LFB292:
+ 176:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 177:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT static INLINE UINT32 osQueueReadParameterCheck(UINT32 uwQueueID, VOID *pBufferAddr
+ 178:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 179:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (uwQueueID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
+ 180:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 181:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_INVALID;
+ 182:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 183:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if ((NULL == pBufferAddr) || (NULL == puwBufferSize))
+ 184:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 185:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_READ_PTR_NULL;
+ 186:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 187:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 188:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (0 == *puwBufferSize)
+ 189:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 190:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_READSIZE_ISZERO;
+ 191:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 192:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 193:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (LOS_NO_WAIT != uwTimeOut)
+ 194:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 195:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (OS_INT_ACTIVE)
+ 196:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 197:../../iot_link/os/liteos/base/ipc/los_queue.c ****             return LOS_ERRNO_QUEUE_READ_IN_INTERRUPT;
+ 198:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 199:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 200:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return LOS_OK;
+ 201:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 202:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 203:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 204:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT static INLINE UINT32 osQueueWriteParameterCheck(UINT32 uwQueueID, VOID *pBufferAdd
+ 205:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 206:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (uwQueueID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
+ 207:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 208:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_INVALID;
+ 209:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 210:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 211:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (NULL == pBufferAddr)
+ 212:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 213:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_WRITE_PTR_NULL;
+ 214:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 215:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 216:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (0 == *puwBufferSize)
+ 217:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 218:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_WRITESIZE_ISZERO;
+ 219:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 220:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 221:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (LOS_NO_WAIT != uwTimeOut)
+ 222:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 223:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (OS_INT_ACTIVE)
+ 224:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 225:../../iot_link/os/liteos/base/ipc/los_queue.c ****             return LOS_ERRNO_QUEUE_WRITE_IN_INTERRUPT;
+ 226:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 227:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 228:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return LOS_OK;
+ 229:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 15
+
+
+ 230:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 231:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT static INLINE VOID osQueueBufferOperate(QUEUE_CB_S *pstQueueCB, UINT32 uwOperateTy
+ 232:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 233:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT8        *pucQueueNode;
+ 234:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32       uwMsgDataSize = 0;
+ 235:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT16      usQueuePosion = 0;
+ 236:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 237:../../iot_link/os/liteos/base/ipc/los_queue.c ****     /* get the queue position */
+ 238:../../iot_link/os/liteos/base/ipc/los_queue.c ****     switch (OS_QUEUE_OPERATE_GET(uwOperateType))
+ 239:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 240:../../iot_link/os/liteos/base/ipc/los_queue.c ****         case OS_QUEUE_READ_HEAD:
+ 241:../../iot_link/os/liteos/base/ipc/los_queue.c ****             usQueuePosion = pstQueueCB->usQueueHead;
+ 242:../../iot_link/os/liteos/base/ipc/los_queue.c ****             (pstQueueCB->usQueueHead + 1 == pstQueueCB->usQueueLen) ? (pstQueueCB->usQueueHead = 0)
+ 243:../../iot_link/os/liteos/base/ipc/los_queue.c ****             break;
+ 244:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 245:../../iot_link/os/liteos/base/ipc/los_queue.c ****         case OS_QUEUE_WRITE_HEAD:
+ 246:../../iot_link/os/liteos/base/ipc/los_queue.c ****             (0 == pstQueueCB->usQueueHead) ? (pstQueueCB->usQueueHead = pstQueueCB->usQueueLen - 1)
+ 247:../../iot_link/os/liteos/base/ipc/los_queue.c ****             usQueuePosion = pstQueueCB->usQueueHead;
+ 248:../../iot_link/os/liteos/base/ipc/los_queue.c ****             break;
+ 249:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 250:../../iot_link/os/liteos/base/ipc/los_queue.c ****         case OS_QUEUE_WRITE_TAIL :
+ 251:../../iot_link/os/liteos/base/ipc/los_queue.c ****             usQueuePosion = pstQueueCB->usQueueTail;
+ 252:../../iot_link/os/liteos/base/ipc/los_queue.c ****             (pstQueueCB->usQueueTail + 1 == pstQueueCB->usQueueLen) ? (pstQueueCB->usQueueTail = 0)
+ 253:../../iot_link/os/liteos/base/ipc/los_queue.c ****             break;
+ 254:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 255:../../iot_link/os/liteos/base/ipc/los_queue.c ****         default: //read tail , reserved.
+ 256:../../iot_link/os/liteos/base/ipc/los_queue.c ****             PRINT_ERR("invalid queue operate type!\n");
+ 257:../../iot_link/os/liteos/base/ipc/los_queue.c ****             return;
+ 258:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 259:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 260:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pucQueueNode = &(pstQueueCB->pucQueue[(usQueuePosion * (pstQueueCB->usQueueSize))]);
+ 261:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 262:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(OS_QUEUE_IS_POINT(uwOperateType))
+ 263:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 264:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if(OS_QUEUE_IS_READ(uwOperateType))
+ 265:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 266:../../iot_link/os/liteos/base/ipc/los_queue.c ****             *(UINT32 *)pBufferAddr = *(UINT32 *)pucQueueNode;
+ 267:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 268:../../iot_link/os/liteos/base/ipc/los_queue.c ****         else
+ 269:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 270:../../iot_link/os/liteos/base/ipc/los_queue.c ****             *(UINT32 *)pucQueueNode = *(UINT32 *)pBufferAddr;//change to pp when calling osQueueOpe
+ 271:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 272:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 273:../../iot_link/os/liteos/base/ipc/los_queue.c ****     else
+ 274:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 275:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if(OS_QUEUE_IS_READ(uwOperateType))
+ 276:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 277:../../iot_link/os/liteos/base/ipc/los_queue.c ****             memcpy((VOID *)&uwMsgDataSize, (VOID *)(pucQueueNode + pstQueueCB->usQueueSize - sizeof
+ 278:../../iot_link/os/liteos/base/ipc/los_queue.c ****             memcpy((VOID *)pBufferAddr, (VOID *)pucQueueNode, uwMsgDataSize);
+ 279:../../iot_link/os/liteos/base/ipc/los_queue.c ****             *puwBufferSize = uwMsgDataSize;
+ 280:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 281:../../iot_link/os/liteos/base/ipc/los_queue.c ****         else
+ 282:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 283:../../iot_link/os/liteos/base/ipc/los_queue.c ****             memcpy((VOID *)pucQueueNode, (VOID *)pBufferAddr, *puwBufferSize);
+ 284:../../iot_link/os/liteos/base/ipc/los_queue.c ****             memcpy((VOID *)(pucQueueNode + pstQueueCB->usQueueSize - sizeof(UINT32)), puwBufferSize
+ 285:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 286:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 16
+
+
+ 287:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 288:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 289:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 290:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT UINT32 osQueueOperate(UINT32 uwQueueID, UINT32 uwOperateType, VOID *pBufferAddr, U
+ 291:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 330              		.loc 1 291 0
+ 331              		.cfi_startproc
+ 332              		@ args = 4, pretend = 0, frame = 8
+ 333              		@ frame_needed = 0, uses_anonymous_args = 0
+ 334              	.LVL35:
+ 335 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 336              	.LCFI2:
+ 337              		.cfi_def_cfa_offset 48
+ 338              		.cfi_offset 4, -36
+ 339              		.cfi_offset 5, -32
+ 340              		.cfi_offset 6, -28
+ 341              		.cfi_offset 7, -24
+ 342              		.cfi_offset 8, -20
+ 343              		.cfi_offset 9, -16
+ 344              		.cfi_offset 10, -12
+ 345              		.cfi_offset 11, -8
+ 346              		.cfi_offset 14, -4
+ 347              		.loc 1 291 0
+ 348 0004 0446     		mov	r4, r0
+ 349 0006 9846     		mov	r8, r3
+ 350 0008 0D46     		mov	r5, r1
+ 351              	.LVL36:
+ 352 000a 9146     		mov	r9, r2
+ 292:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueCB;
+ 293:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_TASK_CB  *pstRunTsk;
+ 294:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINTPTR      uvIntSave;
+ 295:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_TASK_CB  *pstResumedTask;
+ 296:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32       uwRet = LOS_OK;
+ 297:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32       uwReadWrite = OS_QUEUE_READ_WRITE_GET(uwOperateType);
+ 298:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 299:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uvIntSave = LOS_IntLock();
+ 353              		.loc 1 299 0
+ 354 000c FFF7FEFF 		bl	LOS_IntLock
+ 355              	.LVL37:
+ 300:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 301:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB = (QUEUE_CB_S *)GET_QUEUE_HANDLE(uwQueueID);
+ 356              		.loc 1 301 0
+ 357 0010 624B     		ldr	r3, .L49
+ 358 0012 4FF02C0A 		mov	r10, #44
+ 359 0016 D3F800B0 		ldr	fp, [r3]
+ 360 001a 0AFB04FA 		mul	r10, r10, r4
+ 361 001e 0BEB0A04 		add	r4, fp, r10
+ 362              	.LVL38:
+ 299:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 363              		.loc 1 299 0
+ 364 0022 0746     		mov	r7, r0
+ 365              	.LVL39:
+ 302:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (OS_QUEUE_UNUSED == pstQueueCB->usQueueState)
+ 366              		.loc 1 302 0
+ 367 0024 A388     		ldrh	r3, [r4, #4]
+ 368 0026 002B     		cmp	r3, #0
+ 369 0028 00F0B280 		beq	.L40
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 17
+
+
+ 370 002c 2389     		ldrh	r3, [r4, #8]
+ 371 002e D8F80020 		ldr	r2, [r8]
+ 303:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 304:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_NOT_CREATE;
+ 305:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 306:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 307:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 308:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 309:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(OS_QUEUE_IS_READ(uwOperateType) && (*puwBufferSize < pstQueueCB->usQueueSize - sizeof(UINT32
+ 372              		.loc 1 309 0
+ 373 0032 15F00106 		ands	r6, r5, #1
+ 374              	.LVL40:
+ 375 0036 A3F10403 		sub	r3, r3, #4
+ 376 003a 13D1     		bne	.L20
+ 377              		.loc 1 309 0 is_stmt 0 discriminator 1
+ 378 003c 9342     		cmp	r3, r2
+ 379 003e 00F2A980 		bhi	.L41
+ 380              	.L21:
+ 381 0042 04EB4602 		add	r2, r4, r6, lsl #1
+ 310:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 311:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_READ_SIZE_TOO_SMALL;
+ 312:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 313:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 314:../../iot_link/os/liteos/base/ipc/los_queue.c ****     else if(OS_QUEUE_IS_WRITE(uwOperateType) && (*puwBufferSize > pstQueueCB->usQueueSize - sizeof(
+ 315:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 316:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_WRITE_SIZE_TOO_BIG;
+ 317:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 318:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 319:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 320:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (0 == pstQueueCB->usReadWriteableCnt[uwReadWrite])
+ 382              		.loc 1 320 0 is_stmt 1
+ 383 0046 138A     		ldrh	r3, [r2, #16]
+ 384 0048 002B     		cmp	r3, #0
+ 385 004a 31D1     		bne	.L22
+ 321:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 322:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (LOS_NO_WAIT == uwTimeOut)
+ 386              		.loc 1 322 0
+ 387 004c 0C9B     		ldr	r3, [sp, #48]
+ 388 004e 6BB9     		cbnz	r3, .L23
+ 323:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 324:../../iot_link/os/liteos/base/ipc/los_queue.c ****             uwRet = OS_QUEUE_IS_READ(uwOperateType) ? LOS_ERRNO_QUEUE_ISEMPTY : LOS_ERRNO_QUEUE_ISF
+ 389              		.loc 1 324 0
+ 390 0050 534B     		ldr	r3, .L49+4
+ 391 0052 544A     		ldr	r2, .L49+8
+ 392 0054 002E     		cmp	r6, #0
+ 393 0056 14BF     		ite	ne
+ 394 0058 1E46     		movne	r6, r3
+ 395 005a 1646     		moveq	r6, r2
+ 396              	.LVL41:
+ 397              	.L19:
+ 325:../../iot_link/os/liteos/base/ipc/los_queue.c ****             goto QUEUE_END;
+ 326:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 327:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 328:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (g_usLosTaskLock)
+ 329:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 330:../../iot_link/os/liteos/base/ipc/los_queue.c ****             uwRet = LOS_ERRNO_QUEUE_PEND_IN_LOCK;
+ 331:../../iot_link/os/liteos/base/ipc/los_queue.c ****             goto QUEUE_END;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 18
+
+
+ 332:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 333:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 334:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstRunTsk = (LOS_TASK_CB *)g_stLosTask.pstRunTask;
+ 335:../../iot_link/os/liteos/base/ipc/los_queue.c ****         osTaskWait(&pstQueueCB->stReadWriteList[uwReadWrite], OS_TASK_STATUS_PEND_QUEUE, uwTimeOut)
+ 336:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 337:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_Schedule();
+ 338:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 339:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uvIntSave = LOS_IntLock();
+ 340:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 341:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (pstRunTsk->usTaskStatus & OS_TASK_STATUS_TIMEOUT)
+ 342:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 343:../../iot_link/os/liteos/base/ipc/los_queue.c ****             pstRunTsk->usTaskStatus &= (~OS_TASK_STATUS_TIMEOUT);
+ 344:../../iot_link/os/liteos/base/ipc/los_queue.c ****             uwRet = LOS_ERRNO_QUEUE_TIMEOUT;
+ 345:../../iot_link/os/liteos/base/ipc/los_queue.c ****             goto QUEUE_END;
+ 346:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 347:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 348:../../iot_link/os/liteos/base/ipc/los_queue.c ****     else
+ 349:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 350:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstQueueCB->usReadWriteableCnt[uwReadWrite]--;
+ 351:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 352:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 353:../../iot_link/os/liteos/base/ipc/los_queue.c ****     osQueueBufferOperate(pstQueueCB, uwOperateType, pBufferAddr, puwBufferSize);
+ 354:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 355:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (!LOS_ListEmpty(&pstQueueCB->stReadWriteList[!uwReadWrite])) /*lint !e514*/
+ 356:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 357:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstResumedTask = OS_TCB_FROM_PENDLIST(LOS_DL_LIST_FIRST(&pstQueueCB->stReadWriteList[!uwRea
+ 358:../../iot_link/os/liteos/base/ipc/los_queue.c ****         osTaskWake(pstResumedTask, OS_TASK_STATUS_PEND_QUEUE);
+ 359:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 360:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_Schedule();
+ 361:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_OK;
+ 362:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 363:../../iot_link/os/liteos/base/ipc/los_queue.c ****     else
+ 364:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 365:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstQueueCB->usReadWriteableCnt[!uwReadWrite]++; /*lint !e514*/
+ 366:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 367:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 368:../../iot_link/os/liteos/base/ipc/los_queue.c **** QUEUE_END:
+ 369:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_IntRestore(uvIntSave);
+ 398              		.loc 1 369 0
+ 399 005c 3846     		mov	r0, r7
+ 400 005e FFF7FEFF 		bl	LOS_IntRestore
+ 401              	.LVL42:
+ 370:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return uwRet;
+ 402              		.loc 1 370 0
+ 403 0062 4AE0     		b	.L18
+ 404              	.LVL43:
+ 405              	.L20:
+ 314:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 406              		.loc 1 314 0 discriminator 1
+ 407 0064 9342     		cmp	r3, r2
+ 408 0066 ECD2     		bcs	.L21
+ 316:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 409              		.loc 1 316 0
+ 410 0068 4F4E     		ldr	r6, .L49+12
+ 411              	.LVL44:
+ 412 006a F7E7     		b	.L19
+ 413              	.LVL45:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 19
+
+
+ 414              	.L23:
+ 328:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 415              		.loc 1 328 0
+ 416 006c 4F4B     		ldr	r3, .L49+16
+ 417 006e 1B88     		ldrh	r3, [r3]
+ 418 0070 002B     		cmp	r3, #0
+ 419 0072 40F09180 		bne	.L44
+ 334:../../iot_link/os/liteos/base/ipc/los_queue.c ****         osTaskWait(&pstQueueCB->stReadWriteList[uwReadWrite], OS_TASK_STATUS_PEND_QUEUE, uwTimeOut)
+ 420              		.loc 1 334 0
+ 421 0076 4E4B     		ldr	r3, .L49+20
+ 335:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 422              		.loc 1 335 0
+ 423 0078 0C9A     		ldr	r2, [sp, #48]
+ 334:../../iot_link/os/liteos/base/ipc/los_queue.c ****         osTaskWait(&pstQueueCB->stReadWriteList[uwReadWrite], OS_TASK_STATUS_PEND_QUEUE, uwTimeOut)
+ 424              		.loc 1 334 0
+ 425 007a 1B68     		ldr	r3, [r3]
+ 426 007c 0193     		str	r3, [sp, #4]
+ 427              	.LVL46:
+ 335:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 428              		.loc 1 335 0
+ 429 007e B01C     		adds	r0, r6, #2
+ 430              	.LVL47:
+ 431 0080 04EBC000 		add	r0, r4, r0, lsl #3
+ 432 0084 4FF40051 		mov	r1, #8192
+ 433 0088 0430     		adds	r0, r0, #4
+ 434 008a FFF7FEFF 		bl	osTaskWait
+ 435              	.LVL48:
+ 336:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_Schedule();
+ 436              		.loc 1 336 0
+ 437 008e 3846     		mov	r0, r7
+ 438 0090 FFF7FEFF 		bl	LOS_IntRestore
+ 439              	.LVL49:
+ 337:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 440              		.loc 1 337 0
+ 441 0094 FFF7FEFF 		bl	LOS_Schedule
+ 442              	.LVL50:
+ 339:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 443              		.loc 1 339 0
+ 444 0098 FFF7FEFF 		bl	LOS_IntLock
+ 445              	.LVL51:
+ 341:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 446              		.loc 1 341 0
+ 447 009c 019B     		ldr	r3, [sp, #4]
+ 448 009e 9A88     		ldrh	r2, [r3, #4]
+ 449 00a0 5106     		lsls	r1, r2, #25
+ 339:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 450              		.loc 1 339 0
+ 451 00a2 0746     		mov	r7, r0
+ 452              	.LVL52:
+ 341:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 453              		.loc 1 341 0
+ 454 00a4 06D5     		bpl	.L24
+ 343:../../iot_link/os/liteos/base/ipc/los_queue.c ****             uwRet = LOS_ERRNO_QUEUE_TIMEOUT;
+ 455              		.loc 1 343 0
+ 456 00a6 22F04002 		bic	r2, r2, #64
+ 457 00aa 9A80     		strh	r2, [r3, #4]	@ movhi
+ 458              	.LVL53:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 20
+
+
+ 344:../../iot_link/os/liteos/base/ipc/los_queue.c ****             goto QUEUE_END;
+ 459              		.loc 1 344 0
+ 460 00ac 414E     		ldr	r6, .L49+24
+ 461              	.LVL54:
+ 345:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 462              		.loc 1 345 0
+ 463 00ae D5E7     		b	.L19
+ 464              	.LVL55:
+ 465              	.L22:
+ 350:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 466              		.loc 1 350 0
+ 467 00b0 013B     		subs	r3, r3, #1
+ 468 00b2 1382     		strh	r3, [r2, #16]	@ movhi
+ 469              	.L24:
+ 470              	.LVL56:
+ 471              	.LBB62:
+ 472              	.LBB63:
+ 238:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 473              		.loc 1 238 0
+ 474 00b4 05F00303 		and	r3, r5, #3
+ 475 00b8 012B     		cmp	r3, #1
+ 476 00ba 36D0     		beq	.L26
+ 477 00bc 21D3     		bcc	.L27
+ 478 00be 032B     		cmp	r3, #3
+ 479 00c0 3AD0     		beq	.L28
+ 256:../../iot_link/os/liteos/base/ipc/los_queue.c ****             return;
+ 480              		.loc 1 256 0
+ 481 00c2 3D48     		ldr	r0, .L49+28
+ 482              	.LVL57:
+ 483 00c4 FFF7FEFF 		bl	printf
+ 484              	.LVL58:
+ 485 00c8 3C48     		ldr	r0, .L49+32
+ 486 00ca FFF7FEFF 		bl	puts
+ 487              	.LVL59:
+ 488              	.L34:
+ 489 00ce ED43     		mvns	r5, r5
+ 490              	.LVL60:
+ 491 00d0 05F00105 		and	r5, r5, #1
+ 492              	.LVL61:
+ 493              	.LBE63:
+ 494              	.LBE62:
+ 495              	.LBB65:
+ 496              	.LBB66:
+ 497              		.loc 2 215 0
+ 498 00d4 AB1C     		adds	r3, r5, #2
+ 499 00d6 DB00     		lsls	r3, r3, #3
+ 500 00d8 E218     		adds	r2, r4, r3
+ 501              	.LBE66:
+ 502              	.LBE65:
+ 355:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 503              		.loc 1 355 0
+ 504 00da 0433     		adds	r3, r3, #4
+ 505              	.LBB68:
+ 506              	.LBB67:
+ 507              		.loc 2 215 0
+ 508 00dc 9068     		ldr	r0, [r2, #8]
+ 509              	.LVL62:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 21
+
+
+ 510              	.LBE67:
+ 511              	.LBE68:
+ 355:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 512              		.loc 1 355 0
+ 513 00de 2344     		add	r3, r3, r4
+ 514 00e0 9842     		cmp	r0, r3
+ 515 00e2 4ED0     		beq	.L38
+ 516              	.LVL63:
+ 358:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 517              		.loc 1 358 0
+ 518 00e4 4FF40051 		mov	r1, #8192
+ 519 00e8 2838     		subs	r0, r0, #40
+ 520              	.LVL64:
+ 521 00ea FFF7FEFF 		bl	osTaskWake
+ 522              	.LVL65:
+ 359:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_Schedule();
+ 523              		.loc 1 359 0
+ 524 00ee 3846     		mov	r0, r7
+ 525 00f0 FFF7FEFF 		bl	LOS_IntRestore
+ 526              	.LVL66:
+ 360:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_OK;
+ 527              		.loc 1 360 0
+ 528 00f4 FFF7FEFF 		bl	LOS_Schedule
+ 529              	.LVL67:
+ 361:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 530              		.loc 1 361 0
+ 531 00f8 0026     		movs	r6, #0
+ 532              	.LVL68:
+ 533              	.L18:
+ 371:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 534              		.loc 1 371 0
+ 535 00fa 3046     		mov	r0, r6
+ 536 00fc 03B0     		add	sp, sp, #12
+ 537              	.LCFI3:
+ 538              		.cfi_remember_state
+ 539              		.cfi_def_cfa_offset 36
+ 540              		@ sp needed
+ 541 00fe BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 542              	.LVL69:
+ 543              	.L27:
+ 544              	.LCFI4:
+ 545              		.cfi_restore_state
+ 546              	.LBB69:
+ 547              	.LBB64:
+ 241:../../iot_link/os/liteos/base/ipc/los_queue.c ****             (pstQueueCB->usQueueHead + 1 == pstQueueCB->usQueueLen) ? (pstQueueCB->usQueueHead = 0)
+ 548              		.loc 1 241 0
+ 549 0102 A389     		ldrh	r3, [r4, #12]
+ 550              	.LVL70:
+ 242:../../iot_link/os/liteos/base/ipc/los_queue.c ****             break;
+ 551              		.loc 1 242 0
+ 552 0104 E188     		ldrh	r1, [r4, #6]
+ 553 0106 5A1C     		adds	r2, r3, #1
+ 554 0108 8A42     		cmp	r2, r1
+ 555 010a 08BF     		it	eq
+ 556 010c 0022     		moveq	r2, #0
+ 557 010e A281     		strh	r2, [r4, #12]	@ movhi
+ 558              	.L30:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 22
+
+
+ 260:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 559              		.loc 1 260 0
+ 560 0110 2289     		ldrh	r2, [r4, #8]
+ 561 0112 5BF80A10 		ldr	r1, [fp, r10]
+ 562 0116 5343     		muls	r3, r2, r3
+ 563              	.LVL71:
+ 262:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 564              		.loc 1 262 0
+ 565 0118 6807     		lsls	r0, r5, #29
+ 566              	.LVL72:
+ 260:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 567              		.loc 1 260 0
+ 568 011a 01EB030A 		add	r10, r1, r3
+ 569              	.LVL73:
+ 262:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 570              		.loc 1 262 0
+ 571 011e 17D5     		bpl	.L35
+ 264:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 572              		.loc 1 264 0
+ 573 0120 96B9     		cbnz	r6, .L36
+ 266:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 574              		.loc 1 266 0
+ 575 0122 CB58     		ldr	r3, [r1, r3]
+ 576 0124 C9F80030 		str	r3, [r9]
+ 577 0128 D1E7     		b	.L34
+ 578              	.LVL74:
+ 579              	.L26:
+ 246:../../iot_link/os/liteos/base/ipc/los_queue.c ****             usQueuePosion = pstQueueCB->usQueueHead;
+ 580              		.loc 1 246 0
+ 581 012a A389     		ldrh	r3, [r4, #12]
+ 582 012c 03B9     		cbnz	r3, .L31
+ 583 012e E388     		ldrh	r3, [r4, #6]
+ 584              	.L31:
+ 585 0130 013B     		subs	r3, r3, #1
+ 586 0132 A381     		strh	r3, [r4, #12]	@ movhi
+ 247:../../iot_link/os/liteos/base/ipc/los_queue.c ****             break;
+ 587              		.loc 1 247 0
+ 588 0134 A389     		ldrh	r3, [r4, #12]
+ 589              	.LVL75:
+ 590 0136 EBE7     		b	.L30
+ 591              	.LVL76:
+ 592              	.L28:
+ 251:../../iot_link/os/liteos/base/ipc/los_queue.c ****             (pstQueueCB->usQueueTail + 1 == pstQueueCB->usQueueLen) ? (pstQueueCB->usQueueTail = 0)
+ 593              		.loc 1 251 0
+ 594 0138 E389     		ldrh	r3, [r4, #14]
+ 595              	.LVL77:
+ 252:../../iot_link/os/liteos/base/ipc/los_queue.c ****             break;
+ 596              		.loc 1 252 0
+ 597 013a E188     		ldrh	r1, [r4, #6]
+ 598 013c 5A1C     		adds	r2, r3, #1
+ 599 013e 8A42     		cmp	r2, r1
+ 600 0140 08BF     		it	eq
+ 601 0142 0022     		moveq	r2, #0
+ 602 0144 E281     		strh	r2, [r4, #14]	@ movhi
+ 603 0146 E3E7     		b	.L30
+ 604              	.LVL78:
+ 605              	.L36:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 23
+
+
+ 270:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 606              		.loc 1 270 0
+ 607 0148 D9F80020 		ldr	r2, [r9]
+ 608 014c CA50     		str	r2, [r1, r3]
+ 609 014e BEE7     		b	.L34
+ 610              	.L35:
+ 275:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 611              		.loc 1 275 0
+ 612 0150 56B9     		cbnz	r6, .L37
+ 277:../../iot_link/os/liteos/base/ipc/los_queue.c ****             memcpy((VOID *)pBufferAddr, (VOID *)pucQueueNode, uwMsgDataSize);
+ 613              		.loc 1 277 0
+ 614 0152 5244     		add	r2, r2, r10
+ 278:../../iot_link/os/liteos/base/ipc/los_queue.c ****             *puwBufferSize = uwMsgDataSize;
+ 615              		.loc 1 278 0
+ 616 0154 5146     		mov	r1, r10
+ 277:../../iot_link/os/liteos/base/ipc/los_queue.c ****             memcpy((VOID *)pBufferAddr, (VOID *)pucQueueNode, uwMsgDataSize);
+ 617              		.loc 1 277 0
+ 618 0156 52F8046C 		ldr	r6, [r2, #-4]	@ unaligned
+ 619              	.LVL79:
+ 278:../../iot_link/os/liteos/base/ipc/los_queue.c ****             *puwBufferSize = uwMsgDataSize;
+ 620              		.loc 1 278 0
+ 621 015a 4846     		mov	r0, r9
+ 622 015c 3246     		mov	r2, r6
+ 623 015e FFF7FEFF 		bl	memcpy
+ 624              	.LVL80:
+ 279:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 625              		.loc 1 279 0
+ 626 0162 C8F80060 		str	r6, [r8]
+ 627 0166 B2E7     		b	.L34
+ 628              	.LVL81:
+ 629              	.L37:
+ 283:../../iot_link/os/liteos/base/ipc/los_queue.c ****             memcpy((VOID *)(pucQueueNode + pstQueueCB->usQueueSize - sizeof(UINT32)), puwBufferSize
+ 630              		.loc 1 283 0
+ 631 0168 D8F80020 		ldr	r2, [r8]
+ 632 016c 5046     		mov	r0, r10
+ 633 016e 4946     		mov	r1, r9
+ 634 0170 FFF7FEFF 		bl	memcpy
+ 635              	.LVL82:
+ 284:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 636              		.loc 1 284 0
+ 637 0174 2289     		ldrh	r2, [r4, #8]
+ 638 0176 D8F80030 		ldr	r3, [r8]	@ unaligned
+ 639 017a 9244     		add	r10, r10, r2
+ 640              	.LVL83:
+ 641 017c 4AF8043C 		str	r3, [r10, #-4]	@ unaligned
+ 642 0180 A5E7     		b	.L34
+ 643              	.LVL84:
+ 644              	.L38:
+ 645 0182 04EB4504 		add	r4, r4, r5, lsl #1
+ 646              	.LVL85:
+ 647              	.LBE64:
+ 648              	.LBE69:
+ 296:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32       uwReadWrite = OS_QUEUE_READ_WRITE_GET(uwOperateType);
+ 649              		.loc 1 296 0
+ 650 0186 0026     		movs	r6, #0
+ 365:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 651              		.loc 1 365 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 24
+
+
+ 652 0188 238A     		ldrh	r3, [r4, #16]
+ 653 018a 0133     		adds	r3, r3, #1
+ 654 018c 2382     		strh	r3, [r4, #16]	@ movhi
+ 655 018e 65E7     		b	.L19
+ 656              	.LVL86:
+ 657              	.L40:
+ 304:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 658              		.loc 1 304 0
+ 659 0190 0B4E     		ldr	r6, .L49+36
+ 660 0192 63E7     		b	.L19
+ 661              	.LVL87:
+ 662              	.L41:
+ 311:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 663              		.loc 1 311 0
+ 664 0194 0B4E     		ldr	r6, .L49+40
+ 665              	.LVL88:
+ 666 0196 61E7     		b	.L19
+ 667              	.LVL89:
+ 668              	.L44:
+ 330:../../iot_link/os/liteos/base/ipc/los_queue.c ****             goto QUEUE_END;
+ 669              		.loc 1 330 0
+ 670 0198 0B4E     		ldr	r6, .L49+44
+ 671              	.LVL90:
+ 672 019a 5FE7     		b	.L19
+ 673              	.L50:
+ 674              		.align	2
+ 675              	.L49:
+ 676 019c 00000000 		.word	g_pstAllQueue
+ 677 01a0 16060002 		.word	33555990
+ 678 01a4 1D060002 		.word	33555997
+ 679 01a8 15060002 		.word	33555989
+ 680 01ac 00000000 		.word	g_usLosTaskLock
+ 681 01b0 00000000 		.word	g_stLosTask
+ 682 01b4 07060002 		.word	33555975
+ 683 01b8 00000000 		.word	.LC0
+ 684 01bc 07000000 		.word	.LC1
+ 685 01c0 0A060002 		.word	33555978
+ 686 01c4 1F060002 		.word	33555999
+ 687 01c8 06060002 		.word	33555974
+ 688              		.cfi_endproc
+ 689              	.LFE292:
+ 691              		.section	.text.LOS_QueueReadCopy,"ax",%progbits
+ 692              		.align	1
+ 693              		.global	LOS_QueueReadCopy
+ 694              		.syntax unified
+ 695              		.thumb
+ 696              		.thumb_func
+ 697              		.fpu fpv4-sp-d16
+ 699              	LOS_QueueReadCopy:
+ 700              	.LFB293:
+ 372:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 373:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 374:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueReadCopy
+ 375:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Read queue
+ 376:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : uwQueueID
+ 377:../../iot_link/os/liteos/base/ipc/los_queue.c ****                puwBufferSize
+ 378:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwTimeOut
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 25
+
+
+ 379:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : pBufferAddr
+ 380:../../iot_link/os/liteos/base/ipc/los_queue.c ****                puwBufferSize
+ 381:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 382:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 383:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT UINT32 LOS_QueueReadCopy(UINT32  uwQueueID,
+ 384:../../iot_link/os/liteos/base/ipc/los_queue.c ****                     VOID *  pBufferAddr,
+ 385:../../iot_link/os/liteos/base/ipc/los_queue.c ****                     UINT32 * puwBufferSize,
+ 386:../../iot_link/os/liteos/base/ipc/los_queue.c ****                     UINT32  uwTimeOut)
+ 387:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 701              		.loc 1 387 0
+ 702              		.cfi_startproc
+ 703              		@ args = 0, pretend = 0, frame = 0
+ 704              		@ frame_needed = 0, uses_anonymous_args = 0
+ 705              	.LVL91:
+ 706              	.LBB74:
+ 707              	.LBB75:
+ 179:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 708              		.loc 1 179 0
+ 709 0000 0928     		cmp	r0, #9
+ 710              	.LBE75:
+ 711              	.LBE74:
+ 712              		.loc 1 387 0
+ 713 0002 13B5     		push	{r0, r1, r4, lr}
+ 714              	.LCFI5:
+ 715              		.cfi_def_cfa_offset 16
+ 716              		.cfi_offset 4, -8
+ 717              		.cfi_offset 14, -4
+ 718              	.LBB82:
+ 719              	.LBB80:
+ 179:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 720              		.loc 1 179 0
+ 721 0004 0FD8     		bhi	.L54
+ 183:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 722              		.loc 1 183 0
+ 723 0006 81B1     		cbz	r1, .L56
+ 724 0008 7AB1     		cbz	r2, .L56
+ 188:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 725              		.loc 1 188 0
+ 726 000a 1468     		ldr	r4, [r2]
+ 727 000c 7CB1     		cbz	r4, .L57
+ 728              	.LVL92:
+ 729              	.LBB76:
+ 730              	.LBB77:
+ 193:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 731              		.loc 1 193 0
+ 732 000e 13B1     		cbz	r3, .L53
+ 195:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 733              		.loc 1 195 0
+ 734 0010 094C     		ldr	r4, .L62
+ 735 0012 2468     		ldr	r4, [r4]
+ 736 0014 6CB9     		cbnz	r4, .L58
+ 737              	.L53:
+ 738              	.LVL93:
+ 739              	.LBE77:
+ 740              	.LBE76:
+ 741              	.LBE80:
+ 742              	.LBE82:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 26
+
+
+ 388:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwRet;
+ 389:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwOperateType;
+ 390:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 391:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwRet = osQueueReadParameterCheck(uwQueueID, pBufferAddr, puwBufferSize, uwTimeOut);
+ 392:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(uwRet != LOS_OK)
+ 393:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 394:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return uwRet;
+ 395:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 396:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 397:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwOperateType = OS_QUEUE_OPERATE_TYPE(OS_QUEUE_READ, OS_QUEUE_HEAD,OS_QUEUE_NOT_POINT);
+ 398:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return osQueueOperate(uwQueueID, uwOperateType, pBufferAddr, puwBufferSize, uwTimeOut);
+ 743              		.loc 1 398 0
+ 744 0016 0093     		str	r3, [sp]
+ 745 0018 1346     		mov	r3, r2
+ 746              	.LVL94:
+ 747 001a 0A46     		mov	r2, r1
+ 748              	.LVL95:
+ 749 001c 0021     		movs	r1, #0
+ 750              	.LVL96:
+ 751 001e FFF7FEFF 		bl	osQueueOperate
+ 752              	.LVL97:
+ 753              	.L51:
+ 399:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 754              		.loc 1 399 0
+ 755 0022 02B0     		add	sp, sp, #8
+ 756              	.LCFI6:
+ 757              		.cfi_remember_state
+ 758              		.cfi_def_cfa_offset 8
+ 759              		@ sp needed
+ 760 0024 10BD     		pop	{r4, pc}
+ 761              	.LVL98:
+ 762              	.L54:
+ 763              	.LCFI7:
+ 764              		.cfi_restore_state
+ 765              	.LBB83:
+ 766              	.LBB81:
+ 181:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 767              		.loc 1 181 0
+ 768 0026 0548     		ldr	r0, .L62+4
+ 769              	.LVL99:
+ 770 0028 FBE7     		b	.L51
+ 771              	.LVL100:
+ 772              	.L56:
+ 185:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 773              		.loc 1 185 0
+ 774 002a 0548     		ldr	r0, .L62+8
+ 775              	.LVL101:
+ 776 002c F9E7     		b	.L51
+ 777              	.LVL102:
+ 778              	.L57:
+ 190:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 779              		.loc 1 190 0
+ 780 002e 0548     		ldr	r0, .L62+12
+ 781              	.LVL103:
+ 782 0030 F7E7     		b	.L51
+ 783              	.LVL104:
+ 784              	.L58:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 27
+
+
+ 785              	.LBB79:
+ 786              	.LBB78:
+ 197:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 787              		.loc 1 197 0
+ 788 0032 0548     		ldr	r0, .L62+16
+ 789              	.LVL105:
+ 790 0034 F5E7     		b	.L51
+ 791              	.L63:
+ 792 0036 00BF     		.align	2
+ 793              	.L62:
+ 794 0038 00000000 		.word	g_vuwIntCount
+ 795 003c 0E060002 		.word	33555982
+ 796 0040 0F060002 		.word	33555983
+ 797 0044 10060002 		.word	33555984
+ 798 0048 18060002 		.word	33555992
+ 799              	.LBE78:
+ 800              	.LBE79:
+ 801              	.LBE81:
+ 802              	.LBE83:
+ 803              		.cfi_endproc
+ 804              	.LFE293:
+ 806              		.section	.text.LOS_QueueWriteHeadCopy,"ax",%progbits
+ 807              		.align	1
+ 808              		.global	LOS_QueueWriteHeadCopy
+ 809              		.syntax unified
+ 810              		.thumb
+ 811              		.thumb_func
+ 812              		.fpu fpv4-sp-d16
+ 814              	LOS_QueueWriteHeadCopy:
+ 815              	.LFB294:
+ 400:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 401:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 402:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueWriteHeadCopy
+ 403:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Write queue head
+ 404:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : uwQueueID
+ 405:../../iot_link/os/liteos/base/ipc/los_queue.c ****                pBufferAddr
+ 406:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwBufferSize
+ 407:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwTimeOut
+ 408:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : None
+ 409:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 410:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 411:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT UINT32 LOS_QueueWriteHeadCopy(UINT32 uwQueueID,
+ 412:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      VOID * pBufferAddr,
+ 413:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      UINT32 uwBufferSize,
+ 414:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      UINT32 uwTimeOut )
+ 415:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 816              		.loc 1 415 0
+ 817              		.cfi_startproc
+ 818              		@ args = 0, pretend = 0, frame = 8
+ 819              		@ frame_needed = 0, uses_anonymous_args = 0
+ 820              	.LVL106:
+ 821 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 822              	.LCFI8:
+ 823              		.cfi_def_cfa_offset 24
+ 824              		.cfi_offset 14, -4
+ 825              	.LVL107:
+ 826              	.LBB88:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 28
+
+
+ 827              	.LBB89:
+ 206:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 828              		.loc 1 206 0
+ 829 0002 0928     		cmp	r0, #9
+ 830              	.LBE89:
+ 831              	.LBE88:
+ 832              		.loc 1 415 0
+ 833 0004 0392     		str	r2, [sp, #12]
+ 834              	.LBB96:
+ 835              	.LBB94:
+ 206:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 836              		.loc 1 206 0
+ 837 0006 0ED8     		bhi	.L67
+ 211:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 838              		.loc 1 211 0
+ 839 0008 79B1     		cbz	r1, .L68
+ 216:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 840              		.loc 1 216 0
+ 841 000a 82B1     		cbz	r2, .L69
+ 842              	.LVL108:
+ 843              	.LBB90:
+ 844              	.LBB91:
+ 221:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 845              		.loc 1 221 0
+ 846 000c 13B1     		cbz	r3, .L66
+ 223:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 847              		.loc 1 223 0
+ 848 000e 0A4A     		ldr	r2, .L74
+ 849              	.LVL109:
+ 850 0010 1268     		ldr	r2, [r2]
+ 851 0012 72B9     		cbnz	r2, .L70
+ 852              	.L66:
+ 853              	.LVL110:
+ 854              	.LBE91:
+ 855              	.LBE90:
+ 856              	.LBE94:
+ 857              	.LBE96:
+ 416:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwRet;
+ 417:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwOperateType;
+ 418:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 419:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwRet = osQueueWriteParameterCheck(uwQueueID, pBufferAddr, &uwBufferSize, uwTimeOut);
+ 420:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(uwRet != LOS_OK)
+ 421:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 422:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return uwRet;
+ 423:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 424:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 425:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwOperateType = OS_QUEUE_OPERATE_TYPE(OS_QUEUE_WRITE, OS_QUEUE_HEAD,OS_QUEUE_NOT_POINT);
+ 426:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return osQueueOperate(uwQueueID, uwOperateType, pBufferAddr, &uwBufferSize, uwTimeOut);
+ 858              		.loc 1 426 0
+ 859 0014 0093     		str	r3, [sp]
+ 860 0016 0A46     		mov	r2, r1
+ 861 0018 03AB     		add	r3, sp, #12
+ 862              	.LVL111:
+ 863 001a 0121     		movs	r1, #1
+ 864              	.LVL112:
+ 865 001c FFF7FEFF 		bl	osQueueOperate
+ 866              	.LVL113:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 29
+
+
+ 867              	.L64:
+ 427:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 868              		.loc 1 427 0
+ 869 0020 05B0     		add	sp, sp, #20
+ 870              	.LCFI9:
+ 871              		.cfi_remember_state
+ 872              		.cfi_def_cfa_offset 4
+ 873              		@ sp needed
+ 874 0022 5DF804FB 		ldr	pc, [sp], #4
+ 875              	.LVL114:
+ 876              	.L67:
+ 877              	.LCFI10:
+ 878              		.cfi_restore_state
+ 879              	.LBB97:
+ 880              	.LBB95:
+ 208:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 881              		.loc 1 208 0
+ 882 0026 0548     		ldr	r0, .L74+4
+ 883              	.LVL115:
+ 884 0028 FAE7     		b	.L64
+ 885              	.LVL116:
+ 886              	.L68:
+ 213:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 887              		.loc 1 213 0
+ 888 002a 0548     		ldr	r0, .L74+8
+ 889              	.LVL117:
+ 890 002c F8E7     		b	.L64
+ 891              	.LVL118:
+ 892              	.L69:
+ 218:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 893              		.loc 1 218 0
+ 894 002e 0548     		ldr	r0, .L74+12
+ 895              	.LVL119:
+ 896 0030 F6E7     		b	.L64
+ 897              	.LVL120:
+ 898              	.L70:
+ 899              	.LBB93:
+ 900              	.LBB92:
+ 225:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 901              		.loc 1 225 0
+ 902 0032 0548     		ldr	r0, .L74+16
+ 903              	.LVL121:
+ 904 0034 F4E7     		b	.L64
+ 905              	.L75:
+ 906 0036 00BF     		.align	2
+ 907              	.L74:
+ 908 0038 00000000 		.word	g_vuwIntCount
+ 909 003c 0E060002 		.word	33555982
+ 910 0040 12060002 		.word	33555986
+ 911 0044 13060002 		.word	33555987
+ 912 0048 09060002 		.word	33555977
+ 913              	.LBE92:
+ 914              	.LBE93:
+ 915              	.LBE95:
+ 916              	.LBE97:
+ 917              		.cfi_endproc
+ 918              	.LFE294:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 30
+
+
+ 920              		.section	.text.LOS_QueueWriteCopy,"ax",%progbits
+ 921              		.align	1
+ 922              		.global	LOS_QueueWriteCopy
+ 923              		.syntax unified
+ 924              		.thumb
+ 925              		.thumb_func
+ 926              		.fpu fpv4-sp-d16
+ 928              	LOS_QueueWriteCopy:
+ 929              	.LFB295:
+ 428:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 429:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 430:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueWriteCopy
+ 431:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Write queue tail
+ 432:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : uwQueueID
+ 433:../../iot_link/os/liteos/base/ipc/los_queue.c ****                pBufferAddr
+ 434:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwBufferSize
+ 435:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwTimeOut
+ 436:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : None
+ 437:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 438:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 439:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT UINT32 LOS_QueueWriteCopy( UINT32 uwQueueID,
+ 440:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      VOID * pBufferAddr,
+ 441:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      UINT32 uwBufferSize,
+ 442:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      UINT32 uwTimeOut )
+ 443:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 930              		.loc 1 443 0
+ 931              		.cfi_startproc
+ 932              		@ args = 0, pretend = 0, frame = 8
+ 933              		@ frame_needed = 0, uses_anonymous_args = 0
+ 934              	.LVL122:
+ 935 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 936              	.LCFI11:
+ 937              		.cfi_def_cfa_offset 24
+ 938              		.cfi_offset 14, -4
+ 939              	.LVL123:
+ 940              	.LBB102:
+ 941              	.LBB103:
+ 206:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 942              		.loc 1 206 0
+ 943 0002 0928     		cmp	r0, #9
+ 944              	.LBE103:
+ 945              	.LBE102:
+ 946              		.loc 1 443 0
+ 947 0004 0392     		str	r2, [sp, #12]
+ 948              	.LBB110:
+ 949              	.LBB108:
+ 206:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 950              		.loc 1 206 0
+ 951 0006 0ED8     		bhi	.L79
+ 211:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 952              		.loc 1 211 0
+ 953 0008 79B1     		cbz	r1, .L80
+ 216:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 954              		.loc 1 216 0
+ 955 000a 82B1     		cbz	r2, .L81
+ 956              	.LVL124:
+ 957              	.LBB104:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 31
+
+
+ 958              	.LBB105:
+ 221:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 959              		.loc 1 221 0
+ 960 000c 13B1     		cbz	r3, .L78
+ 223:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 961              		.loc 1 223 0
+ 962 000e 0A4A     		ldr	r2, .L86
+ 963              	.LVL125:
+ 964 0010 1268     		ldr	r2, [r2]
+ 965 0012 72B9     		cbnz	r2, .L82
+ 966              	.L78:
+ 967              	.LVL126:
+ 968              	.LBE105:
+ 969              	.LBE104:
+ 970              	.LBE108:
+ 971              	.LBE110:
+ 444:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwRet;
+ 445:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwOperateType;
+ 446:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 447:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwRet = osQueueWriteParameterCheck(uwQueueID, pBufferAddr, &uwBufferSize, uwTimeOut);
+ 448:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(uwRet != LOS_OK)
+ 449:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 450:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return uwRet;
+ 451:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 452:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 453:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwOperateType = OS_QUEUE_OPERATE_TYPE(OS_QUEUE_WRITE, OS_QUEUE_TAIL, OS_QUEUE_NOT_POINT);
+ 454:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return osQueueOperate(uwQueueID, uwOperateType, pBufferAddr, &uwBufferSize, uwTimeOut);
+ 972              		.loc 1 454 0
+ 973 0014 0093     		str	r3, [sp]
+ 974 0016 0A46     		mov	r2, r1
+ 975 0018 03AB     		add	r3, sp, #12
+ 976              	.LVL127:
+ 977 001a 0321     		movs	r1, #3
+ 978              	.LVL128:
+ 979 001c FFF7FEFF 		bl	osQueueOperate
+ 980              	.LVL129:
+ 981              	.L76:
+ 455:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 982              		.loc 1 455 0
+ 983 0020 05B0     		add	sp, sp, #20
+ 984              	.LCFI12:
+ 985              		.cfi_remember_state
+ 986              		.cfi_def_cfa_offset 4
+ 987              		@ sp needed
+ 988 0022 5DF804FB 		ldr	pc, [sp], #4
+ 989              	.LVL130:
+ 990              	.L79:
+ 991              	.LCFI13:
+ 992              		.cfi_restore_state
+ 993              	.LBB111:
+ 994              	.LBB109:
+ 208:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 995              		.loc 1 208 0
+ 996 0026 0548     		ldr	r0, .L86+4
+ 997              	.LVL131:
+ 998 0028 FAE7     		b	.L76
+ 999              	.LVL132:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 32
+
+
+ 1000              	.L80:
+ 213:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1001              		.loc 1 213 0
+ 1002 002a 0548     		ldr	r0, .L86+8
+ 1003              	.LVL133:
+ 1004 002c F8E7     		b	.L76
+ 1005              	.LVL134:
+ 1006              	.L81:
+ 218:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1007              		.loc 1 218 0
+ 1008 002e 0548     		ldr	r0, .L86+12
+ 1009              	.LVL135:
+ 1010 0030 F6E7     		b	.L76
+ 1011              	.LVL136:
+ 1012              	.L82:
+ 1013              	.LBB107:
+ 1014              	.LBB106:
+ 225:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 1015              		.loc 1 225 0
+ 1016 0032 0548     		ldr	r0, .L86+16
+ 1017              	.LVL137:
+ 1018 0034 F4E7     		b	.L76
+ 1019              	.L87:
+ 1020 0036 00BF     		.align	2
+ 1021              	.L86:
+ 1022 0038 00000000 		.word	g_vuwIntCount
+ 1023 003c 0E060002 		.word	33555982
+ 1024 0040 12060002 		.word	33555986
+ 1025 0044 13060002 		.word	33555987
+ 1026 0048 09060002 		.word	33555977
+ 1027              	.LBE106:
+ 1028              	.LBE107:
+ 1029              	.LBE109:
+ 1030              	.LBE111:
+ 1031              		.cfi_endproc
+ 1032              	.LFE295:
+ 1034              		.section	.text.LOS_QueueRead,"ax",%progbits
+ 1035              		.align	1
+ 1036              		.global	LOS_QueueRead
+ 1037              		.syntax unified
+ 1038              		.thumb
+ 1039              		.thumb_func
+ 1040              		.fpu fpv4-sp-d16
+ 1042              	LOS_QueueRead:
+ 1043              	.LFB296:
+ 456:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 457:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 458:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueRead
+ 459:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : read queue
+ 460:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : uwQueueID
+ 461:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwBufferSize
+ 462:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwTimeOut
+ 463:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : pBufferAddr
+ 464:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 465:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 466:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT UINT32 LOS_QueueRead(UINT32  uwQueueID, VOID *pBufferAddr, UINT32 uwBufferSize, UI
+ 467:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 33
+
+
+ 1044              		.loc 1 467 0
+ 1045              		.cfi_startproc
+ 1046              		@ args = 0, pretend = 0, frame = 8
+ 1047              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1048              	.LVL138:
+ 1049 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1050              	.LCFI14:
+ 1051              		.cfi_def_cfa_offset 24
+ 1052              		.cfi_offset 14, -4
+ 1053              	.LVL139:
+ 1054              	.LBB116:
+ 1055              	.LBB117:
+ 179:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1056              		.loc 1 179 0
+ 1057 0002 0928     		cmp	r0, #9
+ 1058              	.LBE117:
+ 1059              	.LBE116:
+ 1060              		.loc 1 467 0
+ 1061 0004 0392     		str	r2, [sp, #12]
+ 1062              	.LBB124:
+ 1063              	.LBB122:
+ 179:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1064              		.loc 1 179 0
+ 1065 0006 0ED8     		bhi	.L91
+ 183:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1066              		.loc 1 183 0
+ 1067 0008 79B1     		cbz	r1, .L92
+ 188:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1068              		.loc 1 188 0
+ 1069 000a 82B1     		cbz	r2, .L93
+ 1070              	.LVL140:
+ 1071              	.LBB118:
+ 1072              	.LBB119:
+ 193:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1073              		.loc 1 193 0
+ 1074 000c 13B1     		cbz	r3, .L90
+ 195:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 1075              		.loc 1 195 0
+ 1076 000e 0A4A     		ldr	r2, .L98
+ 1077              	.LVL141:
+ 1078 0010 1268     		ldr	r2, [r2]
+ 1079 0012 72B9     		cbnz	r2, .L94
+ 1080              	.L90:
+ 1081              	.LVL142:
+ 1082              	.LBE119:
+ 1083              	.LBE118:
+ 1084              	.LBE122:
+ 1085              	.LBE124:
+ 468:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwRet;
+ 469:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwOperateType;
+ 470:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 471:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwRet = osQueueReadParameterCheck(uwQueueID, pBufferAddr, &uwBufferSize, uwTimeOut);
+ 472:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(uwRet != LOS_OK)
+ 473:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 474:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return uwRet;
+ 475:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 476:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 34
+
+
+ 477:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwOperateType = OS_QUEUE_OPERATE_TYPE(OS_QUEUE_READ, OS_QUEUE_HEAD, OS_QUEUE_POINT);
+ 478:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return osQueueOperate(uwQueueID, uwOperateType, pBufferAddr, &uwBufferSize, uwTimeOut);
+ 1086              		.loc 1 478 0
+ 1087 0014 0093     		str	r3, [sp]
+ 1088 0016 0A46     		mov	r2, r1
+ 1089 0018 03AB     		add	r3, sp, #12
+ 1090              	.LVL143:
+ 1091 001a 0421     		movs	r1, #4
+ 1092              	.LVL144:
+ 1093 001c FFF7FEFF 		bl	osQueueOperate
+ 1094              	.LVL145:
+ 1095              	.L88:
+ 479:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 1096              		.loc 1 479 0
+ 1097 0020 05B0     		add	sp, sp, #20
+ 1098              	.LCFI15:
+ 1099              		.cfi_remember_state
+ 1100              		.cfi_def_cfa_offset 4
+ 1101              		@ sp needed
+ 1102 0022 5DF804FB 		ldr	pc, [sp], #4
+ 1103              	.LVL146:
+ 1104              	.L91:
+ 1105              	.LCFI16:
+ 1106              		.cfi_restore_state
+ 1107              	.LBB125:
+ 1108              	.LBB123:
+ 181:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1109              		.loc 1 181 0
+ 1110 0026 0548     		ldr	r0, .L98+4
+ 1111              	.LVL147:
+ 1112 0028 FAE7     		b	.L88
+ 1113              	.LVL148:
+ 1114              	.L92:
+ 185:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1115              		.loc 1 185 0
+ 1116 002a 0548     		ldr	r0, .L98+8
+ 1117              	.LVL149:
+ 1118 002c F8E7     		b	.L88
+ 1119              	.LVL150:
+ 1120              	.L93:
+ 190:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1121              		.loc 1 190 0
+ 1122 002e 0548     		ldr	r0, .L98+12
+ 1123              	.LVL151:
+ 1124 0030 F6E7     		b	.L88
+ 1125              	.LVL152:
+ 1126              	.L94:
+ 1127              	.LBB121:
+ 1128              	.LBB120:
+ 197:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 1129              		.loc 1 197 0
+ 1130 0032 0548     		ldr	r0, .L98+16
+ 1131              	.LVL153:
+ 1132 0034 F4E7     		b	.L88
+ 1133              	.L99:
+ 1134 0036 00BF     		.align	2
+ 1135              	.L98:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 35
+
+
+ 1136 0038 00000000 		.word	g_vuwIntCount
+ 1137 003c 0E060002 		.word	33555982
+ 1138 0040 0F060002 		.word	33555983
+ 1139 0044 10060002 		.word	33555984
+ 1140 0048 18060002 		.word	33555992
+ 1141              	.LBE120:
+ 1142              	.LBE121:
+ 1143              	.LBE123:
+ 1144              	.LBE125:
+ 1145              		.cfi_endproc
+ 1146              	.LFE296:
+ 1148              		.section	.text.LOS_QueueWrite,"ax",%progbits
+ 1149              		.align	1
+ 1150              		.global	LOS_QueueWrite
+ 1151              		.syntax unified
+ 1152              		.thumb
+ 1153              		.thumb_func
+ 1154              		.fpu fpv4-sp-d16
+ 1156              	LOS_QueueWrite:
+ 1157              	.LFB297:
+ 480:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 481:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 482:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueWrite
+ 483:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Write queue tail
+ 484:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : uwQueueID
+ 485:../../iot_link/os/liteos/base/ipc/los_queue.c ****                pBufferAddr
+ 486:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwBufferSize
+ 487:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwTimeOut
+ 488:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : None
+ 489:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 490:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 491:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT UINT32 LOS_QueueWrite(UINT32 uwQueueID, VOID *pBufferAddr, UINT32 uwBufferSize, UI
+ 492:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 1158              		.loc 1 492 0
+ 1159              		.cfi_startproc
+ 1160              		@ args = 0, pretend = 0, frame = 8
+ 1161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1162              	.LVL154:
+ 1163 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 1164              	.LCFI17:
+ 1165              		.cfi_def_cfa_offset 24
+ 1166              		.cfi_offset 14, -4
+ 1167              	.LBB130:
+ 1168              	.LBB131:
+ 206:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1169              		.loc 1 206 0
+ 1170 0002 0928     		cmp	r0, #9
+ 1171              	.LBE131:
+ 1172              	.LBE130:
+ 493:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwRet;
+ 494:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwOperateType;
+ 495:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 496:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwBufferSize = sizeof(UINT32*);
+ 1173              		.loc 1 496 0
+ 1174 0004 4FF00402 		mov	r2, #4
+ 1175              	.LVL155:
+ 492:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwRet;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 36
+
+
+ 1176              		.loc 1 492 0
+ 1177 0008 0391     		str	r1, [sp, #12]
+ 1178              		.loc 1 496 0
+ 1179 000a 0292     		str	r2, [sp, #8]
+ 1180              	.LVL156:
+ 1181              	.LBB138:
+ 1182              	.LBB136:
+ 206:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1183              		.loc 1 206 0
+ 1184 000c 0DD8     		bhi	.L103
+ 211:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1185              		.loc 1 211 0
+ 1186 000e 71B1     		cbz	r1, .L104
+ 1187              	.LVL157:
+ 1188              	.LBB132:
+ 1189              	.LBB133:
+ 221:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1190              		.loc 1 221 0
+ 1191 0010 13B1     		cbz	r3, .L102
+ 223:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 1192              		.loc 1 223 0
+ 1193 0012 094A     		ldr	r2, .L109
+ 1194 0014 1268     		ldr	r2, [r2]
+ 1195 0016 62B9     		cbnz	r2, .L105
+ 1196              	.L102:
+ 1197              	.LVL158:
+ 1198              	.LBE133:
+ 1199              	.LBE132:
+ 1200              	.LBE136:
+ 1201              	.LBE138:
+ 497:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 498:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwRet = osQueueWriteParameterCheck(uwQueueID, pBufferAddr, &uwBufferSize, uwTimeOut);
+ 499:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(uwRet != LOS_OK)
+ 500:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 501:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return uwRet;
+ 502:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 503:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 504:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwOperateType = OS_QUEUE_OPERATE_TYPE(OS_QUEUE_WRITE, OS_QUEUE_TAIL, OS_QUEUE_POINT);
+ 505:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return osQueueOperate(uwQueueID, uwOperateType, &pBufferAddr, &uwBufferSize, uwTimeOut);
+ 1202              		.loc 1 505 0
+ 1203 0018 0093     		str	r3, [sp]
+ 1204 001a 03AA     		add	r2, sp, #12
+ 1205 001c 02AB     		add	r3, sp, #8
+ 1206              	.LVL159:
+ 1207 001e 0721     		movs	r1, #7
+ 1208              	.LVL160:
+ 1209 0020 FFF7FEFF 		bl	osQueueOperate
+ 1210              	.LVL161:
+ 1211              	.L100:
+ 506:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 1212              		.loc 1 506 0
+ 1213 0024 05B0     		add	sp, sp, #20
+ 1214              	.LCFI18:
+ 1215              		.cfi_remember_state
+ 1216              		.cfi_def_cfa_offset 4
+ 1217              		@ sp needed
+ 1218 0026 5DF804FB 		ldr	pc, [sp], #4
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 37
+
+
+ 1219              	.LVL162:
+ 1220              	.L103:
+ 1221              	.LCFI19:
+ 1222              		.cfi_restore_state
+ 1223              	.LBB139:
+ 1224              	.LBB137:
+ 208:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1225              		.loc 1 208 0
+ 1226 002a 0448     		ldr	r0, .L109+4
+ 1227              	.LVL163:
+ 1228 002c FAE7     		b	.L100
+ 1229              	.LVL164:
+ 1230              	.L104:
+ 213:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1231              		.loc 1 213 0
+ 1232 002e 0448     		ldr	r0, .L109+8
+ 1233              	.LVL165:
+ 1234 0030 F8E7     		b	.L100
+ 1235              	.LVL166:
+ 1236              	.L105:
+ 1237              	.LBB135:
+ 1238              	.LBB134:
+ 225:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 1239              		.loc 1 225 0
+ 1240 0032 0448     		ldr	r0, .L109+12
+ 1241              	.LVL167:
+ 1242 0034 F6E7     		b	.L100
+ 1243              	.L110:
+ 1244 0036 00BF     		.align	2
+ 1245              	.L109:
+ 1246 0038 00000000 		.word	g_vuwIntCount
+ 1247 003c 0E060002 		.word	33555982
+ 1248 0040 12060002 		.word	33555986
+ 1249 0044 09060002 		.word	33555977
+ 1250              	.LBE134:
+ 1251              	.LBE135:
+ 1252              	.LBE137:
+ 1253              	.LBE139:
+ 1254              		.cfi_endproc
+ 1255              	.LFE297:
+ 1257              		.section	.text.LOS_QueueWriteHead,"ax",%progbits
+ 1258              		.align	1
+ 1259              		.global	LOS_QueueWriteHead
+ 1260              		.syntax unified
+ 1261              		.thumb
+ 1262              		.thumb_func
+ 1263              		.fpu fpv4-sp-d16
+ 1265              	LOS_QueueWriteHead:
+ 1266              	.LFB298:
+ 507:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 508:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 509:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueWriteHead
+ 510:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : write queue head
+ 511:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : uwQueueID
+ 512:../../iot_link/os/liteos/base/ipc/los_queue.c ****                pBufferAddr
+ 513:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwBufferSize
+ 514:../../iot_link/os/liteos/base/ipc/los_queue.c ****                uwTimeOut
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 38
+
+
+ 515:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : None
+ 516:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 517:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 518:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT UINT32 LOS_QueueWriteHead( UINT32 uwQueueID,
+ 519:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      VOID * pBufferAddr,
+ 520:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      UINT32 uwBufferSize,
+ 521:../../iot_link/os/liteos/base/ipc/los_queue.c ****                                      UINT32 uwTimeOut )
+ 522:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 1267              		.loc 1 522 0
+ 1268              		.cfi_startproc
+ 1269              		@ args = 0, pretend = 0, frame = 8
+ 1270              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1271              	.LVL168:
+ 1272 0000 07B5     		push	{r0, r1, r2, lr}
+ 1273              	.LCFI20:
+ 1274              		.cfi_def_cfa_offset 16
+ 1275              		.cfi_offset 14, -4
+ 1276              		.loc 1 522 0
+ 1277 0002 0191     		str	r1, [sp, #4]
+ 523:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if(pBufferAddr == NULL)
+ 1278              		.loc 1 523 0
+ 1279 0004 39B1     		cbz	r1, .L113
+ 1280              	.LVL169:
+ 524:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 525:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_WRITE_PTR_NULL;
+ 526:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 527:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwBufferSize = sizeof(UINT32*);
+ 528:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return LOS_QueueWriteHeadCopy(uwQueueID, &pBufferAddr, uwBufferSize, uwTimeOut);
+ 1281              		.loc 1 528 0
+ 1282 0006 0422     		movs	r2, #4
+ 1283 0008 0DEB0201 		add	r1, sp, r2
+ 1284              	.LVL170:
+ 1285 000c FFF7FEFF 		bl	LOS_QueueWriteHeadCopy
+ 1286              	.LVL171:
+ 1287              	.L111:
+ 529:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 1288              		.loc 1 529 0
+ 1289 0010 03B0     		add	sp, sp, #12
+ 1290              	.LCFI21:
+ 1291              		.cfi_remember_state
+ 1292              		.cfi_def_cfa_offset 4
+ 1293              		@ sp needed
+ 1294 0012 5DF804FB 		ldr	pc, [sp], #4
+ 1295              	.LVL172:
+ 1296              	.L113:
+ 1297              	.LCFI22:
+ 1298              		.cfi_restore_state
+ 525:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1299              		.loc 1 525 0
+ 1300 0016 0148     		ldr	r0, .L114
+ 1301              	.LVL173:
+ 1302 0018 FAE7     		b	.L111
+ 1303              	.L115:
+ 1304 001a 00BF     		.align	2
+ 1305              	.L114:
+ 1306 001c 12060002 		.word	33555986
+ 1307              		.cfi_endproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 39
+
+
+ 1308              	.LFE298:
+ 1310              		.section	.text.osQueueMailAlloc,"ax",%progbits
+ 1311              		.align	1
+ 1312              		.global	osQueueMailAlloc
+ 1313              		.syntax unified
+ 1314              		.thumb
+ 1315              		.thumb_func
+ 1316              		.fpu fpv4-sp-d16
+ 1318              	osQueueMailAlloc:
+ 1319              	.LFB299:
+ 530:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 531:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 532:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : osQueueMailAlloc
+ 533:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Mail allocate memory
+ 534:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : uwQueueID   --- QueueID
+ 535:../../iot_link/os/liteos/base/ipc/los_queue.c ****              : pMailPool   --- MailPool
+ 536:../../iot_link/os/liteos/base/ipc/los_queue.c ****              : uwTimeOut   --- TimeOut
+ 537:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : None
+ 538:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : pointer if success otherwise NULL
+ 539:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 540:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT VOID *osQueueMailAlloc(UINT32  uwQueueID, VOID* pMailPool, UINT32 uwTimeOut)
+ 541:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 1320              		.loc 1 541 0
+ 1321              		.cfi_startproc
+ 1322              		@ args = 0, pretend = 0, frame = 0
+ 1323              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1324              	.LVL174:
+ 542:../../iot_link/os/liteos/base/ipc/los_queue.c ****     VOID *pMem = (VOID *)NULL;
+ 543:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINTPTR uvIntSave;
+ 544:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueCB = (QUEUE_CB_S *)NULL;
+ 545:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_TASK_CB *pstRunTsk = (LOS_TASK_CB *)NULL;
+ 546:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 547:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (uwQueueID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
+ 1325              		.loc 1 547 0
+ 1326 0000 0928     		cmp	r0, #9
+ 541:../../iot_link/os/liteos/base/ipc/los_queue.c ****     VOID *pMem = (VOID *)NULL;
+ 1327              		.loc 1 541 0
+ 1328 0002 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1329              	.LCFI23:
+ 1330              		.cfi_def_cfa_offset 24
+ 1331              		.cfi_offset 4, -24
+ 1332              		.cfi_offset 5, -20
+ 1333              		.cfi_offset 6, -16
+ 1334              		.cfi_offset 7, -12
+ 1335              		.cfi_offset 8, -8
+ 1336              		.cfi_offset 14, -4
+ 541:../../iot_link/os/liteos/base/ipc/los_queue.c ****     VOID *pMem = (VOID *)NULL;
+ 1337              		.loc 1 541 0
+ 1338 0006 0546     		mov	r5, r0
+ 1339 0008 0C46     		mov	r4, r1
+ 1340 000a 9046     		mov	r8, r2
+ 1341              		.loc 1 547 0
+ 1342 000c 3BD8     		bhi	.L122
+ 548:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 549:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return NULL;
+ 550:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 551:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 40
+
+
+ 552:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (pMailPool == NULL)
+ 1343              		.loc 1 552 0
+ 1344 000e 0029     		cmp	r1, #0
+ 1345 0010 34D0     		beq	.L117
+ 553:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 554:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return NULL;
+ 555:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 556:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 557:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (LOS_NO_WAIT != uwTimeOut)
+ 1346              		.loc 1 557 0
+ 1347 0012 1AB1     		cbz	r2, .L118
+ 558:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 559:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (OS_INT_ACTIVE)
+ 1348              		.loc 1 559 0
+ 1349 0014 1D4B     		ldr	r3, .L133
+ 1350 0016 1B68     		ldr	r3, [r3]
+ 1351 0018 002B     		cmp	r3, #0
+ 1352 001a 34D1     		bne	.L122
+ 1353              	.L118:
+ 560:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 561:../../iot_link/os/liteos/base/ipc/los_queue.c ****             return NULL;
+ 562:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 563:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 564:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 565:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uvIntSave = LOS_IntLock();
+ 1354              		.loc 1 565 0
+ 1355 001c FFF7FEFF 		bl	LOS_IntLock
+ 1356              	.LVL175:
+ 566:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB = GET_QUEUE_HANDLE(uwQueueID);
+ 1357              		.loc 1 566 0
+ 1358 0020 1B4B     		ldr	r3, .L133+4
+ 1359 0022 1B68     		ldr	r3, [r3]
+ 1360 0024 2C22     		movs	r2, #44
+ 1361 0026 02FB0535 		mla	r5, r2, r5, r3
+ 1362              	.LVL176:
+ 565:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB = GET_QUEUE_HANDLE(uwQueueID);
+ 1363              		.loc 1 565 0
+ 1364 002a 0746     		mov	r7, r0
+ 1365              	.LVL177:
+ 567:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (OS_QUEUE_UNUSED == pstQueueCB->usQueueState)
+ 1366              		.loc 1 567 0
+ 1367 002c AB88     		ldrh	r3, [r5, #4]
+ 1368 002e 43B3     		cbz	r3, .L123
+ 568:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 569:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto END;
+ 570:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 571:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 572:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pMem = LOS_MemboxAlloc(pMailPool);
+ 1369              		.loc 1 572 0
+ 1370 0030 2046     		mov	r0, r4
+ 1371              	.LVL178:
+ 1372 0032 FFF7FEFF 		bl	LOS_MemboxAlloc
+ 1373              	.LVL179:
+ 573:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (NULL == pMem)
+ 1374              		.loc 1 573 0
+ 1375 0036 0446     		mov	r4, r0
+ 1376              	.LVL180:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 41
+
+
+ 1377 0038 E8B9     		cbnz	r0, .L119
+ 574:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 575:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (uwTimeOut == LOS_NO_WAIT)
+ 1378              		.loc 1 575 0
+ 1379 003a B8F1000F 		cmp	r8, #0
+ 1380 003e 1AD0     		beq	.L119
+ 576:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 577:../../iot_link/os/liteos/base/ipc/los_queue.c ****             goto END;
+ 578:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 579:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 580:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstRunTsk = (LOS_TASK_CB *)g_stLosTask.pstRunTask;
+ 1381              		.loc 1 580 0
+ 1382 0040 144B     		ldr	r3, .L133+8
+ 581:../../iot_link/os/liteos/base/ipc/los_queue.c ****         osTaskWait(&pstQueueCB->stMemList, OS_TASK_STATUS_PEND_QUEUE, uwTimeOut);
+ 1383              		.loc 1 581 0
+ 1384 0042 4246     		mov	r2, r8
+ 580:../../iot_link/os/liteos/base/ipc/los_queue.c ****         osTaskWait(&pstQueueCB->stMemList, OS_TASK_STATUS_PEND_QUEUE, uwTimeOut);
+ 1385              		.loc 1 580 0
+ 1386 0044 1E68     		ldr	r6, [r3]
+ 1387              	.LVL181:
+ 1388              		.loc 1 581 0
+ 1389 0046 4FF40051 		mov	r1, #8192
+ 1390 004a 05F12400 		add	r0, r5, #36
+ 1391              	.LVL182:
+ 1392 004e FFF7FEFF 		bl	osTaskWait
+ 1393              	.LVL183:
+ 582:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 1394              		.loc 1 582 0
+ 1395 0052 3846     		mov	r0, r7
+ 1396 0054 FFF7FEFF 		bl	LOS_IntRestore
+ 1397              	.LVL184:
+ 583:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_Schedule();
+ 1398              		.loc 1 583 0
+ 1399 0058 FFF7FEFF 		bl	LOS_Schedule
+ 1400              	.LVL185:
+ 584:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 585:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uvIntSave = LOS_IntLock();
+ 1401              		.loc 1 585 0
+ 1402 005c FFF7FEFF 		bl	LOS_IntLock
+ 1403              	.LVL186:
+ 586:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (pstRunTsk->usTaskStatus & OS_TASK_STATUS_TIMEOUT)
+ 1404              		.loc 1 586 0
+ 1405 0060 B388     		ldrh	r3, [r6, #4]
+ 1406 0062 13F04002 		ands	r2, r3, #64
+ 587:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 588:../../iot_link/os/liteos/base/ipc/los_queue.c ****             pstRunTsk->usTaskStatus &= (~OS_TASK_STATUS_TIMEOUT);
+ 1407              		.loc 1 588 0
+ 1408 0066 16BF     		itet	ne
+ 1409 0068 23F04003 		bicne	r3, r3, #64
+ 589:../../iot_link/os/liteos/base/ipc/los_queue.c ****             goto END;
+ 590:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 591:../../iot_link/os/liteos/base/ipc/los_queue.c ****         else
+ 592:../../iot_link/os/liteos/base/ipc/los_queue.c ****         {
+ 593:../../iot_link/os/liteos/base/ipc/los_queue.c ****             /* When enters the current branch, means the current task already got a available membo
+ 594:../../iot_link/os/liteos/base/ipc/los_queue.c ****              * so the pstRunTsk->puwMsg can not be NULL.
+ 595:../../iot_link/os/liteos/base/ipc/los_queue.c ****              */
+ 596:../../iot_link/os/liteos/base/ipc/los_queue.c ****             pMem = pstRunTsk->puwMsg;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 42
+
+
+ 1410              		.loc 1 596 0
+ 1411 006c 346D     		ldreq	r4, [r6, #80]
+ 1412              	.LVL187:
+ 588:../../iot_link/os/liteos/base/ipc/los_queue.c ****             goto END;
+ 1413              		.loc 1 588 0
+ 1414 006e B380     		strhne	r3, [r6, #4]	@ movhi
+ 585:../../iot_link/os/liteos/base/ipc/los_queue.c ****         if (pstRunTsk->usTaskStatus & OS_TASK_STATUS_TIMEOUT)
+ 1415              		.loc 1 585 0
+ 1416 0070 0746     		mov	r7, r0
+ 1417              	.LVL188:
+ 597:../../iot_link/os/liteos/base/ipc/los_queue.c ****             pstRunTsk->puwMsg = NULL;
+ 1418              		.loc 1 597 0
+ 1419 0072 08BF     		it	eq
+ 1420 0074 3265     		streq	r2, [r6, #80]
+ 1421              	.LVL189:
+ 1422              	.L119:
+ 598:../../iot_link/os/liteos/base/ipc/los_queue.c ****         }
+ 599:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 600:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 601:../../iot_link/os/liteos/base/ipc/los_queue.c **** END:
+ 602:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_IntRestore(uvIntSave);
+ 1423              		.loc 1 602 0
+ 1424 0076 3846     		mov	r0, r7
+ 1425 0078 FFF7FEFF 		bl	LOS_IntRestore
+ 1426              	.LVL190:
+ 1427              	.L117:
+ 603:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return pMem;
+ 604:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 1428              		.loc 1 604 0
+ 1429 007c 2046     		mov	r0, r4
+ 1430 007e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1431              	.LVL191:
+ 1432              	.L123:
+ 542:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINTPTR uvIntSave;
+ 1433              		.loc 1 542 0
+ 1434 0082 1C46     		mov	r4, r3
+ 1435              	.LVL192:
+ 1436 0084 F7E7     		b	.L119
+ 1437              	.LVL193:
+ 1438              	.L122:
+ 549:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1439              		.loc 1 549 0
+ 1440 0086 0024     		movs	r4, #0
+ 1441 0088 F8E7     		b	.L117
+ 1442              	.L134:
+ 1443 008a 00BF     		.align	2
+ 1444              	.L133:
+ 1445 008c 00000000 		.word	g_vuwIntCount
+ 1446 0090 00000000 		.word	g_pstAllQueue
+ 1447 0094 00000000 		.word	g_stLosTask
+ 1448              		.cfi_endproc
+ 1449              	.LFE299:
+ 1451              		.section	.text.osQueueMailFree,"ax",%progbits
+ 1452              		.align	1
+ 1453              		.global	osQueueMailFree
+ 1454              		.syntax unified
+ 1455              		.thumb
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 43
+
+
+ 1456              		.thumb_func
+ 1457              		.fpu fpv4-sp-d16
+ 1459              	osQueueMailFree:
+ 1460              	.LFB300:
+ 605:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 606:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 607:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : osQueueMailFree
+ 608:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Mail free memory
+ 609:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : uwQueueID   --- QueueID
+ 610:../../iot_link/os/liteos/base/ipc/los_queue.c ****              : pMailPool   --- MailPool
+ 611:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : None
+ 612:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 613:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 614:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT UINT32 osQueueMailFree(UINT32  uwQueueID, VOID* pMailPool, VOID* pMailMem)
+ 615:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 1461              		.loc 1 615 0
+ 1462              		.cfi_startproc
+ 1463              		@ args = 0, pretend = 0, frame = 0
+ 1464              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1465              	.LVL194:
+ 616:../../iot_link/os/liteos/base/ipc/los_queue.c ****     VOID *pMem = (VOID *)NULL;
+ 617:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINTPTR uvIntSave;
+ 618:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueCB = (QUEUE_CB_S *)NULL;
+ 619:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_TASK_CB *pstResumedTask = (LOS_TASK_CB *)NULL;
+ 620:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 621:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (uwQueueID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
+ 1466              		.loc 1 621 0
+ 1467 0000 0928     		cmp	r0, #9
+ 615:../../iot_link/os/liteos/base/ipc/los_queue.c ****     VOID *pMem = (VOID *)NULL;
+ 1468              		.loc 1 615 0
+ 1469 0002 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1470              	.LCFI24:
+ 1471              		.cfi_def_cfa_offset 24
+ 1472              		.cfi_offset 3, -24
+ 1473              		.cfi_offset 4, -20
+ 1474              		.cfi_offset 5, -16
+ 1475              		.cfi_offset 6, -12
+ 1476              		.cfi_offset 7, -8
+ 1477              		.cfi_offset 14, -4
+ 615:../../iot_link/os/liteos/base/ipc/los_queue.c ****     VOID *pMem = (VOID *)NULL;
+ 1478              		.loc 1 615 0
+ 1479 0004 0446     		mov	r4, r0
+ 1480 0006 0F46     		mov	r7, r1
+ 1481 0008 1546     		mov	r5, r2
+ 1482              		.loc 1 621 0
+ 1483 000a 33D8     		bhi	.L140
+ 622:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 623:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_MAIL_HANDLE_INVALID;
+ 624:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 625:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 626:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (pMailPool == NULL)
+ 1484              		.loc 1 626 0
+ 1485 000c A1B3     		cbz	r1, .L141
+ 627:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 628:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_MAIL_PTR_INVALID;
+ 629:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 630:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 44
+
+
+ 631:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uvIntSave = LOS_IntLock();
+ 1486              		.loc 1 631 0
+ 1487 000e FFF7FEFF 		bl	LOS_IntLock
+ 1488              	.LVL195:
+ 632:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 633:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (LOS_MemboxFree(pMailPool, pMailMem))
+ 1489              		.loc 1 633 0
+ 1490 0012 2946     		mov	r1, r5
+ 631:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 1491              		.loc 1 631 0
+ 1492 0014 0646     		mov	r6, r0
+ 1493              	.LVL196:
+ 1494              		.loc 1 633 0
+ 1495 0016 3846     		mov	r0, r7
+ 1496              	.LVL197:
+ 1497 0018 FFF7FEFF 		bl	LOS_MemboxFree
+ 1498              	.LVL198:
+ 1499 001c 0546     		mov	r5, r0
+ 1500              	.LVL199:
+ 1501 001e 28B1     		cbz	r0, .L137
+ 634:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 635:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 1502              		.loc 1 635 0
+ 1503 0020 3046     		mov	r0, r6
+ 1504 0022 FFF7FEFF 		bl	LOS_IntRestore
+ 1505              	.LVL200:
+ 636:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_MAIL_FREE_ERROR;
+ 1506              		.loc 1 636 0
+ 1507 0026 154D     		ldr	r5, .L142
+ 1508              	.LVL201:
+ 1509              	.L135:
+ 637:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 638:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 639:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB = GET_QUEUE_HANDLE(uwQueueID);
+ 640:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (OS_QUEUE_UNUSED == pstQueueCB->usQueueState)
+ 641:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 642:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 643:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_NOT_CREATE;
+ 644:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 645:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 646:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (!LOS_ListEmpty(&pstQueueCB->stMemList))
+ 647:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 648:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstResumedTask = OS_TCB_FROM_PENDLIST(LOS_DL_LIST_FIRST(&pstQueueCB->stMemList)); /*lint !e
+ 649:../../iot_link/os/liteos/base/ipc/los_queue.c ****         osTaskWake(pstResumedTask, OS_TASK_STATUS_PEND_QUEUE);
+ 650:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pMem = LOS_MemboxAlloc(pMailPool);
+ 651:../../iot_link/os/liteos/base/ipc/los_queue.c ****         /* At the state of LOS_IntLock, the allocation can not be failed after releasing succefully
+ 652:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 653:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstResumedTask->puwMsg = pMem;
+ 654:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 655:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_Schedule();
+ 656:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 657:../../iot_link/os/liteos/base/ipc/los_queue.c ****     else
+ 658:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 659:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 660:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 661:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return LOS_OK;
+ 662:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 45
+
+
+ 1510              		.loc 1 662 0
+ 1511 0028 2846     		mov	r0, r5
+ 1512 002a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1513              	.LVL202:
+ 1514              	.L137:
+ 639:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (OS_QUEUE_UNUSED == pstQueueCB->usQueueState)
+ 1515              		.loc 1 639 0
+ 1516 002c 144B     		ldr	r3, .L142+4
+ 1517 002e 1868     		ldr	r0, [r3]
+ 1518 0030 2C23     		movs	r3, #44
+ 1519 0032 03FB0400 		mla	r0, r3, r4, r0
+ 1520              	.LVL203:
+ 640:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1521              		.loc 1 640 0
+ 1522 0036 8388     		ldrh	r3, [r0, #4]
+ 1523 0038 23B9     		cbnz	r3, .L138
+ 642:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_NOT_CREATE;
+ 1524              		.loc 1 642 0
+ 1525 003a 3046     		mov	r0, r6
+ 1526              	.LVL204:
+ 1527 003c FFF7FEFF 		bl	LOS_IntRestore
+ 1528              	.LVL205:
+ 643:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1529              		.loc 1 643 0
+ 1530 0040 104D     		ldr	r5, .L142+8
+ 1531 0042 F1E7     		b	.L135
+ 1532              	.LVL206:
+ 1533              	.L138:
+ 1534              	.LBB140:
+ 1535              	.LBB141:
+ 1536              		.loc 2 215 0
+ 1537 0044 846A     		ldr	r4, [r0, #40]
+ 1538              	.LVL207:
+ 1539              	.LBE141:
+ 1540              	.LBE140:
+ 646:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1541              		.loc 1 646 0
+ 1542 0046 2430     		adds	r0, r0, #36
+ 1543              	.LVL208:
+ 1544 0048 8442     		cmp	r4, r0
+ 1545 004a 0FD0     		beq	.L139
+ 1546              	.LVL209:
+ 649:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pMem = LOS_MemboxAlloc(pMailPool);
+ 1547              		.loc 1 649 0
+ 1548 004c 4FF40051 		mov	r1, #8192
+ 1549 0050 A4F12800 		sub	r0, r4, #40
+ 1550              	.LVL210:
+ 1551 0054 FFF7FEFF 		bl	osTaskWake
+ 1552              	.LVL211:
+ 650:../../iot_link/os/liteos/base/ipc/los_queue.c ****         /* At the state of LOS_IntLock, the allocation can not be failed after releasing succefully
+ 1553              		.loc 1 650 0
+ 1554 0058 3846     		mov	r0, r7
+ 1555 005a FFF7FEFF 		bl	LOS_MemboxAlloc
+ 1556              	.LVL212:
+ 653:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_IntRestore(uvIntSave);
+ 1557              		.loc 1 653 0
+ 1558 005e A062     		str	r0, [r4, #40]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 46
+
+
+ 654:../../iot_link/os/liteos/base/ipc/los_queue.c ****         LOS_Schedule();
+ 1559              		.loc 1 654 0
+ 1560 0060 3046     		mov	r0, r6
+ 1561              	.LVL213:
+ 1562 0062 FFF7FEFF 		bl	LOS_IntRestore
+ 1563              	.LVL214:
+ 655:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1564              		.loc 1 655 0
+ 1565 0066 FFF7FEFF 		bl	LOS_Schedule
+ 1566              	.LVL215:
+ 1567 006a DDE7     		b	.L135
+ 1568              	.LVL216:
+ 1569              	.L139:
+ 659:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1570              		.loc 1 659 0
+ 1571 006c 3046     		mov	r0, r6
+ 1572              	.LVL217:
+ 1573 006e FFF7FEFF 		bl	LOS_IntRestore
+ 1574              	.LVL218:
+ 1575 0072 D9E7     		b	.L135
+ 1576              	.LVL219:
+ 1577              	.L140:
+ 623:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1578              		.loc 1 623 0
+ 1579 0074 044D     		ldr	r5, .L142+12
+ 1580 0076 D7E7     		b	.L135
+ 1581              	.L141:
+ 628:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1582              		.loc 1 628 0
+ 1583 0078 044D     		ldr	r5, .L142+16
+ 1584 007a D5E7     		b	.L135
+ 1585              	.L143:
+ 1586              		.align	2
+ 1587              	.L142:
+ 1588 007c 1B060002 		.word	33555995
+ 1589 0080 00000000 		.word	g_pstAllQueue
+ 1590 0084 0A060002 		.word	33555978
+ 1591 0088 19060002 		.word	33555993
+ 1592 008c 1A060002 		.word	33555994
+ 1593              		.cfi_endproc
+ 1594              	.LFE300:
+ 1596              		.section	.text.LOS_QueueDelete,"ax",%progbits
+ 1597              		.align	1
+ 1598              		.global	LOS_QueueDelete
+ 1599              		.syntax unified
+ 1600              		.thumb
+ 1601              		.thumb_func
+ 1602              		.fpu fpv4-sp-d16
+ 1604              	LOS_QueueDelete:
+ 1605              	.LFB301:
+ 663:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 664:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 665:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueDelete
+ 666:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Delete a queue
+ 667:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : puwQueueID   --- QueueID
+ 668:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : None
+ 669:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 47
+
+
+ 670:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 671:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT_INIT UINT32 LOS_QueueDelete(UINT32 uwQueueID)
+ 672:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 1606              		.loc 1 672 0
+ 1607              		.cfi_startproc
+ 1608              		@ args = 0, pretend = 0, frame = 0
+ 1609              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1610              	.LVL220:
+ 673:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueCB;
+ 674:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT8 *pucQueue = NULL;
+ 675:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINTPTR  uvIntSave;
+ 676:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwRet;
+ 677:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 678:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (uwQueueID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
+ 1611              		.loc 1 678 0
+ 1612 0000 0928     		cmp	r0, #9
+ 672:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueCB;
+ 1613              		.loc 1 672 0
+ 1614 0002 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1615              	.LCFI25:
+ 1616              		.cfi_def_cfa_offset 24
+ 1617              		.cfi_offset 3, -24
+ 1618              		.cfi_offset 4, -20
+ 1619              		.cfi_offset 5, -16
+ 1620              		.cfi_offset 6, -12
+ 1621              		.cfi_offset 7, -8
+ 1622              		.cfi_offset 14, -4
+ 672:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueCB;
+ 1623              		.loc 1 672 0
+ 1624 0004 0446     		mov	r4, r0
+ 1625              		.loc 1 678 0
+ 1626 0006 3BD8     		bhi	.L147
+ 679:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 680:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_NOT_FOUND;
+ 681:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 682:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 683:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uvIntSave = LOS_IntLock();
+ 1627              		.loc 1 683 0
+ 1628 0008 FFF7FEFF 		bl	LOS_IntLock
+ 1629              	.LVL221:
+ 684:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB = (QUEUE_CB_S *)GET_QUEUE_HANDLE(uwQueueID);
+ 1630              		.loc 1 684 0
+ 1631 000c 1D4B     		ldr	r3, .L153
+ 1632 000e 2C22     		movs	r2, #44
+ 1633 0010 1D68     		ldr	r5, [r3]
+ 1634 0012 6243     		muls	r2, r4, r2
+ 1635 0014 AB18     		adds	r3, r5, r2
+ 683:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB = (QUEUE_CB_S *)GET_QUEUE_HANDLE(uwQueueID);
+ 1636              		.loc 1 683 0
+ 1637 0016 0746     		mov	r7, r0
+ 1638              	.LVL222:
+ 685:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (OS_QUEUE_UNUSED == pstQueueCB->usQueueState)
+ 1639              		.loc 1 685 0
+ 1640 0018 9988     		ldrh	r1, [r3, #4]
+ 1641 001a 39B3     		cbz	r1, .L148
+ 686:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 687:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_NOT_CREATE;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 48
+
+
+ 688:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 689:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 690:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 691:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (!LOS_ListEmpty(&pstQueueCB->stReadWriteList[OS_QUEUE_READ]))
+ 1642              		.loc 1 691 0
+ 1643 001c 9C69     		ldr	r4, [r3, #24]
+ 1644              	.LVL223:
+ 1645 001e 03F11401 		add	r1, r3, #20
+ 1646 0022 8C42     		cmp	r4, r1
+ 1647 0024 28D1     		bne	.L151
+ 692:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 693:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_IN_TSKUSE;
+ 694:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 695:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 696:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 697:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (!LOS_ListEmpty(&pstQueueCB->stReadWriteList[OS_QUEUE_WRITE]))
+ 1648              		.loc 1 697 0
+ 1649 0026 196A     		ldr	r1, [r3, #32]
+ 1650 0028 03F11C04 		add	r4, r3, #28
+ 1651 002c 8C42     		cmp	r4, r1
+ 1652 002e 23D1     		bne	.L151
+ 698:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 699:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_IN_TSKUSE;
+ 700:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 701:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 702:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 703:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (!LOS_ListEmpty(&pstQueueCB->stMemList))
+ 1653              		.loc 1 703 0
+ 1654 0030 9E6A     		ldr	r6, [r3, #40]
+ 1655 0032 03F12401 		add	r1, r3, #36
+ 1656 0036 8E42     		cmp	r6, r1
+ 1657 0038 1ED1     		bne	.L151
+ 704:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 705:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_IN_TSKUSE;
+ 706:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 707:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 708:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 709:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if ((pstQueueCB->usReadWriteableCnt[OS_QUEUE_WRITE] + pstQueueCB->usReadWriteableCnt[OS_QUEUE_R
+ 1658              		.loc 1 709 0
+ 1659 003a 1E8A     		ldrh	r6, [r3, #16]
+ 1660 003c 598A     		ldrh	r1, [r3, #18]
+ 1661 003e 3144     		add	r1, r1, r6
+ 1662 0040 DE88     		ldrh	r6, [r3, #6]
+ 1663 0042 B142     		cmp	r1, r6
+ 1664 0044 1AD1     		bne	.L152
+ 710:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 711:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_IN_TSKWRITE;
+ 712:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 713:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 714:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 715:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pucQueue = pstQueueCB->pucQueue;
+ 716:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->pucQueue = (UINT8 *)NULL;
+ 1665              		.loc 1 716 0
+ 1666 0046 0026     		movs	r6, #0
+ 715:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->pucQueue = (UINT8 *)NULL;
+ 1667              		.loc 1 715 0
+ 1668 0048 AF58     		ldr	r7, [r5, r2]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 49
+
+
+ 1669              	.LVL224:
+ 1670              		.loc 1 716 0
+ 1671 004a AE50     		str	r6, [r5, r2]
+ 1672              	.LBB150:
+ 1673              	.LBB151:
+ 131:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev = pstList;
+ 1674              		.loc 2 131 0
+ 1675 004c 0E4A     		ldr	r2, .L153+4
+ 1676              	.LBE151:
+ 1677              	.LBE150:
+ 717:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB->usQueueState = OS_QUEUE_UNUSED;
+ 1678              		.loc 1 717 0
+ 1679 004e 9E80     		strh	r6, [r3, #4]	@ movhi
+ 1680              	.LVL225:
+ 1681              	.LBB153:
+ 1682              	.LBB152:
+ 131:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev = pstList;
+ 1683              		.loc 2 131 0
+ 1684 0050 5568     		ldr	r5, [r2, #4]
+ 132:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstNext->pstPrev = pstNode;
+ 1685              		.loc 2 132 0
+ 1686 0052 C3E90725 		strd	r2, r5, [r3, #28]
+ 133:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstNext = pstNode;
+ 1687              		.loc 2 133 0
+ 1688 0056 2C60     		str	r4, [r5]
+ 134:../../iot_link/os/liteos/include/los_list.h **** }
+ 1689              		.loc 2 134 0
+ 1690 0058 5460     		str	r4, [r2, #4]
+ 1691              	.LVL226:
+ 1692              	.LBE152:
+ 1693              	.LBE153:
+ 718:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_ListAdd(&g_stFreeQueueList, &pstQueueCB->stReadWriteList[OS_QUEUE_WRITE]);
+ 719:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_IntRestore(uvIntSave);
+ 1694              		.loc 1 719 0
+ 1695 005a FFF7FEFF 		bl	LOS_IntRestore
+ 1696              	.LVL227:
+ 720:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 721:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uwRet = LOS_MemFree(m_aucSysMem0, (VOID *)pucQueue);
+ 1697              		.loc 1 721 0
+ 1698 005e 0B4B     		ldr	r3, .L153+8
+ 1699 0060 3946     		mov	r1, r7
+ 1700 0062 1868     		ldr	r0, [r3]
+ 722:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return uwRet;
+ 723:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 724:../../iot_link/os/liteos/base/ipc/los_queue.c **** QUEUE_END:
+ 725:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_IntRestore(uvIntSave);
+ 726:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return uwRet;
+ 727:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 1701              		.loc 1 727 0
+ 1702 0064 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 1703              	.LCFI26:
+ 1704              		.cfi_remember_state
+ 1705              		.cfi_restore 14
+ 1706              		.cfi_restore 7
+ 1707              		.cfi_restore 6
+ 1708              		.cfi_restore 5
+ 1709              		.cfi_restore 4
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 50
+
+
+ 1710              		.cfi_restore 3
+ 1711              		.cfi_def_cfa_offset 0
+ 1712              	.LVL228:
+ 721:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return uwRet;
+ 1713              		.loc 1 721 0
+ 1714 0068 FFF7FEBF 		b	LOS_MemFree
+ 1715              	.LVL229:
+ 1716              	.L148:
+ 1717              	.LCFI27:
+ 1718              		.cfi_restore_state
+ 687:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 1719              		.loc 1 687 0
+ 1720 006c 084C     		ldr	r4, .L153+12
+ 1721              	.LVL230:
+ 1722              	.L146:
+ 725:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return uwRet;
+ 1723              		.loc 1 725 0
+ 1724 006e 3846     		mov	r0, r7
+ 1725              	.LVL231:
+ 1726 0070 FFF7FEFF 		bl	LOS_IntRestore
+ 1727              	.LVL232:
+ 1728              	.L144:
+ 1729              		.loc 1 727 0
+ 1730 0074 2046     		mov	r0, r4
+ 1731 0076 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1732              	.LVL233:
+ 1733              	.L151:
+ 693:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 1734              		.loc 1 693 0
+ 1735 0078 064C     		ldr	r4, .L153+16
+ 1736 007a F8E7     		b	.L146
+ 1737              	.L152:
+ 711:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 1738              		.loc 1 711 0
+ 1739 007c 064C     		ldr	r4, .L153+20
+ 1740 007e F6E7     		b	.L146
+ 1741              	.LVL234:
+ 1742              	.L147:
+ 680:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1743              		.loc 1 680 0
+ 1744 0080 064C     		ldr	r4, .L153+24
+ 1745 0082 F7E7     		b	.L144
+ 1746              	.L154:
+ 1747              		.align	2
+ 1748              	.L153:
+ 1749 0084 00000000 		.word	g_pstAllQueue
+ 1750 0088 00000000 		.word	g_stFreeQueueList
+ 1751 008c 00000000 		.word	m_aucSysMem0
+ 1752 0090 0A060002 		.word	33555978
+ 1753 0094 08060002 		.word	33555976
+ 1754 0098 0B060002 		.word	33555979
+ 1755 009c 05060002 		.word	33555973
+ 1756              		.cfi_endproc
+ 1757              	.LFE301:
+ 1759              		.section	.text.LOS_QueueInfoGet,"ax",%progbits
+ 1760              		.align	1
+ 1761              		.global	LOS_QueueInfoGet
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 51
+
+
+ 1762              		.syntax unified
+ 1763              		.thumb
+ 1764              		.thumb_func
+ 1765              		.fpu fpv4-sp-d16
+ 1767              	LOS_QueueInfoGet:
+ 1768              	.LFB302:
+ 728:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 729:../../iot_link/os/liteos/base/ipc/los_queue.c **** /*****************************************************************************
+ 730:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Function    : LOS_QueueInfoGet
+ 731:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Description : Get queue infomation
+ 732:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Input       : puwQueueID   --- QueueID
+ 733:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Output      : pstQueueInfo
+ 734:../../iot_link/os/liteos/base/ipc/los_queue.c ****  Return      : LOS_OK on success or error code on failure
+ 735:../../iot_link/os/liteos/base/ipc/los_queue.c ****  *****************************************************************************/
+ 736:../../iot_link/os/liteos/base/ipc/los_queue.c **** LITE_OS_SEC_TEXT_MINOR UINT32 LOS_QueueInfoGet(UINT32 uwQueueID, QUEUE_INFO_S *pstQueueInfo)
+ 737:../../iot_link/os/liteos/base/ipc/los_queue.c **** {
+ 1769              		.loc 1 737 0
+ 1770              		.cfi_startproc
+ 1771              		@ args = 0, pretend = 0, frame = 0
+ 1772              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1773              	.LVL235:
+ 1774 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1775              	.LCFI28:
+ 1776              		.cfi_def_cfa_offset 24
+ 1777              		.cfi_offset 3, -24
+ 1778              		.cfi_offset 4, -20
+ 1779              		.cfi_offset 5, -16
+ 1780              		.cfi_offset 6, -12
+ 1781              		.cfi_offset 7, -8
+ 1782              		.cfi_offset 14, -4
+ 1783              		.loc 1 737 0
+ 1784 0002 0546     		mov	r5, r0
+ 738:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINTPTR uvIntSave;
+ 739:../../iot_link/os/liteos/base/ipc/los_queue.c ****     UINT32 uwRet = LOS_OK;
+ 740:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueCB;
+ 741:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_TASK_CB *pstTskCB;
+ 742:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 743:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (NULL == pstQueueInfo)
+ 1785              		.loc 1 743 0
+ 1786 0004 0C46     		mov	r4, r1
+ 1787 0006 0029     		cmp	r1, #0
+ 1788 0008 59D0     		beq	.L164
+ 744:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 745:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_PTR_NULL;
+ 746:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 747:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 748:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (uwQueueID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
+ 1789              		.loc 1 748 0
+ 1790 000a 0928     		cmp	r0, #9
+ 1791 000c 59D8     		bhi	.L165
+ 749:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 750:../../iot_link/os/liteos/base/ipc/los_queue.c ****         return LOS_ERRNO_QUEUE_INVALID;
+ 751:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 752:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 753:../../iot_link/os/liteos/base/ipc/los_queue.c ****     (VOID)memset((VOID *)pstQueueInfo, 0, sizeof(QUEUE_INFO_S));
+ 1792              		.loc 1 753 0
+ 1793 000e 1C22     		movs	r2, #28
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 52
+
+
+ 1794 0010 0021     		movs	r1, #0
+ 1795              	.LVL236:
+ 1796 0012 2046     		mov	r0, r4
+ 1797              	.LVL237:
+ 1798 0014 FFF7FEFF 		bl	memset
+ 1799              	.LVL238:
+ 754:../../iot_link/os/liteos/base/ipc/los_queue.c ****     uvIntSave = LOS_IntLock();
+ 1800              		.loc 1 754 0
+ 1801 0018 FFF7FEFF 		bl	LOS_IntLock
+ 1802              	.LVL239:
+ 755:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 756:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueCB = (QUEUE_CB_S *)GET_QUEUE_HANDLE(uwQueueID);
+ 1803              		.loc 1 756 0
+ 1804 001c 2A4B     		ldr	r3, .L167
+ 1805 001e 1B68     		ldr	r3, [r3]
+ 1806 0020 2C22     		movs	r2, #44
+ 1807 0022 02FB0533 		mla	r3, r2, r5, r3
+ 1808              	.LVL240:
+ 757:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 758:../../iot_link/os/liteos/base/ipc/los_queue.c ****     if (OS_QUEUE_UNUSED == pstQueueCB->usQueueState)
+ 1809              		.loc 1 758 0
+ 1810 0026 9A88     		ldrh	r2, [r3, #4]
+ 1811 0028 002A     		cmp	r2, #0
+ 1812 002a 46D0     		beq	.L166
+ 759:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 760:../../iot_link/os/liteos/base/ipc/los_queue.c ****         uwRet = LOS_ERRNO_QUEUE_NOT_CREATE;
+ 761:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 762:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 763:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 764:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueInfo->uwQueueID = uwQueueID;
+ 765:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueInfo->usQueueLen = pstQueueCB->usQueueLen;
+ 1813              		.loc 1 765 0
+ 1814 002c DA88     		ldrh	r2, [r3, #6]
+ 1815 002e A280     		strh	r2, [r4, #4]	@ movhi
+ 766:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueInfo->usQueueSize = pstQueueCB->usQueueSize;
+ 1816              		.loc 1 766 0
+ 1817 0030 1A89     		ldrh	r2, [r3, #8]
+ 1818 0032 E280     		strh	r2, [r4, #6]	@ movhi
+ 767:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueInfo->usQueueHead = pstQueueCB->usQueueHead;
+ 1819              		.loc 1 767 0
+ 1820 0034 9A89     		ldrh	r2, [r3, #12]
+ 1821 0036 2281     		strh	r2, [r4, #8]	@ movhi
+ 768:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueInfo->usQueueTail = pstQueueCB->usQueueTail;
+ 1822              		.loc 1 768 0
+ 1823 0038 DA89     		ldrh	r2, [r3, #14]
+ 1824 003a 6281     		strh	r2, [r4, #10]	@ movhi
+ 769:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueInfo->usReadableCnt = pstQueueCB->usReadWriteableCnt[OS_QUEUE_READ];
+ 1825              		.loc 1 769 0
+ 1826 003c 1A8A     		ldrh	r2, [r3, #16]
+ 1827 003e E281     		strh	r2, [r4, #14]	@ movhi
+ 770:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueInfo->usWritableCnt = pstQueueCB->usReadWriteableCnt[OS_QUEUE_WRITE];
+ 1828              		.loc 1 770 0
+ 1829 0040 5A8A     		ldrh	r2, [r3, #18]
+ 1830 0042 A281     		strh	r2, [r4, #12]	@ movhi
+ 771:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 772:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_DL_LIST_FOR_EACH_ENTRY(pstTskCB, &pstQueueCB->stReadWriteList[OS_QUEUE_READ], LOS_TASK_CB, 
+ 1831              		.loc 1 772 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 53
+
+
+ 1832 0044 9A69     		ldr	r2, [r3, #24]
+ 764:../../iot_link/os/liteos/base/ipc/los_queue.c ****     pstQueueInfo->usQueueLen = pstQueueCB->usQueueLen;
+ 1833              		.loc 1 764 0
+ 1834 0046 2560     		str	r5, [r4]
+ 1835              		.loc 1 772 0
+ 1836 0048 283A     		subs	r2, r2, #40
+ 1837              	.LVL241:
+ 1838 004a 03F11406 		add	r6, r3, #20
+ 773:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 774:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstQueueInfo->uwWaitReadTask |= (1 << pstTskCB->uwTaskID);
+ 1839              		.loc 1 774 0
+ 1840 004e 0127     		movs	r7, #1
+ 1841              	.LVL242:
+ 1842              	.L158:
+ 772:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1843              		.loc 1 772 0 discriminator 1
+ 1844 0050 02F12801 		add	r1, r2, #40
+ 1845 0054 B142     		cmp	r1, r6
+ 1846 0056 15D1     		bne	.L159
+ 775:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 776:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 777:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_DL_LIST_FOR_EACH_ENTRY(pstTskCB, &pstQueueCB->stReadWriteList[OS_QUEUE_WRITE], LOS_TASK_CB,
+ 1847              		.loc 1 777 0
+ 1848 0058 1A6A     		ldr	r2, [r3, #32]
+ 1849              	.LVL243:
+ 1850 005a 03F11C06 		add	r6, r3, #28
+ 1851 005e 283A     		subs	r2, r2, #40
+ 1852              	.LVL244:
+ 778:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 779:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstQueueInfo->uwWaitWriteTask |= (1 << pstTskCB->uwTaskID);
+ 1853              		.loc 1 779 0
+ 1854 0060 0127     		movs	r7, #1
+ 1855              	.L160:
+ 777:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1856              		.loc 1 777 0 discriminator 1
+ 1857 0062 02F12801 		add	r1, r2, #40
+ 1858 0066 B142     		cmp	r1, r6
+ 1859 0068 15D1     		bne	.L161
+ 780:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 781:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 782:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_DL_LIST_FOR_EACH_ENTRY(pstTskCB, &pstQueueCB->stMemList, LOS_TASK_CB, stPendList) /*lint !e
+ 1860              		.loc 1 782 0
+ 1861 006a 9A6A     		ldr	r2, [r3, #40]
+ 1862              	.LVL245:
+ 783:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 784:../../iot_link/os/liteos/base/ipc/los_queue.c ****         pstQueueInfo->uwWaitMemTask |= (1 << pstTskCB->uwTaskID);
+ 1863              		.loc 1 784 0
+ 1864 006c 0126     		movs	r6, #1
+ 782:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1865              		.loc 1 782 0
+ 1866 006e 283A     		subs	r2, r2, #40
+ 1867              	.LVL246:
+ 1868 0070 2433     		adds	r3, r3, #36
+ 1869              	.LVL247:
+ 1870              	.L162:
+ 782:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1871              		.loc 1 782 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 54
+
+
+ 1872 0072 02F12801 		add	r1, r2, #40
+ 1873 0076 9942     		cmp	r1, r3
+ 1874 0078 16D1     		bne	.L163
+ 739:../../iot_link/os/liteos/base/ipc/los_queue.c ****     QUEUE_CB_S *pstQueueCB;
+ 1875              		.loc 1 739 0 is_stmt 1
+ 1876 007a 0024     		movs	r4, #0
+ 1877              	.LVL248:
+ 1878              	.L157:
+ 785:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 786:../../iot_link/os/liteos/base/ipc/los_queue.c **** 
+ 787:../../iot_link/os/liteos/base/ipc/los_queue.c **** QUEUE_END:
+ 788:../../iot_link/os/liteos/base/ipc/los_queue.c ****     LOS_IntRestore(uvIntSave);
+ 1879              		.loc 1 788 0
+ 1880 007c FFF7FEFF 		bl	LOS_IntRestore
+ 1881              	.LVL249:
+ 1882              	.L155:
+ 789:../../iot_link/os/liteos/base/ipc/los_queue.c ****     return uwRet;
+ 790:../../iot_link/os/liteos/base/ipc/los_queue.c **** }
+ 1883              		.loc 1 790 0
+ 1884 0080 2046     		mov	r0, r4
+ 1885 0082 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1886              	.LVL250:
+ 1887              	.L159:
+ 774:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1888              		.loc 1 774 0 discriminator 3
+ 1889 0084 1169     		ldr	r1, [r2, #16]
+ 772:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1890              		.loc 1 772 0 discriminator 3
+ 1891 0086 D26A     		ldr	r2, [r2, #44]
+ 1892              	.LVL251:
+ 774:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1893              		.loc 1 774 0 discriminator 3
+ 1894 0088 07FA01F5 		lsl	r5, r7, r1
+ 1895 008c 2169     		ldr	r1, [r4, #16]
+ 1896 008e 2943     		orrs	r1, r1, r5
+ 1897 0090 2161     		str	r1, [r4, #16]
+ 772:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1898              		.loc 1 772 0 discriminator 3
+ 1899 0092 283A     		subs	r2, r2, #40
+ 1900              	.LVL252:
+ 1901 0094 DCE7     		b	.L158
+ 1902              	.L161:
+ 779:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1903              		.loc 1 779 0 discriminator 3
+ 1904 0096 1169     		ldr	r1, [r2, #16]
+ 777:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1905              		.loc 1 777 0 discriminator 3
+ 1906 0098 D26A     		ldr	r2, [r2, #44]
+ 1907              	.LVL253:
+ 779:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1908              		.loc 1 779 0 discriminator 3
+ 1909 009a 07FA01F5 		lsl	r5, r7, r1
+ 1910 009e 6169     		ldr	r1, [r4, #20]
+ 1911 00a0 2943     		orrs	r1, r1, r5
+ 1912 00a2 6161     		str	r1, [r4, #20]
+ 777:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1913              		.loc 1 777 0 discriminator 3
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 55
+
+
+ 1914 00a4 283A     		subs	r2, r2, #40
+ 1915              	.LVL254:
+ 1916 00a6 DCE7     		b	.L160
+ 1917              	.LVL255:
+ 1918              	.L163:
+ 784:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1919              		.loc 1 784 0 discriminator 3
+ 1920 00a8 1169     		ldr	r1, [r2, #16]
+ 782:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1921              		.loc 1 782 0 discriminator 3
+ 1922 00aa D26A     		ldr	r2, [r2, #44]
+ 1923              	.LVL256:
+ 784:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1924              		.loc 1 784 0 discriminator 3
+ 1925 00ac 06FA01F5 		lsl	r5, r6, r1
+ 1926 00b0 A169     		ldr	r1, [r4, #24]
+ 1927 00b2 2943     		orrs	r1, r1, r5
+ 1928 00b4 A161     		str	r1, [r4, #24]
+ 782:../../iot_link/os/liteos/base/ipc/los_queue.c ****     {
+ 1929              		.loc 1 782 0 discriminator 3
+ 1930 00b6 283A     		subs	r2, r2, #40
+ 1931              	.LVL257:
+ 1932 00b8 DBE7     		b	.L162
+ 1933              	.LVL258:
+ 1934              	.L166:
+ 760:../../iot_link/os/liteos/base/ipc/los_queue.c ****         goto QUEUE_END;
+ 1935              		.loc 1 760 0
+ 1936 00ba 044C     		ldr	r4, .L167+4
+ 1937              	.LVL259:
+ 1938 00bc DEE7     		b	.L157
+ 1939              	.LVL260:
+ 1940              	.L164:
+ 745:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1941              		.loc 1 745 0
+ 1942 00be 044C     		ldr	r4, .L167+8
+ 1943 00c0 DEE7     		b	.L155
+ 1944              	.L165:
+ 750:../../iot_link/os/liteos/base/ipc/los_queue.c ****     }
+ 1945              		.loc 1 750 0
+ 1946 00c2 044C     		ldr	r4, .L167+12
+ 1947 00c4 DCE7     		b	.L155
+ 1948              	.L168:
+ 1949 00c6 00BF     		.align	2
+ 1950              	.L167:
+ 1951 00c8 00000000 		.word	g_pstAllQueue
+ 1952 00cc 0A060002 		.word	33555978
+ 1953 00d0 17060002 		.word	33555991
+ 1954 00d4 0E060002 		.word	33555982
+ 1955              		.cfi_endproc
+ 1956              	.LFE302:
+ 1958              		.comm	g_stFreeQueueList,8,4
+ 1959              		.comm	g_pstAllQueue,4,4
+ 1960              		.section	.rodata.osQueueOperate.str1.1,"aMS",%progbits,1
+ 1961              	.LC0:
+ 1962 0000 5B455252 		.ascii	"[ERR] \000"
+ 1962      5D2000
+ 1963              	.LC1:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 56
+
+
+ 1964 0007 696E7661 		.ascii	"invalid queue operate type!\000"
+ 1964      6C696420 
+ 1964      71756575 
+ 1964      65206F70 
+ 1964      65726174 
+ 1965              		.text
+ 1966              	.Letext0:
+ 1967              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1968              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1969              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1970              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 1971              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1972              		.file 8 "../../iot_link/os/liteos/include/los_typedef.h"
+ 1973              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1974              		.file 10 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 1975              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 1976              		.file 12 "../../iot_link/os/liteos/include/los_config.h"
+ 1977              		.file 13 "../../iot_link/os/liteos/include/los_err.h"
+ 1978              		.file 14 "../../iot_link/os/liteos/include/los_queue.h"
+ 1979              		.file 15 "../../iot_link/os/liteos/base/include/los_queue.ph"
+ 1980              		.file 16 "../../iot_link/os/liteos/include/los_memory.h"
+ 1981              		.file 17 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 1982              		.file 18 "../../iot_link/os/liteos/include/los_tick.h"
+ 1983              		.file 19 "../../iot_link/os/liteos/include/los_event.h"
+ 1984              		.file 20 "../../iot_link/os/liteos/include/los_task.h"
+ 1985              		.file 21 "../../iot_link/os/liteos/base/include/los_task.ph"
+ 1986              		.file 22 "../../iot_link/os/liteos/include/los_membox.h"
+ 1987              		.file 23 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1988              		.file 24 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 57
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 los_queue.c
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:18     .text.osQueueInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:25     .text.osQueueInit:00000000 osQueueInit
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:119    .text.osQueueInit:00000050 $d
+                            *COM*:00000004 g_pstAllQueue
+                            *COM*:00000008 g_stFreeQueueList
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:127    .text.LOS_QueueCreate:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:134    .text.LOS_QueueCreate:00000000 LOS_QueueCreate
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:310    .text.LOS_QueueCreate:000000bc $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:321    .text.osQueueOperate:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:328    .text.osQueueOperate:00000000 osQueueOperate
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:676    .text.osQueueOperate:0000019c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:692    .text.LOS_QueueReadCopy:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:699    .text.LOS_QueueReadCopy:00000000 LOS_QueueReadCopy
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:794    .text.LOS_QueueReadCopy:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:807    .text.LOS_QueueWriteHeadCopy:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:814    .text.LOS_QueueWriteHeadCopy:00000000 LOS_QueueWriteHeadCopy
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:908    .text.LOS_QueueWriteHeadCopy:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:921    .text.LOS_QueueWriteCopy:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:928    .text.LOS_QueueWriteCopy:00000000 LOS_QueueWriteCopy
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1022   .text.LOS_QueueWriteCopy:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1035   .text.LOS_QueueRead:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1042   .text.LOS_QueueRead:00000000 LOS_QueueRead
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1136   .text.LOS_QueueRead:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1149   .text.LOS_QueueWrite:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1156   .text.LOS_QueueWrite:00000000 LOS_QueueWrite
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1246   .text.LOS_QueueWrite:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1258   .text.LOS_QueueWriteHead:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1265   .text.LOS_QueueWriteHead:00000000 LOS_QueueWriteHead
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1306   .text.LOS_QueueWriteHead:0000001c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1311   .text.osQueueMailAlloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1318   .text.osQueueMailAlloc:00000000 osQueueMailAlloc
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1445   .text.osQueueMailAlloc:0000008c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1452   .text.osQueueMailFree:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1459   .text.osQueueMailFree:00000000 osQueueMailFree
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1588   .text.osQueueMailFree:0000007c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1597   .text.LOS_QueueDelete:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1604   .text.LOS_QueueDelete:00000000 LOS_QueueDelete
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1749   .text.LOS_QueueDelete:00000084 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1760   .text.LOS_QueueInfoGet:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1767   .text.LOS_QueueInfoGet:00000000 LOS_QueueInfoGet
+C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s:1951   .text.LOS_QueueInfoGet:000000c8 $d
+
+UNDEFINED SYMBOLS
+LOS_MemAlloc
+memset
+m_aucSysMem0
+LOS_IntLock
+LOS_IntRestore
+LOS_MemFree
+osTaskWait
+LOS_Schedule
+printf
+puts
+osTaskWake
+memcpy
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccl5wXFc.s 			page 58
+
+
+g_usLosTaskLock
+g_stLosTask
+g_vuwIntCount
+LOS_MemboxAlloc
+LOS_MemboxFree

@@ -1,0 +1,509 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"crc32.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.calc_crc32,"ax",%progbits
+  18              		.align	1
+  19              		.global	calc_crc32
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	calc_crc32:
+  26              	.LFB0:
+  27              		.file 1 "../../iot_link/crc/crc32.c"
+   1:../../iot_link/crc/crc32.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/crc/crc32.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/crc/crc32.c ****  * All rights reserved.
+   4:../../iot_link/crc/crc32.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/crc/crc32.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/crc/crc32.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/crc/crc32.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/crc/crc32.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/crc/crc32.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/crc/crc32.c ****  * provided with the distribution.
+  11:../../iot_link/crc/crc32.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/crc/crc32.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/crc/crc32.c ****  * permission.
+  14:../../iot_link/crc/crc32.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/crc/crc32.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/crc/crc32.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/crc/crc32.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/crc/crc32.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/crc/crc32.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/crc/crc32.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/crc/crc32.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/crc/crc32.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/crc/crc32.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/crc/crc32.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/crc/crc32.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/crc/crc32.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/crc/crc32.c ****  * Notice of Export Control Law
+  28:../../iot_link/crc/crc32.c ****  * ===============================================
+  29:../../iot_link/crc/crc32.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/crc/crc32.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/crc/crc32.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 2
+
+
+  32:../../iot_link/crc/crc32.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/crc/crc32.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/crc/crc32.c **** /**
+  35:../../iot_link/crc/crc32.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/crc/crc32.c ****  *  2019-05-30 15:20  zhangqianfu  The first version
+  37:../../iot_link/crc/crc32.c ****  *
+  38:../../iot_link/crc/crc32.c ****  */
+  39:../../iot_link/crc/crc32.c **** 
+  40:../../iot_link/crc/crc32.c **** #include <stdint.h>
+  41:../../iot_link/crc/crc32.c **** #include <stddef.h>
+  42:../../iot_link/crc/crc32.c **** 
+  43:../../iot_link/crc/crc32.c **** static const uint32_t crc_table[256] =
+  44:../../iot_link/crc/crc32.c **** {
+  45:../../iot_link/crc/crc32.c ****     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419,
+  46:../../iot_link/crc/crc32.c ****     0x706af48f, 0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4,
+  47:../../iot_link/crc/crc32.c ****     0xe0d5e91e, 0x97d2d988, 0x09b64c2b, 0x7eb17cbd, 0xe7b82d07,
+  48:../../iot_link/crc/crc32.c ****     0x90bf1d91, 0x1db71064, 0x6ab020f2, 0xf3b97148, 0x84be41de,
+  49:../../iot_link/crc/crc32.c ****     0x1adad47d, 0x6ddde4eb, 0xf4d4b551, 0x83d385c7, 0x136c9856,
+  50:../../iot_link/crc/crc32.c ****     0x646ba8c0, 0xfd62f97a, 0x8a65c9ec, 0x14015c4f, 0x63066cd9,
+  51:../../iot_link/crc/crc32.c ****     0xfa0f3d63, 0x8d080df5, 0x3b6e20c8, 0x4c69105e, 0xd56041e4,
+  52:../../iot_link/crc/crc32.c ****     0xa2677172, 0x3c03e4d1, 0x4b04d447, 0xd20d85fd, 0xa50ab56b,
+  53:../../iot_link/crc/crc32.c ****     0x35b5a8fa, 0x42b2986c, 0xdbbbc9d6, 0xacbcf940, 0x32d86ce3,
+  54:../../iot_link/crc/crc32.c ****     0x45df5c75, 0xdcd60dcf, 0xabd13d59, 0x26d930ac, 0x51de003a,
+  55:../../iot_link/crc/crc32.c ****     0xc8d75180, 0xbfd06116, 0x21b4f4b5, 0x56b3c423, 0xcfba9599,
+  56:../../iot_link/crc/crc32.c ****     0xb8bda50f, 0x2802b89e, 0x5f058808, 0xc60cd9b2, 0xb10be924,
+  57:../../iot_link/crc/crc32.c ****     0x2f6f7c87, 0x58684c11, 0xc1611dab, 0xb6662d3d, 0x76dc4190,
+  58:../../iot_link/crc/crc32.c ****     0x01db7106, 0x98d220bc, 0xefd5102a, 0x71b18589, 0x06b6b51f,
+  59:../../iot_link/crc/crc32.c ****     0x9fbfe4a5, 0xe8b8d433, 0x7807c9a2, 0x0f00f934, 0x9609a88e,
+  60:../../iot_link/crc/crc32.c ****     0xe10e9818, 0x7f6a0dbb, 0x086d3d2d, 0x91646c97, 0xe6635c01,
+  61:../../iot_link/crc/crc32.c ****     0x6b6b51f4, 0x1c6c6162, 0x856530d8, 0xf262004e, 0x6c0695ed,
+  62:../../iot_link/crc/crc32.c ****     0x1b01a57b, 0x8208f4c1, 0xf50fc457, 0x65b0d9c6, 0x12b7e950,
+  63:../../iot_link/crc/crc32.c ****     0x8bbeb8ea, 0xfcb9887c, 0x62dd1ddf, 0x15da2d49, 0x8cd37cf3,
+  64:../../iot_link/crc/crc32.c ****     0xfbd44c65, 0x4db26158, 0x3ab551ce, 0xa3bc0074, 0xd4bb30e2,
+  65:../../iot_link/crc/crc32.c ****     0x4adfa541, 0x3dd895d7, 0xa4d1c46d, 0xd3d6f4fb, 0x4369e96a,
+  66:../../iot_link/crc/crc32.c ****     0x346ed9fc, 0xad678846, 0xda60b8d0, 0x44042d73, 0x33031de5,
+  67:../../iot_link/crc/crc32.c ****     0xaa0a4c5f, 0xdd0d7cc9, 0x5005713c, 0x270241aa, 0xbe0b1010,
+  68:../../iot_link/crc/crc32.c ****     0xc90c2086, 0x5768b525, 0x206f85b3, 0xb966d409, 0xce61e49f,
+  69:../../iot_link/crc/crc32.c ****     0x5edef90e, 0x29d9c998, 0xb0d09822, 0xc7d7a8b4, 0x59b33d17,
+  70:../../iot_link/crc/crc32.c ****     0x2eb40d81, 0xb7bd5c3b, 0xc0ba6cad, 0xedb88320, 0x9abfb3b6,
+  71:../../iot_link/crc/crc32.c ****     0x03b6e20c, 0x74b1d29a, 0xead54739, 0x9dd277af, 0x04db2615,
+  72:../../iot_link/crc/crc32.c ****     0x73dc1683, 0xe3630b12, 0x94643b84, 0x0d6d6a3e, 0x7a6a5aa8,
+  73:../../iot_link/crc/crc32.c ****     0xe40ecf0b, 0x9309ff9d, 0x0a00ae27, 0x7d079eb1, 0xf00f9344,
+  74:../../iot_link/crc/crc32.c ****     0x8708a3d2, 0x1e01f268, 0x6906c2fe, 0xf762575d, 0x806567cb,
+  75:../../iot_link/crc/crc32.c ****     0x196c3671, 0x6e6b06e7, 0xfed41b76, 0x89d32be0, 0x10da7a5a,
+  76:../../iot_link/crc/crc32.c ****     0x67dd4acc, 0xf9b9df6f, 0x8ebeeff9, 0x17b7be43, 0x60b08ed5,
+  77:../../iot_link/crc/crc32.c ****     0xd6d6a3e8, 0xa1d1937e, 0x38d8c2c4, 0x4fdff252, 0xd1bb67f1,
+  78:../../iot_link/crc/crc32.c ****     0xa6bc5767, 0x3fb506dd, 0x48b2364b, 0xd80d2bda, 0xaf0a1b4c,
+  79:../../iot_link/crc/crc32.c ****     0x36034af6, 0x41047a60, 0xdf60efc3, 0xa867df55, 0x316e8eef,
+  80:../../iot_link/crc/crc32.c ****     0x4669be79, 0xcb61b38c, 0xbc66831a, 0x256fd2a0, 0x5268e236,
+  81:../../iot_link/crc/crc32.c ****     0xcc0c7795, 0xbb0b4703, 0x220216b9, 0x5505262f, 0xc5ba3bbe,
+  82:../../iot_link/crc/crc32.c ****     0xb2bd0b28, 0x2bb45a92, 0x5cb36a04, 0xc2d7ffa7, 0xb5d0cf31,
+  83:../../iot_link/crc/crc32.c ****     0x2cd99e8b, 0x5bdeae1d, 0x9b64c2b0, 0xec63f226, 0x756aa39c,
+  84:../../iot_link/crc/crc32.c ****     0x026d930a, 0x9c0906a9, 0xeb0e363f, 0x72076785, 0x05005713,
+  85:../../iot_link/crc/crc32.c ****     0x95bf4a82, 0xe2b87a14, 0x7bb12bae, 0x0cb61b38, 0x92d28e9b,
+  86:../../iot_link/crc/crc32.c ****     0xe5d5be0d, 0x7cdcefb7, 0x0bdbdf21, 0x86d3d2d4, 0xf1d4e242,
+  87:../../iot_link/crc/crc32.c ****     0x68ddb3f8, 0x1fda836e, 0x81be16cd, 0xf6b9265b, 0x6fb077e1,
+  88:../../iot_link/crc/crc32.c ****     0x18b74777, 0x88085ae6, 0xff0f6a70, 0x66063bca, 0x11010b5c,
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 3
+
+
+  89:../../iot_link/crc/crc32.c ****     0x8f659eff, 0xf862ae69, 0x616bffd3, 0x166ccf45, 0xa00ae278,
+  90:../../iot_link/crc/crc32.c ****     0xd70dd2ee, 0x4e048354, 0x3903b3c2, 0xa7672661, 0xd06016f7,
+  91:../../iot_link/crc/crc32.c ****     0x4969474d, 0x3e6e77db, 0xaed16a4a, 0xd9d65adc, 0x40df0b66,
+  92:../../iot_link/crc/crc32.c ****     0x37d83bf0, 0xa9bcae53, 0xdebb9ec5, 0x47b2cf7f, 0x30b5ffe9,
+  93:../../iot_link/crc/crc32.c ****     0xbdbdf21c, 0xcabac28a, 0x53b39330, 0x24b4a3a6, 0xbad03605,
+  94:../../iot_link/crc/crc32.c ****     0xcdd70693, 0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8,
+  95:../../iot_link/crc/crc32.c ****     0x5d681b02, 0x2a6f2b94, 0xb40bbe37, 0xc30c8ea1, 0x5a05df1b,
+  96:../../iot_link/crc/crc32.c ****     0x2d02ef8d
+  97:../../iot_link/crc/crc32.c **** };
+  98:../../iot_link/crc/crc32.c **** 
+  99:../../iot_link/crc/crc32.c **** uint32_t calc_crc32(uint32_t origin, const void *buf, int32_t len)
+ 100:../../iot_link/crc/crc32.c **** {
+  28              		.loc 1 100 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 30B5     		push	{r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+ 101:../../iot_link/crc/crc32.c ****     int i;
+ 102:../../iot_link/crc/crc32.c ****     uint32_t crc;
+ 103:../../iot_link/crc/crc32.c ****     const uint8_t *pbuf;
+ 104:../../iot_link/crc/crc32.c **** 
+ 105:../../iot_link/crc/crc32.c ****     if (NULL == buf || len < 0)
+  39              		.loc 1 105 0
+  40 0002 89B1     		cbz	r1, .L6
+  41              		.loc 1 105 0 is_stmt 0 discriminator 1
+  42 0004 002A     		cmp	r2, #0
+  43 0006 0FDB     		blt	.L6
+  44              	.LVL1:
+ 106:../../iot_link/crc/crc32.c ****     {
+ 107:../../iot_link/crc/crc32.c ****         return 0;
+ 108:../../iot_link/crc/crc32.c ****     }
+ 109:../../iot_link/crc/crc32.c **** 
+ 110:../../iot_link/crc/crc32.c ****     pbuf = (const uint8_t *)buf;
+ 111:../../iot_link/crc/crc32.c ****     crc = ~origin;
+ 112:../../iot_link/crc/crc32.c **** 
+ 113:../../iot_link/crc/crc32.c ****     for (i = 0; i < len; ++i)
+ 114:../../iot_link/crc/crc32.c ****     {
+ 115:../../iot_link/crc/crc32.c ****         crc = (crc >> 8) ^ crc_table[((crc & 0xff) ^ pbuf[i]) & 0xff];
+  45              		.loc 1 115 0 is_stmt 1
+  46 0008 084C     		ldr	r4, .L7
+ 111:../../iot_link/crc/crc32.c **** 
+  47              		.loc 1 111 0
+  48 000a C043     		mvns	r0, r0
+  49              	.LVL2:
+  50 000c 0A44     		add	r2, r2, r1
+  51              	.LVL3:
+  52              	.L3:
+ 113:../../iot_link/crc/crc32.c ****     {
+  53              		.loc 1 113 0 discriminator 1
+  54 000e 9142     		cmp	r1, r2
+  55 0010 01D1     		bne	.L4
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 4
+
+
+ 116:../../iot_link/crc/crc32.c ****     }
+ 117:../../iot_link/crc/crc32.c **** 
+ 118:../../iot_link/crc/crc32.c ****     return ~crc;
+  56              		.loc 1 118 0
+  57 0012 C043     		mvns	r0, r0
+  58              	.LVL4:
+  59              	.L1:
+ 119:../../iot_link/crc/crc32.c **** }
+  60              		.loc 1 119 0
+  61 0014 30BD     		pop	{r4, r5, pc}
+  62              	.LVL5:
+  63              	.L4:
+ 115:../../iot_link/crc/crc32.c ****     }
+  64              		.loc 1 115 0 discriminator 3
+  65 0016 11F8015B 		ldrb	r5, [r1], #1	@ zero_extendqisi2
+  66              	.LVL6:
+  67 001a C3B2     		uxtb	r3, r0
+  68 001c 6B40     		eors	r3, r3, r5
+  69 001e 54F82330 		ldr	r3, [r4, r3, lsl #2]
+  70 0022 83EA1020 		eor	r0, r3, r0, lsr #8
+  71              	.LVL7:
+  72 0026 F2E7     		b	.L3
+  73              	.LVL8:
+  74              	.L6:
+ 107:../../iot_link/crc/crc32.c ****     }
+  75              		.loc 1 107 0
+  76 0028 0020     		movs	r0, #0
+  77              	.LVL9:
+  78 002a F3E7     		b	.L1
+  79              	.L8:
+  80              		.align	2
+  81              	.L7:
+  82 002c 00000000 		.word	.LANCHOR0
+  83              		.cfi_endproc
+  84              	.LFE0:
+  86              		.section	.rodata.crc_table,"a",%progbits
+  87              		.align	2
+  88              		.set	.LANCHOR0,. + 0
+  91              	crc_table:
+  92 0000 00000000 		.word	0
+  93 0004 96300777 		.word	1996959894
+  94 0008 2C610EEE 		.word	-301047508
+  95 000c BA510999 		.word	-1727442502
+  96 0010 19C46D07 		.word	124634137
+  97 0014 8FF46A70 		.word	1886057615
+  98 0018 35A563E9 		.word	-379345611
+  99 001c A395649E 		.word	-1637575261
+ 100 0020 3288DB0E 		.word	249268274
+ 101 0024 A4B8DC79 		.word	2044508324
+ 102 0028 1EE9D5E0 		.word	-522852066
+ 103 002c 88D9D297 		.word	-1747789432
+ 104 0030 2B4CB609 		.word	162941995
+ 105 0034 BD7CB17E 		.word	2125561021
+ 106 0038 072DB8E7 		.word	-407360249
+ 107 003c 911DBF90 		.word	-1866523247
+ 108 0040 6410B71D 		.word	498536548
+ 109 0044 F220B06A 		.word	1789927666
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 5
+
+
+ 110 0048 4871B9F3 		.word	-205950648
+ 111 004c DE41BE84 		.word	-2067906082
+ 112 0050 7DD4DA1A 		.word	450548861
+ 113 0054 EBE4DD6D 		.word	1843258603
+ 114 0058 51B5D4F4 		.word	-187386543
+ 115 005c C785D383 		.word	-2083289657
+ 116 0060 56986C13 		.word	325883990
+ 117 0064 C0A86B64 		.word	1684777152
+ 118 0068 7AF962FD 		.word	-43845254
+ 119 006c ECC9658A 		.word	-1973040660
+ 120 0070 4F5C0114 		.word	335633487
+ 121 0074 D96C0663 		.word	1661365465
+ 122 0078 633D0FFA 		.word	-99664541
+ 123 007c F50D088D 		.word	-1928851979
+ 124 0080 C8206E3B 		.word	997073096
+ 125 0084 5E10694C 		.word	1281953886
+ 126 0088 E44160D5 		.word	-715111964
+ 127 008c 727167A2 		.word	-1570279054
+ 128 0090 D1E4033C 		.word	1006888145
+ 129 0094 47D4044B 		.word	1258607687
+ 130 0098 FD850DD2 		.word	-770865667
+ 131 009c 6BB50AA5 		.word	-1526024853
+ 132 00a0 FAA8B535 		.word	901097722
+ 133 00a4 6C98B242 		.word	1119000684
+ 134 00a8 D6C9BBDB 		.word	-608450090
+ 135 00ac 40F9BCAC 		.word	-1396901568
+ 136 00b0 E36CD832 		.word	853044451
+ 137 00b4 755CDF45 		.word	1172266101
+ 138 00b8 CF0DD6DC 		.word	-589951537
+ 139 00bc 593DD1AB 		.word	-1412350631
+ 140 00c0 AC30D926 		.word	651767980
+ 141 00c4 3A00DE51 		.word	1373503546
+ 142 00c8 8051D7C8 		.word	-925412992
+ 143 00cc 1661D0BF 		.word	-1076862698
+ 144 00d0 B5F4B421 		.word	565507253
+ 145 00d4 23C4B356 		.word	1454621731
+ 146 00d8 9995BACF 		.word	-809855591
+ 147 00dc 0FA5BDB8 		.word	-1195530993
+ 148 00e0 9EB80228 		.word	671266974
+ 149 00e4 0888055F 		.word	1594198024
+ 150 00e8 B2D90CC6 		.word	-972236366
+ 151 00ec 24E90BB1 		.word	-1324619484
+ 152 00f0 877C6F2F 		.word	795835527
+ 153 00f4 114C6858 		.word	1483230225
+ 154 00f8 AB1D61C1 		.word	-1050600021
+ 155 00fc 3D2D66B6 		.word	-1234817731
+ 156 0100 9041DC76 		.word	1994146192
+ 157 0104 0671DB01 		.word	31158534
+ 158 0108 BC20D298 		.word	-1731059524
+ 159 010c 2A10D5EF 		.word	-271249366
+ 160 0110 8985B171 		.word	1907459465
+ 161 0114 1FB5B606 		.word	112637215
+ 162 0118 A5E4BF9F 		.word	-1614814043
+ 163 011c 33D4B8E8 		.word	-390540237
+ 164 0120 A2C90778 		.word	2013776290
+ 165 0124 34F9000F 		.word	251722036
+ 166 0128 8EA80996 		.word	-1777751922
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 6
+
+
+ 167 012c 18980EE1 		.word	-519137256
+ 168 0130 BB0D6A7F 		.word	2137656763
+ 169 0134 2D3D6D08 		.word	141376813
+ 170 0138 976C6491 		.word	-1855689577
+ 171 013c 015C63E6 		.word	-429695999
+ 172 0140 F4516B6B 		.word	1802195444
+ 173 0144 62616C1C 		.word	476864866
+ 174 0148 D8306585 		.word	-2056965928
+ 175 014c 4E0062F2 		.word	-228458418
+ 176 0150 ED95066C 		.word	1812370925
+ 177 0154 7BA5011B 		.word	453092731
+ 178 0158 C1F40882 		.word	-2113342271
+ 179 015c 57C40FF5 		.word	-183516073
+ 180 0160 C6D9B065 		.word	1706088902
+ 181 0164 50E9B712 		.word	314042704
+ 182 0168 EAB8BE8B 		.word	-1950435094
+ 183 016c 7C88B9FC 		.word	-54949764
+ 184 0170 DF1DDD62 		.word	1658658271
+ 185 0174 492DDA15 		.word	366619977
+ 186 0178 F37CD38C 		.word	-1932296973
+ 187 017c 654CD4FB 		.word	-69972891
+ 188 0180 5861B24D 		.word	1303535960
+ 189 0184 CE51B53A 		.word	984961486
+ 190 0188 7400BCA3 		.word	-1547960204
+ 191 018c E230BBD4 		.word	-725929758
+ 192 0190 41A5DF4A 		.word	1256170817
+ 193 0194 D795D83D 		.word	1037604311
+ 194 0198 6DC4D1A4 		.word	-1529756563
+ 195 019c FBF4D6D3 		.word	-740887301
+ 196 01a0 6AE96943 		.word	1131014506
+ 197 01a4 FCD96E34 		.word	879679996
+ 198 01a8 468867AD 		.word	-1385723834
+ 199 01ac D0B860DA 		.word	-631195440
+ 200 01b0 732D0444 		.word	1141124467
+ 201 01b4 E51D0333 		.word	855842277
+ 202 01b8 5F4C0AAA 		.word	-1442165665
+ 203 01bc C97C0DDD 		.word	-586318647
+ 204 01c0 3C710550 		.word	1342533948
+ 205 01c4 AA410227 		.word	654459306
+ 206 01c8 10100BBE 		.word	-1106571248
+ 207 01cc 86200CC9 		.word	-921952122
+ 208 01d0 25B56857 		.word	1466479909
+ 209 01d4 B3856F20 		.word	544179635
+ 210 01d8 09D466B9 		.word	-1184443383
+ 211 01dc 9FE461CE 		.word	-832445281
+ 212 01e0 0EF9DE5E 		.word	1591671054
+ 213 01e4 98C9D929 		.word	702138776
+ 214 01e8 2298D0B0 		.word	-1328506846
+ 215 01ec B4A8D7C7 		.word	-942167884
+ 216 01f0 173DB359 		.word	1504918807
+ 217 01f4 810DB42E 		.word	783551873
+ 218 01f8 3B5CBDB7 		.word	-1212326853
+ 219 01fc AD6CBAC0 		.word	-1061524307
+ 220 0200 2083B8ED 		.word	-306674912
+ 221 0204 B6B3BF9A 		.word	-1698712650
+ 222 0208 0CE2B603 		.word	62317068
+ 223 020c 9AD2B174 		.word	1957810842
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 7
+
+
+ 224 0210 3947D5EA 		.word	-355121351
+ 225 0214 AF77D29D 		.word	-1647151185
+ 226 0218 1526DB04 		.word	81470997
+ 227 021c 8316DC73 		.word	1943803523
+ 228 0220 120B63E3 		.word	-480048366
+ 229 0224 843B6494 		.word	-1805370492
+ 230 0228 3E6A6D0D 		.word	225274430
+ 231 022c A85A6A7A 		.word	2053790376
+ 232 0230 0BCF0EE4 		.word	-468791541
+ 233 0234 9DFF0993 		.word	-1828061283
+ 234 0238 27AE000A 		.word	167816743
+ 235 023c B19E077D 		.word	2097651377
+ 236 0240 44930FF0 		.word	-267414716
+ 237 0244 D2A30887 		.word	-2029476910
+ 238 0248 68F2011E 		.word	503444072
+ 239 024c FEC20669 		.word	1762050814
+ 240 0250 5D5762F7 		.word	-144550051
+ 241 0254 CB676580 		.word	-2140837941
+ 242 0258 71366C19 		.word	426522225
+ 243 025c E7066B6E 		.word	1852507879
+ 244 0260 761BD4FE 		.word	-19653770
+ 245 0264 E02BD389 		.word	-1982649376
+ 246 0268 5A7ADA10 		.word	282753626
+ 247 026c CC4ADD67 		.word	1742555852
+ 248 0270 6FDFB9F9 		.word	-105259153
+ 249 0274 F9EFBE8E 		.word	-1900089351
+ 250 0278 43BEB717 		.word	397917763
+ 251 027c D58EB060 		.word	1622183637
+ 252 0280 E8A3D6D6 		.word	-690576408
+ 253 0284 7E93D1A1 		.word	-1580100738
+ 254 0288 C4C2D838 		.word	953729732
+ 255 028c 52F2DF4F 		.word	1340076626
+ 256 0290 F167BBD1 		.word	-776247311
+ 257 0294 6757BCA6 		.word	-1497606297
+ 258 0298 DD06B53F 		.word	1068828381
+ 259 029c 4B36B248 		.word	1219638859
+ 260 02a0 DA2B0DD8 		.word	-670225446
+ 261 02a4 4C1B0AAF 		.word	-1358292148
+ 262 02a8 F64A0336 		.word	906185462
+ 263 02ac 607A0441 		.word	1090812512
+ 264 02b0 C3EF60DF 		.word	-547295293
+ 265 02b4 55DF67A8 		.word	-1469587627
+ 266 02b8 EF8E6E31 		.word	829329135
+ 267 02bc 79BE6946 		.word	1181335161
+ 268 02c0 8CB361CB 		.word	-882789492
+ 269 02c4 1A8366BC 		.word	-1134132454
+ 270 02c8 A0D26F25 		.word	628085408
+ 271 02cc 36E26852 		.word	1382605366
+ 272 02d0 95770CCC 		.word	-871598187
+ 273 02d4 03470BBB 		.word	-1156888829
+ 274 02d8 B9160222 		.word	570562233
+ 275 02dc 2F260555 		.word	1426400815
+ 276 02e0 BE3BBAC5 		.word	-977650754
+ 277 02e4 280BBDB2 		.word	-1296233688
+ 278 02e8 925AB42B 		.word	733239954
+ 279 02ec 046AB35C 		.word	1555261956
+ 280 02f0 A7FFD7C2 		.word	-1026031705
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 8
+
+
+ 281 02f4 31CFD0B5 		.word	-1244606671
+ 282 02f8 8B9ED92C 		.word	752459403
+ 283 02fc 1DAEDE5B 		.word	1541320221
+ 284 0300 B0C2649B 		.word	-1687895376
+ 285 0304 26F263EC 		.word	-328994266
+ 286 0308 9CA36A75 		.word	1969922972
+ 287 030c 0A936D02 		.word	40735498
+ 288 0310 A906099C 		.word	-1677130071
+ 289 0314 3F360EEB 		.word	-351390145
+ 290 0318 85670772 		.word	1913087877
+ 291 031c 13570005 		.word	83908371
+ 292 0320 824ABF95 		.word	-1782625662
+ 293 0324 147AB8E2 		.word	-491226604
+ 294 0328 AE2BB17B 		.word	2075208622
+ 295 032c 381BB60C 		.word	213261112
+ 296 0330 9B8ED292 		.word	-1831694693
+ 297 0334 0DBED5E5 		.word	-438977011
+ 298 0338 B7EFDC7C 		.word	2094854071
+ 299 033c 21DFDB0B 		.word	198958881
+ 300 0340 D4D2D386 		.word	-2032938284
+ 301 0344 42E2D4F1 		.word	-237706686
+ 302 0348 F8B3DD68 		.word	1759359992
+ 303 034c 6E83DA1F 		.word	534414190
+ 304 0350 CD16BE81 		.word	-2118248755
+ 305 0354 5B26B9F6 		.word	-155638181
+ 306 0358 E177B06F 		.word	1873836001
+ 307 035c 7747B718 		.word	414664567
+ 308 0360 E65A0888 		.word	-2012718362
+ 309 0364 706A0FFF 		.word	-15766928
+ 310 0368 CA3B0666 		.word	1711684554
+ 311 036c 5C0B0111 		.word	285281116
+ 312 0370 FF9E658F 		.word	-1889165569
+ 313 0374 69AE62F8 		.word	-127750551
+ 314 0378 D3FF6B61 		.word	1634467795
+ 315 037c 45CF6C16 		.word	376229701
+ 316 0380 78E20AA0 		.word	-1609899400
+ 317 0384 EED20DD7 		.word	-686959890
+ 318 0388 5483044E 		.word	1308918612
+ 319 038c C2B30339 		.word	956543938
+ 320 0390 612667A7 		.word	-1486412191
+ 321 0394 F71660D0 		.word	-799009033
+ 322 0398 4D476949 		.word	1231636301
+ 323 039c DB776E3E 		.word	1047427035
+ 324 03a0 4A6AD1AE 		.word	-1362007478
+ 325 03a4 DC5AD6D9 		.word	-640263460
+ 326 03a8 660BDF40 		.word	1088359270
+ 327 03ac F03BD837 		.word	936918000
+ 328 03b0 53AEBCA9 		.word	-1447252397
+ 329 03b4 C59EBBDE 		.word	-558129467
+ 330 03b8 7FCFB247 		.word	1202900863
+ 331 03bc E9FFB530 		.word	817233897
+ 332 03c0 1CF2BDBD 		.word	-1111625188
+ 333 03c4 8AC2BACA 		.word	-893730166
+ 334 03c8 3093B353 		.word	1404277552
+ 335 03cc A6A3B424 		.word	615818150
+ 336 03d0 0536D0BA 		.word	-1160759803
+ 337 03d4 9306D7CD 		.word	-841546093
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 9
+
+
+ 338 03d8 2957DE54 		.word	1423857449
+ 339 03dc BF67D923 		.word	601450431
+ 340 03e0 2E7A66B3 		.word	-1285129682
+ 341 03e4 B84A61C4 		.word	-1000256840
+ 342 03e8 021B685D 		.word	1567103746
+ 343 03ec 942B6F2A 		.word	711928724
+ 344 03f0 37BE0BB4 		.word	-1274298825
+ 345 03f4 A18E0CC3 		.word	-1022587231
+ 346 03f8 1BDF055A 		.word	1510334235
+ 347 03fc 8DEF022D 		.word	755167117
+ 348              		.text
+ 349              	.Letext0:
+ 350              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 351              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 crc32.c
+C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s:18     .text.calc_crc32:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s:25     .text.calc_crc32:00000000 calc_crc32
+C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s:82     .text.calc_crc32:0000002c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s:87     .rodata.crc_table:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccEBc1oL.s:91     .rodata.crc_table:00000000 crc_table
+
+NO UNDEFINED SYMBOLS

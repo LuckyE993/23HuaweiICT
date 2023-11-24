@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "e53_sf1.h": "c",
+        "hal_qspi_flash.h": "c",
+        "main.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "lcd.h": "c",
+        "gpio.h": "c"
+    }
+}

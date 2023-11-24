@@ -1,0 +1,209 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5EG3uC.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"link_random.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.link_random,"ax",%progbits
+  18              		.align	1
+  19              		.weak	link_random
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	link_random:
+  26              	.LFB3:
+  27              		.file 1 "../../iot_link/link_misc/link_random.c"
+   1:../../iot_link/link_misc/link_random.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/link_misc/link_random.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/link_misc/link_random.c ****  * All rights reserved.
+   4:../../iot_link/link_misc/link_random.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/link_misc/link_random.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/link_misc/link_random.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/link_misc/link_random.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/link_misc/link_random.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/link_misc/link_random.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/link_misc/link_random.c ****  * provided with the distribution.
+  11:../../iot_link/link_misc/link_random.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/link_misc/link_random.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/link_misc/link_random.c ****  * permission.
+  14:../../iot_link/link_misc/link_random.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/link_misc/link_random.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/link_misc/link_random.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/link_misc/link_random.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/link_misc/link_random.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/link_misc/link_random.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/link_misc/link_random.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/link_misc/link_random.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/link_misc/link_random.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/link_misc/link_random.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/link_misc/link_random.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/link_misc/link_random.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/link_misc/link_random.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/link_misc/link_random.c ****  * Notice of Export Control Law
+  28:../../iot_link/link_misc/link_random.c ****  * ===============================================
+  29:../../iot_link/link_misc/link_random.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/link_misc/link_random.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/link_misc/link_random.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5EG3uC.s 			page 2
+
+
+  32:../../iot_link/link_misc/link_random.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/link_misc/link_random.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/link_misc/link_random.c **** /**
+  35:../../iot_link/link_misc/link_random.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/link_misc/link_random.c ****  *  2019-05-10 10:26  zhangqianfu  The first version  
+  37:../../iot_link/link_misc/link_random.c ****  *
+  38:../../iot_link/link_misc/link_random.c ****  */
+  39:../../iot_link/link_misc/link_random.c **** #include <stdint.h>
+  40:../../iot_link/link_misc/link_random.c **** #include <stddef.h>
+  41:../../iot_link/link_misc/link_random.c **** 
+  42:../../iot_link/link_misc/link_random.c **** #include <stdlib.h>
+  43:../../iot_link/link_misc/link_random.c **** #include <string.h>
+  44:../../iot_link/link_misc/link_random.c **** 
+  45:../../iot_link/link_misc/link_random.c **** #include <osal.h>
+  46:../../iot_link/link_misc/link_random.c **** 
+  47:../../iot_link/link_misc/link_random.c **** __attribute__((weak)) int link_random(void* output, int len)
+  48:../../iot_link/link_misc/link_random.c **** {
+  28              		.loc 1 48 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 4, -16
+  37              		.cfi_offset 5, -12
+  38              		.cfi_offset 6, -8
+  39              		.cfi_offset 14, -4
+  40              		.loc 1 48 0
+  41 0002 0D46     		mov	r5, r1
+  49:../../iot_link/link_misc/link_random.c ****     int i;
+  50:../../iot_link/link_misc/link_random.c ****     int random_number;
+  51:../../iot_link/link_misc/link_random.c ****     char* pbuf;
+  52:../../iot_link/link_misc/link_random.c **** 
+  53:../../iot_link/link_misc/link_random.c ****     if (NULL == output)
+  42              		.loc 1 53 0
+  43 0004 0646     		mov	r6, r0
+  44 0006 B0B1     		cbz	r0, .L5
+  45              	.LVL1:
+  54:../../iot_link/link_misc/link_random.c ****     {
+  55:../../iot_link/link_misc/link_random.c ****         return -1;
+  56:../../iot_link/link_misc/link_random.c ****     }
+  57:../../iot_link/link_misc/link_random.c **** 
+  58:../../iot_link/link_misc/link_random.c ****     pbuf = output;
+  59:../../iot_link/link_misc/link_random.c ****     srand(osal_sys_time());
+  46              		.loc 1 59 0
+  47 0008 FFF7FEFF 		bl	osal_sys_time
+  48              	.LVL2:
+  49 000c FFF7FEFF 		bl	srand
+  50              	.LVL3:
+  60:../../iot_link/link_misc/link_random.c **** 
+  61:../../iot_link/link_misc/link_random.c ****     for (i = 0; i < len; i += sizeof(int))
+  51              		.loc 1 61 0
+  52 0010 0024     		movs	r4, #0
+  53              	.LVL4:
+  54              	.L3:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5EG3uC.s 			page 3
+
+
+  55              		.loc 1 61 0 is_stmt 0 discriminator 1
+  56 0012 AC42     		cmp	r4, r5
+  57 0014 02DB     		blt	.L4
+  62:../../iot_link/link_misc/link_random.c ****     {
+  63:../../iot_link/link_misc/link_random.c ****         random_number = rand();
+  64:../../iot_link/link_misc/link_random.c ****         (void) memcpy(pbuf + i, &random_number,
+  65:../../iot_link/link_misc/link_random.c ****                sizeof(int) > (unsigned int)(len - i)? (unsigned int)(len - i): sizeof(int));
+  66:../../iot_link/link_misc/link_random.c ****     }
+  67:../../iot_link/link_misc/link_random.c **** 
+  68:../../iot_link/link_misc/link_random.c ****     return 0;
+  58              		.loc 1 68 0 is_stmt 1
+  59 0016 0020     		movs	r0, #0
+  60              	.LVL5:
+  61              	.L1:
+  69:../../iot_link/link_misc/link_random.c **** }
+  62              		.loc 1 69 0
+  63 0018 02B0     		add	sp, sp, #8
+  64              	.LCFI1:
+  65              		.cfi_remember_state
+  66              		.cfi_def_cfa_offset 16
+  67              		@ sp needed
+  68 001a 70BD     		pop	{r4, r5, r6, pc}
+  69              	.LVL6:
+  70              	.L4:
+  71              	.LCFI2:
+  72              		.cfi_restore_state
+  63:../../iot_link/link_misc/link_random.c ****         (void) memcpy(pbuf + i, &random_number,
+  73              		.loc 1 63 0 discriminator 3
+  74 001c FFF7FEFF 		bl	rand
+  75              	.LVL7:
+  65:../../iot_link/link_misc/link_random.c ****     }
+  76              		.loc 1 65 0 discriminator 3
+  77 0020 2A1B     		subs	r2, r5, r4
+  64:../../iot_link/link_misc/link_random.c ****                sizeof(int) > (unsigned int)(len - i)? (unsigned int)(len - i): sizeof(int));
+  78              		.loc 1 64 0 discriminator 3
+  79 0022 042A     		cmp	r2, #4
+  63:../../iot_link/link_misc/link_random.c ****         (void) memcpy(pbuf + i, &random_number,
+  80              		.loc 1 63 0 discriminator 3
+  81 0024 0190     		str	r0, [sp, #4]
+  64:../../iot_link/link_misc/link_random.c ****                sizeof(int) > (unsigned int)(len - i)? (unsigned int)(len - i): sizeof(int));
+  82              		.loc 1 64 0 discriminator 3
+  83 0026 28BF     		it	cs
+  84 0028 0422     		movcs	r2, #4
+  85 002a 3019     		adds	r0, r6, r4
+  86 002c 01A9     		add	r1, sp, #4
+  87 002e FFF7FEFF 		bl	memcpy
+  88              	.LVL8:
+  61:../../iot_link/link_misc/link_random.c ****     {
+  89              		.loc 1 61 0 discriminator 3
+  90 0032 0434     		adds	r4, r4, #4
+  91              	.LVL9:
+  92 0034 EDE7     		b	.L3
+  93              	.LVL10:
+  94              	.L5:
+  55:../../iot_link/link_misc/link_random.c ****     }
+  95              		.loc 1 55 0
+  96 0036 4FF0FF30 		mov	r0, #-1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5EG3uC.s 			page 4
+
+
+  97              	.LVL11:
+  98 003a EDE7     		b	.L1
+  99              		.cfi_endproc
+ 100              	.LFE3:
+ 102              		.text
+ 103              	.Letext0:
+ 104              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 105              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 106              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 107              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 108              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 109              		.file 7 "../../iot_link/inc/link_log.h"
+ 110              		.file 8 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5EG3uC.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 link_random.c
+C:\Users\LuckyE\AppData\Local\Temp\cc5EG3uC.s:18     .text.link_random:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc5EG3uC.s:25     .text.link_random:00000000 link_random
+
+UNDEFINED SYMBOLS
+osal_sys_time
+srand
+rand
+memcpy

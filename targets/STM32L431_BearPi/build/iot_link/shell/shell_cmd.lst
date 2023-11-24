@@ -1,0 +1,1175 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"shell_cmd.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.shell_cmd_help,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	shell_cmd_help:
+  25              	.LFB3:
+  26              		.file 1 "../../iot_link/shell/shell_cmd.c"
+   1:../../iot_link/shell/shell_cmd.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/shell/shell_cmd.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/shell/shell_cmd.c ****  * All rights reserved.
+   4:../../iot_link/shell/shell_cmd.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/shell/shell_cmd.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/shell/shell_cmd.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/shell/shell_cmd.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/shell/shell_cmd.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/shell/shell_cmd.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/shell/shell_cmd.c ****  * provided with the distribution.
+  11:../../iot_link/shell/shell_cmd.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/shell/shell_cmd.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/shell/shell_cmd.c ****  * permission.
+  14:../../iot_link/shell/shell_cmd.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/shell/shell_cmd.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/shell/shell_cmd.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/shell/shell_cmd.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/shell/shell_cmd.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/shell/shell_cmd.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/shell/shell_cmd.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/shell/shell_cmd.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/shell/shell_cmd.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/shell/shell_cmd.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/shell/shell_cmd.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/shell/shell_cmd.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/shell/shell_cmd.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/shell/shell_cmd.c ****  * Notice of Export Control Law
+  28:../../iot_link/shell/shell_cmd.c ****  * ===============================================
+  29:../../iot_link/shell/shell_cmd.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/shell/shell_cmd.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/shell/shell_cmd.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:../../iot_link/shell/shell_cmd.c ****  * applicable export control laws and regulations.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 2
+
+
+  33:../../iot_link/shell/shell_cmd.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/shell/shell_cmd.c **** /**
+  35:../../iot_link/shell/shell_cmd.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/shell/shell_cmd.c ****  *  2019-05-14 17:22  zhangqianfu  The first version
+  37:../../iot_link/shell/shell_cmd.c ****  *
+  38:../../iot_link/shell/shell_cmd.c ****  */
+  39:../../iot_link/shell/shell_cmd.c **** 
+  40:../../iot_link/shell/shell_cmd.c **** /**********************************README***************************************
+  41:../../iot_link/shell/shell_cmd.c ****  * 1, we will load the command table in shell_cmd_init
+  42:../../iot_link/shell/shell_cmd.c ****  * 2, uptil now, we support the keil,gcc,you could add more compiler here
+  43:../../iot_link/shell/shell_cmd.c ****  *    make sure you get the method to define a section and know its address and size
+  44:../../iot_link/shell/shell_cmd.c **** *******************************************************************************/
+  45:../../iot_link/shell/shell_cmd.c **** 
+  46:../../iot_link/shell/shell_cmd.c **** 
+  47:../../iot_link/shell/shell_cmd.c **** /**************************************FILE INCLIUDES**************************/
+  48:../../iot_link/shell/shell_cmd.c **** 
+  49:../../iot_link/shell/shell_cmd.c **** #include <stdint.h>
+  50:../../iot_link/shell/shell_cmd.c **** #include <stddef.h>
+  51:../../iot_link/shell/shell_cmd.c **** #include <stdio.h>
+  52:../../iot_link/shell/shell_cmd.c **** #include <string.h>
+  53:../../iot_link/shell/shell_cmd.c **** #include <stdlib.h>
+  54:../../iot_link/shell/shell_cmd.c **** #include <shell.h>
+  55:../../iot_link/shell/shell_cmd.c **** #include <link_misc.h>
+  56:../../iot_link/shell/shell_cmd.c **** 
+  57:../../iot_link/shell/shell_cmd.c **** 
+  58:../../iot_link/shell/shell_cmd.c **** typedef int (*fn_shell_cmdentry)(int argc, const char *argv[]);
+  59:../../iot_link/shell/shell_cmd.c **** 
+  60:../../iot_link/shell/shell_cmd.c **** 
+  61:../../iot_link/shell/shell_cmd.c **** /**************************************FILE DEFINES****************************/
+  62:../../iot_link/shell/shell_cmd.c **** #define cn_shell_args       16     //at most could support 16 parameters for command
+  63:../../iot_link/shell/shell_cmd.c **** #define cn_shell_ver_major  1
+  64:../../iot_link/shell/shell_cmd.c **** #define cn_shell_ver_minor  0
+  65:../../iot_link/shell/shell_cmd.c **** 
+  66:../../iot_link/shell/shell_cmd.c **** /**************************************FILE DATA STRUCTURE*********************/
+  67:../../iot_link/shell/shell_cmd.c **** struct shell_cb_t
+  68:../../iot_link/shell/shell_cmd.c **** {
+  69:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t *s;      //static tabs
+  70:../../iot_link/shell/shell_cmd.c ****     int                  s_num;  //static number
+  71:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t *d;      //dynamic list
+  72:../../iot_link/shell/shell_cmd.c ****     int                  d_num;  //dynamic number;
+  73:../../iot_link/shell/shell_cmd.c **** };
+  74:../../iot_link/shell/shell_cmd.c **** 
+  75:../../iot_link/shell/shell_cmd.c **** 
+  76:../../iot_link/shell/shell_cmd.c **** /**************************************FILE VARS*******************************/
+  77:../../iot_link/shell/shell_cmd.c **** static struct shell_cb_t gs_shell_cb; //shell controller here
+  78:../../iot_link/shell/shell_cmd.c **** 
+  79:../../iot_link/shell/shell_cmd.c **** static const char *gs_os_shell_type[EN_OSSHELL_LAST]={
+  80:../../iot_link/shell/shell_cmd.c ****     "CMD",\
+  81:../../iot_link/shell/shell_cmd.c ****     "VAR",
+  82:../../iot_link/shell/shell_cmd.c **** };//this will be used in show the shell type
+  83:../../iot_link/shell/shell_cmd.c **** static struct shell_tab_matches tab_matches;
+  84:../../iot_link/shell/shell_cmd.c **** /**************************************FILE FUNCTIONS**************************/
+  85:../../iot_link/shell/shell_cmd.c **** //export functions
+  86:../../iot_link/shell/shell_cmd.c **** int   shell_cmd_execute(char *param);            //execute the command
+  87:../../iot_link/shell/shell_cmd.c **** int   shell_cmd_init(void);                      //do the command table load
+  88:../../iot_link/shell/shell_cmd.c **** const struct shell_tab_matches *shell_cmd_index(const char *index);  //find the most like command
+  89:../../iot_link/shell/shell_cmd.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 3
+
+
+  90:../../iot_link/shell/shell_cmd.c **** 
+  91:../../iot_link/shell/shell_cmd.c **** /**************************************FILE FUNCIMPLEMENT**********************/
+  92:../../iot_link/shell/shell_cmd.c **** 
+  93:../../iot_link/shell/shell_cmd.c **** /*******************************************************************************
+  94:../../iot_link/shell/shell_cmd.c **** function     :system help
+  95:../../iot_link/shell/shell_cmd.c **** parameters   :
+  96:../../iot_link/shell/shell_cmd.c **** instruction  :take care of help specified command
+  97:../../iot_link/shell/shell_cmd.c **** *******************************************************************************/
+  98:../../iot_link/shell/shell_cmd.c **** static int   shell_cmd_help(int argc, const char *argv[]){
+  27              		.loc 1 98 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 28
+  35              		.cfi_offset 4, -28
+  36              		.cfi_offset 5, -24
+  37              		.cfi_offset 6, -20
+  38              		.cfi_offset 7, -16
+  39              		.cfi_offset 8, -12
+  40              		.cfi_offset 9, -8
+  41              		.cfi_offset 14, -4
+  42 0004 85B0     		sub	sp, sp, #20
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_offset 48
+  99:../../iot_link/shell/shell_cmd.c ****     int   i ;
+ 100:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t *item;
+ 101:../../iot_link/shell/shell_cmd.c **** 
+ 102:../../iot_link/shell/shell_cmd.c ****     (void) item;
+ 103:../../iot_link/shell/shell_cmd.c ****     (void) gs_os_shell_type;
+ 104:../../iot_link/shell/shell_cmd.c **** 
+ 105:../../iot_link/shell/shell_cmd.c ****     link_printf("%-16s%-5s%-4s%-10s%-20s\n\r",\
+  45              		.loc 1 105 0
+  46 0006 2C4B     		ldr	r3, .L6
+  47 0008 0193     		str	r3, [sp, #4]
+  48 000a 2C4D     		ldr	r5, .L6+4
+  49 000c 2C4B     		ldr	r3, .L6+8
+  50 000e 0093     		str	r3, [sp]
+  51 0010 2C4A     		ldr	r2, .L6+12
+  52 0012 2D4B     		ldr	r3, .L6+16
+  53 0014 2D49     		ldr	r1, .L6+20
+  54              	.LVL1:
+  55 0016 2E48     		ldr	r0, .L6+24
+  56              	.LVL2:
+ 106:../../iot_link/shell/shell_cmd.c ****             "Name","Type","Len","RunAddr","Description");
+ 107:../../iot_link/shell/shell_cmd.c ****     for(i = 0;i <gs_shell_cb.s_num;i++){
+  57              		.loc 1 107 0
+  58 0018 2E4F     		ldr	r7, .L6+28
+ 108:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 109:../../iot_link/shell/shell_cmd.c ****         link_printf("%-16s%-5s%-4x%08x  %-30s\n\r",\
+  59              		.loc 1 109 0
+  60 001a DFF8BC80 		ldr	r8, .L6+32
+ 105:../../iot_link/shell/shell_cmd.c ****             "Name","Type","Len","RunAddr","Description");
+  61              		.loc 1 105 0
+  62 001e FFF7FEFF 		bl	printf
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 4
+
+
+  63              	.LVL3:
+  64 0022 2B68     		ldr	r3, [r5]
+  65 0024 9868     		ldr	r0, [r3, #8]
+  66 0026 FFF7FEFF 		bl	fflush
+  67              	.LVL4:
+ 107:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+  68              		.loc 1 107 0
+  69 002a 0024     		movs	r4, #0
+  70 002c A946     		mov	r9, r5
+  71 002e 3E46     		mov	r6, r7
+  72              	.LVL5:
+  73              	.L2:
+ 107:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+  74              		.loc 1 107 0 is_stmt 0 discriminator 1
+  75 0030 7B68     		ldr	r3, [r7, #4]
+  76 0032 A342     		cmp	r3, r4
+  77 0034 0ADC     		bgt	.L3
+ 110:../../iot_link/shell/shell_cmd.c ****                 item->name,gs_os_shell_type[item->type%EN_OSSHELL_LAST],\
+ 111:../../iot_link/shell/shell_cmd.c ****                 item->len,(unsigned int)item->addr,item->help);
+ 112:../../iot_link/shell/shell_cmd.c ****     }
+ 113:../../iot_link/shell/shell_cmd.c ****     for(i = 0;i <gs_shell_cb.d_num;i++){
+ 114:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.d[i]);
+ 115:../../iot_link/shell/shell_cmd.c ****         link_printf("%-2x  %-16s%-5s%-4x%08x  %-30s\n\r",\
+  78              		.loc 1 115 0 is_stmt 1
+  79 0036 284F     		ldr	r7, .L6+32
+  80 0038 DFF8A480 		ldr	r8, .L6+40
+ 113:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.d[i]);
+  81              		.loc 1 113 0
+  82 003c 0024     		movs	r4, #0
+  83              	.LVL6:
+  84              	.L4:
+ 113:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.d[i]);
+  85              		.loc 1 113 0 is_stmt 0 discriminator 1
+  86 003e F368     		ldr	r3, [r6, #12]
+  87 0040 A342     		cmp	r3, r4
+  88 0042 1EDC     		bgt	.L5
+ 116:../../iot_link/shell/shell_cmd.c ****                 i,item->name,gs_os_shell_type[item->type%EN_OSSHELL_LAST],\
+ 117:../../iot_link/shell/shell_cmd.c ****                 item->len,(unsigned int)item->addr,item->help);
+ 118:../../iot_link/shell/shell_cmd.c ****     }
+ 119:../../iot_link/shell/shell_cmd.c ****     return 0;
+ 120:../../iot_link/shell/shell_cmd.c **** }
+  89              		.loc 1 120 0 is_stmt 1
+  90 0044 0020     		movs	r0, #0
+  91 0046 05B0     		add	sp, sp, #20
+  92              	.LCFI2:
+  93              		.cfi_remember_state
+  94              		.cfi_def_cfa_offset 28
+  95              		@ sp needed
+  96 0048 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+  97              	.LVL7:
+  98              	.L3:
+  99              	.LCFI3:
+ 100              		.cfi_restore_state
+ 108:../../iot_link/shell/shell_cmd.c ****         link_printf("%-16s%-5s%-4x%08x  %-30s\n\r",\
+ 101              		.loc 1 108 0 discriminator 3
+ 102 004c D7F800C0 		ldr	ip, [r7]
+ 103 0050 2001     		lsls	r0, r4, #4
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 5
+
+
+ 104 0052 0CEB0002 		add	r2, ip, r0
+ 105              	.LVL8:
+ 107:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 106              		.loc 1 107 0 discriminator 3
+ 107 0056 0134     		adds	r4, r4, #1
+ 108              	.LVL9:
+ 109:../../iot_link/shell/shell_cmd.c ****                 item->name,gs_os_shell_type[item->type%EN_OSSHELL_LAST],\
+ 109              		.loc 1 109 0 discriminator 3
+ 110 0058 9189     		ldrh	r1, [r2, #12]
+ 111 005a 5568     		ldr	r5, [r2, #4]
+ 112 005c D389     		ldrh	r3, [r2, #14]
+ 113 005e 0195     		str	r5, [sp, #4]
+ 114 0060 9268     		ldr	r2, [r2, #8]
+ 115              	.LVL10:
+ 116 0062 0092     		str	r2, [sp]
+ 117 0064 01F00101 		and	r1, r1, #1
+ 118 0068 58F82120 		ldr	r2, [r8, r1, lsl #2]
+ 119 006c 5CF80010 		ldr	r1, [ip, r0]
+ 120 0070 1A48     		ldr	r0, .L6+36
+ 121              	.LVL11:
+ 122 0072 FFF7FEFF 		bl	printf
+ 123              	.LVL12:
+ 124 0076 D9F80030 		ldr	r3, [r9]
+ 125 007a 9868     		ldr	r0, [r3, #8]
+ 126 007c FFF7FEFF 		bl	fflush
+ 127              	.LVL13:
+ 128 0080 D6E7     		b	.L2
+ 129              	.L5:
+ 114:../../iot_link/shell/shell_cmd.c ****         link_printf("%-2x  %-16s%-5s%-4x%08x  %-30s\n\r",\
+ 130              		.loc 1 114 0 discriminator 3
+ 131 0082 B068     		ldr	r0, [r6, #8]
+ 132 0084 2101     		lsls	r1, r4, #4
+ 133 0086 4318     		adds	r3, r0, r1
+ 134              	.LVL14:
+ 115:../../iot_link/shell/shell_cmd.c ****                 i,item->name,gs_os_shell_type[item->type%EN_OSSHELL_LAST],\
+ 135              		.loc 1 115 0 discriminator 3
+ 136 0088 5D68     		ldr	r5, [r3, #4]
+ 137 008a 9A89     		ldrh	r2, [r3, #12]
+ 138 008c 0295     		str	r5, [sp, #8]
+ 139 008e 9D68     		ldr	r5, [r3, #8]
+ 140 0090 0195     		str	r5, [sp, #4]
+ 141 0092 DB89     		ldrh	r3, [r3, #14]
+ 142              	.LVL15:
+ 143 0094 0093     		str	r3, [sp]
+ 144 0096 02F00102 		and	r2, r2, #1
+ 145 009a 57F82230 		ldr	r3, [r7, r2, lsl #2]
+ 146 009e 4258     		ldr	r2, [r0, r1]
+ 147 00a0 2146     		mov	r1, r4
+ 148              	.LVL16:
+ 149 00a2 4046     		mov	r0, r8
+ 150              	.LVL17:
+ 151 00a4 FFF7FEFF 		bl	printf
+ 152              	.LVL18:
+ 153 00a8 D9F80030 		ldr	r3, [r9]
+ 154 00ac 9868     		ldr	r0, [r3, #8]
+ 155 00ae FFF7FEFF 		bl	fflush
+ 156              	.LVL19:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 6
+
+
+ 113:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.d[i]);
+ 157              		.loc 1 113 0 discriminator 3
+ 158 00b2 0134     		adds	r4, r4, #1
+ 159              	.LVL20:
+ 160 00b4 C3E7     		b	.L4
+ 161              	.L7:
+ 162 00b6 00BF     		.align	2
+ 163              	.L6:
+ 164 00b8 28000000 		.word	.LC4
+ 165 00bc 00000000 		.word	_impure_ptr
+ 166 00c0 34000000 		.word	.LC5
+ 167 00c4 04000000 		.word	.LC1
+ 168 00c8 00000000 		.word	.LC0
+ 169 00cc 09000000 		.word	.LC2
+ 170 00d0 0E000000 		.word	.LC3
+ 171 00d4 00000000 		.word	.LANCHOR0
+ 172 00d8 00000000 		.word	.LANCHOR1
+ 173 00dc 3C000000 		.word	.LC6
+ 174 00e0 57000000 		.word	.LC7
+ 175              		.cfi_endproc
+ 176              	.LFE3:
+ 178              		.section	.text.os_shell_version,"ax",%progbits
+ 179              		.align	1
+ 180              		.syntax unified
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.fpu fpv4-sp-d16
+ 185              	os_shell_version:
+ 186              	.LFB8:
+ 121:../../iot_link/shell/shell_cmd.c **** 
+ 122:../../iot_link/shell/shell_cmd.c **** /*******************************************************************************
+ 123:../../iot_link/shell/shell_cmd.c **** function     :used to find the command
+ 124:../../iot_link/shell/shell_cmd.c **** parameters   :
+ 125:../../iot_link/shell/shell_cmd.c **** instruction  :
+ 126:../../iot_link/shell/shell_cmd.c **** *******************************************************************************/
+ 127:../../iot_link/shell/shell_cmd.c **** static struct shell_item_t *shell_cmd_match(const char *name)
+ 128:../../iot_link/shell/shell_cmd.c **** {
+ 129:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t *item = NULL;
+ 130:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t  *ret = NULL;
+ 131:../../iot_link/shell/shell_cmd.c ****     int   i;
+ 132:../../iot_link/shell/shell_cmd.c ****     //search the static tab first,if not found then find the dynamic tab
+ 133:../../iot_link/shell/shell_cmd.c ****     ret = NULL;
+ 134:../../iot_link/shell/shell_cmd.c ****     for(i = 0;i <gs_shell_cb.s_num;i++){
+ 135:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 136:../../iot_link/shell/shell_cmd.c ****         if(0 == strcmp(name,item->name)){
+ 137:../../iot_link/shell/shell_cmd.c ****             ret = item;
+ 138:../../iot_link/shell/shell_cmd.c ****             break;
+ 139:../../iot_link/shell/shell_cmd.c ****         }
+ 140:../../iot_link/shell/shell_cmd.c ****     }
+ 141:../../iot_link/shell/shell_cmd.c ****     if(NULL == ret){
+ 142:../../iot_link/shell/shell_cmd.c ****         for(i = 0;i <gs_shell_cb.d_num;i++){
+ 143:../../iot_link/shell/shell_cmd.c ****             item = &(gs_shell_cb.d[i]);
+ 144:../../iot_link/shell/shell_cmd.c ****             if(0 == strcmp(name,item->name)){
+ 145:../../iot_link/shell/shell_cmd.c ****                 ret = item;
+ 146:../../iot_link/shell/shell_cmd.c ****                 break;
+ 147:../../iot_link/shell/shell_cmd.c ****             }
+ 148:../../iot_link/shell/shell_cmd.c ****         }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 7
+
+
+ 149:../../iot_link/shell/shell_cmd.c ****     }
+ 150:../../iot_link/shell/shell_cmd.c ****     return ret;
+ 151:../../iot_link/shell/shell_cmd.c **** }
+ 152:../../iot_link/shell/shell_cmd.c **** 
+ 153:../../iot_link/shell/shell_cmd.c **** /*******************************************************************************
+ 154:../../iot_link/shell/shell_cmd.c **** function     :used to find the most like command
+ 155:../../iot_link/shell/shell_cmd.c **** parameters   :
+ 156:../../iot_link/shell/shell_cmd.c **** instruction  :
+ 157:../../iot_link/shell/shell_cmd.c **** *******************************************************************************/
+ 158:../../iot_link/shell/shell_cmd.c **** const struct shell_tab_matches *shell_cmd_index(const char *index){
+ 159:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t *item;
+ 160:../../iot_link/shell/shell_cmd.c ****     int   i;
+ 161:../../iot_link/shell/shell_cmd.c ****     //search the static tab first,if not found then find the dynamic tab
+ 162:../../iot_link/shell/shell_cmd.c ****     tab_matches.len = 0;
+ 163:../../iot_link/shell/shell_cmd.c ****     for(i = 0;i <gs_shell_cb.s_num && tab_matches.len < MAX_TAB_MATCHES; i++){
+ 164:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 165:../../iot_link/shell/shell_cmd.c ****         if (strncmp(item->name, index, strlen(index)) == 0) {
+ 166:../../iot_link/shell/shell_cmd.c ****             tab_matches.matches[tab_matches.len++] = item->name;
+ 167:../../iot_link/shell/shell_cmd.c ****         }
+ 168:../../iot_link/shell/shell_cmd.c ****     }
+ 169:../../iot_link/shell/shell_cmd.c ****     
+ 170:../../iot_link/shell/shell_cmd.c ****     for(i = 0;i <gs_shell_cb.d_num && tab_matches.len < MAX_TAB_MATCHES; i++){
+ 171:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.d[i]);
+ 172:../../iot_link/shell/shell_cmd.c ****         if(strncmp(item->name, index, strlen(index)) == 0){
+ 173:../../iot_link/shell/shell_cmd.c ****             tab_matches.matches[tab_matches.len++] = item->name;
+ 174:../../iot_link/shell/shell_cmd.c ****         }
+ 175:../../iot_link/shell/shell_cmd.c ****     }
+ 176:../../iot_link/shell/shell_cmd.c ****     
+ 177:../../iot_link/shell/shell_cmd.c ****     return &tab_matches;
+ 178:../../iot_link/shell/shell_cmd.c **** }
+ 179:../../iot_link/shell/shell_cmd.c **** 
+ 180:../../iot_link/shell/shell_cmd.c **** /*******************************************************************************
+ 181:../../iot_link/shell/shell_cmd.c **** function     :used to execute the command specified by the string
+ 182:../../iot_link/shell/shell_cmd.c **** parameters   :
+ 183:../../iot_link/shell/shell_cmd.c **** instruction  :we will split the string with the blank space, and the first one
+ 184:../../iot_link/shell/shell_cmd.c ****              will be used as the shell name to search the shell.If a shell cmd
+ 185:../../iot_link/shell/shell_cmd.c ****              found then will execute the command,and then all the args will be
+ 186:../../iot_link/shell/shell_cmd.c ****              passed to the function;if a data shell found, then will only do the
+ 187:../../iot_link/shell/shell_cmd.c ****              "get" or set "action";attention that the first arg is the shell name
+ 188:../../iot_link/shell/shell_cmd.c ****              itself!
+ 189:../../iot_link/shell/shell_cmd.c **** *******************************************************************************/
+ 190:../../iot_link/shell/shell_cmd.c **** int   shell_cmd_execute(char *param){
+ 191:../../iot_link/shell/shell_cmd.c ****     int   ret= -1;
+ 192:../../iot_link/shell/shell_cmd.c ****     int    argc = cn_shell_args;           //split the params to argc and argv format
+ 193:../../iot_link/shell/shell_cmd.c ****     unsigned int     value;
+ 194:../../iot_link/shell/shell_cmd.c ****     unsigned char   *bytes;
+ 195:../../iot_link/shell/shell_cmd.c ****     int     i;
+ 196:../../iot_link/shell/shell_cmd.c ****     const  char *argv[cn_shell_args];
+ 197:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t *item;            //match the command item
+ 198:../../iot_link/shell/shell_cmd.c ****     fn_shell_cmdentry shell_cmd_entry;    //command function entry
+ 199:../../iot_link/shell/shell_cmd.c **** 
+ 200:../../iot_link/shell/shell_cmd.c ****     (void)bytes;
+ 201:../../iot_link/shell/shell_cmd.c **** 
+ 202:../../iot_link/shell/shell_cmd.c ****     string_to_arg(&argc,argv,param);      //format the parameters
+ 203:../../iot_link/shell/shell_cmd.c ****     if(argc == 0){
+ 204:../../iot_link/shell/shell_cmd.c ****         shell_cmd_help(0,NULL);               //if no args we show system help
+ 205:../../iot_link/shell/shell_cmd.c ****         ret = 0;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 8
+
+
+ 206:../../iot_link/shell/shell_cmd.c ****     }
+ 207:../../iot_link/shell/shell_cmd.c ****     else{
+ 208:../../iot_link/shell/shell_cmd.c ****         item =shell_cmd_match(argv[0]);//find the item
+ 209:../../iot_link/shell/shell_cmd.c ****         if(NULL == item){
+ 210:../../iot_link/shell/shell_cmd.c ****             link_printf("SHELL COMMAND NOT FIND:%s\n\r",argv[0]);
+ 211:../../iot_link/shell/shell_cmd.c ****             ret = -1;
+ 212:../../iot_link/shell/shell_cmd.c ****         }
+ 213:../../iot_link/shell/shell_cmd.c ****         else{
+ 214:../../iot_link/shell/shell_cmd.c ****             if(item->type == EN_OSSHELL_CMD){
+ 215:../../iot_link/shell/shell_cmd.c ****                 shell_cmd_entry = (fn_shell_cmdentry)item->addr;
+ 216:../../iot_link/shell/shell_cmd.c ****                 shell_cmd_entry(argc,argv);
+ 217:../../iot_link/shell/shell_cmd.c ****             }
+ 218:../../iot_link/shell/shell_cmd.c ****             else{
+ 219:../../iot_link/shell/shell_cmd.c ****                 if((argc == 3)&&(0 == strcmp(argv[1],"set"))){
+ 220:../../iot_link/shell/shell_cmd.c ****                     //deal it simple and easy here
+ 221:../../iot_link/shell/shell_cmd.c ****                     value = strtol(argv[2],NULL,0);
+ 222:../../iot_link/shell/shell_cmd.c ****                     (void) memcpy(item->addr,&value,item->len);
+ 223:../../iot_link/shell/shell_cmd.c ****                 }
+ 224:../../iot_link/shell/shell_cmd.c ****                 else{
+ 225:../../iot_link/shell/shell_cmd.c ****                     bytes = item->addr;
+ 226:../../iot_link/shell/shell_cmd.c ****                     link_printf("(HEX):ADDR:0X%08X:",(unsigned int)bytes);
+ 227:../../iot_link/shell/shell_cmd.c ****                     for(i = 0;i<item->len;i++){
+ 228:../../iot_link/shell/shell_cmd.c ****                         link_printf("%02x ",*bytes++);
+ 229:../../iot_link/shell/shell_cmd.c ****                     }
+ 230:../../iot_link/shell/shell_cmd.c ****                 }
+ 231:../../iot_link/shell/shell_cmd.c ****             }
+ 232:../../iot_link/shell/shell_cmd.c ****         }
+ 233:../../iot_link/shell/shell_cmd.c ****     }
+ 234:../../iot_link/shell/shell_cmd.c ****     return ret;
+ 235:../../iot_link/shell/shell_cmd.c **** }
+ 236:../../iot_link/shell/shell_cmd.c **** 
+ 237:../../iot_link/shell/shell_cmd.c **** /*******************************************************************************
+ 238:../../iot_link/shell/shell_cmd.c **** function     :used to load the command table
+ 239:../../iot_link/shell/shell_cmd.c **** parameters   :
+ 240:../../iot_link/shell/shell_cmd.c **** instruction  :different compiler has different method to ge the section("oshell")
+ 241:../../iot_link/shell/shell_cmd.c ****               so take care of your compiler
+ 242:../../iot_link/shell/shell_cmd.c **** *******************************************************************************/
+ 243:../../iot_link/shell/shell_cmd.c **** #ifdef __CC_ARM /* ARM C Compiler ,like keil,options for linker:--keep *.o(oshell)*/
+ 244:../../iot_link/shell/shell_cmd.c **** extern unsigned int oshell$$Base;
+ 245:../../iot_link/shell/shell_cmd.c **** extern unsigned int oshell$$Limit;
+ 246:../../iot_link/shell/shell_cmd.c **** //#pragma section("oshell", read) 
+ 247:../../iot_link/shell/shell_cmd.c **** #elif defined(__GNUC__)
+ 248:../../iot_link/shell/shell_cmd.c ****     extern unsigned int __oshell_start;
+ 249:../../iot_link/shell/shell_cmd.c ****     extern unsigned int __oshell_end;
+ 250:../../iot_link/shell/shell_cmd.c **** #else
+ 251:../../iot_link/shell/shell_cmd.c ****     #error("unknown compiler here");
+ 252:../../iot_link/shell/shell_cmd.c **** #endif        
+ 253:../../iot_link/shell/shell_cmd.c **** 
+ 254:../../iot_link/shell/shell_cmd.c **** 
+ 255:../../iot_link/shell/shell_cmd.c **** int   shell_cmd_init(void){
+ 256:../../iot_link/shell/shell_cmd.c ****     void  *cmd_start = NULL;
+ 257:../../iot_link/shell/shell_cmd.c ****     unsigned int len = 0;
+ 258:../../iot_link/shell/shell_cmd.c **** #if defined (__CC_ARM)    //you could add other compiler like this
+ 259:../../iot_link/shell/shell_cmd.c ****     len = (unsigned int)&oshell$$Limit-(unsigned int)&oshell$$Base;
+ 260:../../iot_link/shell/shell_cmd.c ****     cmd_start = &oshell$$Base;
+ 261:../../iot_link/shell/shell_cmd.c **** #elif defined(__GNUC__)
+ 262:../../iot_link/shell/shell_cmd.c ****     cmd_start = &__oshell_start;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 9
+
+
+ 263:../../iot_link/shell/shell_cmd.c ****     len = (unsigned int )&__oshell_end - (unsigned int)&__oshell_start;
+ 264:../../iot_link/shell/shell_cmd.c **** #else 
+ 265:../../iot_link/shell/shell_cmd.c ****     #error("unknown compiler here");
+ 266:../../iot_link/shell/shell_cmd.c **** #endif    
+ 267:../../iot_link/shell/shell_cmd.c ****     if(len > 0){
+ 268:../../iot_link/shell/shell_cmd.c ****         len = len/sizeof(struct shell_item_t);
+ 269:../../iot_link/shell/shell_cmd.c ****         gs_shell_cb.s = (struct shell_item_t *)cmd_start;
+ 270:../../iot_link/shell/shell_cmd.c ****         gs_shell_cb.s_num = len;
+ 271:../../iot_link/shell/shell_cmd.c ****     }
+ 272:../../iot_link/shell/shell_cmd.c ****     return 0;
+ 273:../../iot_link/shell/shell_cmd.c **** }
+ 274:../../iot_link/shell/shell_cmd.c **** 
+ 275:../../iot_link/shell/shell_cmd.c **** static int   os_shell_version(int argc, char *argv){
+ 187              		.loc 1 275 0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 191              	.LVL21:
+ 192 0000 08B5     		push	{r3, lr}
+ 193              	.LCFI4:
+ 194              		.cfi_def_cfa_offset 8
+ 195              		.cfi_offset 3, -8
+ 196              		.cfi_offset 14, -4
+ 276:../../iot_link/shell/shell_cmd.c ****     link_printf("os_shell_version:%d.%d\n\r",cn_shell_ver_major,cn_shell_ver_minor);
+ 197              		.loc 1 276 0
+ 198 0002 0022     		movs	r2, #0
+ 199 0004 0121     		movs	r1, #1
+ 200              	.LVL22:
+ 201 0006 0548     		ldr	r0, .L9
+ 202              	.LVL23:
+ 203 0008 FFF7FEFF 		bl	printf
+ 204              	.LVL24:
+ 205 000c 044B     		ldr	r3, .L9+4
+ 206 000e 1B68     		ldr	r3, [r3]
+ 207 0010 9868     		ldr	r0, [r3, #8]
+ 208 0012 FFF7FEFF 		bl	fflush
+ 209              	.LVL25:
+ 277:../../iot_link/shell/shell_cmd.c ****     return 0;
+ 278:../../iot_link/shell/shell_cmd.c **** };
+ 210              		.loc 1 278 0
+ 211 0016 0020     		movs	r0, #0
+ 212 0018 08BD     		pop	{r3, pc}
+ 213              	.L10:
+ 214 001a 00BF     		.align	2
+ 215              	.L9:
+ 216 001c 00000000 		.word	.LC8
+ 217 0020 00000000 		.word	_impure_ptr
+ 218              		.cfi_endproc
+ 219              	.LFE8:
+ 221              		.section	.text.shell_cmd_index,"ax",%progbits
+ 222              		.align	1
+ 223              		.global	shell_cmd_index
+ 224              		.syntax unified
+ 225              		.thumb
+ 226              		.thumb_func
+ 227              		.fpu fpv4-sp-d16
+ 229              	shell_cmd_index:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 10
+
+
+ 230              	.LFB5:
+ 158:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t *item;
+ 231              		.loc 1 158 0
+ 232              		.cfi_startproc
+ 233              		@ args = 0, pretend = 0, frame = 0
+ 234              		@ frame_needed = 0, uses_anonymous_args = 0
+ 235              	.LVL26:
+ 236 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 237              	.LCFI5:
+ 238              		.cfi_def_cfa_offset 40
+ 239              		.cfi_offset 3, -40
+ 240              		.cfi_offset 4, -36
+ 241              		.cfi_offset 5, -32
+ 242              		.cfi_offset 6, -28
+ 243              		.cfi_offset 7, -24
+ 244              		.cfi_offset 8, -20
+ 245              		.cfi_offset 9, -16
+ 246              		.cfi_offset 10, -12
+ 247              		.cfi_offset 11, -8
+ 248              		.cfi_offset 14, -4
+ 163:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 249              		.loc 1 163 0
+ 250 0004 1F4F     		ldr	r7, .L20
+ 162:../../iot_link/shell/shell_cmd.c ****     for(i = 0;i <gs_shell_cb.s_num && tab_matches.len < MAX_TAB_MATCHES; i++){
+ 251              		.loc 1 162 0
+ 252 0006 204C     		ldr	r4, .L20+4
+ 164:../../iot_link/shell/shell_cmd.c ****         if (strncmp(item->name, index, strlen(index)) == 0) {
+ 253              		.loc 1 164 0
+ 254 0008 D7E900AB 		ldrd	r10, fp, [r7]
+ 162:../../iot_link/shell/shell_cmd.c ****     for(i = 0;i <gs_shell_cb.s_num && tab_matches.len < MAX_TAB_MATCHES; i++){
+ 255              		.loc 1 162 0
+ 256 000c 0025     		movs	r5, #0
+ 158:../../iot_link/shell/shell_cmd.c ****     struct shell_item_t *item;
+ 257              		.loc 1 158 0
+ 258 000e 8046     		mov	r8, r0
+ 162:../../iot_link/shell/shell_cmd.c ****     for(i = 0;i <gs_shell_cb.s_num && tab_matches.len < MAX_TAB_MATCHES; i++){
+ 259              		.loc 1 162 0
+ 260 0010 A4F84050 		strh	r5, [r4, #64]	@ movhi
+ 261              	.LVL27:
+ 262              	.L12:
+ 163:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 263              		.loc 1 163 0 discriminator 1
+ 264 0014 AB45     		cmp	fp, r5
+ 265 0016 03DD     		ble	.L14
+ 163:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 266              		.loc 1 163 0 is_stmt 0 discriminator 3
+ 267 0018 B4F84060 		ldrh	r6, [r4, #64]
+ 268 001c 0F2E     		cmp	r6, #15
+ 269 001e 0BD9     		bls	.L15
+ 270              	.L14:
+ 171:../../iot_link/shell/shell_cmd.c ****         if(strncmp(item->name, index, strlen(index)) == 0){
+ 271              		.loc 1 171 0 is_stmt 1 discriminator 1
+ 272 0020 D7E9029A 		ldrd	r9, r10, [r7, #8]
+ 273 0024 0025     		movs	r5, #0
+ 274              	.LVL28:
+ 275              	.L16:
+ 170:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.d[i]);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 11
+
+
+ 276              		.loc 1 170 0 discriminator 1
+ 277 0026 AA45     		cmp	r10, r5
+ 278 0028 03DD     		ble	.L18
+ 170:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.d[i]);
+ 279              		.loc 1 170 0 is_stmt 0 discriminator 3
+ 280 002a B4F84060 		ldrh	r6, [r4, #64]
+ 281 002e 0F2E     		cmp	r6, #15
+ 282 0030 15D9     		bls	.L19
+ 283              	.L18:
+ 178:../../iot_link/shell/shell_cmd.c **** 
+ 284              		.loc 1 178 0 is_stmt 1
+ 285 0032 1548     		ldr	r0, .L20+4
+ 286 0034 BDE8F88F 		pop	{r3, r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 287              	.LVL29:
+ 288              	.L15:
+ 165:../../iot_link/shell/shell_cmd.c ****             tab_matches.matches[tab_matches.len++] = item->name;
+ 289              		.loc 1 165 0
+ 290 0038 2B01     		lsls	r3, r5, #4
+ 291 003a 4046     		mov	r0, r8
+ 292 003c 5AF80390 		ldr	r9, [r10, r3]
+ 293 0040 FFF7FEFF 		bl	strlen
+ 294              	.LVL30:
+ 295 0044 4146     		mov	r1, r8
+ 296 0046 0246     		mov	r2, r0
+ 297 0048 4846     		mov	r0, r9
+ 298 004a FFF7FEFF 		bl	strncmp
+ 299              	.LVL31:
+ 300 004e 20B9     		cbnz	r0, .L13
+ 166:../../iot_link/shell/shell_cmd.c ****         }
+ 301              		.loc 1 166 0
+ 302 0050 731C     		adds	r3, r6, #1
+ 303 0052 44F82690 		str	r9, [r4, r6, lsl #2]
+ 304 0056 A4F84030 		strh	r3, [r4, #64]	@ movhi
+ 305              	.L13:
+ 163:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 306              		.loc 1 163 0 discriminator 2
+ 307 005a 0135     		adds	r5, r5, #1
+ 308              	.LVL32:
+ 309 005c DAE7     		b	.L12
+ 310              	.LVL33:
+ 311              	.L19:
+ 172:../../iot_link/shell/shell_cmd.c ****             tab_matches.matches[tab_matches.len++] = item->name;
+ 312              		.loc 1 172 0
+ 313 005e 2B01     		lsls	r3, r5, #4
+ 314 0060 4046     		mov	r0, r8
+ 315 0062 59F80370 		ldr	r7, [r9, r3]
+ 316 0066 FFF7FEFF 		bl	strlen
+ 317              	.LVL34:
+ 318 006a 4146     		mov	r1, r8
+ 319 006c 0246     		mov	r2, r0
+ 320 006e 3846     		mov	r0, r7
+ 321 0070 FFF7FEFF 		bl	strncmp
+ 322              	.LVL35:
+ 323 0074 20B9     		cbnz	r0, .L17
+ 173:../../iot_link/shell/shell_cmd.c ****         }
+ 324              		.loc 1 173 0
+ 325 0076 731C     		adds	r3, r6, #1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 12
+
+
+ 326 0078 44F82670 		str	r7, [r4, r6, lsl #2]
+ 327 007c A4F84030 		strh	r3, [r4, #64]	@ movhi
+ 328              	.L17:
+ 170:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.d[i]);
+ 329              		.loc 1 170 0 discriminator 2
+ 330 0080 0135     		adds	r5, r5, #1
+ 331              	.LVL36:
+ 332 0082 D0E7     		b	.L16
+ 333              	.L21:
+ 334              		.align	2
+ 335              	.L20:
+ 336 0084 00000000 		.word	.LANCHOR0
+ 337 0088 00000000 		.word	.LANCHOR2
+ 338              		.cfi_endproc
+ 339              	.LFE5:
+ 341              		.section	.text.shell_cmd_execute,"ax",%progbits
+ 342              		.align	1
+ 343              		.global	shell_cmd_execute
+ 344              		.syntax unified
+ 345              		.thumb
+ 346              		.thumb_func
+ 347              		.fpu fpv4-sp-d16
+ 349              	shell_cmd_execute:
+ 350              	.LFB6:
+ 190:../../iot_link/shell/shell_cmd.c ****     int   ret= -1;
+ 351              		.loc 1 190 0
+ 352              		.cfi_startproc
+ 353              		@ args = 0, pretend = 0, frame = 72
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 355              	.LVL37:
+ 356 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 357              	.LCFI6:
+ 358              		.cfi_def_cfa_offset 32
+ 359              		.cfi_offset 4, -32
+ 360              		.cfi_offset 5, -28
+ 361              		.cfi_offset 6, -24
+ 362              		.cfi_offset 7, -20
+ 363              		.cfi_offset 8, -16
+ 364              		.cfi_offset 9, -12
+ 365              		.cfi_offset 10, -8
+ 366              		.cfi_offset 14, -4
+ 367 0004 92B0     		sub	sp, sp, #72
+ 368              	.LCFI7:
+ 369              		.cfi_def_cfa_offset 104
+ 192:../../iot_link/shell/shell_cmd.c ****     unsigned int     value;
+ 370              		.loc 1 192 0
+ 371 0006 1023     		movs	r3, #16
+ 202:../../iot_link/shell/shell_cmd.c ****     if(argc == 0){
+ 372              		.loc 1 202 0
+ 373 0008 0246     		mov	r2, r0
+ 374 000a 02A9     		add	r1, sp, #8
+ 375 000c 6846     		mov	r0, sp
+ 376              	.LVL38:
+ 192:../../iot_link/shell/shell_cmd.c ****     unsigned int     value;
+ 377              		.loc 1 192 0
+ 378 000e 0093     		str	r3, [sp]
+ 202:../../iot_link/shell/shell_cmd.c ****     if(argc == 0){
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 13
+
+
+ 379              		.loc 1 202 0
+ 380 0010 FFF7FEFF 		bl	string_to_arg
+ 381              	.LVL39:
+ 203:../../iot_link/shell/shell_cmd.c ****         shell_cmd_help(0,NULL);               //if no args we show system help
+ 382              		.loc 1 203 0
+ 383 0014 009C     		ldr	r4, [sp]
+ 384 0016 3CB9     		cbnz	r4, .L23
+ 204:../../iot_link/shell/shell_cmd.c ****         ret = 0;
+ 385              		.loc 1 204 0
+ 386 0018 2146     		mov	r1, r4
+ 387 001a 2046     		mov	r0, r4
+ 388 001c FFF7FEFF 		bl	shell_cmd_help
+ 389              	.LVL40:
+ 390              	.L22:
+ 235:../../iot_link/shell/shell_cmd.c **** 
+ 391              		.loc 1 235 0
+ 392 0020 2046     		mov	r0, r4
+ 393 0022 12B0     		add	sp, sp, #72
+ 394              	.LCFI8:
+ 395              		.cfi_remember_state
+ 396              		.cfi_def_cfa_offset 32
+ 397              		@ sp needed
+ 398 0024 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 399              	.LVL41:
+ 400              	.L23:
+ 401              	.LCFI9:
+ 402              		.cfi_restore_state
+ 403              	.LBB4:
+ 404              	.LBB5:
+ 134:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 405              		.loc 1 134 0
+ 406 0028 314E     		ldr	r6, .L45
+ 407              	.LBE5:
+ 408              	.LBE4:
+ 208:../../iot_link/shell/shell_cmd.c ****         if(NULL == item){
+ 409              		.loc 1 208 0
+ 410 002a 029F     		ldr	r7, [sp, #8]
+ 411              	.LVL42:
+ 412 002c D6E9009A 		ldrd	r9, r10, [r6]
+ 413              	.LBB8:
+ 414              	.LBB6:
+ 134:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 415              		.loc 1 134 0
+ 416 0030 4FF00008 		mov	r8, #0
+ 417              	.LVL43:
+ 418              	.L25:
+ 419 0034 D045     		cmp	r8, r10
+ 420 0036 0EDB     		blt	.L27
+ 421 0038 D6E90289 		ldrd	r8, r9, [r6, #8]
+ 422              	.LVL44:
+ 142:../../iot_link/shell/shell_cmd.c ****             item = &(gs_shell_cb.d[i]);
+ 423              		.loc 1 142 0
+ 424 003c 0026     		movs	r6, #0
+ 425              	.L28:
+ 426              	.LVL45:
+ 427 003e 4E45     		cmp	r6, r9
+ 428 0040 14DB     		blt	.L29
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 14
+
+
+ 429              	.LVL46:
+ 430              	.LBE6:
+ 431              	.LBE8:
+ 210:../../iot_link/shell/shell_cmd.c ****             ret = -1;
+ 432              		.loc 1 210 0
+ 433 0042 3946     		mov	r1, r7
+ 434 0044 2B48     		ldr	r0, .L45+4
+ 435 0046 FFF7FEFF 		bl	printf
+ 436              	.LVL47:
+ 437 004a 2B4B     		ldr	r3, .L45+8
+ 438 004c 1B68     		ldr	r3, [r3]
+ 439 004e 9868     		ldr	r0, [r3, #8]
+ 440 0050 FFF7FEFF 		bl	fflush
+ 441              	.LVL48:
+ 442 0054 49E0     		b	.L44
+ 443              	.LVL49:
+ 444              	.L27:
+ 445              	.LBB9:
+ 446              	.LBB7:
+ 135:../../iot_link/shell/shell_cmd.c ****         if(0 == strcmp(name,item->name)){
+ 447              		.loc 1 135 0
+ 448 0056 4D46     		mov	r5, r9
+ 449              	.LVL50:
+ 136:../../iot_link/shell/shell_cmd.c ****             ret = item;
+ 450              		.loc 1 136 0
+ 451 0058 3846     		mov	r0, r7
+ 452 005a 59F8101B 		ldr	r1, [r9], #16
+ 453 005e FFF7FEFF 		bl	strcmp
+ 454              	.LVL51:
+ 455 0062 0028     		cmp	r0, #0
+ 456 0064 3AD0     		beq	.L26
+ 134:../../iot_link/shell/shell_cmd.c ****         item = &(gs_shell_cb.s[i]);
+ 457              		.loc 1 134 0
+ 458 0066 08F10108 		add	r8, r8, #1
+ 459              	.LVL52:
+ 460 006a E3E7     		b	.L25
+ 461              	.LVL53:
+ 462              	.L29:
+ 143:../../iot_link/shell/shell_cmd.c ****             if(0 == strcmp(name,item->name)){
+ 463              		.loc 1 143 0
+ 464 006c 4546     		mov	r5, r8
+ 465              	.LVL54:
+ 144:../../iot_link/shell/shell_cmd.c ****                 ret = item;
+ 466              		.loc 1 144 0
+ 467 006e 3846     		mov	r0, r7
+ 468 0070 58F8101B 		ldr	r1, [r8], #16
+ 469 0074 FFF7FEFF 		bl	strcmp
+ 470              	.LVL55:
+ 471 0078 80B3     		cbz	r0, .L26
+ 142:../../iot_link/shell/shell_cmd.c ****             item = &(gs_shell_cb.d[i]);
+ 472              		.loc 1 142 0
+ 473 007a 0136     		adds	r6, r6, #1
+ 474              	.LVL56:
+ 475 007c DFE7     		b	.L28
+ 476              	.LVL57:
+ 477              	.L43:
+ 478              	.LBE7:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 15
+
+
+ 479              	.LBE9:
+ 219:../../iot_link/shell/shell_cmd.c ****                     //deal it simple and easy here
+ 480              		.loc 1 219 0
+ 481 007e 032C     		cmp	r4, #3
+ 482 0080 11D1     		bne	.L31
+ 219:../../iot_link/shell/shell_cmd.c ****                     //deal it simple and easy here
+ 483              		.loc 1 219 0 is_stmt 0 discriminator 1
+ 484 0082 1E49     		ldr	r1, .L45+12
+ 485 0084 0398     		ldr	r0, [sp, #12]
+ 486 0086 FFF7FEFF 		bl	strcmp
+ 487              	.LVL58:
+ 488 008a 0246     		mov	r2, r0
+ 489 008c 58B9     		cbnz	r0, .L31
+ 221:../../iot_link/shell/shell_cmd.c ****                     (void) memcpy(item->addr,&value,item->len);
+ 490              		.loc 1 221 0 is_stmt 1
+ 491 008e 0146     		mov	r1, r0
+ 492 0090 0498     		ldr	r0, [sp, #16]
+ 493 0092 FFF7FEFF 		bl	strtol
+ 494              	.LVL59:
+ 495 0096 12A9     		add	r1, sp, #72
+ 222:../../iot_link/shell/shell_cmd.c ****                 }
+ 496              		.loc 1 222 0
+ 497 0098 EA89     		ldrh	r2, [r5, #14]
+ 221:../../iot_link/shell/shell_cmd.c ****                     (void) memcpy(item->addr,&value,item->len);
+ 498              		.loc 1 221 0
+ 499 009a 41F8440D 		str	r0, [r1, #-68]!
+ 222:../../iot_link/shell/shell_cmd.c ****                 }
+ 500              		.loc 1 222 0
+ 501 009e A868     		ldr	r0, [r5, #8]
+ 502 00a0 FFF7FEFF 		bl	memcpy
+ 503              	.LVL60:
+ 504 00a4 21E0     		b	.L44
+ 505              	.L31:
+ 225:../../iot_link/shell/shell_cmd.c ****                     link_printf("(HEX):ADDR:0X%08X:",(unsigned int)bytes);
+ 506              		.loc 1 225 0
+ 507 00a6 AC68     		ldr	r4, [r5, #8]
+ 508              	.LVL61:
+ 226:../../iot_link/shell/shell_cmd.c ****                     for(i = 0;i<item->len;i++){
+ 509              		.loc 1 226 0
+ 510 00a8 134E     		ldr	r6, .L45+8
+ 511 00aa 1548     		ldr	r0, .L45+16
+ 228:../../iot_link/shell/shell_cmd.c ****                     }
+ 512              		.loc 1 228 0
+ 513 00ac DFF85480 		ldr	r8, .L45+20
+ 226:../../iot_link/shell/shell_cmd.c ****                     for(i = 0;i<item->len;i++){
+ 514              		.loc 1 226 0
+ 515 00b0 2146     		mov	r1, r4
+ 516 00b2 FFF7FEFF 		bl	printf
+ 517              	.LVL62:
+ 518 00b6 3368     		ldr	r3, [r6]
+ 519 00b8 9868     		ldr	r0, [r3, #8]
+ 520 00ba FFF7FEFF 		bl	fflush
+ 521              	.LVL63:
+ 522 00be 2746     		mov	r7, r4
+ 523              	.LVL64:
+ 524              	.L32:
+ 227:../../iot_link/shell/shell_cmd.c ****                         link_printf("%02x ",*bytes++);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 16
+
+
+ 525              		.loc 1 227 0 discriminator 1
+ 526 00c0 EA89     		ldrh	r2, [r5, #14]
+ 527 00c2 E31B     		subs	r3, r4, r7
+ 528              	.LVL65:
+ 529 00c4 9A42     		cmp	r2, r3
+ 530 00c6 10DD     		ble	.L44
+ 228:../../iot_link/shell/shell_cmd.c ****                     }
+ 531              		.loc 1 228 0 discriminator 3
+ 532 00c8 14F8011B 		ldrb	r1, [r4], #1	@ zero_extendqisi2
+ 533              	.LVL66:
+ 534 00cc 4046     		mov	r0, r8
+ 535 00ce FFF7FEFF 		bl	printf
+ 536              	.LVL67:
+ 537 00d2 3368     		ldr	r3, [r6]
+ 538 00d4 9868     		ldr	r0, [r3, #8]
+ 539 00d6 FFF7FEFF 		bl	fflush
+ 540              	.LVL68:
+ 541 00da F1E7     		b	.L32
+ 542              	.LVL69:
+ 543              	.L26:
+ 214:../../iot_link/shell/shell_cmd.c ****                 shell_cmd_entry = (fn_shell_cmdentry)item->addr;
+ 544              		.loc 1 214 0
+ 545 00dc AB89     		ldrh	r3, [r5, #12]
+ 546 00de 002B     		cmp	r3, #0
+ 547 00e0 CDD1     		bne	.L43
+ 548              	.LVL70:
+ 216:../../iot_link/shell/shell_cmd.c ****             }
+ 549              		.loc 1 216 0
+ 550 00e2 AB68     		ldr	r3, [r5, #8]
+ 551 00e4 02A9     		add	r1, sp, #8
+ 552 00e6 2046     		mov	r0, r4
+ 553 00e8 9847     		blx	r3
+ 554              	.LVL71:
+ 555              	.L44:
+ 211:../../iot_link/shell/shell_cmd.c ****         }
+ 556              		.loc 1 211 0
+ 557 00ea 4FF0FF34 		mov	r4, #-1
+ 558 00ee 97E7     		b	.L22
+ 559              	.L46:
+ 560              		.align	2
+ 561              	.L45:
+ 562 00f0 00000000 		.word	.LANCHOR0
+ 563 00f4 1D000000 		.word	.LC12
+ 564 00f8 00000000 		.word	_impure_ptr
+ 565 00fc 00000000 		.word	.LC9
+ 566 0100 04000000 		.word	.LC10
+ 567 0104 17000000 		.word	.LC11
+ 568              		.cfi_endproc
+ 569              	.LFE6:
+ 571              		.section	.text.shell_cmd_init,"ax",%progbits
+ 572              		.align	1
+ 573              		.global	shell_cmd_init
+ 574              		.syntax unified
+ 575              		.thumb
+ 576              		.thumb_func
+ 577              		.fpu fpv4-sp-d16
+ 579              	shell_cmd_init:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 17
+
+
+ 580              	.LFB7:
+ 255:../../iot_link/shell/shell_cmd.c ****     void  *cmd_start = NULL;
+ 581              		.loc 1 255 0
+ 582              		.cfi_startproc
+ 583              		@ args = 0, pretend = 0, frame = 0
+ 584              		@ frame_needed = 0, uses_anonymous_args = 0
+ 585              		@ link register save eliminated.
+ 586              	.LVL72:
+ 263:../../iot_link/shell/shell_cmd.c **** #else 
+ 587              		.loc 1 263 0
+ 588 0000 044A     		ldr	r2, .L52
+ 589 0002 054B     		ldr	r3, .L52+4
+ 590              	.LVL73:
+ 267:../../iot_link/shell/shell_cmd.c ****         len = len/sizeof(struct shell_item_t);
+ 591              		.loc 1 267 0
+ 592 0004 9B1A     		subs	r3, r3, r2
+ 593              	.LVL74:
+ 269:../../iot_link/shell/shell_cmd.c ****         gs_shell_cb.s_num = len;
+ 594              		.loc 1 269 0
+ 595 0006 1FBF     		itttt	ne
+ 596 0008 0449     		ldrne	r1, .L52+8
+ 268:../../iot_link/shell/shell_cmd.c ****         gs_shell_cb.s = (struct shell_item_t *)cmd_start;
+ 597              		.loc 1 268 0
+ 598 000a 1B09     		lsrne	r3, r3, #4
+ 599              	.LVL75:
+ 269:../../iot_link/shell/shell_cmd.c ****         gs_shell_cb.s_num = len;
+ 600              		.loc 1 269 0
+ 601 000c 0A60     		strne	r2, [r1]
+ 270:../../iot_link/shell/shell_cmd.c ****     }
+ 602              		.loc 1 270 0
+ 603 000e 4B60     		strne	r3, [r1, #4]
+ 273:../../iot_link/shell/shell_cmd.c **** 
+ 604              		.loc 1 273 0
+ 605 0010 0020     		movs	r0, #0
+ 606 0012 7047     		bx	lr
+ 607              	.L53:
+ 608              		.align	2
+ 609              	.L52:
+ 610 0014 00000000 		.word	__oshell_start
+ 611 0018 00000000 		.word	__oshell_end
+ 612 001c 00000000 		.word	.LANCHOR0
+ 613              		.cfi_endproc
+ 614              	.LFE7:
+ 616              		.section	.bss.gs_shell_cb,"aw",%nobits
+ 617              		.align	2
+ 618              		.set	.LANCHOR0,. + 0
+ 621              	gs_shell_cb:
+ 622 0000 00000000 		.space	16
+ 622      00000000 
+ 622      00000000 
+ 622      00000000 
+ 623              		.section	.bss.tab_matches,"aw",%nobits
+ 624              		.align	2
+ 625              		.set	.LANCHOR2,. + 0
+ 628              	tab_matches:
+ 629 0000 00000000 		.space	68
+ 629      00000000 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 18
+
+
+ 629      00000000 
+ 629      00000000 
+ 629      00000000 
+ 630              		.section	.rodata.gs_os_shell_type,"a",%progbits
+ 631              		.align	2
+ 632              		.set	.LANCHOR1,. + 0
+ 635              	gs_os_shell_type:
+ 636 0000 12000000 		.word	.LC15
+ 637 0004 16000000 		.word	.LC16
+ 638              		.section	.rodata.os_shell_version.str1.1,"aMS",%progbits,1
+ 639              	.LC8:
+ 640 0000 6F735F73 		.ascii	"os_shell_version:%d.%d\012\015\000"
+ 640      68656C6C 
+ 640      5F766572 
+ 640      73696F6E 
+ 640      3A25642E 
+ 641              		.section	.rodata.shell_cmd_execute.str1.1,"aMS",%progbits,1
+ 642              	.LC9:
+ 643 0000 73657400 		.ascii	"set\000"
+ 644              	.LC10:
+ 645 0004 28484558 		.ascii	"(HEX):ADDR:0X%08X:\000"
+ 645      293A4144 
+ 645      44523A30 
+ 645      58253038 
+ 645      583A00
+ 646              	.LC11:
+ 647 0017 25303278 		.ascii	"%02x \000"
+ 647      2000
+ 648              	.LC12:
+ 649 001d 5348454C 		.ascii	"SHELL COMMAND NOT FIND:%s\012\015\000"
+ 649      4C20434F 
+ 649      4D4D414E 
+ 649      44204E4F 
+ 649      54204649 
+ 650              		.section	.rodata.shell_cmd_help.str1.1,"aMS",%progbits,1
+ 651              	.LC0:
+ 652 0000 4C656E00 		.ascii	"Len\000"
+ 653              	.LC1:
+ 654 0004 54797065 		.ascii	"Type\000"
+ 654      00
+ 655              	.LC2:
+ 656 0009 4E616D65 		.ascii	"Name\000"
+ 656      00
+ 657              	.LC3:
+ 658 000e 252D3136 		.ascii	"%-16s%-5s%-4s%-10s%-20s\012\015\000"
+ 658      73252D35 
+ 658      73252D34 
+ 658      73252D31 
+ 658      3073252D 
+ 659              	.LC4:
+ 660 0028 44657363 		.ascii	"Description\000"
+ 660      72697074 
+ 660      696F6E00 
+ 661              	.LC5:
+ 662 0034 52756E41 		.ascii	"RunAddr\000"
+ 662      64647200 
+ 663              	.LC6:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 19
+
+
+ 664 003c 252D3136 		.ascii	"%-16s%-5s%-4x%08x  %-30s\012\015\000"
+ 664      73252D35 
+ 664      73252D34 
+ 664      78253038 
+ 664      78202025 
+ 665              	.LC7:
+ 666 0057 252D3278 		.ascii	"%-2x  %-16s%-5s%-4x%08x  %-30s\012\015\000"
+ 666      2020252D 
+ 666      31367325 
+ 666      2D357325 
+ 666      2D347825 
+ 667              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 668              	.LC13:
+ 669 0000 68656C70 		.ascii	"help\000"
+ 669      00
+ 670              	.LC14:
+ 671 0005 7368656C 		.ascii	"shellversion\000"
+ 671      6C766572 
+ 671      73696F6E 
+ 671      00
+ 672              	.LC15:
+ 673 0012 434D4400 		.ascii	"CMD\000"
+ 674              	.LC16:
+ 675 0016 56415200 		.ascii	"VAR\000"
+ 676              		.section	oshell,"a",%progbits
+ 677              		.align	2
+ 680              	__oshell_shell_cmd_help:
+ 681 0000 00000000 		.word	.LC13
+ 682 0004 00000000 		.word	.LC13
+ 683 0008 00000000 		.word	shell_cmd_help
+ 684 000c 0000     		.short	0
+ 685 000e 0400     		.short	4
+ 688              	__oshell_os_shell_version:
+ 689 0010 05000000 		.word	.LC14
+ 690 0014 05000000 		.word	.LC14
+ 691 0018 00000000 		.word	os_shell_version
+ 692 001c 0000     		.short	0
+ 693 001e 0400     		.short	4
+ 694              		.text
+ 695              	.Letext0:
+ 696              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 697              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 698              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 699              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 700              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 701              		.file 7 "../../iot_link/inc/shell.h"
+ 702              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 703              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 704              		.file 10 "../../iot_link/link_misc/link_misc.h"
+ 705              		.file 11 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 shell_cmd.c
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:18     .text.shell_cmd_help:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:24     .text.shell_cmd_help:00000000 shell_cmd_help
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:164    .text.shell_cmd_help:000000b8 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:179    .text.os_shell_version:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:185    .text.os_shell_version:00000000 os_shell_version
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:216    .text.os_shell_version:0000001c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:222    .text.shell_cmd_index:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:229    .text.shell_cmd_index:00000000 shell_cmd_index
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:336    .text.shell_cmd_index:00000084 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:342    .text.shell_cmd_execute:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:349    .text.shell_cmd_execute:00000000 shell_cmd_execute
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:562    .text.shell_cmd_execute:000000f0 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:572    .text.shell_cmd_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:579    .text.shell_cmd_init:00000000 shell_cmd_init
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:610    .text.shell_cmd_init:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:617    .bss.gs_shell_cb:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:621    .bss.gs_shell_cb:00000000 gs_shell_cb
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:624    .bss.tab_matches:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:628    .bss.tab_matches:00000000 tab_matches
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:631    .rodata.gs_os_shell_type:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:635    .rodata.gs_os_shell_type:00000000 gs_os_shell_type
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:677    oshell:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:680    oshell:00000000 __oshell_shell_cmd_help
+C:\Users\LuckyE\AppData\Local\Temp\ccpCr1JB.s:688    oshell:00000010 __oshell_os_shell_version
+
+UNDEFINED SYMBOLS
+printf
+fflush
+_impure_ptr
+strlen
+strncmp
+string_to_arg
+strcmp
+strtol
+memcpy
+__oshell_start
+__oshell_end

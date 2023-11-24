@@ -1,0 +1,2010 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"osal.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.osal_install,"ax",%progbits
+  18              		.align	1
+  19              		.global	osal_install
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	osal_install:
+  26              	.LFB3:
+  27              		.file 1 "../../iot_link/os/osal/osal.c"
+   1:../../iot_link/os/osal/osal.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/osal/osal.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/osal/osal.c ****  * All rights reserved.
+   4:../../iot_link/os/osal/osal.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/osal/osal.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/osal/osal.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/osal/osal.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/osal/osal.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/osal/osal.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/osal/osal.c ****  * provided with the distribution.
+  11:../../iot_link/os/osal/osal.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/osal/osal.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/osal/osal.c ****  * permission.
+  14:../../iot_link/os/osal/osal.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/osal/osal.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/osal/osal.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/osal/osal.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/osal/osal.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/osal/osal.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/osal/osal.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/osal/osal.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/osal/osal.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/osal/osal.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/osal/osal.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/osal/osal.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/osal/osal.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/osal/osal.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/osal/osal.c ****  * ===============================================
+  29:../../iot_link/os/osal/osal.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/osal/osal.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/osal/osal.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 2
+
+
+  32:../../iot_link/os/osal/osal.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/osal/osal.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/osal/osal.c **** /**
+  35:../../iot_link/os/osal/osal.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/os/osal/osal.c ****  *  2019-07-26 18:04  zhangqianfu  The first version
+  37:../../iot_link/os/osal/osal.c ****  *
+  38:../../iot_link/os/osal/osal.c ****  */
+  39:../../iot_link/os/osal/osal.c **** #include <stddef.h>
+  40:../../iot_link/os/osal/osal.c **** #include <stdint.h>
+  41:../../iot_link/os/osal/osal.c **** #include <stdlib.h>
+  42:../../iot_link/os/osal/osal.c **** #include <unistd.h>
+  43:../../iot_link/os/osal/osal.c **** 
+  44:../../iot_link/os/osal/osal.c **** 
+  45:../../iot_link/os/osal/osal.c **** #include <string.h>
+  46:../../iot_link/os/osal/osal.c **** 
+  47:../../iot_link/os/osal/osal.c **** #include <osal_imp.h>
+  48:../../iot_link/os/osal/osal.c **** #include <osal.h>
+  49:../../iot_link/os/osal/osal.c **** 
+  50:../../iot_link/os/osal/osal.c **** static const tag_os *s_os_cb = NULL;
+  51:../../iot_link/os/osal/osal.c **** 
+  52:../../iot_link/os/osal/osal.c **** int osal_install(const tag_os *os)
+  53:../../iot_link/os/osal/osal.c **** {
+  28              		.loc 1 53 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  54:../../iot_link/os/osal/osal.c ****     int ret = -1;
+  55:../../iot_link/os/osal/osal.c **** 
+  56:../../iot_link/os/osal/osal.c ****     if(NULL == s_os_cb)
+  34              		.loc 1 56 0
+  35 0000 044A     		ldr	r2, .L4
+  36 0002 1368     		ldr	r3, [r2]
+  37 0004 13B9     		cbnz	r3, .L3
+  57:../../iot_link/os/osal/osal.c ****     {
+  58:../../iot_link/os/osal/osal.c ****         s_os_cb = os;
+  38              		.loc 1 58 0
+  39 0006 1060     		str	r0, [r2]
+  40              	.LVL1:
+  59:../../iot_link/os/osal/osal.c ****         ret = 0;
+  41              		.loc 1 59 0
+  42 0008 1846     		mov	r0, r3
+  43              	.LVL2:
+  44 000a 7047     		bx	lr
+  45              	.LVL3:
+  46              	.L3:
+  54:../../iot_link/os/osal/osal.c ****     int ret = -1;
+  47              		.loc 1 54 0
+  48 000c 4FF0FF30 		mov	r0, #-1
+  49              	.LVL4:
+  60:../../iot_link/os/osal/osal.c ****     }
+  61:../../iot_link/os/osal/osal.c **** 
+  62:../../iot_link/os/osal/osal.c ****     return ret;
+  63:../../iot_link/os/osal/osal.c **** }
+  50              		.loc 1 63 0
+  51 0010 7047     		bx	lr
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 3
+
+
+  52              	.L5:
+  53 0012 00BF     		.align	2
+  54              	.L4:
+  55 0014 00000000 		.word	.LANCHOR0
+  56              		.cfi_endproc
+  57              	.LFE3:
+  59              		.section	.text.osal_task_create,"ax",%progbits
+  60              		.align	1
+  61              		.global	osal_task_create
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  65              		.fpu fpv4-sp-d16
+  67              	osal_task_create:
+  68              	.LFB4:
+  64:../../iot_link/os/osal/osal.c **** 
+  65:../../iot_link/os/osal/osal.c **** 
+  66:../../iot_link/os/osal/osal.c **** void* osal_task_create(const char *name,int (*task_entry)(void *args),\
+  67:../../iot_link/os/osal/osal.c ****                       void *args,int stack_size,void *stack,int prior)
+  68:../../iot_link/os/osal/osal.c **** {
+  69              		.loc 1 68 0
+  70              		.cfi_startproc
+  71              		@ args = 8, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73              		@ link register save eliminated.
+  74              	.LVL5:
+  75 0000 10B4     		push	{r4}
+  76              	.LCFI0:
+  77              		.cfi_def_cfa_offset 4
+  78              		.cfi_offset 4, -4
+  69:../../iot_link/os/osal/osal.c ****     void *ret = NULL;
+  70:../../iot_link/os/osal/osal.c **** 
+  71:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->task_create))
+  79              		.loc 1 71 0
+  80 0002 074C     		ldr	r4, .L14
+  81 0004 2468     		ldr	r4, [r4]
+  82 0006 3CB1     		cbz	r4, .L6
+  83              		.loc 1 71 0 is_stmt 0 discriminator 1
+  84 0008 6468     		ldr	r4, [r4, #4]
+  85 000a 2CB1     		cbz	r4, .L6
+  86              		.loc 1 71 0 discriminator 2
+  87 000c 2468     		ldr	r4, [r4]
+  88 000e 1CB1     		cbz	r4, .L6
+  72:../../iot_link/os/osal/osal.c ****     {
+  73:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->task_create(name, task_entry,args,stack_size,stack,prior);
+  89              		.loc 1 73 0 is_stmt 1
+  90 0010 A446     		mov	ip, r4
+  74:../../iot_link/os/osal/osal.c ****     }
+  75:../../iot_link/os/osal/osal.c **** 
+  76:../../iot_link/os/osal/osal.c ****     return ret;
+  77:../../iot_link/os/osal/osal.c **** }
+  91              		.loc 1 77 0
+  92 0012 5DF8044B 		ldr	r4, [sp], #4
+  93              	.LCFI1:
+  94              		.cfi_remember_state
+  95              		.cfi_restore 4
+  96              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 4
+
+
+  97              	.LVL6:
+  73:../../iot_link/os/osal/osal.c ****     }
+  98              		.loc 1 73 0
+  99 0016 6047     		bx	ip
+ 100              	.LVL7:
+ 101              	.L6:
+ 102              	.LCFI2:
+ 103              		.cfi_restore_state
+ 104              		.loc 1 77 0
+ 105 0018 0020     		movs	r0, #0
+ 106              	.LVL8:
+ 107 001a 5DF8044B 		ldr	r4, [sp], #4
+ 108              	.LCFI3:
+ 109              		.cfi_restore 4
+ 110              		.cfi_def_cfa_offset 0
+ 111              	.LVL9:
+ 112 001e 7047     		bx	lr
+ 113              	.L15:
+ 114              		.align	2
+ 115              	.L14:
+ 116 0020 00000000 		.word	.LANCHOR0
+ 117              		.cfi_endproc
+ 118              	.LFE4:
+ 120              		.section	.text.osal_task_kill,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	osal_task_kill
+ 123              		.syntax unified
+ 124              		.thumb
+ 125              		.thumb_func
+ 126              		.fpu fpv4-sp-d16
+ 128              	osal_task_kill:
+ 129              	.LFB5:
+  78:../../iot_link/os/osal/osal.c **** 
+  79:../../iot_link/os/osal/osal.c **** 
+  80:../../iot_link/os/osal/osal.c **** int osal_task_kill(void *task)
+  81:../../iot_link/os/osal/osal.c **** {
+ 130              		.loc 1 81 0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		@ link register save eliminated.
+ 135              	.LVL10:
+  82:../../iot_link/os/osal/osal.c ****     int ret = -1;
+  83:../../iot_link/os/osal/osal.c **** 
+  84:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->task_kill))
+ 136              		.loc 1 84 0
+ 137 0000 054B     		ldr	r3, .L24
+ 138 0002 1B68     		ldr	r3, [r3]
+ 139 0004 23B1     		cbz	r3, .L16
+ 140              		.loc 1 84 0 is_stmt 0 discriminator 1
+ 141 0006 5B68     		ldr	r3, [r3, #4]
+ 142 0008 13B1     		cbz	r3, .L16
+ 143              		.loc 1 84 0 discriminator 2
+ 144 000a 5B68     		ldr	r3, [r3, #4]
+ 145 000c 03B1     		cbz	r3, .L16
+  85:../../iot_link/os/osal/osal.c ****     {
+  86:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->task_kill(task);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 5
+
+
+ 146              		.loc 1 86 0 is_stmt 1
+ 147 000e 1847     		bx	r3
+ 148              	.LVL11:
+ 149              	.L16:
+  87:../../iot_link/os/osal/osal.c ****     }
+  88:../../iot_link/os/osal/osal.c **** 
+  89:../../iot_link/os/osal/osal.c ****     return ret;
+  90:../../iot_link/os/osal/osal.c **** 
+  91:../../iot_link/os/osal/osal.c **** }
+ 150              		.loc 1 91 0
+ 151 0010 4FF0FF30 		mov	r0, #-1
+ 152              	.LVL12:
+ 153 0014 7047     		bx	lr
+ 154              	.L25:
+ 155 0016 00BF     		.align	2
+ 156              	.L24:
+ 157 0018 00000000 		.word	.LANCHOR0
+ 158              		.cfi_endproc
+ 159              	.LFE5:
+ 161              		.section	.text.osal_task_exit,"ax",%progbits
+ 162              		.align	1
+ 163              		.global	osal_task_exit
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 167              		.fpu fpv4-sp-d16
+ 169              	osal_task_exit:
+ 170              	.LFB6:
+  92:../../iot_link/os/osal/osal.c **** 
+  93:../../iot_link/os/osal/osal.c **** 
+  94:../../iot_link/os/osal/osal.c **** void osal_task_exit()
+  95:../../iot_link/os/osal/osal.c **** {
+ 171              		.loc 1 95 0
+ 172              		.cfi_startproc
+ 173              		@ args = 0, pretend = 0, frame = 0
+ 174              		@ frame_needed = 0, uses_anonymous_args = 0
+ 175              		@ link register save eliminated.
+  96:../../iot_link/os/osal/osal.c **** 
+  97:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->task_exit))
+ 176              		.loc 1 97 0
+ 177 0000 044B     		ldr	r3, .L37
+ 178 0002 1B68     		ldr	r3, [r3]
+ 179 0004 23B1     		cbz	r3, .L26
+ 180              		.loc 1 97 0 is_stmt 0 discriminator 1
+ 181 0006 5B68     		ldr	r3, [r3, #4]
+ 182 0008 13B1     		cbz	r3, .L26
+ 183              		.loc 1 97 0 discriminator 2
+ 184 000a 9B68     		ldr	r3, [r3, #8]
+ 185 000c 03B1     		cbz	r3, .L26
+  98:../../iot_link/os/osal/osal.c ****     {
+  99:../../iot_link/os/osal/osal.c ****         s_os_cb->ops->task_exit();
+ 186              		.loc 1 99 0 is_stmt 1
+ 187 000e 1847     		bx	r3	@ indirect register sibling call
+ 188              	.LVL13:
+ 189              	.L26:
+ 100:../../iot_link/os/osal/osal.c ****     }
+ 101:../../iot_link/os/osal/osal.c ****     return ;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 6
+
+
+ 102:../../iot_link/os/osal/osal.c **** 
+ 103:../../iot_link/os/osal/osal.c **** }
+ 190              		.loc 1 103 0
+ 191 0010 7047     		bx	lr
+ 192              	.L38:
+ 193 0012 00BF     		.align	2
+ 194              	.L37:
+ 195 0014 00000000 		.word	.LANCHOR0
+ 196              		.cfi_endproc
+ 197              	.LFE6:
+ 199              		.section	.text.osal_task_sleep,"ax",%progbits
+ 200              		.align	1
+ 201              		.global	osal_task_sleep
+ 202              		.syntax unified
+ 203              		.thumb
+ 204              		.thumb_func
+ 205              		.fpu fpv4-sp-d16
+ 207              	osal_task_sleep:
+ 208              	.LFB7:
+ 104:../../iot_link/os/osal/osal.c **** 
+ 105:../../iot_link/os/osal/osal.c **** 
+ 106:../../iot_link/os/osal/osal.c **** void osal_task_sleep(int ms)
+ 107:../../iot_link/os/osal/osal.c **** {
+ 209              		.loc 1 107 0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213              		@ link register save eliminated.
+ 214              	.LVL14:
+ 108:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->task_sleep))
+ 215              		.loc 1 108 0
+ 216 0000 044B     		ldr	r3, .L50
+ 217 0002 1B68     		ldr	r3, [r3]
+ 218 0004 23B1     		cbz	r3, .L39
+ 219              		.loc 1 108 0 is_stmt 0 discriminator 1
+ 220 0006 5B68     		ldr	r3, [r3, #4]
+ 221 0008 13B1     		cbz	r3, .L39
+ 222              		.loc 1 108 0 discriminator 2
+ 223 000a DB68     		ldr	r3, [r3, #12]
+ 224 000c 03B1     		cbz	r3, .L39
+ 109:../../iot_link/os/osal/osal.c ****     {
+ 110:../../iot_link/os/osal/osal.c ****         s_os_cb->ops->task_sleep(ms);
+ 225              		.loc 1 110 0 is_stmt 1
+ 226 000e 1847     		bx	r3	@ indirect register sibling call
+ 227              	.LVL15:
+ 228              	.L39:
+ 111:../../iot_link/os/osal/osal.c ****     }
+ 112:../../iot_link/os/osal/osal.c **** 
+ 113:../../iot_link/os/osal/osal.c ****     return ;
+ 114:../../iot_link/os/osal/osal.c **** 
+ 115:../../iot_link/os/osal/osal.c **** }
+ 229              		.loc 1 115 0
+ 230 0010 7047     		bx	lr
+ 231              	.L51:
+ 232 0012 00BF     		.align	2
+ 233              	.L50:
+ 234 0014 00000000 		.word	.LANCHOR0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 7
+
+
+ 235              		.cfi_endproc
+ 236              	.LFE7:
+ 238              		.section	.text.osal_mutex_create,"ax",%progbits
+ 239              		.align	1
+ 240              		.global	osal_mutex_create
+ 241              		.syntax unified
+ 242              		.thumb
+ 243              		.thumb_func
+ 244              		.fpu fpv4-sp-d16
+ 246              	osal_mutex_create:
+ 247              	.LFB8:
+ 116:../../iot_link/os/osal/osal.c **** 
+ 117:../../iot_link/os/osal/osal.c **** 
+ 118:../../iot_link/os/osal/osal.c **** bool_t  osal_mutex_create(osal_mutex_t *mutex)
+ 119:../../iot_link/os/osal/osal.c **** {
+ 248              		.loc 1 119 0
+ 249              		.cfi_startproc
+ 250              		@ args = 0, pretend = 0, frame = 0
+ 251              		@ frame_needed = 0, uses_anonymous_args = 0
+ 252              		@ link register save eliminated.
+ 253              	.LVL16:
+ 120:../../iot_link/os/osal/osal.c ****     bool_t ret = false;
+ 121:../../iot_link/os/osal/osal.c **** 
+ 122:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->mutex_create))
+ 254              		.loc 1 122 0
+ 255 0000 044B     		ldr	r3, .L60
+ 256 0002 1B68     		ldr	r3, [r3]
+ 257 0004 23B1     		cbz	r3, .L52
+ 258              		.loc 1 122 0 is_stmt 0 discriminator 1
+ 259 0006 5B68     		ldr	r3, [r3, #4]
+ 260 0008 13B1     		cbz	r3, .L52
+ 261              		.loc 1 122 0 discriminator 2
+ 262 000a 1B69     		ldr	r3, [r3, #16]
+ 263 000c 03B1     		cbz	r3, .L52
+ 123:../../iot_link/os/osal/osal.c ****     {
+ 124:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->mutex_create(mutex);
+ 264              		.loc 1 124 0 is_stmt 1
+ 265 000e 1847     		bx	r3
+ 266              	.LVL17:
+ 267              	.L52:
+ 125:../../iot_link/os/osal/osal.c ****     }
+ 126:../../iot_link/os/osal/osal.c **** 
+ 127:../../iot_link/os/osal/osal.c ****     return ret;
+ 128:../../iot_link/os/osal/osal.c **** 
+ 129:../../iot_link/os/osal/osal.c **** }
+ 268              		.loc 1 129 0
+ 269 0010 0020     		movs	r0, #0
+ 270              	.LVL18:
+ 271 0012 7047     		bx	lr
+ 272              	.L61:
+ 273              		.align	2
+ 274              	.L60:
+ 275 0014 00000000 		.word	.LANCHOR0
+ 276              		.cfi_endproc
+ 277              	.LFE8:
+ 279              		.section	.text.osal_mutex_lock,"ax",%progbits
+ 280              		.align	1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 8
+
+
+ 281              		.global	osal_mutex_lock
+ 282              		.syntax unified
+ 283              		.thumb
+ 284              		.thumb_func
+ 285              		.fpu fpv4-sp-d16
+ 287              	osal_mutex_lock:
+ 288              	.LFB9:
+ 130:../../iot_link/os/osal/osal.c **** 
+ 131:../../iot_link/os/osal/osal.c **** 
+ 132:../../iot_link/os/osal/osal.c **** bool_t  osal_mutex_lock(osal_mutex_t mutex)
+ 133:../../iot_link/os/osal/osal.c **** {
+ 289              		.loc 1 133 0
+ 290              		.cfi_startproc
+ 291              		@ args = 0, pretend = 0, frame = 0
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+ 293              		@ link register save eliminated.
+ 294              	.LVL19:
+ 134:../../iot_link/os/osal/osal.c ****     bool_t ret = false;
+ 135:../../iot_link/os/osal/osal.c **** 
+ 136:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->mutex_lock))
+ 295              		.loc 1 136 0
+ 296 0000 044B     		ldr	r3, .L70
+ 297 0002 1B68     		ldr	r3, [r3]
+ 298 0004 23B1     		cbz	r3, .L62
+ 299              		.loc 1 136 0 is_stmt 0 discriminator 1
+ 300 0006 5B68     		ldr	r3, [r3, #4]
+ 301 0008 13B1     		cbz	r3, .L62
+ 302              		.loc 1 136 0 discriminator 2
+ 303 000a 5B69     		ldr	r3, [r3, #20]
+ 304 000c 03B1     		cbz	r3, .L62
+ 137:../../iot_link/os/osal/osal.c ****     {
+ 138:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->mutex_lock(mutex);
+ 305              		.loc 1 138 0 is_stmt 1
+ 306 000e 1847     		bx	r3
+ 307              	.LVL20:
+ 308              	.L62:
+ 139:../../iot_link/os/osal/osal.c ****     }
+ 140:../../iot_link/os/osal/osal.c **** 
+ 141:../../iot_link/os/osal/osal.c ****     return ret;
+ 142:../../iot_link/os/osal/osal.c **** 
+ 143:../../iot_link/os/osal/osal.c **** }
+ 309              		.loc 1 143 0
+ 310 0010 0020     		movs	r0, #0
+ 311              	.LVL21:
+ 312 0012 7047     		bx	lr
+ 313              	.L71:
+ 314              		.align	2
+ 315              	.L70:
+ 316 0014 00000000 		.word	.LANCHOR0
+ 317              		.cfi_endproc
+ 318              	.LFE9:
+ 320              		.section	.text.osal_mutex_unlock,"ax",%progbits
+ 321              		.align	1
+ 322              		.global	osal_mutex_unlock
+ 323              		.syntax unified
+ 324              		.thumb
+ 325              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 9
+
+
+ 326              		.fpu fpv4-sp-d16
+ 328              	osal_mutex_unlock:
+ 329              	.LFB10:
+ 144:../../iot_link/os/osal/osal.c **** 
+ 145:../../iot_link/os/osal/osal.c **** 
+ 146:../../iot_link/os/osal/osal.c **** bool_t  osal_mutex_unlock(osal_mutex_t mutex)
+ 147:../../iot_link/os/osal/osal.c **** {
+ 330              		.loc 1 147 0
+ 331              		.cfi_startproc
+ 332              		@ args = 0, pretend = 0, frame = 0
+ 333              		@ frame_needed = 0, uses_anonymous_args = 0
+ 334              		@ link register save eliminated.
+ 335              	.LVL22:
+ 148:../../iot_link/os/osal/osal.c ****     bool_t ret = false;
+ 149:../../iot_link/os/osal/osal.c **** 
+ 150:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->mutex_unlock))
+ 336              		.loc 1 150 0
+ 337 0000 044B     		ldr	r3, .L80
+ 338 0002 1B68     		ldr	r3, [r3]
+ 339 0004 23B1     		cbz	r3, .L72
+ 340              		.loc 1 150 0 is_stmt 0 discriminator 1
+ 341 0006 5B68     		ldr	r3, [r3, #4]
+ 342 0008 13B1     		cbz	r3, .L72
+ 343              		.loc 1 150 0 discriminator 2
+ 344 000a 9B69     		ldr	r3, [r3, #24]
+ 345 000c 03B1     		cbz	r3, .L72
+ 151:../../iot_link/os/osal/osal.c ****     {
+ 152:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->mutex_unlock(mutex);
+ 346              		.loc 1 152 0 is_stmt 1
+ 347 000e 1847     		bx	r3
+ 348              	.LVL23:
+ 349              	.L72:
+ 153:../../iot_link/os/osal/osal.c ****     }
+ 154:../../iot_link/os/osal/osal.c **** 
+ 155:../../iot_link/os/osal/osal.c ****     return ret;
+ 156:../../iot_link/os/osal/osal.c **** 
+ 157:../../iot_link/os/osal/osal.c **** }
+ 350              		.loc 1 157 0
+ 351 0010 0020     		movs	r0, #0
+ 352              	.LVL24:
+ 353 0012 7047     		bx	lr
+ 354              	.L81:
+ 355              		.align	2
+ 356              	.L80:
+ 357 0014 00000000 		.word	.LANCHOR0
+ 358              		.cfi_endproc
+ 359              	.LFE10:
+ 361              		.section	.text.osal_mutex_del,"ax",%progbits
+ 362              		.align	1
+ 363              		.global	osal_mutex_del
+ 364              		.syntax unified
+ 365              		.thumb
+ 366              		.thumb_func
+ 367              		.fpu fpv4-sp-d16
+ 369              	osal_mutex_del:
+ 370              	.LFB11:
+ 158:../../iot_link/os/osal/osal.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 10
+
+
+ 159:../../iot_link/os/osal/osal.c **** bool_t  osal_mutex_del(osal_mutex_t mutex)
+ 160:../../iot_link/os/osal/osal.c **** {
+ 371              		.loc 1 160 0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 0
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375              		@ link register save eliminated.
+ 376              	.LVL25:
+ 161:../../iot_link/os/osal/osal.c ****     bool_t ret = false;
+ 162:../../iot_link/os/osal/osal.c **** 
+ 163:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->mutex_del))
+ 377              		.loc 1 163 0
+ 378 0000 044B     		ldr	r3, .L90
+ 379 0002 1B68     		ldr	r3, [r3]
+ 380 0004 23B1     		cbz	r3, .L82
+ 381              		.loc 1 163 0 is_stmt 0 discriminator 1
+ 382 0006 5B68     		ldr	r3, [r3, #4]
+ 383 0008 13B1     		cbz	r3, .L82
+ 384              		.loc 1 163 0 discriminator 2
+ 385 000a DB69     		ldr	r3, [r3, #28]
+ 386 000c 03B1     		cbz	r3, .L82
+ 164:../../iot_link/os/osal/osal.c ****     {
+ 165:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->mutex_del(mutex);
+ 387              		.loc 1 165 0 is_stmt 1
+ 388 000e 1847     		bx	r3
+ 389              	.LVL26:
+ 390              	.L82:
+ 166:../../iot_link/os/osal/osal.c ****     }
+ 167:../../iot_link/os/osal/osal.c **** 
+ 168:../../iot_link/os/osal/osal.c ****     return ret;
+ 169:../../iot_link/os/osal/osal.c **** 
+ 170:../../iot_link/os/osal/osal.c **** }
+ 391              		.loc 1 170 0
+ 392 0010 0020     		movs	r0, #0
+ 393              	.LVL27:
+ 394 0012 7047     		bx	lr
+ 395              	.L91:
+ 396              		.align	2
+ 397              	.L90:
+ 398 0014 00000000 		.word	.LANCHOR0
+ 399              		.cfi_endproc
+ 400              	.LFE11:
+ 402              		.section	.text.osal_semp_create,"ax",%progbits
+ 403              		.align	1
+ 404              		.global	osal_semp_create
+ 405              		.syntax unified
+ 406              		.thumb
+ 407              		.thumb_func
+ 408              		.fpu fpv4-sp-d16
+ 410              	osal_semp_create:
+ 411              	.LFB12:
+ 171:../../iot_link/os/osal/osal.c **** 
+ 172:../../iot_link/os/osal/osal.c **** bool_t  osal_semp_create(osal_semp_t *semp,int limit,int initvalue)
+ 173:../../iot_link/os/osal/osal.c **** {
+ 412              		.loc 1 173 0
+ 413              		.cfi_startproc
+ 414              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 11
+
+
+ 415              		@ frame_needed = 0, uses_anonymous_args = 0
+ 416              		@ link register save eliminated.
+ 417              	.LVL28:
+ 174:../../iot_link/os/osal/osal.c ****     bool_t ret = false;
+ 175:../../iot_link/os/osal/osal.c **** 
+ 176:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->semp_create))
+ 418              		.loc 1 176 0
+ 419 0000 044B     		ldr	r3, .L100
+ 420 0002 1B68     		ldr	r3, [r3]
+ 421 0004 23B1     		cbz	r3, .L92
+ 422              		.loc 1 176 0 is_stmt 0 discriminator 1
+ 423 0006 5B68     		ldr	r3, [r3, #4]
+ 424 0008 13B1     		cbz	r3, .L92
+ 425              		.loc 1 176 0 discriminator 2
+ 426 000a 1B6A     		ldr	r3, [r3, #32]
+ 427 000c 03B1     		cbz	r3, .L92
+ 177:../../iot_link/os/osal/osal.c ****     {
+ 178:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->semp_create(semp,limit,initvalue);
+ 428              		.loc 1 178 0 is_stmt 1
+ 429 000e 1847     		bx	r3
+ 430              	.LVL29:
+ 431              	.L92:
+ 179:../../iot_link/os/osal/osal.c ****     }
+ 180:../../iot_link/os/osal/osal.c **** 
+ 181:../../iot_link/os/osal/osal.c ****     return ret;
+ 182:../../iot_link/os/osal/osal.c **** 
+ 183:../../iot_link/os/osal/osal.c **** }
+ 432              		.loc 1 183 0
+ 433 0010 0020     		movs	r0, #0
+ 434              	.LVL30:
+ 435 0012 7047     		bx	lr
+ 436              	.L101:
+ 437              		.align	2
+ 438              	.L100:
+ 439 0014 00000000 		.word	.LANCHOR0
+ 440              		.cfi_endproc
+ 441              	.LFE12:
+ 443              		.section	.text.osal_semp_pend,"ax",%progbits
+ 444              		.align	1
+ 445              		.global	osal_semp_pend
+ 446              		.syntax unified
+ 447              		.thumb
+ 448              		.thumb_func
+ 449              		.fpu fpv4-sp-d16
+ 451              	osal_semp_pend:
+ 452              	.LFB13:
+ 184:../../iot_link/os/osal/osal.c **** 
+ 185:../../iot_link/os/osal/osal.c **** bool_t  osal_semp_pend(osal_semp_t semp,unsigned int timeout)
+ 186:../../iot_link/os/osal/osal.c **** {
+ 453              		.loc 1 186 0
+ 454              		.cfi_startproc
+ 455              		@ args = 0, pretend = 0, frame = 0
+ 456              		@ frame_needed = 0, uses_anonymous_args = 0
+ 457              		@ link register save eliminated.
+ 458              	.LVL31:
+ 187:../../iot_link/os/osal/osal.c ****     bool_t ret = false;
+ 188:../../iot_link/os/osal/osal.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 12
+
+
+ 189:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->semp_pend))
+ 459              		.loc 1 189 0
+ 460 0000 044B     		ldr	r3, .L110
+ 461 0002 1B68     		ldr	r3, [r3]
+ 462 0004 23B1     		cbz	r3, .L102
+ 463              		.loc 1 189 0 is_stmt 0 discriminator 1
+ 464 0006 5B68     		ldr	r3, [r3, #4]
+ 465 0008 13B1     		cbz	r3, .L102
+ 466              		.loc 1 189 0 discriminator 2
+ 467 000a 5B6A     		ldr	r3, [r3, #36]
+ 468 000c 03B1     		cbz	r3, .L102
+ 190:../../iot_link/os/osal/osal.c ****     {
+ 191:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->semp_pend(semp,timeout);
+ 469              		.loc 1 191 0 is_stmt 1
+ 470 000e 1847     		bx	r3
+ 471              	.LVL32:
+ 472              	.L102:
+ 192:../../iot_link/os/osal/osal.c ****     }
+ 193:../../iot_link/os/osal/osal.c **** 
+ 194:../../iot_link/os/osal/osal.c ****     return ret;
+ 195:../../iot_link/os/osal/osal.c **** 
+ 196:../../iot_link/os/osal/osal.c **** }
+ 473              		.loc 1 196 0
+ 474 0010 0020     		movs	r0, #0
+ 475              	.LVL33:
+ 476 0012 7047     		bx	lr
+ 477              	.L111:
+ 478              		.align	2
+ 479              	.L110:
+ 480 0014 00000000 		.word	.LANCHOR0
+ 481              		.cfi_endproc
+ 482              	.LFE13:
+ 484              		.section	.text.osal_semp_post,"ax",%progbits
+ 485              		.align	1
+ 486              		.global	osal_semp_post
+ 487              		.syntax unified
+ 488              		.thumb
+ 489              		.thumb_func
+ 490              		.fpu fpv4-sp-d16
+ 492              	osal_semp_post:
+ 493              	.LFB14:
+ 197:../../iot_link/os/osal/osal.c **** 
+ 198:../../iot_link/os/osal/osal.c **** 
+ 199:../../iot_link/os/osal/osal.c **** bool_t  osal_semp_post(osal_semp_t semp)
+ 200:../../iot_link/os/osal/osal.c **** {
+ 494              		.loc 1 200 0
+ 495              		.cfi_startproc
+ 496              		@ args = 0, pretend = 0, frame = 0
+ 497              		@ frame_needed = 0, uses_anonymous_args = 0
+ 498              		@ link register save eliminated.
+ 499              	.LVL34:
+ 201:../../iot_link/os/osal/osal.c ****     bool_t ret = false;
+ 202:../../iot_link/os/osal/osal.c **** 
+ 203:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->semp_post))
+ 500              		.loc 1 203 0
+ 501 0000 044B     		ldr	r3, .L120
+ 502 0002 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 13
+
+
+ 503 0004 23B1     		cbz	r3, .L112
+ 504              		.loc 1 203 0 is_stmt 0 discriminator 1
+ 505 0006 5B68     		ldr	r3, [r3, #4]
+ 506 0008 13B1     		cbz	r3, .L112
+ 507              		.loc 1 203 0 discriminator 2
+ 508 000a 9B6A     		ldr	r3, [r3, #40]
+ 509 000c 03B1     		cbz	r3, .L112
+ 204:../../iot_link/os/osal/osal.c ****     {
+ 205:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->semp_post(semp);
+ 510              		.loc 1 205 0 is_stmt 1
+ 511 000e 1847     		bx	r3
+ 512              	.LVL35:
+ 513              	.L112:
+ 206:../../iot_link/os/osal/osal.c ****     }
+ 207:../../iot_link/os/osal/osal.c **** 
+ 208:../../iot_link/os/osal/osal.c ****     return ret;
+ 209:../../iot_link/os/osal/osal.c **** 
+ 210:../../iot_link/os/osal/osal.c **** }
+ 514              		.loc 1 210 0
+ 515 0010 0020     		movs	r0, #0
+ 516              	.LVL36:
+ 517 0012 7047     		bx	lr
+ 518              	.L121:
+ 519              		.align	2
+ 520              	.L120:
+ 521 0014 00000000 		.word	.LANCHOR0
+ 522              		.cfi_endproc
+ 523              	.LFE14:
+ 525              		.section	.text.osal_semp_del,"ax",%progbits
+ 526              		.align	1
+ 527              		.global	osal_semp_del
+ 528              		.syntax unified
+ 529              		.thumb
+ 530              		.thumb_func
+ 531              		.fpu fpv4-sp-d16
+ 533              	osal_semp_del:
+ 534              	.LFB15:
+ 211:../../iot_link/os/osal/osal.c **** 
+ 212:../../iot_link/os/osal/osal.c **** bool_t  osal_semp_del(osal_semp_t semp)
+ 213:../../iot_link/os/osal/osal.c **** {
+ 535              		.loc 1 213 0
+ 536              		.cfi_startproc
+ 537              		@ args = 0, pretend = 0, frame = 0
+ 538              		@ frame_needed = 0, uses_anonymous_args = 0
+ 539              		@ link register save eliminated.
+ 540              	.LVL37:
+ 214:../../iot_link/os/osal/osal.c ****     bool_t ret = false;
+ 215:../../iot_link/os/osal/osal.c **** 
+ 216:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->semp_del))
+ 541              		.loc 1 216 0
+ 542 0000 044B     		ldr	r3, .L130
+ 543 0002 1B68     		ldr	r3, [r3]
+ 544 0004 23B1     		cbz	r3, .L122
+ 545              		.loc 1 216 0 is_stmt 0 discriminator 1
+ 546 0006 5B68     		ldr	r3, [r3, #4]
+ 547 0008 13B1     		cbz	r3, .L122
+ 548              		.loc 1 216 0 discriminator 2
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 14
+
+
+ 549 000a DB6A     		ldr	r3, [r3, #44]
+ 550 000c 03B1     		cbz	r3, .L122
+ 217:../../iot_link/os/osal/osal.c ****     {
+ 218:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->semp_del(semp);
+ 551              		.loc 1 218 0 is_stmt 1
+ 552 000e 1847     		bx	r3
+ 553              	.LVL38:
+ 554              	.L122:
+ 219:../../iot_link/os/osal/osal.c ****     }
+ 220:../../iot_link/os/osal/osal.c **** 
+ 221:../../iot_link/os/osal/osal.c ****     return ret;
+ 222:../../iot_link/os/osal/osal.c **** 
+ 223:../../iot_link/os/osal/osal.c **** }
+ 555              		.loc 1 223 0
+ 556 0010 0020     		movs	r0, #0
+ 557              	.LVL39:
+ 558 0012 7047     		bx	lr
+ 559              	.L131:
+ 560              		.align	2
+ 561              	.L130:
+ 562 0014 00000000 		.word	.LANCHOR0
+ 563              		.cfi_endproc
+ 564              	.LFE15:
+ 566              		.section	.text.osal_malloc,"ax",%progbits
+ 567              		.align	1
+ 568              		.global	osal_malloc
+ 569              		.syntax unified
+ 570              		.thumb
+ 571              		.thumb_func
+ 572              		.fpu fpv4-sp-d16
+ 574              	osal_malloc:
+ 575              	.LFB16:
+ 224:../../iot_link/os/osal/osal.c **** 
+ 225:../../iot_link/os/osal/osal.c **** 
+ 226:../../iot_link/os/osal/osal.c **** 
+ 227:../../iot_link/os/osal/osal.c **** void *osal_malloc(size_t size)
+ 228:../../iot_link/os/osal/osal.c **** {
+ 576              		.loc 1 228 0
+ 577              		.cfi_startproc
+ 578              		@ args = 0, pretend = 0, frame = 0
+ 579              		@ frame_needed = 0, uses_anonymous_args = 0
+ 580              		@ link register save eliminated.
+ 581              	.LVL40:
+ 229:../../iot_link/os/osal/osal.c ****     void *ret = NULL;
+ 230:../../iot_link/os/osal/osal.c **** 
+ 231:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->malloc))
+ 582              		.loc 1 231 0
+ 583 0000 044B     		ldr	r3, .L140
+ 584 0002 1B68     		ldr	r3, [r3]
+ 585 0004 23B1     		cbz	r3, .L132
+ 586              		.loc 1 231 0 is_stmt 0 discriminator 1
+ 587 0006 5B68     		ldr	r3, [r3, #4]
+ 588 0008 13B1     		cbz	r3, .L132
+ 589              		.loc 1 231 0 discriminator 2
+ 590 000a 1B6C     		ldr	r3, [r3, #64]
+ 591 000c 03B1     		cbz	r3, .L132
+ 232:../../iot_link/os/osal/osal.c ****     {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 15
+
+
+ 233:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->malloc(size);
+ 592              		.loc 1 233 0 is_stmt 1
+ 593 000e 1847     		bx	r3
+ 594              	.LVL41:
+ 595              	.L132:
+ 234:../../iot_link/os/osal/osal.c ****     }
+ 235:../../iot_link/os/osal/osal.c **** 
+ 236:../../iot_link/os/osal/osal.c ****     return ret;
+ 237:../../iot_link/os/osal/osal.c **** 
+ 238:../../iot_link/os/osal/osal.c **** }
+ 596              		.loc 1 238 0
+ 597 0010 0020     		movs	r0, #0
+ 598              	.LVL42:
+ 599 0012 7047     		bx	lr
+ 600              	.L141:
+ 601              		.align	2
+ 602              	.L140:
+ 603 0014 00000000 		.word	.LANCHOR0
+ 604              		.cfi_endproc
+ 605              	.LFE16:
+ 607              		.section	.text.osal_free,"ax",%progbits
+ 608              		.align	1
+ 609              		.global	osal_free
+ 610              		.syntax unified
+ 611              		.thumb
+ 612              		.thumb_func
+ 613              		.fpu fpv4-sp-d16
+ 615              	osal_free:
+ 616              	.LFB17:
+ 239:../../iot_link/os/osal/osal.c **** 
+ 240:../../iot_link/os/osal/osal.c **** void  osal_free(void *addr)
+ 241:../../iot_link/os/osal/osal.c **** {
+ 617              		.loc 1 241 0
+ 618              		.cfi_startproc
+ 619              		@ args = 0, pretend = 0, frame = 0
+ 620              		@ frame_needed = 0, uses_anonymous_args = 0
+ 621              		@ link register save eliminated.
+ 622              	.LVL43:
+ 242:../../iot_link/os/osal/osal.c **** 
+ 243:../../iot_link/os/osal/osal.c ****     if((NULL != addr) && (NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->free))
+ 623              		.loc 1 243 0
+ 624 0000 38B1     		cbz	r0, .L142
+ 625              		.loc 1 243 0 is_stmt 0 discriminator 1
+ 626 0002 044B     		ldr	r3, .L156
+ 627 0004 1B68     		ldr	r3, [r3]
+ 628 0006 23B1     		cbz	r3, .L142
+ 629              		.loc 1 243 0 discriminator 2
+ 630 0008 5B68     		ldr	r3, [r3, #4]
+ 631 000a 13B1     		cbz	r3, .L142
+ 632              		.loc 1 243 0 discriminator 3
+ 633 000c 5B6C     		ldr	r3, [r3, #68]
+ 634 000e 03B1     		cbz	r3, .L142
+ 244:../../iot_link/os/osal/osal.c ****     {
+ 245:../../iot_link/os/osal/osal.c ****         s_os_cb->ops->free(addr);
+ 635              		.loc 1 245 0 is_stmt 1
+ 636 0010 1847     		bx	r3	@ indirect register sibling call
+ 637              	.LVL44:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 16
+
+
+ 638              	.L142:
+ 246:../../iot_link/os/osal/osal.c ****     }
+ 247:../../iot_link/os/osal/osal.c **** 
+ 248:../../iot_link/os/osal/osal.c ****     return;
+ 249:../../iot_link/os/osal/osal.c **** }
+ 639              		.loc 1 249 0
+ 640 0012 7047     		bx	lr
+ 641              	.L157:
+ 642              		.align	2
+ 643              	.L156:
+ 644 0014 00000000 		.word	.LANCHOR0
+ 645              		.cfi_endproc
+ 646              	.LFE17:
+ 648              		.section	.text.osal_zalloc,"ax",%progbits
+ 649              		.align	1
+ 650              		.global	osal_zalloc
+ 651              		.syntax unified
+ 652              		.thumb
+ 653              		.thumb_func
+ 654              		.fpu fpv4-sp-d16
+ 656              	osal_zalloc:
+ 657              	.LFB18:
+ 250:../../iot_link/os/osal/osal.c **** 
+ 251:../../iot_link/os/osal/osal.c **** void *osal_zalloc(size_t size)
+ 252:../../iot_link/os/osal/osal.c **** {
+ 658              		.loc 1 252 0
+ 659              		.cfi_startproc
+ 660              		@ args = 0, pretend = 0, frame = 0
+ 661              		@ frame_needed = 0, uses_anonymous_args = 0
+ 662              	.LVL45:
+ 663 0000 38B5     		push	{r3, r4, r5, lr}
+ 664              	.LCFI4:
+ 665              		.cfi_def_cfa_offset 16
+ 666              		.cfi_offset 3, -16
+ 667              		.cfi_offset 4, -12
+ 668              		.cfi_offset 5, -8
+ 669              		.cfi_offset 14, -4
+ 253:../../iot_link/os/osal/osal.c ****     void *ret = NULL;
+ 254:../../iot_link/os/osal/osal.c **** 
+ 255:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->malloc))
+ 670              		.loc 1 255 0
+ 671 0002 084B     		ldr	r3, .L166
+ 672 0004 1C68     		ldr	r4, [r3]
+ 252:../../iot_link/os/osal/osal.c ****     void *ret = NULL;
+ 673              		.loc 1 252 0
+ 674 0006 0546     		mov	r5, r0
+ 675              		.loc 1 255 0
+ 676 0008 54B1     		cbz	r4, .L158
+ 677              		.loc 1 255 0 is_stmt 0 discriminator 1
+ 678 000a 6468     		ldr	r4, [r4, #4]
+ 679 000c 44B1     		cbz	r4, .L158
+ 680              		.loc 1 255 0 discriminator 2
+ 681 000e 246C     		ldr	r4, [r4, #64]
+ 682 0010 34B1     		cbz	r4, .L158
+ 256:../../iot_link/os/osal/osal.c ****     {
+ 257:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->malloc(size);
+ 683              		.loc 1 257 0 is_stmt 1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 17
+
+
+ 684 0012 A047     		blx	r4
+ 685              	.LVL46:
+ 258:../../iot_link/os/osal/osal.c ****         if(NULL != ret)
+ 686              		.loc 1 258 0
+ 687 0014 0446     		mov	r4, r0
+ 688 0016 18B1     		cbz	r0, .L158
+ 259:../../iot_link/os/osal/osal.c ****         {
+ 260:../../iot_link/os/osal/osal.c ****             (void) memset(ret,0,size);
+ 689              		.loc 1 260 0
+ 690 0018 2A46     		mov	r2, r5
+ 691 001a 0021     		movs	r1, #0
+ 692 001c FFF7FEFF 		bl	memset
+ 693              	.LVL47:
+ 694              	.L158:
+ 261:../../iot_link/os/osal/osal.c ****         }
+ 262:../../iot_link/os/osal/osal.c ****     }
+ 263:../../iot_link/os/osal/osal.c **** 
+ 264:../../iot_link/os/osal/osal.c ****     return ret;
+ 265:../../iot_link/os/osal/osal.c **** 
+ 266:../../iot_link/os/osal/osal.c **** }
+ 695              		.loc 1 266 0
+ 696 0020 2046     		mov	r0, r4
+ 697 0022 38BD     		pop	{r3, r4, r5, pc}
+ 698              	.LVL48:
+ 699              	.L167:
+ 700              		.align	2
+ 701              	.L166:
+ 702 0024 00000000 		.word	.LANCHOR0
+ 703              		.cfi_endproc
+ 704              	.LFE18:
+ 706              		.section	.text.osal_realloc,"ax",%progbits
+ 707              		.align	1
+ 708              		.global	osal_realloc
+ 709              		.syntax unified
+ 710              		.thumb
+ 711              		.thumb_func
+ 712              		.fpu fpv4-sp-d16
+ 714              	osal_realloc:
+ 715              	.LFB19:
+ 267:../../iot_link/os/osal/osal.c **** 
+ 268:../../iot_link/os/osal/osal.c **** void *osal_realloc(void *ptr,size_t newsize)
+ 269:../../iot_link/os/osal/osal.c **** {
+ 716              		.loc 1 269 0
+ 717              		.cfi_startproc
+ 718              		@ args = 0, pretend = 0, frame = 0
+ 719              		@ frame_needed = 0, uses_anonymous_args = 0
+ 720              		@ link register save eliminated.
+ 721              	.LVL49:
+ 270:../../iot_link/os/osal/osal.c ****     void *ret = NULL;
+ 271:../../iot_link/os/osal/osal.c **** 
+ 272:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->realloc))
+ 722              		.loc 1 272 0
+ 723 0000 044B     		ldr	r3, .L176
+ 724 0002 1B68     		ldr	r3, [r3]
+ 725 0004 23B1     		cbz	r3, .L168
+ 726              		.loc 1 272 0 is_stmt 0 discriminator 1
+ 727 0006 5B68     		ldr	r3, [r3, #4]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 18
+
+
+ 728 0008 13B1     		cbz	r3, .L168
+ 729              		.loc 1 272 0 discriminator 2
+ 730 000a 9B6C     		ldr	r3, [r3, #72]
+ 731 000c 03B1     		cbz	r3, .L168
+ 273:../../iot_link/os/osal/osal.c ****     {
+ 274:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->realloc(ptr,newsize);
+ 732              		.loc 1 274 0 is_stmt 1
+ 733 000e 1847     		bx	r3
+ 734              	.LVL50:
+ 735              	.L168:
+ 275:../../iot_link/os/osal/osal.c ****     }
+ 276:../../iot_link/os/osal/osal.c **** 
+ 277:../../iot_link/os/osal/osal.c ****     return ret;
+ 278:../../iot_link/os/osal/osal.c **** }
+ 736              		.loc 1 278 0
+ 737 0010 0020     		movs	r0, #0
+ 738              	.LVL51:
+ 739 0012 7047     		bx	lr
+ 740              	.L177:
+ 741              		.align	2
+ 742              	.L176:
+ 743 0014 00000000 		.word	.LANCHOR0
+ 744              		.cfi_endproc
+ 745              	.LFE19:
+ 747              		.section	.text.osal_calloc,"ax",%progbits
+ 748              		.align	1
+ 749              		.global	osal_calloc
+ 750              		.syntax unified
+ 751              		.thumb
+ 752              		.thumb_func
+ 753              		.fpu fpv4-sp-d16
+ 755              	osal_calloc:
+ 756              	.LFB20:
+ 279:../../iot_link/os/osal/osal.c **** 
+ 280:../../iot_link/os/osal/osal.c **** 
+ 281:../../iot_link/os/osal/osal.c **** 
+ 282:../../iot_link/os/osal/osal.c **** void *osal_calloc(size_t n, size_t size)
+ 283:../../iot_link/os/osal/osal.c **** {
+ 757              		.loc 1 283 0
+ 758              		.cfi_startproc
+ 759              		@ args = 0, pretend = 0, frame = 0
+ 760              		@ frame_needed = 0, uses_anonymous_args = 0
+ 761              	.LVL52:
+ 762 0000 38B5     		push	{r3, r4, r5, lr}
+ 763              	.LCFI5:
+ 764              		.cfi_def_cfa_offset 16
+ 765              		.cfi_offset 3, -16
+ 766              		.cfi_offset 4, -12
+ 767              		.cfi_offset 5, -8
+ 768              		.cfi_offset 14, -4
+ 284:../../iot_link/os/osal/osal.c ****     void *ret = NULL;
+ 285:../../iot_link/os/osal/osal.c ****     size_t len;
+ 286:../../iot_link/os/osal/osal.c ****     len = n*size;
+ 769              		.loc 1 286 0
+ 770 0002 01FB00F4 		mul	r4, r1, r0
+ 771              	.LVL53:
+ 287:../../iot_link/os/osal/osal.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 19
+
+
+ 288:../../iot_link/os/osal/osal.c ****     ret = malloc(len);
+ 772              		.loc 1 288 0
+ 773 0006 2046     		mov	r0, r4
+ 774              	.LVL54:
+ 775 0008 FFF7FEFF 		bl	malloc
+ 776              	.LVL55:
+ 289:../../iot_link/os/osal/osal.c ****     if(NULL != ret)
+ 777              		.loc 1 289 0
+ 778 000c 0546     		mov	r5, r0
+ 779 000e 18B1     		cbz	r0, .L178
+ 290:../../iot_link/os/osal/osal.c ****     {
+ 291:../../iot_link/os/osal/osal.c ****         (void) memset(ret, 0,len);
+ 780              		.loc 1 291 0
+ 781 0010 2246     		mov	r2, r4
+ 782 0012 0021     		movs	r1, #0
+ 783 0014 FFF7FEFF 		bl	memset
+ 784              	.LVL56:
+ 785              	.L178:
+ 292:../../iot_link/os/osal/osal.c ****     }
+ 293:../../iot_link/os/osal/osal.c **** 
+ 294:../../iot_link/os/osal/osal.c ****     return ret;
+ 295:../../iot_link/os/osal/osal.c **** }
+ 786              		.loc 1 295 0
+ 787 0018 2846     		mov	r0, r5
+ 788 001a 38BD     		pop	{r3, r4, r5, pc}
+ 789              		.cfi_endproc
+ 790              	.LFE20:
+ 792              		.section	.text.osal_sys_time,"ax",%progbits
+ 793              		.align	1
+ 794              		.global	osal_sys_time
+ 795              		.syntax unified
+ 796              		.thumb
+ 797              		.thumb_func
+ 798              		.fpu fpv4-sp-d16
+ 800              	osal_sys_time:
+ 801              	.LFB21:
+ 296:../../iot_link/os/osal/osal.c **** 
+ 297:../../iot_link/os/osal/osal.c **** 
+ 298:../../iot_link/os/osal/osal.c **** 
+ 299:../../iot_link/os/osal/osal.c **** unsigned long long osal_sys_time()
+ 300:../../iot_link/os/osal/osal.c **** {
+ 802              		.loc 1 300 0
+ 803              		.cfi_startproc
+ 804              		@ args = 0, pretend = 0, frame = 0
+ 805              		@ frame_needed = 0, uses_anonymous_args = 0
+ 806              		@ link register save eliminated.
+ 807              	.LVL57:
+ 301:../../iot_link/os/osal/osal.c **** 
+ 302:../../iot_link/os/osal/osal.c ****     unsigned long long  ret = 0;
+ 303:../../iot_link/os/osal/osal.c **** 
+ 304:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->get_sys_time))
+ 808              		.loc 1 304 0
+ 809 0000 054B     		ldr	r3, .L191
+ 810 0002 1B68     		ldr	r3, [r3]
+ 811 0004 23B1     		cbz	r3, .L183
+ 812              		.loc 1 304 0 is_stmt 0 discriminator 1
+ 813 0006 5B68     		ldr	r3, [r3, #4]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 20
+
+
+ 814 0008 13B1     		cbz	r3, .L183
+ 815              		.loc 1 304 0 discriminator 2
+ 816 000a DB6C     		ldr	r3, [r3, #76]
+ 817 000c 03B1     		cbz	r3, .L183
+ 305:../../iot_link/os/osal/osal.c ****     {
+ 306:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->get_sys_time();
+ 818              		.loc 1 306 0 is_stmt 1
+ 819 000e 1847     		bx	r3
+ 820              	.LVL58:
+ 821              	.L183:
+ 307:../../iot_link/os/osal/osal.c ****     }
+ 308:../../iot_link/os/osal/osal.c **** 
+ 309:../../iot_link/os/osal/osal.c ****     return ret;
+ 310:../../iot_link/os/osal/osal.c **** }
+ 822              		.loc 1 310 0
+ 823 0010 0020     		movs	r0, #0
+ 824 0012 0021     		movs	r1, #0
+ 825 0014 7047     		bx	lr
+ 826              	.L192:
+ 827 0016 00BF     		.align	2
+ 828              	.L191:
+ 829 0018 00000000 		.word	.LANCHOR0
+ 830              		.cfi_endproc
+ 831              	.LFE21:
+ 833              		.section	.text.osal_loop_timer_init,"ax",%progbits
+ 834              		.align	1
+ 835              		.global	osal_loop_timer_init
+ 836              		.syntax unified
+ 837              		.thumb
+ 838              		.thumb_func
+ 839              		.fpu fpv4-sp-d16
+ 841              	osal_loop_timer_init:
+ 842              	.LFB22:
+ 311:../../iot_link/os/osal/osal.c **** 
+ 312:../../iot_link/os/osal/osal.c **** void osal_loop_timer_init(osal_loop_timer_t *timer)
+ 313:../../iot_link/os/osal/osal.c **** {
+ 843              		.loc 1 313 0
+ 844              		.cfi_startproc
+ 845              		@ args = 0, pretend = 0, frame = 0
+ 846              		@ frame_needed = 0, uses_anonymous_args = 0
+ 847              	.LVL59:
+ 848 0000 10B5     		push	{r4, lr}
+ 849              	.LCFI6:
+ 850              		.cfi_def_cfa_offset 8
+ 851              		.cfi_offset 4, -8
+ 852              		.cfi_offset 14, -4
+ 853              		.loc 1 313 0
+ 854 0002 0446     		mov	r4, r0
+ 314:../../iot_link/os/osal/osal.c ****     timer->dead_time = osal_sys_time();
+ 855              		.loc 1 314 0
+ 856 0004 FFF7FEFF 		bl	osal_sys_time
+ 857              	.LVL60:
+ 858 0008 C4E90001 		strd	r0, [r4]
+ 315:../../iot_link/os/osal/osal.c **** }
+ 859              		.loc 1 315 0
+ 860 000c 10BD     		pop	{r4, pc}
+ 861              		.cfi_endproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 21
+
+
+ 862              	.LFE22:
+ 864              		.section	.text.osal_loop_timer_expired,"ax",%progbits
+ 865              		.align	1
+ 866              		.global	osal_loop_timer_expired
+ 867              		.syntax unified
+ 868              		.thumb
+ 869              		.thumb_func
+ 870              		.fpu fpv4-sp-d16
+ 872              	osal_loop_timer_expired:
+ 873              	.LFB23:
+ 316:../../iot_link/os/osal/osal.c **** 
+ 317:../../iot_link/os/osal/osal.c **** char osal_loop_timer_expired(osal_loop_timer_t *timer)
+ 318:../../iot_link/os/osal/osal.c **** {
+ 874              		.loc 1 318 0
+ 875              		.cfi_startproc
+ 876              		@ args = 0, pretend = 0, frame = 0
+ 877              		@ frame_needed = 0, uses_anonymous_args = 0
+ 878              	.LVL61:
+ 879 0000 10B5     		push	{r4, lr}
+ 880              	.LCFI7:
+ 881              		.cfi_def_cfa_offset 8
+ 882              		.cfi_offset 4, -8
+ 883              		.cfi_offset 14, -4
+ 884              		.loc 1 318 0
+ 885 0002 0446     		mov	r4, r0
+ 319:../../iot_link/os/osal/osal.c ****     unsigned long long now = osal_sys_time();
+ 886              		.loc 1 319 0
+ 887 0004 FFF7FEFF 		bl	osal_sys_time
+ 888              	.LVL62:
+ 320:../../iot_link/os/osal/osal.c ****     return now >= timer->dead_time;
+ 889              		.loc 1 320 0
+ 890 0008 D4E90023 		ldrd	r2, [r4]
+ 891 000c 9942     		cmp	r1, r3
+ 892 000e 08BF     		it	eq
+ 893 0010 9042     		cmpeq	r0, r2
+ 321:../../iot_link/os/osal/osal.c **** }
+ 894              		.loc 1 321 0
+ 895 0012 2CBF     		ite	cs
+ 896 0014 0120     		movcs	r0, #1
+ 897              	.LVL63:
+ 898 0016 0020     		movcc	r0, #0
+ 899 0018 10BD     		pop	{r4, pc}
+ 900              		.cfi_endproc
+ 901              	.LFE23:
+ 903              		.section	.text.osal_loop_timer_count_downms,"ax",%progbits
+ 904              		.align	1
+ 905              		.global	osal_loop_timer_count_downms
+ 906              		.syntax unified
+ 907              		.thumb
+ 908              		.thumb_func
+ 909              		.fpu fpv4-sp-d16
+ 911              	osal_loop_timer_count_downms:
+ 912              	.LFB24:
+ 322:../../iot_link/os/osal/osal.c **** 
+ 323:../../iot_link/os/osal/osal.c **** void osal_loop_timer_count_downms(osal_loop_timer_t *timer, unsigned int timeout)
+ 324:../../iot_link/os/osal/osal.c **** {
+ 913              		.loc 1 324 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 22
+
+
+ 914              		.cfi_startproc
+ 915              		@ args = 0, pretend = 0, frame = 0
+ 916              		@ frame_needed = 0, uses_anonymous_args = 0
+ 917              	.LVL64:
+ 918 0000 38B5     		push	{r3, r4, r5, lr}
+ 919              	.LCFI8:
+ 920              		.cfi_def_cfa_offset 16
+ 921              		.cfi_offset 3, -16
+ 922              		.cfi_offset 4, -12
+ 923              		.cfi_offset 5, -8
+ 924              		.cfi_offset 14, -4
+ 925              		.loc 1 324 0
+ 926 0002 0446     		mov	r4, r0
+ 927 0004 0D46     		mov	r5, r1
+ 325:../../iot_link/os/osal/osal.c ****     unsigned long long now = osal_sys_time();
+ 928              		.loc 1 325 0
+ 929 0006 FFF7FEFF 		bl	osal_sys_time
+ 930              	.LVL65:
+ 326:../../iot_link/os/osal/osal.c ****     timer->dead_time = now + timeout;
+ 931              		.loc 1 326 0
+ 932 000a 4219     		adds	r2, r0, r5
+ 933 000c 41F10003 		adc	r3, r1, #0
+ 934 0010 C4E90023 		strd	r2, [r4]
+ 327:../../iot_link/os/osal/osal.c **** }
+ 935              		.loc 1 327 0
+ 936 0014 38BD     		pop	{r3, r4, r5, pc}
+ 937              		.cfi_endproc
+ 938              	.LFE24:
+ 940              		.section	.text.osal_loop_timer_count_down,"ax",%progbits
+ 941              		.align	1
+ 942              		.global	osal_loop_timer_count_down
+ 943              		.syntax unified
+ 944              		.thumb
+ 945              		.thumb_func
+ 946              		.fpu fpv4-sp-d16
+ 948              	osal_loop_timer_count_down:
+ 949              	.LFB25:
+ 328:../../iot_link/os/osal/osal.c **** 
+ 329:../../iot_link/os/osal/osal.c **** 
+ 330:../../iot_link/os/osal/osal.c **** void osal_loop_timer_count_down(osal_loop_timer_t *timer, unsigned int timeout)
+ 331:../../iot_link/os/osal/osal.c **** {
+ 950              		.loc 1 331 0
+ 951              		.cfi_startproc
+ 952              		@ args = 0, pretend = 0, frame = 0
+ 953              		@ frame_needed = 0, uses_anonymous_args = 0
+ 954              		@ link register save eliminated.
+ 955              	.LVL66:
+ 332:../../iot_link/os/osal/osal.c ****     osal_loop_timer_count_downms(timer,timeout*1000);
+ 956              		.loc 1 332 0
+ 957 0000 4FF47A73 		mov	r3, #1000
+ 958 0004 5943     		muls	r1, r3, r1
+ 959              	.LVL67:
+ 960 0006 FFF7FEBF 		b	osal_loop_timer_count_downms
+ 961              	.LVL68:
+ 962              		.cfi_endproc
+ 963              	.LFE25:
+ 965              		.section	.text.osal_loop_timer_left,"ax",%progbits
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 23
+
+
+ 966              		.align	1
+ 967              		.global	osal_loop_timer_left
+ 968              		.syntax unified
+ 969              		.thumb
+ 970              		.thumb_func
+ 971              		.fpu fpv4-sp-d16
+ 973              	osal_loop_timer_left:
+ 974              	.LFB26:
+ 333:../../iot_link/os/osal/osal.c **** }
+ 334:../../iot_link/os/osal/osal.c **** 
+ 335:../../iot_link/os/osal/osal.c **** int osal_loop_timer_left(osal_loop_timer_t *timer)
+ 336:../../iot_link/os/osal/osal.c **** {
+ 975              		.loc 1 336 0
+ 976              		.cfi_startproc
+ 977              		@ args = 0, pretend = 0, frame = 0
+ 978              		@ frame_needed = 0, uses_anonymous_args = 0
+ 979              	.LVL69:
+ 980 0000 10B5     		push	{r4, lr}
+ 981              	.LCFI9:
+ 982              		.cfi_def_cfa_offset 8
+ 983              		.cfi_offset 4, -8
+ 984              		.cfi_offset 14, -4
+ 985              		.loc 1 336 0
+ 986 0002 0446     		mov	r4, r0
+ 337:../../iot_link/os/osal/osal.c ****     unsigned long long now = osal_sys_time();
+ 987              		.loc 1 337 0
+ 988 0004 FFF7FEFF 		bl	osal_sys_time
+ 989              	.LVL70:
+ 338:../../iot_link/os/osal/osal.c ****     return timer->dead_time <= now ? 0 : timer->dead_time - now;
+ 990              		.loc 1 338 0
+ 991 0008 D4E90023 		ldrd	r2, [r4]
+ 992 000c 9942     		cmp	r1, r3
+ 993 000e 08BF     		it	eq
+ 994 0010 9042     		cmpeq	r0, r2
+ 995 0012 34BF     		ite	cc
+ 996 0014 101A     		subcc	r0, r2, r0
+ 997              	.LVL71:
+ 998 0016 0020     		movcs	r0, #0
+ 339:../../iot_link/os/osal/osal.c **** }
+ 999              		.loc 1 339 0
+ 1000 0018 10BD     		pop	{r4, pc}
+ 1001              		.cfi_endproc
+ 1002              	.LFE26:
+ 1004              		.section	.text.osal_reboot,"ax",%progbits
+ 1005              		.align	1
+ 1006              		.global	osal_reboot
+ 1007              		.syntax unified
+ 1008              		.thumb
+ 1009              		.thumb_func
+ 1010              		.fpu fpv4-sp-d16
+ 1012              	osal_reboot:
+ 1013              	.LFB27:
+ 340:../../iot_link/os/osal/osal.c **** 
+ 341:../../iot_link/os/osal/osal.c **** 
+ 342:../../iot_link/os/osal/osal.c **** 
+ 343:../../iot_link/os/osal/osal.c **** 
+ 344:../../iot_link/os/osal/osal.c **** int osal_reboot()  ///< maybe we should never come back
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 24
+
+
+ 345:../../iot_link/os/osal/osal.c **** {
+ 1014              		.loc 1 345 0
+ 1015              		.cfi_startproc
+ 1016              		@ args = 0, pretend = 0, frame = 0
+ 1017              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1018              		@ link register save eliminated.
+ 1019              	.LVL72:
+ 346:../../iot_link/os/osal/osal.c ****     int ret = -1;
+ 347:../../iot_link/os/osal/osal.c **** 
+ 348:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->reboot))
+ 1020              		.loc 1 348 0
+ 1021 0000 054B     		ldr	r3, .L208
+ 1022 0002 1B68     		ldr	r3, [r3]
+ 1023 0004 23B1     		cbz	r3, .L200
+ 1024              		.loc 1 348 0 is_stmt 0 discriminator 1
+ 1025 0006 5B68     		ldr	r3, [r3, #4]
+ 1026 0008 13B1     		cbz	r3, .L200
+ 1027              		.loc 1 348 0 discriminator 2
+ 1028 000a 1B6D     		ldr	r3, [r3, #80]
+ 1029 000c 03B1     		cbz	r3, .L200
+ 349:../../iot_link/os/osal/osal.c ****     {
+ 350:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->reboot();
+ 1030              		.loc 1 350 0 is_stmt 1
+ 1031 000e 1847     		bx	r3
+ 1032              	.LVL73:
+ 1033              	.L200:
+ 351:../../iot_link/os/osal/osal.c ****     }
+ 352:../../iot_link/os/osal/osal.c **** 
+ 353:../../iot_link/os/osal/osal.c ****     return ret;
+ 354:../../iot_link/os/osal/osal.c **** }
+ 1034              		.loc 1 354 0
+ 1035 0010 4FF0FF30 		mov	r0, #-1
+ 1036 0014 7047     		bx	lr
+ 1037              	.L209:
+ 1038 0016 00BF     		.align	2
+ 1039              	.L208:
+ 1040 0018 00000000 		.word	.LANCHOR0
+ 1041              		.cfi_endproc
+ 1042              	.LFE27:
+ 1044              		.section	.text.osal_int_connect,"ax",%progbits
+ 1045              		.align	1
+ 1046              		.global	osal_int_connect
+ 1047              		.syntax unified
+ 1048              		.thumb
+ 1049              		.thumb_func
+ 1050              		.fpu fpv4-sp-d16
+ 1052              	osal_int_connect:
+ 1053              	.LFB28:
+ 355:../../iot_link/os/osal/osal.c **** 
+ 356:../../iot_link/os/osal/osal.c **** 
+ 357:../../iot_link/os/osal/osal.c **** 
+ 358:../../iot_link/os/osal/osal.c **** int osal_int_connect(int intnum, int prio, int mode, fn_interrupt_handle callback, void *arg)
+ 359:../../iot_link/os/osal/osal.c **** {
+ 1054              		.loc 1 359 0
+ 1055              		.cfi_startproc
+ 1056              		@ args = 4, pretend = 0, frame = 0
+ 1057              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 25
+
+
+ 1058              		@ link register save eliminated.
+ 1059              	.LVL74:
+ 1060 0000 10B4     		push	{r4}
+ 1061              	.LCFI10:
+ 1062              		.cfi_def_cfa_offset 4
+ 1063              		.cfi_offset 4, -4
+ 360:../../iot_link/os/osal/osal.c ****     int ret = -1;
+ 361:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->int_connect))
+ 1064              		.loc 1 361 0
+ 1065 0002 084C     		ldr	r4, .L218
+ 1066 0004 2468     		ldr	r4, [r4]
+ 1067 0006 3CB1     		cbz	r4, .L210
+ 1068              		.loc 1 361 0 is_stmt 0 discriminator 1
+ 1069 0008 6468     		ldr	r4, [r4, #4]
+ 1070 000a 2CB1     		cbz	r4, .L210
+ 1071              		.loc 1 361 0 discriminator 2
+ 1072 000c 646D     		ldr	r4, [r4, #84]
+ 1073 000e 1CB1     		cbz	r4, .L210
+ 362:../../iot_link/os/osal/osal.c ****     {
+ 363:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->int_connect(intnum, prio, mode, callback, arg);
+ 1074              		.loc 1 363 0 is_stmt 1
+ 1075 0010 A446     		mov	ip, r4
+ 364:../../iot_link/os/osal/osal.c **** 	}
+ 365:../../iot_link/os/osal/osal.c **** 
+ 366:../../iot_link/os/osal/osal.c ****     return ret;
+ 367:../../iot_link/os/osal/osal.c **** }
+ 1076              		.loc 1 367 0
+ 1077 0012 5DF8044B 		ldr	r4, [sp], #4
+ 1078              	.LCFI11:
+ 1079              		.cfi_remember_state
+ 1080              		.cfi_restore 4
+ 1081              		.cfi_def_cfa_offset 0
+ 1082              	.LVL75:
+ 363:../../iot_link/os/osal/osal.c **** 	}
+ 1083              		.loc 1 363 0
+ 1084 0016 6047     		bx	ip
+ 1085              	.LVL76:
+ 1086              	.L210:
+ 1087              	.LCFI12:
+ 1088              		.cfi_restore_state
+ 1089              		.loc 1 367 0
+ 1090 0018 4FF0FF30 		mov	r0, #-1
+ 1091              	.LVL77:
+ 1092 001c 5DF8044B 		ldr	r4, [sp], #4
+ 1093              	.LCFI13:
+ 1094              		.cfi_restore 4
+ 1095              		.cfi_def_cfa_offset 0
+ 1096              	.LVL78:
+ 1097 0020 7047     		bx	lr
+ 1098              	.L219:
+ 1099 0022 00BF     		.align	2
+ 1100              	.L218:
+ 1101 0024 00000000 		.word	.LANCHOR0
+ 1102              		.cfi_endproc
+ 1103              	.LFE28:
+ 1105              		.section	.text.osal_queue_create,"ax",%progbits
+ 1106              		.align	1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 26
+
+
+ 1107              		.global	osal_queue_create
+ 1108              		.syntax unified
+ 1109              		.thumb
+ 1110              		.thumb_func
+ 1111              		.fpu fpv4-sp-d16
+ 1113              	osal_queue_create:
+ 1114              	.LFB29:
+ 368:../../iot_link/os/osal/osal.c **** 
+ 369:../../iot_link/os/osal/osal.c **** 
+ 370:../../iot_link/os/osal/osal.c **** 
+ 371:../../iot_link/os/osal/osal.c **** bool_t  osal_queue_create(osal_queue_t *queue,int len,int msgsize)
+ 372:../../iot_link/os/osal/osal.c **** {
+ 1115              		.loc 1 372 0
+ 1116              		.cfi_startproc
+ 1117              		@ args = 0, pretend = 0, frame = 0
+ 1118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1119              		@ link register save eliminated.
+ 1120              	.LVL79:
+ 373:../../iot_link/os/osal/osal.c ****     int ret = false;
+ 374:../../iot_link/os/osal/osal.c **** 
+ 375:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->queue_create))
+ 1121              		.loc 1 375 0
+ 1122 0000 044B     		ldr	r3, .L228
+ 1123 0002 1B68     		ldr	r3, [r3]
+ 1124 0004 23B1     		cbz	r3, .L220
+ 1125              		.loc 1 375 0 is_stmt 0 discriminator 1
+ 1126 0006 5B68     		ldr	r3, [r3, #4]
+ 1127 0008 13B1     		cbz	r3, .L220
+ 1128              		.loc 1 375 0 discriminator 2
+ 1129 000a 1B6B     		ldr	r3, [r3, #48]
+ 1130 000c 03B1     		cbz	r3, .L220
+ 376:../../iot_link/os/osal/osal.c ****     {
+ 377:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->queue_create( queue, len, msgsize);
+ 1131              		.loc 1 377 0 is_stmt 1
+ 1132 000e 1847     		bx	r3
+ 1133              	.LVL80:
+ 1134              	.L220:
+ 378:../../iot_link/os/osal/osal.c ****     }
+ 379:../../iot_link/os/osal/osal.c **** 
+ 380:../../iot_link/os/osal/osal.c ****     return ret;
+ 381:../../iot_link/os/osal/osal.c **** }
+ 1135              		.loc 1 381 0
+ 1136 0010 0020     		movs	r0, #0
+ 1137              	.LVL81:
+ 1138 0012 7047     		bx	lr
+ 1139              	.L229:
+ 1140              		.align	2
+ 1141              	.L228:
+ 1142 0014 00000000 		.word	.LANCHOR0
+ 1143              		.cfi_endproc
+ 1144              	.LFE29:
+ 1146              		.section	.text.osal_queue_send,"ax",%progbits
+ 1147              		.align	1
+ 1148              		.global	osal_queue_send
+ 1149              		.syntax unified
+ 1150              		.thumb
+ 1151              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 27
+
+
+ 1152              		.fpu fpv4-sp-d16
+ 1154              	osal_queue_send:
+ 1155              	.LFB30:
+ 382:../../iot_link/os/osal/osal.c **** 
+ 383:../../iot_link/os/osal/osal.c **** bool_t  osal_queue_send(osal_queue_t queue, void *pbuf, unsigned int bufsize, unsigned int timeout)
+ 384:../../iot_link/os/osal/osal.c **** {
+ 1156              		.loc 1 384 0
+ 1157              		.cfi_startproc
+ 1158              		@ args = 0, pretend = 0, frame = 0
+ 1159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1160              		@ link register save eliminated.
+ 1161              	.LVL82:
+ 1162 0000 10B4     		push	{r4}
+ 1163              	.LCFI14:
+ 1164              		.cfi_def_cfa_offset 4
+ 1165              		.cfi_offset 4, -4
+ 385:../../iot_link/os/osal/osal.c ****     int ret = false;
+ 386:../../iot_link/os/osal/osal.c **** 
+ 387:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->queue_send))
+ 1166              		.loc 1 387 0
+ 1167 0002 074C     		ldr	r4, .L238
+ 1168 0004 2468     		ldr	r4, [r4]
+ 1169 0006 3CB1     		cbz	r4, .L230
+ 1170              		.loc 1 387 0 is_stmt 0 discriminator 1
+ 1171 0008 6468     		ldr	r4, [r4, #4]
+ 1172 000a 2CB1     		cbz	r4, .L230
+ 1173              		.loc 1 387 0 discriminator 2
+ 1174 000c 646B     		ldr	r4, [r4, #52]
+ 1175 000e 1CB1     		cbz	r4, .L230
+ 388:../../iot_link/os/osal/osal.c ****     {
+ 389:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->queue_send( queue, pbuf, bufsize, timeout);
+ 1176              		.loc 1 389 0 is_stmt 1
+ 1177 0010 A446     		mov	ip, r4
+ 390:../../iot_link/os/osal/osal.c ****     }
+ 391:../../iot_link/os/osal/osal.c **** 
+ 392:../../iot_link/os/osal/osal.c ****     return ret;
+ 393:../../iot_link/os/osal/osal.c **** }
+ 1178              		.loc 1 393 0
+ 1179 0012 5DF8044B 		ldr	r4, [sp], #4
+ 1180              	.LCFI15:
+ 1181              		.cfi_remember_state
+ 1182              		.cfi_restore 4
+ 1183              		.cfi_def_cfa_offset 0
+ 389:../../iot_link/os/osal/osal.c ****     }
+ 1184              		.loc 1 389 0
+ 1185 0016 6047     		bx	ip
+ 1186              	.LVL83:
+ 1187              	.L230:
+ 1188              	.LCFI16:
+ 1189              		.cfi_restore_state
+ 1190              		.loc 1 393 0
+ 1191 0018 0020     		movs	r0, #0
+ 1192              	.LVL84:
+ 1193 001a 5DF8044B 		ldr	r4, [sp], #4
+ 1194              	.LCFI17:
+ 1195              		.cfi_restore 4
+ 1196              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 28
+
+
+ 1197 001e 7047     		bx	lr
+ 1198              	.L239:
+ 1199              		.align	2
+ 1200              	.L238:
+ 1201 0020 00000000 		.word	.LANCHOR0
+ 1202              		.cfi_endproc
+ 1203              	.LFE30:
+ 1205              		.section	.text.osal_queue_recv,"ax",%progbits
+ 1206              		.align	1
+ 1207              		.global	osal_queue_recv
+ 1208              		.syntax unified
+ 1209              		.thumb
+ 1210              		.thumb_func
+ 1211              		.fpu fpv4-sp-d16
+ 1213              	osal_queue_recv:
+ 1214              	.LFB31:
+ 394:../../iot_link/os/osal/osal.c **** 
+ 395:../../iot_link/os/osal/osal.c **** bool_t  osal_queue_recv(osal_queue_t queue, void *pbuf, unsigned int *bufsize, unsigned int timeout
+ 396:../../iot_link/os/osal/osal.c **** {
+ 1215              		.loc 1 396 0
+ 1216              		.cfi_startproc
+ 1217              		@ args = 0, pretend = 0, frame = 0
+ 1218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1219              		@ link register save eliminated.
+ 1220              	.LVL85:
+ 1221 0000 10B4     		push	{r4}
+ 1222              	.LCFI18:
+ 1223              		.cfi_def_cfa_offset 4
+ 1224              		.cfi_offset 4, -4
+ 397:../../iot_link/os/osal/osal.c ****     int ret = false;
+ 398:../../iot_link/os/osal/osal.c **** 
+ 399:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->queue_recv))
+ 1225              		.loc 1 399 0
+ 1226 0002 074C     		ldr	r4, .L248
+ 1227 0004 2468     		ldr	r4, [r4]
+ 1228 0006 3CB1     		cbz	r4, .L240
+ 1229              		.loc 1 399 0 is_stmt 0 discriminator 1
+ 1230 0008 6468     		ldr	r4, [r4, #4]
+ 1231 000a 2CB1     		cbz	r4, .L240
+ 1232              		.loc 1 399 0 discriminator 2
+ 1233 000c A46B     		ldr	r4, [r4, #56]
+ 1234 000e 1CB1     		cbz	r4, .L240
+ 400:../../iot_link/os/osal/osal.c ****     {
+ 401:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->queue_recv( queue, pbuf, bufsize, timeout);
+ 1235              		.loc 1 401 0 is_stmt 1
+ 1236 0010 A446     		mov	ip, r4
+ 402:../../iot_link/os/osal/osal.c ****     }
+ 403:../../iot_link/os/osal/osal.c **** 
+ 404:../../iot_link/os/osal/osal.c ****     return ret;
+ 405:../../iot_link/os/osal/osal.c **** }
+ 1237              		.loc 1 405 0
+ 1238 0012 5DF8044B 		ldr	r4, [sp], #4
+ 1239              	.LCFI19:
+ 1240              		.cfi_remember_state
+ 1241              		.cfi_restore 4
+ 1242              		.cfi_def_cfa_offset 0
+ 401:../../iot_link/os/osal/osal.c ****     }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 29
+
+
+ 1243              		.loc 1 401 0
+ 1244 0016 6047     		bx	ip
+ 1245              	.LVL86:
+ 1246              	.L240:
+ 1247              	.LCFI20:
+ 1248              		.cfi_restore_state
+ 1249              		.loc 1 405 0
+ 1250 0018 0020     		movs	r0, #0
+ 1251              	.LVL87:
+ 1252 001a 5DF8044B 		ldr	r4, [sp], #4
+ 1253              	.LCFI21:
+ 1254              		.cfi_restore 4
+ 1255              		.cfi_def_cfa_offset 0
+ 1256 001e 7047     		bx	lr
+ 1257              	.L249:
+ 1258              		.align	2
+ 1259              	.L248:
+ 1260 0020 00000000 		.word	.LANCHOR0
+ 1261              		.cfi_endproc
+ 1262              	.LFE31:
+ 1264              		.section	.text.osal_queue_del,"ax",%progbits
+ 1265              		.align	1
+ 1266              		.global	osal_queue_del
+ 1267              		.syntax unified
+ 1268              		.thumb
+ 1269              		.thumb_func
+ 1270              		.fpu fpv4-sp-d16
+ 1272              	osal_queue_del:
+ 1273              	.LFB32:
+ 406:../../iot_link/os/osal/osal.c **** 
+ 407:../../iot_link/os/osal/osal.c **** bool_t  osal_queue_del(osal_queue_t queue)
+ 408:../../iot_link/os/osal/osal.c **** {
+ 1274              		.loc 1 408 0
+ 1275              		.cfi_startproc
+ 1276              		@ args = 0, pretend = 0, frame = 0
+ 1277              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1278              		@ link register save eliminated.
+ 1279              	.LVL88:
+ 409:../../iot_link/os/osal/osal.c ****     int ret = false;
+ 410:../../iot_link/os/osal/osal.c **** 
+ 411:../../iot_link/os/osal/osal.c ****     if((NULL != s_os_cb) &&(NULL != s_os_cb->ops) &&(NULL != s_os_cb->ops->queue_del))
+ 1280              		.loc 1 411 0
+ 1281 0000 044B     		ldr	r3, .L258
+ 1282 0002 1B68     		ldr	r3, [r3]
+ 1283 0004 23B1     		cbz	r3, .L250
+ 1284              		.loc 1 411 0 is_stmt 0 discriminator 1
+ 1285 0006 5B68     		ldr	r3, [r3, #4]
+ 1286 0008 13B1     		cbz	r3, .L250
+ 1287              		.loc 1 411 0 discriminator 2
+ 1288 000a DB6B     		ldr	r3, [r3, #60]
+ 1289 000c 03B1     		cbz	r3, .L250
+ 412:../../iot_link/os/osal/osal.c ****     {
+ 413:../../iot_link/os/osal/osal.c ****         ret = s_os_cb->ops->queue_del( queue);
+ 1290              		.loc 1 413 0 is_stmt 1
+ 1291 000e 1847     		bx	r3
+ 1292              	.LVL89:
+ 1293              	.L250:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 30
+
+
+ 414:../../iot_link/os/osal/osal.c ****     }
+ 415:../../iot_link/os/osal/osal.c **** 
+ 416:../../iot_link/os/osal/osal.c ****     return ret;
+ 417:../../iot_link/os/osal/osal.c **** }
+ 1294              		.loc 1 417 0
+ 1295 0010 0020     		movs	r0, #0
+ 1296              	.LVL90:
+ 1297 0012 7047     		bx	lr
+ 1298              	.L259:
+ 1299              		.align	2
+ 1300              	.L258:
+ 1301 0014 00000000 		.word	.LANCHOR0
+ 1302              		.cfi_endproc
+ 1303              	.LFE32:
+ 1305              		.section	.text.os_imp_init,"ax",%progbits
+ 1306              		.align	1
+ 1307              		.weak	os_imp_init
+ 1308              		.syntax unified
+ 1309              		.thumb
+ 1310              		.thumb_func
+ 1311              		.fpu fpv4-sp-d16
+ 1313              	os_imp_init:
+ 1314              	.LFB33:
+ 418:../../iot_link/os/osal/osal.c **** 
+ 419:../../iot_link/os/osal/osal.c **** 
+ 420:../../iot_link/os/osal/osal.c **** 
+ 421:../../iot_link/os/osal/osal.c **** __attribute__((weak))  int os_imp_init(void)
+ 422:../../iot_link/os/osal/osal.c **** {
+ 1315              		.loc 1 422 0
+ 1316              		.cfi_startproc
+ 1317              		@ args = 0, pretend = 0, frame = 0
+ 1318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1319 0000 13B5     		push	{r0, r1, r4, lr}
+ 1320              	.LCFI22:
+ 1321              		.cfi_def_cfa_offset 16
+ 1322              		.cfi_offset 4, -8
+ 1323              		.cfi_offset 14, -4
+ 423:../../iot_link/os/osal/osal.c ****     LINK_LOG_DEBUG("%s:###please implement this function by yourself####\n\r",__FUNCTION__);
+ 1324              		.loc 1 423 0
+ 1325 0002 FFF7FEFF 		bl	link_log_level_get
+ 1326              	.LVL91:
+ 1327 0006 0128     		cmp	r0, #1
+ 1328 0008 11D8     		bhi	.L261
+ 1329              	.LBB4:
+ 1330              	.LBB5:
+ 1331 000a 0120     		movs	r0, #1
+ 1332 000c FFF7FEFF 		bl	link_log_level_name
+ 1333              	.LVL92:
+ 1334 0010 0446     		mov	r4, r0
+ 1335 0012 FFF7FEFF 		bl	osal_sys_time
+ 1336              	.LVL93:
+ 1337 0016 084B     		ldr	r3, .L262
+ 1338 0018 0093     		str	r3, [sp]
+ 1339 001a 0246     		mov	r2, r0
+ 1340 001c 2146     		mov	r1, r4
+ 1341 001e 0748     		ldr	r0, .L262+4
+ 1342 0020 FFF7FEFF 		bl	printf
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 31
+
+
+ 1343              	.LVL94:
+ 1344 0024 064B     		ldr	r3, .L262+8
+ 1345 0026 1B68     		ldr	r3, [r3]
+ 1346 0028 9868     		ldr	r0, [r3, #8]
+ 1347 002a FFF7FEFF 		bl	fflush
+ 1348              	.LVL95:
+ 1349              	.L261:
+ 1350              	.LBE5:
+ 1351              	.LBE4:
+ 424:../../iot_link/os/osal/osal.c ****     return -1;
+ 425:../../iot_link/os/osal/osal.c **** }
+ 1352              		.loc 1 425 0
+ 1353 002e 4FF0FF30 		mov	r0, #-1
+ 1354 0032 02B0     		add	sp, sp, #8
+ 1355              	.LCFI23:
+ 1356              		.cfi_def_cfa_offset 8
+ 1357              		@ sp needed
+ 1358 0034 10BD     		pop	{r4, pc}
+ 1359              	.L263:
+ 1360 0036 00BF     		.align	2
+ 1361              	.L262:
+ 1362 0038 00000000 		.word	.LANCHOR1
+ 1363 003c 00000000 		.word	.LC0
+ 1364 0040 00000000 		.word	_impure_ptr
+ 1365              		.cfi_endproc
+ 1366              	.LFE33:
+ 1368              		.section	.text.osal_init,"ax",%progbits
+ 1369              		.align	1
+ 1370              		.global	osal_init
+ 1371              		.syntax unified
+ 1372              		.thumb
+ 1373              		.thumb_func
+ 1374              		.fpu fpv4-sp-d16
+ 1376              	osal_init:
+ 1377              	.LFB34:
+ 426:../../iot_link/os/osal/osal.c **** 
+ 427:../../iot_link/os/osal/osal.c **** int osal_init(void)
+ 428:../../iot_link/os/osal/osal.c **** {
+ 1378              		.loc 1 428 0
+ 1379              		.cfi_startproc
+ 1380              		@ args = 0, pretend = 0, frame = 0
+ 1381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1382              	.LVL96:
+ 1383 0000 08B5     		push	{r3, lr}
+ 1384              	.LCFI24:
+ 1385              		.cfi_def_cfa_offset 8
+ 1386              		.cfi_offset 3, -8
+ 1387              		.cfi_offset 14, -4
+ 429:../../iot_link/os/osal/osal.c ****     int ret = -1;
+ 430:../../iot_link/os/osal/osal.c ****     ret = os_imp_init();
+ 1388              		.loc 1 430 0
+ 1389 0002 FFF7FEFF 		bl	os_imp_init
+ 1390              	.LVL97:
+ 431:../../iot_link/os/osal/osal.c ****     return ret;
+ 432:../../iot_link/os/osal/osal.c **** }
+ 1391              		.loc 1 432 0
+ 1392 0006 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 32
+
+
+ 1393              		.cfi_endproc
+ 1394              	.LFE34:
+ 1396              		.section	.bss.s_os_cb,"aw",%nobits
+ 1397              		.align	2
+ 1398              		.set	.LANCHOR0,. + 0
+ 1401              	s_os_cb:
+ 1402 0000 00000000 		.space	4
+ 1403              		.section	.rodata.__FUNCTION__.7752,"a",%progbits
+ 1404              		.set	.LANCHOR1,. + 0
+ 1407              	__FUNCTION__.7752:
+ 1408 0000 6F735F69 		.ascii	"os_imp_init\000"
+ 1408      6D705F69 
+ 1408      6E697400 
+ 1409              		.section	.rodata.os_imp_init.str1.1,"aMS",%progbits,1
+ 1410              	.LC0:
+ 1411 0000 5B25735D 		.ascii	"[%s][%u][%s] %s:###please implement this function b"
+ 1411      5B25755D 
+ 1411      5B25735D 
+ 1411      2025733A 
+ 1411      23232370 
+ 1412 0033 7920796F 		.ascii	"y yourself####\012\015\015\012\000"
+ 1412      75727365 
+ 1412      6C662323 
+ 1412      23230A0D 
+ 1412      0D0A00
+ 1413              		.text
+ 1414              	.Letext0:
+ 1415              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 1416              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1417              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1418              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1419              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1420              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1421              		.file 8 "../../iot_link/os/osal/osal_types.h"
+ 1422              		.file 9 "../../iot_link/os/osal/osal_imp.h"
+ 1423              		.file 10 "../../iot_link/inc/link_log.h"
+ 1424              		.file 11 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1425              		.file 12 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 33
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 osal.c
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:18     .text.osal_install:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:25     .text.osal_install:00000000 osal_install
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:55     .text.osal_install:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:60     .text.osal_task_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:67     .text.osal_task_create:00000000 osal_task_create
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:116    .text.osal_task_create:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:121    .text.osal_task_kill:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:128    .text.osal_task_kill:00000000 osal_task_kill
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:157    .text.osal_task_kill:00000018 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:162    .text.osal_task_exit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:169    .text.osal_task_exit:00000000 osal_task_exit
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:195    .text.osal_task_exit:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:200    .text.osal_task_sleep:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:207    .text.osal_task_sleep:00000000 osal_task_sleep
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:234    .text.osal_task_sleep:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:239    .text.osal_mutex_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:246    .text.osal_mutex_create:00000000 osal_mutex_create
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:275    .text.osal_mutex_create:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:280    .text.osal_mutex_lock:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:287    .text.osal_mutex_lock:00000000 osal_mutex_lock
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:316    .text.osal_mutex_lock:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:321    .text.osal_mutex_unlock:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:328    .text.osal_mutex_unlock:00000000 osal_mutex_unlock
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:357    .text.osal_mutex_unlock:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:362    .text.osal_mutex_del:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:369    .text.osal_mutex_del:00000000 osal_mutex_del
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:398    .text.osal_mutex_del:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:403    .text.osal_semp_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:410    .text.osal_semp_create:00000000 osal_semp_create
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:439    .text.osal_semp_create:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:444    .text.osal_semp_pend:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:451    .text.osal_semp_pend:00000000 osal_semp_pend
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:480    .text.osal_semp_pend:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:485    .text.osal_semp_post:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:492    .text.osal_semp_post:00000000 osal_semp_post
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:521    .text.osal_semp_post:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:526    .text.osal_semp_del:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:533    .text.osal_semp_del:00000000 osal_semp_del
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:562    .text.osal_semp_del:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:567    .text.osal_malloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:574    .text.osal_malloc:00000000 osal_malloc
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:603    .text.osal_malloc:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:608    .text.osal_free:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:615    .text.osal_free:00000000 osal_free
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:644    .text.osal_free:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:649    .text.osal_zalloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:656    .text.osal_zalloc:00000000 osal_zalloc
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:702    .text.osal_zalloc:00000024 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:707    .text.osal_realloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:714    .text.osal_realloc:00000000 osal_realloc
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:743    .text.osal_realloc:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:748    .text.osal_calloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:755    .text.osal_calloc:00000000 osal_calloc
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:793    .text.osal_sys_time:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:800    .text.osal_sys_time:00000000 osal_sys_time
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s 			page 34
+
+
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:829    .text.osal_sys_time:00000018 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:834    .text.osal_loop_timer_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:841    .text.osal_loop_timer_init:00000000 osal_loop_timer_init
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:865    .text.osal_loop_timer_expired:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:872    .text.osal_loop_timer_expired:00000000 osal_loop_timer_expired
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:904    .text.osal_loop_timer_count_downms:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:911    .text.osal_loop_timer_count_downms:00000000 osal_loop_timer_count_downms
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:941    .text.osal_loop_timer_count_down:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:948    .text.osal_loop_timer_count_down:00000000 osal_loop_timer_count_down
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:966    .text.osal_loop_timer_left:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:973    .text.osal_loop_timer_left:00000000 osal_loop_timer_left
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1005   .text.osal_reboot:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1012   .text.osal_reboot:00000000 osal_reboot
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1040   .text.osal_reboot:00000018 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1045   .text.osal_int_connect:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1052   .text.osal_int_connect:00000000 osal_int_connect
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1101   .text.osal_int_connect:00000024 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1106   .text.osal_queue_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1113   .text.osal_queue_create:00000000 osal_queue_create
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1142   .text.osal_queue_create:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1147   .text.osal_queue_send:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1154   .text.osal_queue_send:00000000 osal_queue_send
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1201   .text.osal_queue_send:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1206   .text.osal_queue_recv:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1213   .text.osal_queue_recv:00000000 osal_queue_recv
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1260   .text.osal_queue_recv:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1265   .text.osal_queue_del:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1272   .text.osal_queue_del:00000000 osal_queue_del
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1301   .text.osal_queue_del:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1306   .text.os_imp_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1313   .text.os_imp_init:00000000 os_imp_init
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1362   .text.os_imp_init:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1369   .text.osal_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1376   .text.osal_init:00000000 osal_init
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1397   .bss.s_os_cb:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1401   .bss.s_os_cb:00000000 s_os_cb
+C:\Users\LuckyE\AppData\Local\Temp\ccXQxDsd.s:1407   .rodata.__FUNCTION__.7752:00000000 __FUNCTION__.7752
+
+UNDEFINED SYMBOLS
+memset
+malloc
+link_log_level_get
+link_log_level_name
+printf
+fflush
+_impure_ptr

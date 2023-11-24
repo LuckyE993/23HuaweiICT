@@ -1,0 +1,1601 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"los_hw.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.osTaskExit,"ax",%progbits
+  18              		.align	1
+  19              		.global	osTaskExit
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	osTaskExit:
+  26              	.LFB289:
+  27              		.file 1 "../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c"
+   1:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * Copyright (c) <2013-2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * All rights reserved.
+   4:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * permission.
+  14:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * ===============================================
+  29:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 2
+
+
+  32:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  35:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_config.h"
+  36:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_base.h"
+  37:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_task.ph"
+  38:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_hw.h"
+  39:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_priqueue.ph"
+  40:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_mpu.h"
+  41:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_memory.h"
+  42:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_printf.h"
+  43:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  44:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_ENABLE_MPU == YES)
+  45:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "heap.h"
+  46:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #include "los_svc.h"
+  47:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+  48:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  49:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #ifdef __cplusplus
+  50:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if __cplusplus
+  51:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** extern "C" {
+  52:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif /* __cplusplus */
+  53:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif /* __cplusplus */
+  54:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  55:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  56:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** /*****************************************************************************
+  57:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Function    : osSchedule
+  58:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Description : task scheduling
+  59:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Input       : None
+  60:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Output      : None
+  61:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Return      : None
+  62:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  *****************************************************************************/
+  63:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** LITE_OS_SEC_TEXT VOID osSchedule(VOID)
+  64:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** {
+  65:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     osTaskSchedule();
+  66:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+  67:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  68:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** /*****************************************************************************
+  69:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Function    : LOS_Schedule
+  70:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Description : Function to determine whether task scheduling is required
+  71:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Input       : None
+  72:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Output      : None
+  73:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Return      : None
+  74:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  *****************************************************************************/
+  75:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** LITE_OS_SEC_TEXT VOID LOS_Schedule(VOID)
+  76:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** {
+  77:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     UINTPTR uvIntSave;
+  78:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  79:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     uvIntSave = LOS_IntLock();
+  80:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  81:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     /* Find the highest task */
+  82:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     g_stLosTask.pstNewTask = LOS_DL_LIST_ENTRY(osPriqueueTop(), LOS_TASK_CB, stPendList);
+  83:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  84:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     /* In case that running is not highest then reschedule */
+  85:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     if (g_stLosTask.pstRunTask != g_stLosTask.pstNewTask)
+  86:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     {
+  87:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         if ((!g_usLosTaskLock))
+  88:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 3
+
+
+  89:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             (VOID)LOS_IntRestore(uvIntSave);
+  90:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  91:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             osTaskSchedule();
+  92:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  93:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             return;
+  94:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         }
+  95:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     }
+  96:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  97:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     (VOID)LOS_IntRestore(uvIntSave);
+  98:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+  99:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 100:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** /*****************************************************************************
+ 101:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Function    : osTaskExit
+ 102:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Description : Task exit function
+ 103:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Input       : None
+ 104:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Output      : None
+ 105:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Return      : None
+ 106:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  *****************************************************************************/
+ 107:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** LITE_OS_SEC_TEXT_MINOR VOID osTaskExit(VOID)
+ 108:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** {
+  28              		.loc 1 108 0
+  29              		.cfi_startproc
+  30              		@ Volatile: function does not return.
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.LBB8:
+  35              	.LBB9:
+  36              		.file 2 "../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h"
+   1:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**************************************************************************//**
+   2:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * @version  V5.0.1
+   5:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * @date     02. February 2017
+   6:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  ******************************************************************************/
+   7:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /*
+   8:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+   9:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  *
+  10:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  *
+  12:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  *
+  16:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  *
+  18:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * limitations under the License.
+  23:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+  24:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  25:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  28:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* ignore some GCC warnings */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 4
+
+
+  29:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  34:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  35:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __ASM
+  36:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __ASM                     __asm
+  37:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  38:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __INLINE
+  39:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __INLINE                  inline
+  40:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  41:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  42:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __STATIC_INLINE           static inline
+  43:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  44:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  45:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __NO_RETURN               __attribute__((noreturn))
+  46:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  47:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __USED
+  48:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __USED                    __attribute__((used))
+  49:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  50:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __WEAK
+  51:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __WEAK                    __attribute__((weak))
+  52:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  53:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32
+  54:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic push
+  55:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wpacked"
+  56:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wattributes"
+  57:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  58:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic pop
+  59:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  60:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  61:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __ALIGNED
+  62:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __ALIGNED(x)              __attribute__((aligned(x)))
+  63:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  64:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __PACKED
+  65:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __PACKED                  __attribute__((packed, aligned(1)))
+  66:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  67:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  68:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
+  69:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  70:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  71:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  72:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  73:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  74:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  75:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   @{
+  76:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+  77:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  78:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+  79:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  80:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  81:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  82:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+  83:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
+  84:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+  85:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 5
+
+
+  86:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+  87:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  88:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  89:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+  90:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  91:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  92:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  93:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+  94:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __disable_irq(void)
+  95:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+  96:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  37              		.loc 2 96 0
+  38              		.syntax unified
+  39              	@ 96 "../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h" 1
+  40 0000 72B6     		cpsid i
+  41              	@ 0 "" 2
+  42              		.thumb
+  43              		.syntax unified
+  44              	.L2:
+  45 0002 FEE7     		b	.L2
+  46              	.LBE9:
+  47              	.LBE8:
+  48              		.cfi_endproc
+  49              	.LFE289:
+  51              		.section	.text.osSchedule,"ax",%progbits
+  52              		.align	1
+  53              		.global	osSchedule
+  54              		.syntax unified
+  55              		.thumb
+  56              		.thumb_func
+  57              		.fpu fpv4-sp-d16
+  59              	osSchedule:
+  60              	.LFB287:
+  64:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     osTaskSchedule();
+  61              		.loc 1 64 0
+  62              		.cfi_startproc
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 0, uses_anonymous_args = 0
+  65              		@ link register save eliminated.
+  65:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+  66              		.loc 1 65 0
+  67 0000 FFF7FEBF 		b	osTaskSchedule
+  68              	.LVL0:
+  69              		.cfi_endproc
+  70              	.LFE287:
+  72              		.section	.text.LOS_Schedule,"ax",%progbits
+  73              		.align	1
+  74              		.global	LOS_Schedule
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  78              		.fpu fpv4-sp-d16
+  80              	LOS_Schedule:
+  81              	.LFB288:
+  76:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     UINTPTR uvIntSave;
+  82              		.loc 1 76 0
+  83              		.cfi_startproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 6
+
+
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+  86 0000 10B5     		push	{r4, lr}
+  87              	.LCFI0:
+  88              		.cfi_def_cfa_offset 8
+  89              		.cfi_offset 4, -8
+  90              		.cfi_offset 14, -4
+  79:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  91              		.loc 1 79 0
+  92 0002 FFF7FEFF 		bl	LOS_IntLock
+  93              	.LVL1:
+  94 0006 0446     		mov	r4, r0
+  95              	.LVL2:
+  82:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+  96              		.loc 1 82 0
+  97 0008 FFF7FEFF 		bl	osPriqueueTop
+  98              	.LVL3:
+  99 000c 094B     		ldr	r3, .L6
+ 100 000e 2838     		subs	r0, r0, #40
+ 101 0010 5860     		str	r0, [r3, #4]
+  85:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     {
+ 102              		.loc 1 85 0
+ 103 0012 1B68     		ldr	r3, [r3]
+ 104 0014 9842     		cmp	r0, r3
+  89:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 105              		.loc 1 89 0
+ 106 0016 2046     		mov	r0, r4
+  85:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     {
+ 107              		.loc 1 85 0
+ 108 0018 08D0     		beq	.L5
+  87:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         {
+ 109              		.loc 1 87 0
+ 110 001a 074B     		ldr	r3, .L6+4
+ 111 001c 1B88     		ldrh	r3, [r3]
+ 112 001e 2BB9     		cbnz	r3, .L5
+  89:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 113              		.loc 1 89 0
+ 114 0020 FFF7FEFF 		bl	LOS_IntRestore
+ 115              	.LVL4:
+  98:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 116              		.loc 1 98 0
+ 117 0024 BDE81040 		pop	{r4, lr}
+ 118              	.LCFI1:
+ 119              		.cfi_remember_state
+ 120              		.cfi_restore 14
+ 121              		.cfi_restore 4
+ 122              		.cfi_def_cfa_offset 0
+ 123              	.LVL5:
+  91:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 124              		.loc 1 91 0
+ 125 0028 FFF7FEBF 		b	osTaskSchedule
+ 126              	.LVL6:
+ 127              	.L5:
+ 128              	.LCFI2:
+ 129              		.cfi_restore_state
+  98:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 130              		.loc 1 98 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 7
+
+
+ 131 002c BDE81040 		pop	{r4, lr}
+ 132              	.LCFI3:
+ 133              		.cfi_restore 14
+ 134              		.cfi_restore 4
+ 135              		.cfi_def_cfa_offset 0
+  97:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+ 136              		.loc 1 97 0
+ 137 0030 FFF7FEBF 		b	LOS_IntRestore
+ 138              	.LVL7:
+ 139              	.L7:
+ 140              		.align	2
+ 141              	.L6:
+ 142 0034 00000000 		.word	g_stLosTask
+ 143 0038 00000000 		.word	g_usLosTaskLock
+ 144              		.cfi_endproc
+ 145              	.LFE288:
+ 147              		.section	.text.osTskStackInit,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	osTskStackInit
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 153              		.fpu fpv4-sp-d16
+ 155              	osTskStackInit:
+ 156              	.LFB290:
+ 109:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     __disable_irq();
+ 110:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     while(1);
+ 111:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+ 112:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 113:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ 114:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** LITE_OS_SEC_TEXT_INIT VOID osUsrTaskEntry(UINT32 uwTaskID)
+ 115:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** {
+ 116:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     LOS_TASK_CB    *pstTaskCB;
+ 117:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     TSK_ENTRY_FUNC entry;
+ 118:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     UINT32         arg;
+ 119:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 120:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstTaskCB = OS_TCB_FROM_TID(uwTaskID);
+ 121:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 122:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     entry = pstTaskCB->pfnTaskEntry;
+ 123:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     arg   = pstTaskCB->uwArg;
+ 124:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 125:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     /* enter unprivileged */
+ 126:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 127:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     __set_CONTROL(__get_CONTROL() | CONTROL_nPRIV_Msk);
+ 128:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 129:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     (VOID)entry(arg);
+ 130:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 131:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     (VOID)LOS_UsrTaskDelete(uwTaskID);
+ 132:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+ 133:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 134:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 135:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** /*****************************************************************************
+ 136:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Function    : osTskStackInit
+ 137:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Description : Task stack initialization function
+ 138:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Input       : pstTaskCB    --- TCB
+ 139:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****                pstInitParam --- Task init parameters
+ 140:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Output      : None
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 8
+
+
+ 141:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  Return      :
+ 142:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****  *****************************************************************************/
+ 143:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** LITE_OS_SEC_TEXT_INIT VOID osTskStackInit(LOS_TASK_CB *pstTaskCB, TSK_INIT_PARAM_S *pstInitParam)
+ 144:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** {
+ 157              		.loc 1 144 0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 0
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161              	.LVL8:
+ 162 0000 38B5     		push	{r3, r4, r5, lr}
+ 163              	.LCFI4:
+ 164              		.cfi_def_cfa_offset 16
+ 165              		.cfi_offset 3, -16
+ 166              		.cfi_offset 4, -12
+ 167              		.cfi_offset 5, -8
+ 168              		.cfi_offset 14, -4
+ 145:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     TSK_CONTEXT_S  *pstContext;
+ 146:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     char *pTopStack = (char *)pstTaskCB->uwTopOfStack;
+ 147:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     char *pStack = pTopStack + pstTaskCB->uwStackSize;
+ 169              		.loc 1 147 0
+ 170 0002 D0E90223 		ldrd	r2, r3, [r0, #8]
+ 144:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     TSK_CONTEXT_S  *pstContext;
+ 171              		.loc 1 144 0
+ 172 0006 0546     		mov	r5, r0
+ 148:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 149:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ 150:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     int i;   //this var only be used when mpu enabled --zhangqf
+ 151:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     static LOS_MPU_ENTRY astNullMpuSetting [MPU_NR_USR_ENTRIES + 1] = {0};
+ 152:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     LOS_MPU_ENTRY * pstMpuSetting = NULL;
+ 153:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_STATIC_TASK == YES)
+ 154:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     LOS_MPU_PARA  * pstMpuPara = (LOS_MPU_PARA *)pstTaskCB->pMpuSettings;
+ 155:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #else
+ 156:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     LOS_MPU_PARA  * pstMpuPara = (LOS_MPU_PARA *)pstInitParam->pRegions;
+ 157:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 158:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 159:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 160:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     /*initialize the task stack, write magic num to stack top*/
+ 161:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     memset(pTopStack, OS_TASK_STACK_INIT, pstTaskCB->uwStackSize);
+ 173              		.loc 1 161 0
+ 174 0008 4FF0CA31 		mov	r1, #-892679478
+ 175              	.LVL9:
+ 176 000c 1846     		mov	r0, r3
+ 177              	.LVL10:
+ 147:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 178              		.loc 1 147 0
+ 179 000e 9C18     		adds	r4, r3, r2
+ 180              	.LVL11:
+ 181              		.loc 1 161 0
+ 182 0010 FFF7FEFF 		bl	memset
+ 183              	.LVL12:
+ 162:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     *((UINT32 *)(pTopStack)) = OS_TASK_MAGIC_WORD;
+ 184              		.loc 1 162 0
+ 185 0014 4FF0CC32 		mov	r2, #-858993460
+ 186 0018 0260     		str	r2, [r0]
+ 187              	.LVL13:
+ 163:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 164:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 9
+
+
+ 165:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 166:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     if (pstMpuPara != NULL)
+ 167:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     {
+ 168:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         UINT32 allRegionBase, allRegionSize;
+ 169:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 170:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         /* per-task heap is only used for unprivileged task */
+ 171:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 172:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_STATIC_TASK == NO)
+ 173:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstTaskCB->uwHeapSize = pstInitParam->uwHeapSize;
+ 174:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 175:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 176:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         if (pstTaskCB->uwHeapSize)
+ 177:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         {
+ 178:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 179:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             /* the pool address is just the begin of stack, see osTskStackAlloc */
+ 180:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 181:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             if (LOS_MemInit (pStack, pstTaskCB->uwHeapSize))
+ 182:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             {
+ 183:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****                 PRINT_ERR("init per task heap fail!\n");
+ 184:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****                 pstTaskCB->pPool = NULL;
+ 185:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             }
+ 186:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             else
+ 187:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             {
+ 188:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****                 pstTaskCB->pPool = pStack;
+ 189:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             }
+ 190:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         }
+ 191:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 192:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         /* plus 1 for stack */
+ 193:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 194:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pStack -= sizeof(LOS_MPU_ENTRY) * (MPU_NR_USR_ENTRIES + 1);
+ 195:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstMpuSetting = (LOS_MPU_ENTRY *)pStack;
+ 196:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 197:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         for (i = 0; i < MPU_NR_USR_ENTRIES; i++)
+ 198:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         {
+ 199:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             pstMpuSetting [i].uwRegionAddr = pstMpuPara[i].uwRegionAddr |
+ 200:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****                 MPU_RBAR_REGION (i + MPU_FIRST_USR_REGION) | MPU_RBAR_VALID;
+ 201:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             pstMpuSetting [i].uwRegionAttr = pstMpuPara[i].uwRegionAttr |
+ 202:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****                 MPU_ATTR_SZ (pstMpuPara[i].uwRegionSize);
+ 203:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         }
+ 204:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 205:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         allRegionBase = pstTaskCB->uwTopOfStack;
+ 206:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         allRegionSize = pstTaskCB->uwStackSize + pstTaskCB->uwHeapSize;
+ 207:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 208:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstMpuSetting [MPU_NR_USR_ENTRIES].uwRegionAddr =
+ 209:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             allRegionBase | MPU_RBAR_VALID |
+ 210:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             MPU_RBAR_REGION (MPU_NR_USR_ENTRIES + MPU_FIRST_USR_REGION);
+ 211:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstMpuSetting [MPU_NR_USR_ENTRIES].uwRegionAttr =
+ 212:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             MPU_ATTR_RW_RW | MPU_ATTR_SZ (allRegionSize) | MPU_ATTR_WB |
+ 213:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             MPU_ATTR_EN | MPU_ATTR_XN;
+ 214:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     }
+ 215:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     else
+ 216:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     {
+ 217:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstTaskCB->pPool = (void *)OS_SYS_MEM_ADDR;
+ 218:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 219:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstMpuSetting = astNullMpuSetting;
+ 220:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 221:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         for (i = 0; i < MPU_NR_USR_ENTRIES + 1; i++)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 10
+
+
+ 222:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         {
+ 223:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             pstMpuSetting [i].uwRegionAddr = 0 |
+ 224:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****                 MPU_RBAR_REGION (i + MPU_FIRST_USR_REGION) | MPU_RBAR_VALID;
+ 225:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             pstMpuSetting [i].uwRegionAttr = 0;
+ 226:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         }
+ 227:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     }
+ 228:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 229:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstTaskCB->pMpuSettings = (VOID *)pstMpuSetting;
+ 230:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 231:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 232:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pStack -= sizeof(TSK_CONTEXT_S);
+ 233:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 234:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext = (TSK_CONTEXT_S *)pStack;
+ 235:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 236:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ 237:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 238:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     /*
+ 239:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****      * 1. CONTROL.SPSEL is reserved in handler mode, and context load is always
+ 240:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****      *    happend in handler mode expected the first one, so do not set this bit
+ 241:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****      * 2. task is created at priveledged mode, for usr task, it is switched to
+ 242:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****      *    usr mode in osUsrTaskEntry
+ 243:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****      */
+ 244:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 245:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwControl = 0;
+ 246:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 247:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 248:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR4  = 0x04040404L;
+ 249:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR5  = 0x05050505L;
+ 188              		.loc 1 249 0
+ 189 001a 4FF00533 		mov	r3, #84215045
+ 190 001e 4FF00432 		mov	r2, #67372036
+ 191 0022 44E91223 		strd	r2, r3, [r4, #-72]
+ 250:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR6  = 0x06060606L;
+ 251:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR7  = 0x07070707L;
+ 192              		.loc 1 251 0
+ 193 0026 4FF00631 		mov	r1, #101058054
+ 194 002a 4FF00733 		mov	r3, #117901063
+ 195 002e 44E91013 		strd	r1, r3, [r4, #-64]
+ 252:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR8  = 0x08080808L;
+ 253:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR9  = 0x09090909L;
+ 196              		.loc 1 253 0
+ 197 0032 4FF00830 		mov	r0, #134744072
+ 198 0036 4FF00933 		mov	r3, #151587081
+ 199 003a 44E90E03 		strd	r0, r3, [r4, #-56]
+ 254:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR10 = 0x10101010L;
+ 255:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR11 = 0x11111111L;
+ 200              		.loc 1 255 0
+ 201 003e 4FF0103C 		mov	ip, #269488144
+ 202 0042 4FF01133 		mov	r3, #286331153
+ 203 0046 44E90CC3 		strd	ip, r3, [r4, #-48]
+ 256:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     /* The initial interruption state(PRIMASK value: 0 --- enable) of the task */
+ 257:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwPriMask = 0;
+ 258:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if FPU_EXIST
+ 259:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     /**
+ 260:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****      * The initial EXC_RETURN value(use 8 word stack frame, return to thread mode and use PSP).
+ 261:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****      * Please do not modify it.
+ 262:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****      */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 11
+
+
+ 263:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwExcReturn = 0xFFFFFFFD;
+ 204              		.loc 1 263 0
+ 205 004a 4FF0000E 		mov	lr, #0
+ 206 004e 6FF00203 		mvn	r3, #2
+ 207 0052 44E90AE3 		strd	lr, r3, [r4, #-40]
+ 264:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 265:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR0  = pstTaskCB->uwTaskID;
+ 208              		.loc 1 265 0
+ 209 0056 2B69     		ldr	r3, [r5, #16]
+ 210 0058 44F8203C 		str	r3, [r4, #-32]
+ 266:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR1  = 0x01010101L;
+ 267:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR2  = 0x02020202L;
+ 211              		.loc 1 267 0
+ 212 005c 4FF00132 		mov	r2, #16843009
+ 213 0060 4FF00233 		mov	r3, #33686018
+ 214 0064 44E90723 		strd	r2, r3, [r4, #-28]
+ 268:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR3  = 0x03030303L;
+ 269:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwR12 = 0x12121212L;
+ 215              		.loc 1 269 0
+ 216 0068 4FF00331 		mov	r1, #50529027
+ 217 006c 4FF01233 		mov	r3, #303174162
+ 218 0070 44E90513 		strd	r1, r3, [r4, #-20]
+ 270:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwLR  = (UINT32)osTaskExit;
+ 219              		.loc 1 270 0
+ 220 0074 064B     		ldr	r3, .L9
+ 221 0076 44F80C3C 		str	r3, [r4, #-12]
+ 271:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ 272:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     if (pstMpuPara != NULL)
+ 273:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     {
+ 274:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstContext->uwPC  = (UINT32)osUsrTaskEntry;
+ 275:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     }
+ 276:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     else
+ 277:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 278:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwPC  = (UINT32)osTaskEntry;
+ 222              		.loc 1 278 0
+ 223 007a 064B     		ldr	r3, .L9+4
+ 224 007c 44F8083C 		str	r3, [r4, #-8]
+ 279:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstContext->uwxPSR = 0x01000000L;
+ 225              		.loc 1 279 0
+ 226 0080 4FF08073 		mov	r3, #16777216
+ 227 0084 44F8043C 		str	r3, [r4, #-4]
+ 232:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 228              		.loc 1 232 0
+ 229 0088 483C     		subs	r4, r4, #72
+ 230              	.LVL14:
+ 280:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 281:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstTaskCB->pStackPointer = (VOID *)pStack;
+ 231              		.loc 1 281 0
+ 232 008a 2C60     		str	r4, [r5]
+ 282:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 283:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     return;
+ 284:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+ 233              		.loc 1 284 0
+ 234 008c 38BD     		pop	{r3, r4, r5, pc}
+ 235              	.LVL15:
+ 236              	.L10:
+ 237 008e 00BF     		.align	2
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 12
+
+
+ 238              	.L9:
+ 239 0090 00000000 		.word	osTaskExit
+ 240 0094 00000000 		.word	osTaskEntry
+ 241              		.cfi_endproc
+ 242              	.LFE290:
+ 244              		.section	.text.osTskStackAlloc,"ax",%progbits
+ 245              		.align	1
+ 246              		.global	osTskStackAlloc
+ 247              		.syntax unified
+ 248              		.thumb
+ 249              		.thumb_func
+ 250              		.fpu fpv4-sp-d16
+ 252              	osTskStackAlloc:
+ 253              	.LFB291:
+ 285:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 286:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_STATIC_TASK == NO)
+ 287:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** LITE_OS_SEC_TEXT_INIT VOID *osTskStackAlloc (TSK_INIT_PARAM_S *pstInitParam)
+ 288:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** {
+ 254              		.loc 1 288 0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              	.LVL16:
+ 259 0000 10B5     		push	{r4, lr}
+ 260              	.LCFI5:
+ 261              		.cfi_def_cfa_offset 8
+ 262              		.cfi_offset 4, -8
+ 263              		.cfi_offset 14, -4
+ 289:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     UINT32 align = LOSCFG_STACK_POINT_ALIGN_SIZE;
+ 290:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     UINT32 alloc;
+ 291:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 292:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     /* TSK_CONTEXT_S will take space in stack, reserve space for it */
+ 293:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     pstInitParam->uwStackSize += ALIGN(sizeof (TSK_CONTEXT_S) , LOSCFG_STACK_POINT_ALIGN_SIZE);
+ 264              		.loc 1 293 0
+ 265 0002 0821     		movs	r1, #8
+ 288:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     UINT32 align = LOSCFG_STACK_POINT_ALIGN_SIZE;
+ 266              		.loc 1 288 0
+ 267 0004 0446     		mov	r4, r0
+ 268              		.loc 1 293 0
+ 269 0006 4820     		movs	r0, #72
+ 270              	.LVL17:
+ 271 0008 FFF7FEFF 		bl	LOS_Align
+ 272              	.LVL18:
+ 273 000c E168     		ldr	r1, [r4, #12]
+ 294:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 295:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 296:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 297:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #if (LOSCFG_ENABLE_MPU == YES)
+ 298:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     if (pstInitParam->pRegions != NULL)
+ 299:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     {
+ 300:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 301:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         /* LOS_MPU_ENTRY will be allocated from stack, reserve space for it,
+ 302:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****            +1 for the stack entry */
+ 303:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 304:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstInitParam->uwStackSize += sizeof (LOS_MPU_ENTRY) * (MPU_NR_USR_ENTRIES + 1);
+ 305:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 306:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         /* make sure the heap size is correctly aligned */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 13
+
+
+ 307:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 308:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         if (pstInitParam->uwHeapSize != 0)
+ 309:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             {
+ 310:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             pstInitParam->uwHeapSize += sizeof (heap_t);
+ 311:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             }
+ 312:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 313:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstInitParam->uwHeapSize = ALIGN(pstInitParam->uwHeapSize, 8);
+ 314:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 315:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         alloc = pstInitParam->uwStackSize + pstInitParam->uwHeapSize;
+ 316:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 317:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         if (alloc < 256)        /* the minimal supported region size is 256 */
+ 318:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         {
+ 319:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             alloc = 256;
+ 320:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         }
+ 321:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         else
+ 322:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         {
+ 323:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             /* make sure the size is power of 2 */
+ 324:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 325:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             if (alloc & (alloc - 1))
+ 326:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             {
+ 327:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****                 alloc = 1 << (32 - CLZ (alloc));
+ 328:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****             }
+ 329:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         }
+ 330:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 331:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         pstInitParam->uwStackSize = alloc - pstInitParam->uwHeapSize;
+ 332:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 333:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         align = alloc;
+ 334:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     }
+ 335:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     else
+ 336:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 337:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     {
+ 338:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****         alloc = pstInitParam->uwStackSize;
+ 339:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     }
+ 340:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 341:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 342:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 343:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     return LOS_MemAllocAlign(OS_TASK_STACK_ADDR, alloc, align);
+ 274              		.loc 1 343 0
+ 275 000e 044B     		ldr	r3, .L12
+ 293:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 276              		.loc 1 293 0
+ 277 0010 0144     		add	r1, r1, r0
+ 278 0012 E160     		str	r1, [r4, #12]
+ 279              	.LVL19:
+ 280              		.loc 1 343 0
+ 281 0014 0822     		movs	r2, #8
+ 282 0016 1868     		ldr	r0, [r3]
+ 344:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+ 283              		.loc 1 344 0
+ 284 0018 BDE81040 		pop	{r4, lr}
+ 285              	.LCFI6:
+ 286              		.cfi_restore 14
+ 287              		.cfi_restore 4
+ 288              		.cfi_def_cfa_offset 0
+ 289              	.LVL20:
+ 343:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+ 290              		.loc 1 343 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 14
+
+
+ 291 001c FFF7FEBF 		b	LOS_MemAllocAlign
+ 292              	.LVL21:
+ 293              	.L13:
+ 294              		.align	2
+ 295              	.L12:
+ 296 0020 00000000 		.word	m_aucSysMem0
+ 297              		.cfi_endproc
+ 298              	.LFE291:
+ 300              		.section	.text.osEnterSleep,"ax",%progbits
+ 301              		.align	1
+ 302              		.global	osEnterSleep
+ 303              		.syntax unified
+ 304              		.thumb
+ 305              		.thumb_func
+ 306              		.fpu fpv4-sp-d16
+ 308              	osEnterSleep:
+ 309              	.LFB292:
+ 345:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** #endif
+ 346:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 347:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** 
+ 348:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** LITE_OS_SEC_TEXT_INIT VOID osEnterSleep(VOID)
+ 349:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** {
+ 310              		.loc 1 349 0
+ 311              		.cfi_startproc
+ 312              		@ args = 0, pretend = 0, frame = 0
+ 313              		@ frame_needed = 0, uses_anonymous_args = 0
+ 314              		@ link register save eliminated.
+ 315              	.LBB10:
+ 316              	.LBB11:
+  97:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+  98:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  99:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 100:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 101:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Control Register
+ 102:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+ 103:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Control Register value
+ 104:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 105:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_CONTROL(void)
+ 106:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 107:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 108:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 109:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 110:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 111:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 112:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 113:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 114:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 115:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 116:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Control Register (non-secure)
+ 117:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the non-secure Control Register when in secure mode.
+ 118:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               non-secure Control Register value
+ 119:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 120:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_CONTROL_NS(void)
+ 121:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 122:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 123:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 124:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control_ns" : "=r" (result) );
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 15
+
+
+ 125:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 126:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 127:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 128:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 129:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 130:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 131:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Control Register
+ 132:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+ 133:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+ 134:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 135:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+ 136:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 137:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+ 138:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 139:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 140:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 141:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 142:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 143:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Control Register (non-secure)
+ 144:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Writes the given value to the non-secure Control Register when in secure state.
+ 145:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+ 146:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 147:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_CONTROL_NS(uint32_t control)
+ 148:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 149:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR control_ns, %0" : : "r" (control) : "memory");
+ 150:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 151:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 152:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 153:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 154:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 155:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 156:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 157:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               IPSR Register value
+ 158:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 159:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 160:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 161:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 162:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 163:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 164:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 165:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 166:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 167:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 168:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 169:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get APSR Register
+ 170:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 171:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               APSR Register value
+ 172:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 173:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_APSR(void)
+ 174:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 175:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 176:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 177:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 178:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 179:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 180:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 181:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 16
+
+
+ 182:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 183:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 184:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 185:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               xPSR Register value
+ 186:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 187:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 188:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 189:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 190:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 191:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 192:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 193:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 194:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 195:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 196:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 197:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 198:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 199:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               PSP Register value
+ 200:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 201:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSP(void)
+ 202:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 203:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 204:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 205:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp"  : "=r" (result) );
+ 206:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 207:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 208:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 209:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 210:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 211:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 212:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Process Stack Pointer (non-secure)
+ 213:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Process Stack Pointer (PSP) when in secure s
+ 214:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               PSP Register value
+ 215:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 216:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSP_NS(void)
+ 217:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 218:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 219:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 220:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp_ns"  : "=r" (result) );
+ 221:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 222:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 223:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 224:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 225:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 226:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 227:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 228:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 229:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 230:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 231:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 232:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 233:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0" : : "r" (topOfProcStack) : );
+ 234:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 235:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 236:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 237:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 238:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 17
+
+
+ 239:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Process Stack Pointer (non-secure)
+ 240:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Process Stack Pointer (PSP) when in secure sta
+ 241:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 242:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 243:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
+ 244:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 245:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : );
+ 246:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 247:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 248:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 249:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 250:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 251:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 252:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 253:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               MSP Register value
+ 254:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 255:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSP(void)
+ 256:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 257:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 258:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 259:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp" : "=r" (result) );
+ 260:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 261:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 262:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 263:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 264:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 265:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 266:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Main Stack Pointer (non-secure)
+ 267:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Main Stack Pointer (MSP) when in secure stat
+ 268:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               MSP Register value
+ 269:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 270:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSP_NS(void)
+ 271:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 272:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 273:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 274:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp_ns" : "=r" (result) );
+ 275:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 276:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 277:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 278:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 279:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 280:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 281:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 282:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ 283:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 284:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 285:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 286:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 287:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : );
+ 288:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 289:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 290:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 291:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 292:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 293:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Main Stack Pointer (non-secure)
+ 294:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Main Stack Pointer (MSP) when in secure state.
+ 295:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    topOfMainStack  Main Stack Pointer value to set
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 18
+
+
+ 296:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 297:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
+ 298:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 299:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : );
+ 300:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 301:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 302:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 303:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 304:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 305:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Priority Mask
+ 306:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 307:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Priority Mask value
+ 308:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 309:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 310:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 311:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 312:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 313:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+ 314:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 315:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 316:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 317:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 318:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 319:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 320:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Priority Mask (non-secure)
+ 321:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current state of the non-secure priority mask bit from the Priority Mask Reg
+ 322:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Priority Mask value
+ 323:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 324:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PRIMASK_NS(void)
+ 325:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 326:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 327:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 328:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask_ns" : "=r" (result) );
+ 329:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 330:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 331:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 332:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 333:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 334:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 335:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 336:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 337:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 338:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 339:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 340:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 341:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+ 342:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 343:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 344:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 345:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 346:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 347:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Priority Mask (non-secure)
+ 348:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Priority Mask Register when in secure state.
+ 349:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 350:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 351:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
+ 352:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 19
+
+
+ 353:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR primask_ns, %0" : : "r" (priMask) : "memory");
+ 354:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 355:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 356:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 357:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 358:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+ 359:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 360:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 361:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 362:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Enable FIQ
+ 363:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
+ 364:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 365:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 366:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_fault_irq(void)
+ 367:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 368:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("cpsie f" : : : "memory");
+ 369:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 370:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 371:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 372:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 373:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Disable FIQ
+ 374:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Disables FIQ interrupts by setting the F-bit in the CPSR.
+ 375:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 376:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 377:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __disable_fault_irq(void)
+ 378:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 379:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("cpsid f" : : : "memory");
+ 380:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 381:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 382:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 383:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 384:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Base Priority
+ 385:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Base Priority register.
+ 386:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Base Priority register value
+ 387:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 388:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_BASEPRI(void)
+ 389:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 390:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 391:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 392:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, basepri" : "=r" (result) );
+ 393:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 394:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 395:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 396:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 397:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 398:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 399:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Base Priority (non-secure)
+ 400:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Base Priority register when in secure state.
+ 401:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Base Priority register value
+ 402:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 403:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_BASEPRI_NS(void)
+ 404:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 405:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 406:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 407:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, basepri_ns" : "=r" (result) );
+ 408:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 409:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 20
+
+
+ 410:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 411:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 412:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 413:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 414:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Base Priority
+ 415:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register.
+ 416:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 417:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 418:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI(uint32_t basePri)
+ 419:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 420:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR basepri, %0" : : "r" (basePri) : "memory");
+ 421:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 422:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 423:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 424:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 425:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 426:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Base Priority (non-secure)
+ 427:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Base Priority register when in secure state.
+ 428:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 429:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 430:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_BASEPRI_NS(uint32_t basePri)
+ 431:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 432:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR basepri_ns, %0" : : "r" (basePri) : "memory");
+ 433:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 434:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 435:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 436:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 437:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 438:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Base Priority with condition
+ 439:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register only if BASEPRI masking is disable
+ 440:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            or the new value increases the BASEPRI priority level.
+ 441:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 442:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 443:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI_MAX(uint32_t basePri)
+ 444:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 445:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR basepri_max, %0" : : "r" (basePri) : "memory");
+ 446:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 447:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 448:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 449:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 450:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Fault Mask
+ 451:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Fault Mask register.
+ 452:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Fault Mask register value
+ 453:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 454:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FAULTMASK(void)
+ 455:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 456:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 457:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 458:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, faultmask" : "=r" (result) );
+ 459:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 460:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 461:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 462:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 463:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 464:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 465:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Fault Mask (non-secure)
+ 466:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Fault Mask register when in secure state.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 21
+
+
+ 467:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Fault Mask register value
+ 468:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 469:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_FAULTMASK_NS(void)
+ 470:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 471:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 472:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 473:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, faultmask_ns" : "=r" (result) );
+ 474:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 475:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 476:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 477:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 478:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 479:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 480:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Fault Mask
+ 481:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Fault Mask register.
+ 482:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    faultMask  Fault Mask value to set
+ 483:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 484:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
+ 485:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 486:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
+ 487:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 488:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 489:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 490:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 491:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 492:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Fault Mask (non-secure)
+ 493:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Fault Mask register when in secure state.
+ 494:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    faultMask  Fault Mask value to set
+ 495:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 496:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
+ 497:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 498:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR faultmask_ns, %0" : : "r" (faultMask) : "memory");
+ 499:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 500:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 501:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 502:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+ 503:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 504:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
+ 505:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 506:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 507:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+ 508:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+ 509:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 510:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 511:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Process Stack Pointer Limit
+ 512:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer Limit (PSPLIM).
+ 513:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               PSPLIM Register value
+ 514:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 515:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSPLIM(void)
+ 516:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 517:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 518:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 519:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psplim"  : "=r" (result) );
+ 520:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 521:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 522:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 523:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 22
+
+
+ 524:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 525:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 526:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 527:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Process Stack Pointer Limit (non-secure)
+ 528:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Process Stack Pointer Limit (PSPLIM) when in
+ 529:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               PSPLIM Register value
+ 530:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 531:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSPLIM_NS(void)
+ 532:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 533:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 534:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 535:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psplim_ns"  : "=r" (result) );
+ 536:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 537:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 538:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 539:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 540:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 541:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 542:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Process Stack Pointer Limit
+ 543:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
+ 544:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
+ 545:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 546:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
+ 547:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 548:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR psplim, %0" : : "r" (ProcStackPtrLimit));
+ 549:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 550:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 551:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 552:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 553:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 554:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 555:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Process Stack Pointer (non-secure)
+ 556:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Process Stack Pointer Limit (PSPLIM) when in s
+ 557:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
+ 558:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 559:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
+ 560:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 561:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR psplim_ns, %0\n" : : "r" (ProcStackPtrLimit));
+ 562:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 563:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 564:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 565:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 566:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 567:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Main Stack Pointer Limit
+ 568:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer Limit (MSPLIM).
+ 569:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               MSPLIM Register value
+ 570:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 571:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSPLIM(void)
+ 572:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 573:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 574:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 575:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msplim" : "=r" (result) );
+ 576:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 577:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 578:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 579:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 580:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 23
+
+
+ 581:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 582:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 583:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 584:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Main Stack Pointer Limit (non-secure)
+ 585:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Main Stack Pointer Limit(MSPLIM) when in sec
+ 586:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               MSPLIM Register value
+ 587:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 588:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSPLIM_NS(void)
+ 589:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 590:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 591:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 592:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msplim_ns" : "=r" (result) );
+ 593:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 594:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 595:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 596:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 597:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 598:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 599:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Main Stack Pointer Limit
+ 600:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer Limit (MSPLIM).
+ 601:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    MainStackPtrLimit  Main Stack Pointer Limit value to set
+ 602:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 603:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
+ 604:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 605:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR msplim, %0" : : "r" (MainStackPtrLimit));
+ 606:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 607:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 608:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 609:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 610:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 611:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 612:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Main Stack Pointer Limit (non-secure)
+ 613:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secu
+ 614:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    MainStackPtrLimit  Main Stack Pointer value to set
+ 615:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 616:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
+ 617:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 618:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR msplim_ns, %0" : : "r" (MainStackPtrLimit));
+ 619:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 620:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 621:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 622:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+ 623:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    ) */
+ 624:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 625:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 626:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 627:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 628:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 629:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 630:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get FPSCR
+ 631:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Floating Point Status/Control register.
+ 632:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Floating Point Status/Control register value
+ 633:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 634:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
+ 635:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 636:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+ 637:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 24
+
+
+ 638:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 639:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 640:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+ 641:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 642:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #else
+ 643:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****    return(0U);
+ 644:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 645:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 646:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 647:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 648:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 649:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set FPSCR
+ 650:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Floating Point Status/Control register.
+ 651:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    fpscr  Floating Point Status/Control value to set
+ 652:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 653:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+ 654:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 655:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+ 656:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+ 657:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc", "memory");
+ 658:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #else
+ 659:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   (void)fpscr;
+ 660:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 661:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 662:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 663:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 664:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
+ 665:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 666:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 667:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 668:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /*@} end of CMSIS_Core_RegAccFunctions */
+ 669:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 670:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 671:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* ##########################  Core Instruction Access  ######################### */
+ 672:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+ 673:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   Access to dedicated instructions
+ 674:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   @{
+ 675:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** */
+ 676:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 677:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 678:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
+ 679:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
+ 680:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 681:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 682:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+l" (r)
+ 683:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 684:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #else
+ 685:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 686:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+r" (r)
+ 687:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 688:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 689:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 690:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 691:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   No Operation
+ 692:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
+ 693:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 694:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __NOP(void)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 25
+
+
+ 695:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //{
+ 696:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //  __ASM volatile ("nop");
+ 697:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //}
+ 698:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __NOP()                             __ASM volatile ("nop")       /* This implementation gen
+ 699:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 700:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 701:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Wait For Interrupt
+ 702:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number o
+ 703:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 704:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __WFI(void)
+ 705:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //{
+ 706:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //  __ASM volatile ("wfi");
+ 707:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //}
+ 708:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __WFI()                             __ASM volatile ("wfi")       /* This implementation gen
+ 709:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 710:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 711:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 712:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Wait For Event
+ 713:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Wait For Event is a hint instruction that permits the processor to enter
+ 714:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            a low-power state until one of a number of events occurs.
+ 715:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 716:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __WFE(void)
+ 717:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //{
+ 718:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //  __ASM volatile ("wfe");
+ 719:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //}
+ 720:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __WFE()                             __ASM volatile ("wfe")       /* This implementation gen
+ 721:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 722:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 723:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 724:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Send Event
+ 725:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+ 726:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 727:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __SEV(void)
+ 728:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //{
+ 729:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //  __ASM volatile ("sev");
+ 730:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //}
+ 731:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __SEV()                             __ASM volatile ("sev")       /* This implementation gen
+ 732:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 733:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 734:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 735:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Instruction Synchronization Barrier
+ 736:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+ 737:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            so that all instructions following the ISB are fetched from cache or memory,
+ 738:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            after the instruction has been completed.
+ 739:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 740:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __ISB(void)
+ 741:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 742:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("isb 0xF":::"memory");
+ 743:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 744:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 745:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 746:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 747:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Data Synchronization Barrier
+ 748:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
+ 749:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
+ 750:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 751:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 26
+
+
+ 752:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 753:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("dsb 0xF":::"memory");
+ 317              		.loc 2 753 0
+ 318              		.syntax unified
+ 319              	@ 753 "../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h" 1
+ 320 0000 BFF34F8F 		dsb 0xF
+ 321              	@ 0 "" 2
+ 322              		.thumb
+ 323              		.syntax unified
+ 324              	.LBE11:
+ 325              	.LBE10:
+ 350:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     __DSB();
+ 351:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     __WFI();
+ 326              		.loc 1 351 0
+ 327              		.syntax unified
+ 328              	@ 351 "../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c" 1
+ 329 0004 30BF     		wfi
+ 330              	@ 0 "" 2
+ 331              		.thumb
+ 332              		.syntax unified
+ 333              	.LBB12:
+ 334              	.LBB13:
+ 742:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 335              		.loc 2 742 0
+ 336              		.syntax unified
+ 337              	@ 742 "../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h" 1
+ 338 0006 BFF36F8F 		isb 0xF
+ 339              	@ 0 "" 2
+ 340              		.thumb
+ 341              		.syntax unified
+ 342              	.LBE13:
+ 343              	.LBE12:
+ 352:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c ****     __ISB();
+ 353:../../iot_link/os/liteos/arch/arm/arm-m/src/los_hw.c **** }
+ 344              		.loc 1 353 0
+ 345 000a 7047     		bx	lr
+ 346              		.cfi_endproc
+ 347              	.LFE292:
+ 349              		.text
+ 350              	.Letext0:
+ 351              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 352              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 353              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 354              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 355              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 356              		.file 8 "../../iot_link/os/liteos/include/los_typedef.h"
+ 357              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 358              		.file 10 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 359              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 360              		.file 12 "../../iot_link/os/liteos/include/los_config.h"
+ 361              		.file 13 "../../iot_link/os/liteos/include/los_list.h"
+ 362              		.file 14 "../../iot_link/os/liteos/include/los_err.h"
+ 363              		.file 15 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 364              		.file 16 "../../iot_link/os/liteos/include/los_tick.h"
+ 365              		.file 17 "../../iot_link/os/liteos/include/los_event.h"
+ 366              		.file 18 "../../iot_link/os/liteos/include/los_task.h"
+ 367              		.file 19 "../../iot_link/os/liteos/base/include/los_task.ph"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 27
+
+
+ 368              		.file 20 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hw.h"
+ 369              		.file 21 "../../iot_link/os/liteos/include/los_memory.h"
+ 370              		.file 22 "../../iot_link/os/liteos/include/los_base.h"
+ 371              		.file 23 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 372              		.file 24 "../../iot_link/os/liteos/base/include/los_priqueue.ph"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 los_hw.c
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:18     .text.osTaskExit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:25     .text.osTaskExit:00000000 osTaskExit
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:52     .text.osSchedule:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:59     .text.osSchedule:00000000 osSchedule
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:73     .text.LOS_Schedule:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:80     .text.LOS_Schedule:00000000 LOS_Schedule
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:142    .text.LOS_Schedule:00000034 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:148    .text.osTskStackInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:155    .text.osTskStackInit:00000000 osTskStackInit
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:239    .text.osTskStackInit:00000090 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:245    .text.osTskStackAlloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:252    .text.osTskStackAlloc:00000000 osTskStackAlloc
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:296    .text.osTskStackAlloc:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:301    .text.osEnterSleep:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccc8qmn9.s:308    .text.osEnterSleep:00000000 osEnterSleep
+
+UNDEFINED SYMBOLS
+osTaskSchedule
+LOS_IntLock
+osPriqueueTop
+LOS_IntRestore
+g_stLosTask
+g_usLosTaskLock
+memset
+osTaskEntry
+LOS_Align
+LOS_MemAllocAlign
+m_aucSysMem0

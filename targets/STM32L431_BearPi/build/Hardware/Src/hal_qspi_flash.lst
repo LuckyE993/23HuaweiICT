@@ -1,0 +1,2383 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"hal_qspi_flash.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.QSPI_Send_CMD,"ax",%progbits
+  18              		.align	1
+  19              		.global	QSPI_Send_CMD
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	QSPI_Send_CMD:
+  26              	.LFB280:
+  27              		.file 1 "Hardware/Src/hal_qspi_flash.c"
+   1:Hardware/Src/hal_qspi_flash.c **** /*----------------------------------------------------------------------------
+   2:Hardware/Src/hal_qspi_flash.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:Hardware/Src/hal_qspi_flash.c ****  * All rights reserved.
+   4:Hardware/Src/hal_qspi_flash.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:Hardware/Src/hal_qspi_flash.c ****  * are permitted provided that the following conditions are met:
+   6:Hardware/Src/hal_qspi_flash.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:Hardware/Src/hal_qspi_flash.c ****  * conditions and the following disclaimer.
+   8:Hardware/Src/hal_qspi_flash.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:Hardware/Src/hal_qspi_flash.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:Hardware/Src/hal_qspi_flash.c ****  * provided with the distribution.
+  11:Hardware/Src/hal_qspi_flash.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:Hardware/Src/hal_qspi_flash.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:Hardware/Src/hal_qspi_flash.c ****  * permission.
+  14:Hardware/Src/hal_qspi_flash.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:Hardware/Src/hal_qspi_flash.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:Hardware/Src/hal_qspi_flash.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:Hardware/Src/hal_qspi_flash.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:Hardware/Src/hal_qspi_flash.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:Hardware/Src/hal_qspi_flash.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:Hardware/Src/hal_qspi_flash.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:Hardware/Src/hal_qspi_flash.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:Hardware/Src/hal_qspi_flash.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:Hardware/Src/hal_qspi_flash.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:Hardware/Src/hal_qspi_flash.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:Hardware/Src/hal_qspi_flash.c ****  *---------------------------------------------------------------------------*/
+  26:Hardware/Src/hal_qspi_flash.c **** /*----------------------------------------------------------------------------
+  27:Hardware/Src/hal_qspi_flash.c ****  * Notice of Export Control Law
+  28:Hardware/Src/hal_qspi_flash.c ****  * ===============================================
+  29:Hardware/Src/hal_qspi_flash.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:Hardware/Src/hal_qspi_flash.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:Hardware/Src/hal_qspi_flash.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 2
+
+
+  32:Hardware/Src/hal_qspi_flash.c ****  * applicable export control laws and regulations.
+  33:Hardware/Src/hal_qspi_flash.c ****  *---------------------------------------------------------------------------*/
+  34:Hardware/Src/hal_qspi_flash.c **** 
+  35:Hardware/Src/hal_qspi_flash.c **** #include "hal_qspi_flash.h"
+  36:Hardware/Src/hal_qspi_flash.c **** #include "stm32l4xx.h"
+  37:Hardware/Src/hal_qspi_flash.c **** 
+  38:Hardware/Src/hal_qspi_flash.c **** #ifdef HAL_QSPI_MODULE_ENABLED
+  39:Hardware/Src/hal_qspi_flash.c **** 
+  40:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_PAGESIZE                         256
+  41:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_SECTOR                           4096
+  42:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_ID                               0xEF4017
+  43:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_TOTAL_SIZE                       0x7FFFFF
+  44:Hardware/Src/hal_qspi_flash.c **** 
+  45:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_WriteEnable                      0x06
+  46:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_WriteDisable                     0x04
+  47:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_ReadStatusReg                    0x05
+  48:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_WriteStatusReg                   0x01
+  49:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_ReadData                         0x03
+  50:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_FastReadData                     0x0B
+  51:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_FastReadDual                     0x3B
+  52:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_PageProgram                      0x02
+  53:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_BlockErase                       0xD8
+  54:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_SectorErase                      0x20
+  55:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_ChipErase                        0xC7
+  56:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_PowerDown                        0xB9
+  57:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_ReleasePowerDown                 0xAB
+  58:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_DeviceID                         0xAB
+  59:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_ManufactDeviceID                 0x90
+  60:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_JedecDeviceID                    0x9F
+  61:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_WIP_FLAG                         0x01
+  62:Hardware/Src/hal_qspi_flash.c **** #define QSPI_FLASH_DUMMY_BYTE                       0xFF
+  63:Hardware/Src/hal_qspi_flash.c **** 
+  64:Hardware/Src/hal_qspi_flash.c **** #define CHOOSE_BIT_16                              16
+  65:Hardware/Src/hal_qspi_flash.c **** #define CHOOSE_BIT_8                               8
+  66:Hardware/Src/hal_qspi_flash.c **** 
+  67:Hardware/Src/hal_qspi_flash.c **** 
+  68:Hardware/Src/hal_qspi_flash.c **** #define CHECK_RET_RETURN(ret) \
+  69:Hardware/Src/hal_qspi_flash.c ****     do \
+  70:Hardware/Src/hal_qspi_flash.c ****     { \
+  71:Hardware/Src/hal_qspi_flash.c ****         if ((ret) < 0) \
+  72:Hardware/Src/hal_qspi_flash.c ****         { \
+  73:Hardware/Src/hal_qspi_flash.c ****             return ret; \
+  74:Hardware/Src/hal_qspi_flash.c ****         } \
+  75:Hardware/Src/hal_qspi_flash.c ****     } while (0)
+  76:Hardware/Src/hal_qspi_flash.c **** 
+  77:Hardware/Src/hal_qspi_flash.c **** extern QSPI_HandleTypeDef hqspi;
+  78:Hardware/Src/hal_qspi_flash.c **** 
+  79:Hardware/Src/hal_qspi_flash.c **** 
+  80:Hardware/Src/hal_qspi_flash.c **** /**
+  81:Hardware/Src/hal_qspi_flash.c ****  * @brief	QSPI��������
+  82:Hardware/Src/hal_qspi_flash.c ****  *
+  83:Hardware/Src/hal_qspi_flash.c ****  * @param   instruction		Ҫ���͵�ָ��
+  84:Hardware/Src/hal_qspi_flash.c ****  * @param   address			���͵���Ŀ�ĵ�ַ
+  85:Hardware/Src/hal_qspi_flash.c ****  * @param   dummyCycles		��ָ��������
+  86:Hardware/Src/hal_qspi_flash.c ****  * @param   instructionMode	ָ��ģʽ;QSPI_INSTRUCTION_NONE,QSPI_INSTRUCTION_1_LINE,QSPI_INSTRUC
+  87:Hardware/Src/hal_qspi_flash.c ****  * @param   addressMode		��ַģʽ; QSPI_ADDRESS_NONE,QSPI_ADDRESS_1_LINE,QSPI_ADDRESS_2_LINE,QS
+  88:Hardware/Src/hal_qspi_flash.c ****  * @param   addressSize		��ַ����;QSPI_ADDRESS_8_BITS,QSPI_ADDRESS_16_BITS,QSPI_ADDRESS
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 3
+
+
+  89:Hardware/Src/hal_qspi_flash.c ****  * @param   dataMode		����ģʽ; QSPI_DATA_NONE,QSPI_DATA_1_LINE,QSPI_DATA_2_LINE,QSPI_DATA_
+  90:Hardware/Src/hal_qspi_flash.c ****  *
+  91:Hardware/Src/hal_qspi_flash.c ****  * @return  void
+  92:Hardware/Src/hal_qspi_flash.c ****  */
+  93:Hardware/Src/hal_qspi_flash.c **** uint32_t QSPI_Send_CMD(uint32_t instruction, uint32_t address, uint32_t dummyCycles, uint32_t instr
+  94:Hardware/Src/hal_qspi_flash.c **** {
+  28              		.loc 1 94 0
+  29              		.cfi_startproc
+  30              		@ args = 12, pretend = 0, frame = 56
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 00B5     		push	{lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 14, -4
+  37 0002 8FB0     		sub	sp, sp, #60
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 64
+  95:Hardware/Src/hal_qspi_flash.c ****     QSPI_CommandTypeDef s_command;
+  96:Hardware/Src/hal_qspi_flash.c **** 
+  97:Hardware/Src/hal_qspi_flash.c ****     s_command.Instruction = instruction;                 	//ָ��
+  98:Hardware/Src/hal_qspi_flash.c ****     s_command.Address = address;                            	//��ַ
+  99:Hardware/Src/hal_qspi_flash.c ****     s_command.DummyCycles = dummyCycles;                   //���ÿ�ָ��������
+ 100:Hardware/Src/hal_qspi_flash.c ****     s_command.InstructionMode = instructionMode;				//ָ��ģʽ
+  40              		.loc 1 100 0
+  41 0004 CDE90523 		strd	r2, r3, [sp, #20]
+ 101:Hardware/Src/hal_qspi_flash.c ****     s_command.AddressMode = addressMode;   					//��ַģʽ
+  42              		.loc 1 101 0
+  43 0008 109B     		ldr	r3, [sp, #64]
+  44              	.LVL1:
+  45 000a 0793     		str	r3, [sp, #28]
+ 102:Hardware/Src/hal_qspi_flash.c ****     s_command.AddressSize = addressSize;   					//��ַ����
+  46              		.loc 1 102 0
+  47 000c 119B     		ldr	r3, [sp, #68]
+  48 000e 0393     		str	r3, [sp, #12]
+ 103:Hardware/Src/hal_qspi_flash.c ****     s_command.DataMode = dataMode;             				//����ģʽ
+  49              		.loc 1 103 0
+  50 0010 129B     		ldr	r3, [sp, #72]
+  51 0012 0993     		str	r3, [sp, #36]
+  98:Hardware/Src/hal_qspi_flash.c ****     s_command.DummyCycles = dummyCycles;                   //���ÿ�ָ��������
+  52              		.loc 1 98 0
+  53 0014 CDE90001 		strd	r0, r1, [sp]
+ 104:Hardware/Src/hal_qspi_flash.c ****     s_command.SIOOMode = QSPI_SIOO_INST_EVERY_CMD;       	//ÿ�ζ�����ָ��
+  54              		.loc 1 104 0
+  55 0018 0023     		movs	r3, #0
+ 105:Hardware/Src/hal_qspi_flash.c ****     s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE; //�޽����ֽ�
+ 106:Hardware/Src/hal_qspi_flash.c ****     s_command.DdrMode = QSPI_DDR_MODE_DISABLE;           	//�ر�DDRģʽ
+ 107:Hardware/Src/hal_qspi_flash.c ****     s_command.DdrHoldHalfCycle = QSPI_DDR_HHC_ANALOG_DELAY;
+ 108:Hardware/Src/hal_qspi_flash.c **** 	
+ 109:Hardware/Src/hal_qspi_flash.c ****     return HAL_QSPI_Command(&hqspi, &s_command, 5000);
+  56              		.loc 1 109 0
+  57 001a 41F28832 		movw	r2, #5000
+  58              	.LVL2:
+  59 001e 6946     		mov	r1, sp
+  60              	.LVL3:
+  61 0020 0448     		ldr	r0, .L2
+  62              	.LVL4:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 4
+
+
+ 104:Hardware/Src/hal_qspi_flash.c ****     s_command.SIOOMode = QSPI_SIOO_INST_EVERY_CMD;       	//ÿ�ζ�����ָ��
+  63              		.loc 1 104 0
+  64 0022 0D93     		str	r3, [sp, #52]
+ 105:Hardware/Src/hal_qspi_flash.c ****     s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE; //�޽����ֽ�
+  65              		.loc 1 105 0
+  66 0024 0893     		str	r3, [sp, #32]
+ 107:Hardware/Src/hal_qspi_flash.c **** 	
+  67              		.loc 1 107 0
+  68 0026 CDE90B33 		strd	r3, r3, [sp, #44]
+  69              		.loc 1 109 0
+  70 002a FFF7FEFF 		bl	HAL_QSPI_Command
+  71              	.LVL5:
+ 110:Hardware/Src/hal_qspi_flash.c **** }
+  72              		.loc 1 110 0
+  73 002e 0FB0     		add	sp, sp, #60
+  74              	.LCFI2:
+  75              		.cfi_def_cfa_offset 4
+  76              		@ sp needed
+  77 0030 5DF804FB 		ldr	pc, [sp], #4
+  78              	.LVL6:
+  79              	.L3:
+  80              		.align	2
+  81              	.L2:
+  82 0034 00000000 		.word	hqspi
+  83              		.cfi_endproc
+  84              	.LFE280:
+  86              		.section	.text.prv_spi_flash_write_enable,"ax",%progbits
+  87              		.align	1
+  88              		.syntax unified
+  89              		.thumb
+  90              		.thumb_func
+  91              		.fpu fpv4-sp-d16
+  93              	prv_spi_flash_write_enable:
+  94              	.LFB283:
+ 111:Hardware/Src/hal_qspi_flash.c **** 
+ 112:Hardware/Src/hal_qspi_flash.c **** uint8_t QSPI_Receive(const uint8_t * buf, uint32_t datalen)
+ 113:Hardware/Src/hal_qspi_flash.c **** {
+ 114:Hardware/Src/hal_qspi_flash.c ****     hqspi.Instance->DLR = datalen - 1;                       //Configuration data length
+ 115:Hardware/Src/hal_qspi_flash.c ****     if(HAL_QSPI_Receive(&hqspi, (uint8_t * )buf, 5000) == HAL_OK) return 0; //receive data
+ 116:Hardware/Src/hal_qspi_flash.c **** 
+ 117:Hardware/Src/hal_qspi_flash.c ****     else return 1;
+ 118:Hardware/Src/hal_qspi_flash.c **** }
+ 119:Hardware/Src/hal_qspi_flash.c **** 
+ 120:Hardware/Src/hal_qspi_flash.c **** uint8_t QSPI_Transmit(const int8_t * buf, uint32_t datalen)
+ 121:Hardware/Src/hal_qspi_flash.c **** {
+ 122:Hardware/Src/hal_qspi_flash.c ****     hqspi.Instance->DLR = datalen - 1;                        //Configuration data length
+ 123:Hardware/Src/hal_qspi_flash.c ****     if(HAL_QSPI_Transmit(&hqspi, (uint8_t * )buf, 5000) == HAL_OK) return 0; //send data
+ 124:Hardware/Src/hal_qspi_flash.c **** 
+ 125:Hardware/Src/hal_qspi_flash.c ****     else return 1;
+ 126:Hardware/Src/hal_qspi_flash.c **** }
+ 127:Hardware/Src/hal_qspi_flash.c **** 
+ 128:Hardware/Src/hal_qspi_flash.c **** static void prv_spi_flash_write_enable(void)
+ 129:Hardware/Src/hal_qspi_flash.c **** {
+  95              		.loc 1 129 0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 5
+
+
+  99 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 100              	.LCFI3:
+ 101              		.cfi_def_cfa_offset 24
+ 102              		.cfi_offset 14, -4
+ 130:Hardware/Src/hal_qspi_flash.c **** 		QSPI_Send_CMD(QSPI_FLASH_WriteEnable, 0, 0, QSPI_INSTRUCTION_1_LINE, QSPI_ADDRESS_NONE, QSPI_ADDR
+ 103              		.loc 1 130 0
+ 104 0002 0022     		movs	r2, #0
+ 105 0004 CDE90122 		strd	r2, r2, [sp, #4]
+ 106 0008 0092     		str	r2, [sp]
+ 107 000a 4FF48073 		mov	r3, #256
+ 108 000e 1146     		mov	r1, r2
+ 109 0010 0620     		movs	r0, #6
+ 110 0012 FFF7FEFF 		bl	QSPI_Send_CMD
+ 111              	.LVL7:
+ 131:Hardware/Src/hal_qspi_flash.c **** }
+ 112              		.loc 1 131 0
+ 113 0016 05B0     		add	sp, sp, #20
+ 114              	.LCFI4:
+ 115              		.cfi_def_cfa_offset 4
+ 116              		@ sp needed
+ 117 0018 5DF804FB 		ldr	pc, [sp], #4
+ 118              		.cfi_endproc
+ 119              	.LFE283:
+ 121              		.section	.text.QSPI_Receive,"ax",%progbits
+ 122              		.align	1
+ 123              		.global	QSPI_Receive
+ 124              		.syntax unified
+ 125              		.thumb
+ 126              		.thumb_func
+ 127              		.fpu fpv4-sp-d16
+ 129              	QSPI_Receive:
+ 130              	.LFB281:
+ 113:Hardware/Src/hal_qspi_flash.c ****     hqspi.Instance->DLR = datalen - 1;                       //Configuration data length
+ 131              		.loc 1 113 0
+ 132              		.cfi_startproc
+ 133              		@ args = 0, pretend = 0, frame = 0
+ 134              		@ frame_needed = 0, uses_anonymous_args = 0
+ 135              	.LVL8:
+ 136 0000 08B5     		push	{r3, lr}
+ 137              	.LCFI5:
+ 138              		.cfi_def_cfa_offset 8
+ 139              		.cfi_offset 3, -8
+ 140              		.cfi_offset 14, -4
+ 114:Hardware/Src/hal_qspi_flash.c ****     if(HAL_QSPI_Receive(&hqspi, (uint8_t * )buf, 5000) == HAL_OK) return 0; //receive data
+ 141              		.loc 1 114 0
+ 142 0002 074B     		ldr	r3, .L6
+ 143 0004 1A68     		ldr	r2, [r3]
+ 144 0006 0139     		subs	r1, r1, #1
+ 145              	.LVL9:
+ 146 0008 1161     		str	r1, [r2, #16]
+ 115:Hardware/Src/hal_qspi_flash.c **** 
+ 147              		.loc 1 115 0
+ 148 000a 0146     		mov	r1, r0
+ 149              	.LVL10:
+ 150 000c 41F28832 		movw	r2, #5000
+ 151              	.LVL11:
+ 152 0010 1846     		mov	r0, r3
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 6
+
+
+ 153              	.LVL12:
+ 154 0012 FFF7FEFF 		bl	HAL_QSPI_Receive
+ 155              	.LVL13:
+ 118:Hardware/Src/hal_qspi_flash.c **** 
+ 156              		.loc 1 118 0
+ 157 0016 0030     		adds	r0, r0, #0
+ 158 0018 18BF     		it	ne
+ 159 001a 0120     		movne	r0, #1
+ 160 001c 08BD     		pop	{r3, pc}
+ 161              	.L7:
+ 162 001e 00BF     		.align	2
+ 163              	.L6:
+ 164 0020 00000000 		.word	hqspi
+ 165              		.cfi_endproc
+ 166              	.LFE281:
+ 168              		.section	.text.prv_spi_flash_wait_write_end,"ax",%progbits
+ 169              		.align	1
+ 170              		.syntax unified
+ 171              		.thumb
+ 172              		.thumb_func
+ 173              		.fpu fpv4-sp-d16
+ 175              	prv_spi_flash_wait_write_end:
+ 176              	.LFB284:
+ 132:Hardware/Src/hal_qspi_flash.c **** 
+ 133:Hardware/Src/hal_qspi_flash.c **** static void prv_spi_flash_wait_write_end(void)
+ 134:Hardware/Src/hal_qspi_flash.c **** {
+ 177              		.loc 1 134 0
+ 178              		.cfi_startproc
+ 179              		@ args = 0, pretend = 0, frame = 8
+ 180              		@ frame_needed = 0, uses_anonymous_args = 0
+ 181 0000 30B5     		push	{r4, r5, lr}
+ 182              	.LCFI6:
+ 183              		.cfi_def_cfa_offset 12
+ 184              		.cfi_offset 4, -12
+ 185              		.cfi_offset 5, -8
+ 186              		.cfi_offset 14, -4
+ 187 0002 87B0     		sub	sp, sp, #28
+ 188              	.LCFI7:
+ 189              		.cfi_def_cfa_offset 40
+ 135:Hardware/Src/hal_qspi_flash.c ****     uint8_t status = 0;
+ 190              		.loc 1 135 0
+ 191 0004 0024     		movs	r4, #0
+ 192 0006 8DF81740 		strb	r4, [sp, #23]
+ 136:Hardware/Src/hal_qspi_flash.c **** 
+ 137:Hardware/Src/hal_qspi_flash.c **** 
+ 138:Hardware/Src/hal_qspi_flash.c ****     /* Loop as long as the memory is busy with a write cycle */
+ 139:Hardware/Src/hal_qspi_flash.c ****     do
+ 140:Hardware/Src/hal_qspi_flash.c ****     {
+ 141:Hardware/Src/hal_qspi_flash.c ****         /* Send a dummy byte to generate the clock needed by the FLASH
+ 142:Hardware/Src/hal_qspi_flash.c ****         and put the value of the status register in status variable */
+ 143:Hardware/Src/hal_qspi_flash.c **** 		QSPI_Send_CMD(QSPI_FLASH_ReadStatusReg, 0, 0, QSPI_INSTRUCTION_1_LINE, QSPI_ADDRESS_NONE, QSPI_AD
+ 193              		.loc 1 143 0
+ 194 000a 4FF08075 		mov	r5, #16777216
+ 195              	.L9:
+ 196              		.loc 1 143 0 is_stmt 0 discriminator 1
+ 197 000e 0022     		movs	r2, #0
+ 198 0010 4FF48073 		mov	r3, #256
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 7
+
+
+ 199 0014 1146     		mov	r1, r2
+ 200 0016 CDE90145 		strd	r4, r5, [sp, #4]
+ 201 001a 0094     		str	r4, [sp]
+ 202 001c 0520     		movs	r0, #5
+ 203 001e FFF7FEFF 		bl	QSPI_Send_CMD
+ 204              	.LVL14:
+ 144:Hardware/Src/hal_qspi_flash.c ****     QSPI_Receive(&status, 1);
+ 205              		.loc 1 144 0 is_stmt 1 discriminator 1
+ 206 0022 0121     		movs	r1, #1
+ 207 0024 0DF11700 		add	r0, sp, #23
+ 208 0028 FFF7FEFF 		bl	QSPI_Receive
+ 209              	.LVL15:
+ 145:Hardware/Src/hal_qspi_flash.c **** 			
+ 146:Hardware/Src/hal_qspi_flash.c ****     } while ((status & QSPI_FLASH_WIP_FLAG) == SET); /* Write in progress */
+ 210              		.loc 1 146 0 discriminator 1
+ 211 002c 9DF81730 		ldrb	r3, [sp, #23]	@ zero_extendqisi2
+ 212 0030 DB07     		lsls	r3, r3, #31
+ 213 0032 ECD4     		bmi	.L9
+ 147:Hardware/Src/hal_qspi_flash.c **** 
+ 148:Hardware/Src/hal_qspi_flash.c **** }
+ 214              		.loc 1 148 0
+ 215 0034 07B0     		add	sp, sp, #28
+ 216              	.LCFI8:
+ 217              		.cfi_def_cfa_offset 12
+ 218              		@ sp needed
+ 219 0036 30BD     		pop	{r4, r5, pc}
+ 220              		.cfi_endproc
+ 221              	.LFE284:
+ 223              		.section	.text.QSPI_Transmit,"ax",%progbits
+ 224              		.align	1
+ 225              		.global	QSPI_Transmit
+ 226              		.syntax unified
+ 227              		.thumb
+ 228              		.thumb_func
+ 229              		.fpu fpv4-sp-d16
+ 231              	QSPI_Transmit:
+ 232              	.LFB282:
+ 121:Hardware/Src/hal_qspi_flash.c ****     hqspi.Instance->DLR = datalen - 1;                        //Configuration data length
+ 233              		.loc 1 121 0
+ 234              		.cfi_startproc
+ 235              		@ args = 0, pretend = 0, frame = 0
+ 236              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237              	.LVL16:
+ 238 0000 08B5     		push	{r3, lr}
+ 239              	.LCFI9:
+ 240              		.cfi_def_cfa_offset 8
+ 241              		.cfi_offset 3, -8
+ 242              		.cfi_offset 14, -4
+ 122:Hardware/Src/hal_qspi_flash.c ****     if(HAL_QSPI_Transmit(&hqspi, (uint8_t * )buf, 5000) == HAL_OK) return 0; //send data
+ 243              		.loc 1 122 0
+ 244 0002 074B     		ldr	r3, .L12
+ 245 0004 1A68     		ldr	r2, [r3]
+ 246 0006 0139     		subs	r1, r1, #1
+ 247              	.LVL17:
+ 248 0008 1161     		str	r1, [r2, #16]
+ 123:Hardware/Src/hal_qspi_flash.c **** 
+ 249              		.loc 1 123 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 8
+
+
+ 250 000a 0146     		mov	r1, r0
+ 251              	.LVL18:
+ 252 000c 41F28832 		movw	r2, #5000
+ 253              	.LVL19:
+ 254 0010 1846     		mov	r0, r3
+ 255              	.LVL20:
+ 256 0012 FFF7FEFF 		bl	HAL_QSPI_Transmit
+ 257              	.LVL21:
+ 126:Hardware/Src/hal_qspi_flash.c **** 
+ 258              		.loc 1 126 0
+ 259 0016 0030     		adds	r0, r0, #0
+ 260 0018 18BF     		it	ne
+ 261 001a 0120     		movne	r0, #1
+ 262 001c 08BD     		pop	{r3, pc}
+ 263              	.L13:
+ 264 001e 00BF     		.align	2
+ 265              	.L12:
+ 266 0020 00000000 		.word	hqspi
+ 267              		.cfi_endproc
+ 268              	.LFE282:
+ 270              		.section	.text.prv_spi_flash_write_page.part.0,"ax",%progbits
+ 271              		.align	1
+ 272              		.syntax unified
+ 273              		.thumb
+ 274              		.thumb_func
+ 275              		.fpu fpv4-sp-d16
+ 277              	prv_spi_flash_write_page.part.0:
+ 278              	.LFB293:
+ 149:Hardware/Src/hal_qspi_flash.c **** 
+ 150:Hardware/Src/hal_qspi_flash.c **** static int prv_spi_flash_write_page(const uint8_t* buf, uint32_t addr, int32_t len)
+ 279              		.loc 1 150 0
+ 280              		.cfi_startproc
+ 281              		@ args = 0, pretend = 0, frame = 0
+ 282              		@ frame_needed = 0, uses_anonymous_args = 0
+ 283              	.LVL22:
+ 284 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 285              	.LCFI10:
+ 286              		.cfi_def_cfa_offset 32
+ 287              		.cfi_offset 4, -16
+ 288              		.cfi_offset 5, -12
+ 289              		.cfi_offset 6, -8
+ 290              		.cfi_offset 14, -4
+ 291              		.loc 1 150 0
+ 292 0002 0446     		mov	r4, r0
+ 293 0004 1546     		mov	r5, r2
+ 294 0006 0E46     		mov	r6, r1
+ 151:Hardware/Src/hal_qspi_flash.c **** {
+ 152:Hardware/Src/hal_qspi_flash.c ****     int ret = 0;
+ 153:Hardware/Src/hal_qspi_flash.c **** 
+ 154:Hardware/Src/hal_qspi_flash.c ****     if(0 == len)
+ 155:Hardware/Src/hal_qspi_flash.c ****     {
+ 156:Hardware/Src/hal_qspi_flash.c ****         return 0;
+ 157:Hardware/Src/hal_qspi_flash.c ****     }
+ 158:Hardware/Src/hal_qspi_flash.c **** 
+ 159:Hardware/Src/hal_qspi_flash.c ****     prv_spi_flash_write_enable();					//Write enable
+ 295              		.loc 1 159 0
+ 296 0008 FFF7FEFF 		bl	prv_spi_flash_write_enable
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 9
+
+
+ 297              	.LVL23:
+ 160:Hardware/Src/hal_qspi_flash.c **** 		
+ 161:Hardware/Src/hal_qspi_flash.c ****     QSPI_Send_CMD(QSPI_FLASH_PageProgram, addr, 0, QSPI_INSTRUCTION_1_LINE, QSPI_ADDRESS_1_LINE, QS
+ 298              		.loc 1 161 0
+ 299 000c 4FF40053 		mov	r3, #8192
+ 300 0010 4FF08072 		mov	r2, #16777216
+ 301 0014 CDE90132 		strd	r3, r2, [sp, #4]
+ 302 0018 4FF48063 		mov	r3, #1024
+ 303 001c 0093     		str	r3, [sp]
+ 304 001e 0022     		movs	r2, #0
+ 305 0020 4FF48073 		mov	r3, #256
+ 306 0024 3146     		mov	r1, r6
+ 307 0026 0220     		movs	r0, #2
+ 308 0028 FFF7FEFF 		bl	QSPI_Send_CMD
+ 309              	.LVL24:
+ 162:Hardware/Src/hal_qspi_flash.c ****     QSPI_Transmit((const int8_t *)buf, len);
+ 310              		.loc 1 162 0
+ 311 002c 2946     		mov	r1, r5
+ 312 002e 2046     		mov	r0, r4
+ 313 0030 FFF7FEFF 		bl	QSPI_Transmit
+ 314              	.LVL25:
+ 163:Hardware/Src/hal_qspi_flash.c ****     
+ 164:Hardware/Src/hal_qspi_flash.c **** 		prv_spi_flash_wait_write_end();					   //Waiting for Writing to End
+ 165:Hardware/Src/hal_qspi_flash.c ****    
+ 166:Hardware/Src/hal_qspi_flash.c **** 		return ret;
+ 167:Hardware/Src/hal_qspi_flash.c **** }
+ 315              		.loc 1 167 0
+ 316 0034 04B0     		add	sp, sp, #16
+ 317              	.LCFI11:
+ 318              		.cfi_def_cfa_offset 16
+ 319              		@ sp needed
+ 320 0036 BDE87040 		pop	{r4, r5, r6, lr}
+ 321              	.LCFI12:
+ 322              		.cfi_restore 14
+ 323              		.cfi_restore 6
+ 324              		.cfi_restore 5
+ 325              		.cfi_restore 4
+ 326              		.cfi_def_cfa_offset 0
+ 327              	.LVL26:
+ 164:Hardware/Src/hal_qspi_flash.c ****    
+ 328              		.loc 1 164 0
+ 329 003a FFF7FEBF 		b	prv_spi_flash_wait_write_end
+ 330              	.LVL27:
+ 331              		.cfi_endproc
+ 332              	.LFE293:
+ 334              		.section	.text.prv_spi_flash_erase_sector,"ax",%progbits
+ 335              		.align	1
+ 336              		.global	prv_spi_flash_erase_sector
+ 337              		.syntax unified
+ 338              		.thumb
+ 339              		.thumb_func
+ 340              		.fpu fpv4-sp-d16
+ 342              	prv_spi_flash_erase_sector:
+ 343              	.LFB286:
+ 168:Hardware/Src/hal_qspi_flash.c **** 
+ 169:Hardware/Src/hal_qspi_flash.c ****  int prv_spi_flash_erase_sector(uint32_t addr)
+ 170:Hardware/Src/hal_qspi_flash.c **** {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 10
+
+
+ 344              		.loc 1 170 0
+ 345              		.cfi_startproc
+ 346              		@ args = 0, pretend = 0, frame = 0
+ 347              		@ frame_needed = 0, uses_anonymous_args = 0
+ 348              	.LVL28:
+ 349 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 350              	.LCFI13:
+ 351              		.cfi_def_cfa_offset 24
+ 352              		.cfi_offset 4, -8
+ 353              		.cfi_offset 14, -4
+ 354              		.loc 1 170 0
+ 355 0002 0446     		mov	r4, r0
+ 171:Hardware/Src/hal_qspi_flash.c **** 		//printf("fe:%x\r\n",addr);			//����flash�������,������  
+ 172:Hardware/Src/hal_qspi_flash.c **** 		int ret = 0;
+ 173:Hardware/Src/hal_qspi_flash.c ****     prv_spi_flash_write_enable();                  //Write enable
+ 356              		.loc 1 173 0
+ 357 0004 FFF7FEFF 		bl	prv_spi_flash_write_enable
+ 358              	.LVL29:
+ 174:Hardware/Src/hal_qspi_flash.c ****     prv_spi_flash_wait_write_end();
+ 359              		.loc 1 174 0
+ 360 0008 FFF7FEFF 		bl	prv_spi_flash_wait_write_end
+ 361              	.LVL30:
+ 175:Hardware/Src/hal_qspi_flash.c ****     
+ 176:Hardware/Src/hal_qspi_flash.c **** 		ret=QSPI_Send_CMD(QSPI_FLASH_SectorErase, addr, 0, QSPI_INSTRUCTION_1_LINE, QSPI_ADDRESS_1_LINE, 
+ 362              		.loc 1 176 0
+ 363 000c 0022     		movs	r2, #0
+ 364 000e 4FF40053 		mov	r3, #8192
+ 365 0012 CDE90132 		strd	r3, r2, [sp, #4]
+ 366 0016 4FF48063 		mov	r3, #1024
+ 367 001a 2146     		mov	r1, r4
+ 368 001c 0093     		str	r3, [sp]
+ 369 001e 2020     		movs	r0, #32
+ 370 0020 4FF48073 		mov	r3, #256
+ 371 0024 FFF7FEFF 		bl	QSPI_Send_CMD
+ 372              	.LVL31:
+ 373 0028 0446     		mov	r4, r0
+ 374              	.LVL32:
+ 177:Hardware/Src/hal_qspi_flash.c ****     
+ 178:Hardware/Src/hal_qspi_flash.c **** 		prv_spi_flash_wait_write_end();   				    //Waiting for Writing to End
+ 375              		.loc 1 178 0
+ 376 002a FFF7FEFF 		bl	prv_spi_flash_wait_write_end
+ 377              	.LVL33:
+ 179:Hardware/Src/hal_qspi_flash.c **** 	
+ 180:Hardware/Src/hal_qspi_flash.c **** 		return ret;
+ 181:Hardware/Src/hal_qspi_flash.c **** }
+ 378              		.loc 1 181 0
+ 379 002e 2046     		mov	r0, r4
+ 380 0030 04B0     		add	sp, sp, #16
+ 381              	.LCFI14:
+ 382              		.cfi_def_cfa_offset 8
+ 383              		@ sp needed
+ 384 0032 10BD     		pop	{r4, pc}
+ 385              		.cfi_endproc
+ 386              	.LFE286:
+ 388              		.section	.text.hal_spi_flash_config,"ax",%progbits
+ 389              		.align	1
+ 390              		.global	hal_spi_flash_config
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 11
+
+
+ 391              		.syntax unified
+ 392              		.thumb
+ 393              		.thumb_func
+ 394              		.fpu fpv4-sp-d16
+ 396              	hal_spi_flash_config:
+ 397              	.LFB287:
+ 182:Hardware/Src/hal_qspi_flash.c **** 
+ 183:Hardware/Src/hal_qspi_flash.c **** void hal_spi_flash_config(void)
+ 184:Hardware/Src/hal_qspi_flash.c **** {
+ 398              		.loc 1 184 0
+ 399              		.cfi_startproc
+ 400              		@ args = 0, pretend = 0, frame = 0
+ 401              		@ frame_needed = 0, uses_anonymous_args = 0
+ 402              		@ link register save eliminated.
+ 185:Hardware/Src/hal_qspi_flash.c ****   hqspi.Instance = QUADSPI;
+ 403              		.loc 1 185 0
+ 404 0000 0B4B     		ldr	r3, .L17
+ 186:Hardware/Src/hal_qspi_flash.c ****   hqspi.Init.ClockPrescaler = 0;
+ 405              		.loc 1 186 0
+ 406 0002 0C4A     		ldr	r2, .L17+4
+ 407 0004 0021     		movs	r1, #0
+ 408 0006 C3E90021 		strd	r2, r1, [r3]
+ 187:Hardware/Src/hal_qspi_flash.c ****   hqspi.Init.FifoThreshold = 4;
+ 188:Hardware/Src/hal_qspi_flash.c ****   hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_HALFCYCLE;
+ 409              		.loc 1 188 0
+ 410 000a 0420     		movs	r0, #4
+ 411 000c 1022     		movs	r2, #16
+ 412 000e C3E90202 		strd	r0, r2, [r3, #8]
+ 413              	.LVL34:
+ 414              	.LBB8:
+ 415              	.LBB9:
+ 416              		.file 2 "../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h"
+   1:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**************************************************************************//**
+   2:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * @version  V5.0.1
+   5:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * @date     02. February 2017
+   6:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  ******************************************************************************/
+   7:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /*
+   8:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+   9:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  *
+  10:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  *
+  12:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  *
+  16:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  *
+  18:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * limitations under the License.
+  23:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+  24:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  25:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 12
+
+
+  26:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  28:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  34:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  35:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __ASM
+  36:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __ASM                     __asm
+  37:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  38:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __INLINE
+  39:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __INLINE                  inline
+  40:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  41:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  42:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __STATIC_INLINE           static inline
+  43:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  44:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  45:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __NO_RETURN               __attribute__((noreturn))
+  46:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  47:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __USED
+  48:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __USED                    __attribute__((used))
+  49:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  50:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __WEAK
+  51:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __WEAK                    __attribute__((weak))
+  52:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  53:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32
+  54:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic push
+  55:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wpacked"
+  56:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wattributes"
+  57:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  58:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #pragma GCC diagnostic pop
+  59:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  60:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  61:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __ALIGNED
+  62:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __ALIGNED(x)              __attribute__((aligned(x)))
+  63:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  64:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __PACKED
+  65:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __PACKED                  __attribute__((packed, aligned(1)))
+  66:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  67:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  68:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
+  69:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+  70:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  71:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  72:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  73:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  74:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  75:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   @{
+  76:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+  77:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  78:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+  79:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  80:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  81:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  82:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 13
+
+
+  83:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
+  84:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+  85:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  86:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+  87:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  88:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  89:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+  90:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+  91:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  92:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  93:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+  94:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __disable_irq(void)
+  95:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+  96:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  97:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+  98:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+  99:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 100:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 101:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Control Register
+ 102:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the Control Register.
+ 103:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Control Register value
+ 104:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 105:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_CONTROL(void)
+ 106:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 107:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 108:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 109:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control" : "=r" (result) );
+ 110:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 111:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 112:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 113:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 114:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 115:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 116:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Control Register (non-secure)
+ 117:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the non-secure Control Register when in secure mode.
+ 118:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               non-secure Control Register value
+ 119:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 120:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_CONTROL_NS(void)
+ 121:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 122:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 123:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 124:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, control_ns" : "=r" (result) );
+ 125:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 126:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 127:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 128:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 129:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 130:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 131:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Control Register
+ 132:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
+ 133:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+ 134:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 135:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_CONTROL(uint32_t control)
+ 136:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 137:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR control, %0" : : "r" (control) : "memory");
+ 138:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 139:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 14
+
+
+ 140:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 141:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 142:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 143:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Control Register (non-secure)
+ 144:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Writes the given value to the non-secure Control Register when in secure state.
+ 145:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
+ 146:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 147:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_CONTROL_NS(uint32_t control)
+ 148:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 149:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR control_ns, %0" : : "r" (control) : "memory");
+ 150:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 151:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 152:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 153:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 154:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 155:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get IPSR Register
+ 156:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the IPSR Register.
+ 157:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               IPSR Register value
+ 158:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 159:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_IPSR(void)
+ 160:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 161:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 162:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 163:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
+ 164:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 165:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 166:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 167:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 168:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 169:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get APSR Register
+ 170:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the APSR Register.
+ 171:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               APSR Register value
+ 172:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 173:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_APSR(void)
+ 174:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 175:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 176:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 177:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
+ 178:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 179:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 180:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 181:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 182:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 183:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get xPSR Register
+ 184:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
+ 185:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               xPSR Register value
+ 186:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 187:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_xPSR(void)
+ 188:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 189:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 190:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 191:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
+ 192:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 193:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 194:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 195:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 196:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 15
+
+
+ 197:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Process Stack Pointer
+ 198:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer (PSP).
+ 199:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               PSP Register value
+ 200:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 201:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSP(void)
+ 202:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 203:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 204:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 205:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp"  : "=r" (result) );
+ 206:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 207:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 208:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 209:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 210:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 211:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 212:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Process Stack Pointer (non-secure)
+ 213:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Process Stack Pointer (PSP) when in secure s
+ 214:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               PSP Register value
+ 215:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 216:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSP_NS(void)
+ 217:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 218:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 219:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 220:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psp_ns"  : "=r" (result) );
+ 221:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 222:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 223:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 224:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 225:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 226:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 227:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Process Stack Pointer
+ 228:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer (PSP).
+ 229:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 230:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 231:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PSP(uint32_t topOfProcStack)
+ 232:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 233:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR psp, %0" : : "r" (topOfProcStack) : );
+ 234:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 235:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 236:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 237:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 238:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 239:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Process Stack Pointer (non-secure)
+ 240:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Process Stack Pointer (PSP) when in secure sta
+ 241:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
+ 242:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 243:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
+ 244:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 245:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : );
+ 246:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 247:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 248:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 249:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 250:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 251:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Main Stack Pointer
+ 252:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer (MSP).
+ 253:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               MSP Register value
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 16
+
+
+ 254:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 255:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSP(void)
+ 256:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 257:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 258:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 259:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp" : "=r" (result) );
+ 260:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 261:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 262:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 263:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 264:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 265:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 266:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Main Stack Pointer (non-secure)
+ 267:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Main Stack Pointer (MSP) when in secure stat
+ 268:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               MSP Register value
+ 269:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 270:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSP_NS(void)
+ 271:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 272:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 273:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 274:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp_ns" : "=r" (result) );
+ 275:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 276:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 277:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 278:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 279:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 280:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 281:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Main Stack Pointer
+ 282:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer (MSP).
+ 283:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 284:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 285:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_MSP(uint32_t topOfMainStack)
+ 286:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 287:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR msp, %0" : : "r" (topOfMainStack) : );
+ 288:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 289:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 290:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 291:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 292:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 293:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Main Stack Pointer (non-secure)
+ 294:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Main Stack Pointer (MSP) when in secure state.
+ 295:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    topOfMainStack  Main Stack Pointer value to set
+ 296:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 297:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
+ 298:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 299:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : );
+ 300:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 301:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 302:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 303:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 304:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 305:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Priority Mask
+ 306:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current state of the priority mask bit from the Priority Mask Register.
+ 307:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Priority Mask value
+ 308:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 309:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PRIMASK(void)
+ 310:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 17
+
+
+ 311:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 312:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 313:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask" : "=r" (result) );
+ 314:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 315:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 316:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 317:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 318:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 319:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 320:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Priority Mask (non-secure)
+ 321:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current state of the non-secure priority mask bit from the Priority Mask Reg
+ 322:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Priority Mask value
+ 323:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 324:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PRIMASK_NS(void)
+ 325:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 326:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 327:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 328:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask_ns" : "=r" (result) );
+ 329:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 330:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 331:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 332:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 333:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 334:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 335:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Priority Mask
+ 336:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Priority Mask Register.
+ 337:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 338:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 339:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PRIMASK(uint32_t priMask)
+ 340:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 341:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR primask, %0" : : "r" (priMask) : "memory");
+ 342:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 343:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 344:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 345:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 346:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 347:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Priority Mask (non-secure)
+ 348:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Priority Mask Register when in secure state.
+ 349:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    priMask  Priority Mask
+ 350:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 351:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
+ 352:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 353:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR primask_ns, %0" : : "r" (priMask) : "memory");
+ 354:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 355:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 356:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 357:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 358:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+ 359:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 360:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 361:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 362:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Enable FIQ
+ 363:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
+ 364:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 365:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 366:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_fault_irq(void)
+ 367:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 18
+
+
+ 368:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("cpsie f" : : : "memory");
+ 369:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 370:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 371:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 372:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 373:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Disable FIQ
+ 374:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Disables FIQ interrupts by setting the F-bit in the CPSR.
+ 375:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 376:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 377:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __disable_fault_irq(void)
+ 378:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 379:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("cpsid f" : : : "memory");
+ 380:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 381:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 382:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 383:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 384:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Base Priority
+ 385:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Base Priority register.
+ 386:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Base Priority register value
+ 387:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 388:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_BASEPRI(void)
+ 389:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 390:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 391:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 392:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, basepri" : "=r" (result) );
+ 393:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 394:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 395:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 396:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 397:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 398:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 399:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Base Priority (non-secure)
+ 400:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Base Priority register when in secure state.
+ 401:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Base Priority register value
+ 402:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 403:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_BASEPRI_NS(void)
+ 404:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 405:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 406:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 407:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, basepri_ns" : "=r" (result) );
+ 408:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 409:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 410:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 411:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 412:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 413:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 414:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Base Priority
+ 415:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register.
+ 416:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 417:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 418:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI(uint32_t basePri)
+ 419:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 420:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR basepri, %0" : : "r" (basePri) : "memory");
+ 421:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 422:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 423:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 424:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 19
+
+
+ 425:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 426:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Base Priority (non-secure)
+ 427:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Base Priority register when in secure state.
+ 428:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 429:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 430:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_BASEPRI_NS(uint32_t basePri)
+ 431:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 432:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR basepri_ns, %0" : : "r" (basePri) : "memory");
+ 433:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 434:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 435:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 436:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 437:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 438:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Base Priority with condition
+ 439:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register only if BASEPRI masking is disable
+ 440:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            or the new value increases the BASEPRI priority level.
+ 441:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
+ 442:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 443:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_BASEPRI_MAX(uint32_t basePri)
+ 444:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 445:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR basepri_max, %0" : : "r" (basePri) : "memory");
+ 446:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 447:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 448:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 449:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 450:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Fault Mask
+ 451:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Fault Mask register.
+ 452:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Fault Mask register value
+ 453:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 454:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FAULTMASK(void)
+ 455:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 456:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 457:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 458:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, faultmask" : "=r" (result) );
+ 459:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 460:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 461:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 462:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 463:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 464:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 465:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Fault Mask (non-secure)
+ 466:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Fault Mask register when in secure state.
+ 467:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Fault Mask register value
+ 468:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 469:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_FAULTMASK_NS(void)
+ 470:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 471:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 472:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 473:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, faultmask_ns" : "=r" (result) );
+ 474:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 475:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 476:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 477:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 478:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 479:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 480:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Fault Mask
+ 481:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Fault Mask register.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 20
+
+
+ 482:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    faultMask  Fault Mask value to set
+ 483:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 484:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_FAULTMASK(uint32_t faultMask)
+ 485:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 486:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR faultmask, %0" : : "r" (faultMask) : "memory");
+ 487:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 488:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 489:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 490:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+ 491:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 492:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Fault Mask (non-secure)
+ 493:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Fault Mask register when in secure state.
+ 494:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    faultMask  Fault Mask value to set
+ 495:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 496:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
+ 497:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 498:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR faultmask_ns, %0" : : "r" (faultMask) : "memory");
+ 499:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 500:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 501:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 502:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+ 503:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 504:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
+ 505:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 506:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 507:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+ 508:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    )
+ 509:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 510:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 511:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Process Stack Pointer Limit
+ 512:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Process Stack Pointer Limit (PSPLIM).
+ 513:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               PSPLIM Register value
+ 514:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 515:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_PSPLIM(void)
+ 516:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 517:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 518:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 519:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psplim"  : "=r" (result) );
+ 520:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 521:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 522:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 523:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 524:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 525:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 526:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 527:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Process Stack Pointer Limit (non-secure)
+ 528:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Process Stack Pointer Limit (PSPLIM) when in
+ 529:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               PSPLIM Register value
+ 530:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 531:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_PSPLIM_NS(void)
+ 532:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 533:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 534:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 535:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, psplim_ns"  : "=r" (result) );
+ 536:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 537:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 538:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 21
+
+
+ 539:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 540:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 541:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 542:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Process Stack Pointer Limit
+ 543:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
+ 544:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
+ 545:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 546:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
+ 547:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 548:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR psplim, %0" : : "r" (ProcStackPtrLimit));
+ 549:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 550:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 551:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 552:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 553:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 554:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 555:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Process Stack Pointer (non-secure)
+ 556:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Process Stack Pointer Limit (PSPLIM) when in s
+ 557:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
+ 558:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 559:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
+ 560:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 561:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR psplim_ns, %0\n" : : "r" (ProcStackPtrLimit));
+ 562:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 563:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 564:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 565:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 566:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 567:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Main Stack Pointer Limit
+ 568:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Main Stack Pointer Limit (MSPLIM).
+ 569:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               MSPLIM Register value
+ 570:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 571:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_MSPLIM(void)
+ 572:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 573:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 574:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 575:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msplim" : "=r" (result) );
+ 576:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 577:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 578:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 579:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 580:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 581:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 582:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 583:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 584:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get Main Stack Pointer Limit (non-secure)
+ 585:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the non-secure Main Stack Pointer Limit(MSPLIM) when in sec
+ 586:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               MSPLIM Register value
+ 587:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 588:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __TZ_get_MSPLIM_NS(void)
+ 589:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 590:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   register uint32_t result;
+ 591:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 592:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msplim_ns" : "=r" (result) );
+ 593:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 594:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 595:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 22
+
+
+ 596:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 597:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 598:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 599:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Main Stack Pointer Limit
+ 600:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Main Stack Pointer Limit (MSPLIM).
+ 601:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    MainStackPtrLimit  Main Stack Pointer Limit value to set
+ 602:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 603:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
+ 604:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 605:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR msplim, %0" : : "r" (MainStackPtrLimit));
+ 606:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 607:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 608:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 609:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3)) && \
+ 610:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 611:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 612:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set Main Stack Pointer Limit (non-secure)
+ 613:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secu
+ 614:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    MainStackPtrLimit  Main Stack Pointer value to set
+ 615:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 616:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
+ 617:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 618:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("MSR msplim_ns, %0" : : "r" (MainStackPtrLimit));
+ 619:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 620:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 621:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 622:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
+ 623:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    ) */
+ 624:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 625:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 626:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 627:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 628:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 629:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 630:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Get FPSCR
+ 631:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Returns the current value of the Floating Point Status/Control register.
+ 632:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Floating Point Status/Control register value
+ 633:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 634:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __get_FPSCR(void)
+ 635:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 636:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+ 637:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+ 638:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 639:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 640:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
+ 641:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 642:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #else
+ 643:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****    return(0U);
+ 644:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 645:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 646:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 647:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 648:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 649:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Set FPSCR
+ 650:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Assigns the given value to the Floating Point Status/Control register.
+ 651:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    fpscr  Floating Point Status/Control value to set
+ 652:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 23
+
+
+ 653:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
+ 654:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 655:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+ 656:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+ 657:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc", "memory");
+ 658:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #else
+ 659:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   (void)fpscr;
+ 660:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 661:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 662:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 663:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif /* ((defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 664:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
+ 665:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 666:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 667:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 668:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /*@} end of CMSIS_Core_RegAccFunctions */
+ 669:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 670:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 671:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* ##########################  Core Instruction Access  ######################### */
+ 672:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+ 673:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   Access to dedicated instructions
+ 674:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   @{
+ 675:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** */
+ 676:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 677:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 678:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
+ 679:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
+ 680:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 681:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 682:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+l" (r)
+ 683:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 684:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #else
+ 685:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 686:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+r" (r)
+ 687:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 688:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 689:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 690:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 691:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   No Operation
+ 692:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
+ 693:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 694:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __NOP(void)
+ 695:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //{
+ 696:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //  __ASM volatile ("nop");
+ 697:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //}
+ 698:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __NOP()                             __ASM volatile ("nop")       /* This implementation gen
+ 699:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 700:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 701:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Wait For Interrupt
+ 702:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number o
+ 703:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 704:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __WFI(void)
+ 705:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //{
+ 706:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //  __ASM volatile ("wfi");
+ 707:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //}
+ 708:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __WFI()                             __ASM volatile ("wfi")       /* This implementation gen
+ 709:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 24
+
+
+ 710:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 711:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 712:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Wait For Event
+ 713:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Wait For Event is a hint instruction that permits the processor to enter
+ 714:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            a low-power state until one of a number of events occurs.
+ 715:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 716:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __WFE(void)
+ 717:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //{
+ 718:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //  __ASM volatile ("wfe");
+ 719:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //}
+ 720:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __WFE()                             __ASM volatile ("wfe")       /* This implementation gen
+ 721:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 722:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 723:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 724:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Send Event
+ 725:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+ 726:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 727:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //__attribute__((always_inline)) __STATIC_INLINE void __SEV(void)
+ 728:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //{
+ 729:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //  __ASM volatile ("sev");
+ 730:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** //}
+ 731:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __SEV()                             __ASM volatile ("sev")       /* This implementation gen
+ 732:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 733:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 734:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 735:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Instruction Synchronization Barrier
+ 736:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+ 737:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            so that all instructions following the ISB are fetched from cache or memory,
+ 738:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            after the instruction has been completed.
+ 739:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 740:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __ISB(void)
+ 741:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 742:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("isb 0xF":::"memory");
+ 743:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 744:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 745:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 746:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 747:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Data Synchronization Barrier
+ 748:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
+ 749:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
+ 750:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 751:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
+ 752:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 753:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("dsb 0xF":::"memory");
+ 754:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 755:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 756:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 757:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 758:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Data Memory Barrier
+ 759:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Ensures the apparent order of the explicit memory operations before
+ 760:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            and after the instruction, without ensuring their completion.
+ 761:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 762:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __DMB(void)
+ 763:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 764:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("dmb 0xF":::"memory");
+ 765:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 766:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 25
+
+
+ 767:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 768:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 769:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Reverse byte order (32 bit)
+ 770:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Reverses the byte order in integer value.
+ 771:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    value  Value to reverse
+ 772:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Reversed value
+ 773:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 774:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV(uint32_t value)
+ 775:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 776:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+ 777:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return __builtin_bswap32(value);
+ 778:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #else
+ 779:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 780:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 781:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("rev %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
+ 782:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 783:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 784:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 785:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 786:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 787:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 788:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Reverse byte order (16 bit)
+ 789:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Reverses the byte order in two unsigned short values.
+ 790:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    value  Value to reverse
+ 791:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Reversed value
+ 792:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 793:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV16(uint32_t value)
+ 794:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 795:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 796:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 797:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("rev16 %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
+ 798:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 799:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 800:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 801:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 802:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 803:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Reverse byte order in signed short value
+ 804:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Reverses the byte order in a signed short value with sign extension to integer.
+ 805:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    value  Value to reverse
+ 806:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Reversed value
+ 807:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 808:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE int32_t __REVSH(int32_t value)
+ 809:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 810:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8)
+ 811:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return (short)__builtin_bswap16(value);
+ 812:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #else
+ 813:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   int32_t result;
+ 814:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 815:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   __ASM volatile ("revsh %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
+ 816:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return(result);
+ 817:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #endif
+ 818:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 819:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 820:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 821:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 822:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Rotate Right in unsigned value (32 bit)
+ 823:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Rotate Right (immediate) provides the value of the contents of a register rotated by a v
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 26
+
+
+ 824:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    op1  Value to rotate
+ 825:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    op2  Number of Bits to rotate
+ 826:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Rotated value
+ 827:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 828:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
+ 829:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 830:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   return (op1 >> op2) | (op1 << (32U - op2));
+ 831:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** }
+ 832:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 833:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 834:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 835:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Breakpoint
+ 836:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Causes the processor to enter Debug state.
+ 837:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****            Debug tools can use this to investigate system state when the instruction at a particula
+ 838:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    value  is ignored by the processor.
+ 839:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****                  If required, a debugger can use it to store additional information about the break
+ 840:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 841:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #define __BKPT(value)                       __ASM volatile ("bkpt "#value)
+ 842:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 843:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 844:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** /**
+ 845:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \brief   Reverse bit order of value
+ 846:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \details Reverses the bit order of the given value.
+ 847:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \param [in]    value  Value to reverse
+ 848:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   \return               Reversed value
+ 849:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****  */
+ 850:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
+ 851:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** {
+ 852:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****   uint32_t result;
+ 853:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** 
+ 854:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
+ 855:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
+ 856:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
+ 857:../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h ****    __ASM volatile ("rbit %0, %1" : "=r" (result) : "r" (value) );
+ 417              		.loc 2 857 0
+ 418 0012 4FF08072 		mov	r2, #16777216
+ 419              		.syntax unified
+ 420              	@ 857 "../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h" 1
+ 421 0016 92FAA2F2 		rbit r2, r2
+ 422              	@ 0 "" 2
+ 423              	.LVL35:
+ 424              		.thumb
+ 425              		.syntax unified
+ 426              	.LBE9:
+ 427              	.LBE8:
+ 189:Hardware/Src/hal_qspi_flash.c ****   hqspi.Init.FlashSize = POSITION_VAL(0x1000000) - 1;
+ 428              		.loc 1 189 0
+ 429 001a B2FA82F2 		clz	r2, r2
+ 430 001e 013A     		subs	r2, r2, #1
+ 431 0020 1A61     		str	r2, [r3, #16]
+ 190:Hardware/Src/hal_qspi_flash.c ****   hqspi.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_4_CYCLE;
+ 432              		.loc 1 190 0
+ 433 0022 4FF44072 		mov	r2, #768
+ 191:Hardware/Src/hal_qspi_flash.c ****   hqspi.Init.ClockMode = QSPI_CLOCK_MODE_0;
+ 434              		.loc 1 191 0
+ 435 0026 C3E90521 		strd	r2, r1, [r3, #20]
+ 192:Hardware/Src/hal_qspi_flash.c ****   hqspi.Init.FlashID = QSPI_FLASH_ID_1;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 27
+
+
+ 193:Hardware/Src/hal_qspi_flash.c ****   hqspi.Init.DualFlash = QSPI_DUALFLASH_DISABLE;
+ 436              		.loc 1 193 0
+ 437 002a C3E90711 		strd	r1, r1, [r3, #28]
+ 194:Hardware/Src/hal_qspi_flash.c **** //   if (HAL_QSPI_Init(&hqspi) != HAL_OK)
+ 195:Hardware/Src/hal_qspi_flash.c **** //   {
+ 196:Hardware/Src/hal_qspi_flash.c **** //     Error_Handler();
+ 197:Hardware/Src/hal_qspi_flash.c **** //   }
+ 198:Hardware/Src/hal_qspi_flash.c ****    
+ 199:Hardware/Src/hal_qspi_flash.c **** }
+ 438              		.loc 1 199 0
+ 439 002e 7047     		bx	lr
+ 440              	.L18:
+ 441              		.align	2
+ 442              	.L17:
+ 443 0030 00000000 		.word	hqspi
+ 444 0034 001000A0 		.word	-1610608640
+ 445              		.cfi_endproc
+ 446              	.LFE287:
+ 448              		.section	.text.hal_spi_flash_erase,"ax",%progbits
+ 449              		.align	1
+ 450              		.global	hal_spi_flash_erase
+ 451              		.syntax unified
+ 452              		.thumb
+ 453              		.thumb_func
+ 454              		.fpu fpv4-sp-d16
+ 456              	hal_spi_flash_erase:
+ 457              	.LFB288:
+ 200:Hardware/Src/hal_qspi_flash.c **** 
+ 201:Hardware/Src/hal_qspi_flash.c **** int hal_spi_flash_erase(uint32_t addr, int32_t len)
+ 202:Hardware/Src/hal_qspi_flash.c **** {
+ 458              		.loc 1 202 0
+ 459              		.cfi_startproc
+ 460              		@ args = 0, pretend = 0, frame = 0
+ 461              		@ frame_needed = 0, uses_anonymous_args = 0
+ 462              	.LVL36:
+ 203:Hardware/Src/hal_qspi_flash.c ****     uint32_t begin;
+ 204:Hardware/Src/hal_qspi_flash.c ****     uint32_t end;
+ 205:Hardware/Src/hal_qspi_flash.c ****     int i;
+ 206:Hardware/Src/hal_qspi_flash.c **** 
+ 207:Hardware/Src/hal_qspi_flash.c ****     if (len < 0
+ 463              		.loc 1 207 0
+ 464 0000 0029     		cmp	r1, #0
+ 202:Hardware/Src/hal_qspi_flash.c ****     uint32_t begin;
+ 465              		.loc 1 202 0
+ 466 0002 38B5     		push	{r3, r4, r5, lr}
+ 467              	.LCFI15:
+ 468              		.cfi_def_cfa_offset 16
+ 469              		.cfi_offset 3, -16
+ 470              		.cfi_offset 4, -12
+ 471              		.cfi_offset 5, -8
+ 472              		.cfi_offset 14, -4
+ 473              		.loc 1 207 0
+ 474 0004 02DA     		bge	.L20
+ 475              	.LVL37:
+ 476              	.L22:
+ 208:Hardware/Src/hal_qspi_flash.c ****         || addr > QSPI_FLASH_TOTAL_SIZE
+ 209:Hardware/Src/hal_qspi_flash.c ****         || addr + len > QSPI_FLASH_TOTAL_SIZE)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 28
+
+
+ 210:Hardware/Src/hal_qspi_flash.c ****     {
+ 211:Hardware/Src/hal_qspi_flash.c ****         return -1;
+ 477              		.loc 1 211 0
+ 478 0006 4FF0FF30 		mov	r0, #-1
+ 479              	.L19:
+ 212:Hardware/Src/hal_qspi_flash.c ****     }
+ 213:Hardware/Src/hal_qspi_flash.c **** 
+ 214:Hardware/Src/hal_qspi_flash.c ****     begin = addr / QSPI_FLASH_SECTOR * QSPI_FLASH_SECTOR;
+ 215:Hardware/Src/hal_qspi_flash.c ****     end = (addr + len - 1) / QSPI_FLASH_SECTOR * QSPI_FLASH_SECTOR;
+ 216:Hardware/Src/hal_qspi_flash.c **** 
+ 217:Hardware/Src/hal_qspi_flash.c ****     for (i = begin; i <= end; i += QSPI_FLASH_SECTOR)
+ 218:Hardware/Src/hal_qspi_flash.c ****     {
+ 219:Hardware/Src/hal_qspi_flash.c ****         if (prv_spi_flash_erase_sector(i) == -1)
+ 220:Hardware/Src/hal_qspi_flash.c ****         {
+ 221:Hardware/Src/hal_qspi_flash.c ****             return -1;
+ 222:Hardware/Src/hal_qspi_flash.c ****         }
+ 223:Hardware/Src/hal_qspi_flash.c ****     }
+ 224:Hardware/Src/hal_qspi_flash.c **** 
+ 225:Hardware/Src/hal_qspi_flash.c ****     return 0;
+ 226:Hardware/Src/hal_qspi_flash.c **** }
+ 480              		.loc 1 226 0
+ 481 000a 38BD     		pop	{r3, r4, r5, pc}
+ 482              	.LVL38:
+ 483              	.L20:
+ 208:Hardware/Src/hal_qspi_flash.c ****         || addr > QSPI_FLASH_TOTAL_SIZE
+ 484              		.loc 1 208 0
+ 485 000c 0B4B     		ldr	r3, .L28
+ 486 000e 9842     		cmp	r0, r3
+ 487 0010 F9D8     		bhi	.L22
+ 209:Hardware/Src/hal_qspi_flash.c ****     {
+ 488              		.loc 1 209 0
+ 489 0012 0144     		add	r1, r1, r0
+ 490              	.LVL39:
+ 491 0014 9942     		cmp	r1, r3
+ 492 0016 F6D8     		bhi	.L22
+ 493              	.LVL40:
+ 215:Hardware/Src/hal_qspi_flash.c **** 
+ 494              		.loc 1 215 0
+ 495 0018 094D     		ldr	r5, .L28+4
+ 496 001a 0139     		subs	r1, r1, #1
+ 497 001c 01EA0504 		and	r4, r1, r5
+ 498              	.LVL41:
+ 214:Hardware/Src/hal_qspi_flash.c ****     end = (addr + len - 1) / QSPI_FLASH_SECTOR * QSPI_FLASH_SECTOR;
+ 499              		.loc 1 214 0
+ 500 0020 0540     		ands	r5, r5, r0
+ 501              	.LVL42:
+ 502              	.L23:
+ 217:Hardware/Src/hal_qspi_flash.c ****     {
+ 503              		.loc 1 217 0 discriminator 1
+ 504 0022 A542     		cmp	r5, r4
+ 505 0024 01D9     		bls	.L24
+ 225:Hardware/Src/hal_qspi_flash.c **** }
+ 506              		.loc 1 225 0
+ 507 0026 0020     		movs	r0, #0
+ 508 0028 EFE7     		b	.L19
+ 509              	.L24:
+ 219:Hardware/Src/hal_qspi_flash.c ****         {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 29
+
+
+ 510              		.loc 1 219 0
+ 511 002a 2846     		mov	r0, r5
+ 512 002c FFF7FEFF 		bl	prv_spi_flash_erase_sector
+ 513              	.LVL43:
+ 514 0030 0130     		adds	r0, r0, #1
+ 515 0032 E8D0     		beq	.L22
+ 217:Hardware/Src/hal_qspi_flash.c ****     {
+ 516              		.loc 1 217 0 discriminator 2
+ 517 0034 05F58055 		add	r5, r5, #4096
+ 518              	.LVL44:
+ 519 0038 F3E7     		b	.L23
+ 520              	.L29:
+ 521 003a 00BF     		.align	2
+ 522              	.L28:
+ 523 003c FFFF7F00 		.word	8388607
+ 524 0040 00F0FFFF 		.word	-4096
+ 525              		.cfi_endproc
+ 526              	.LFE288:
+ 528              		.section	.text.hal_spi_flash_write,"ax",%progbits
+ 529              		.align	1
+ 530              		.global	hal_spi_flash_write
+ 531              		.syntax unified
+ 532              		.thumb
+ 533              		.thumb_func
+ 534              		.fpu fpv4-sp-d16
+ 536              	hal_spi_flash_write:
+ 537              	.LFB289:
+ 227:Hardware/Src/hal_qspi_flash.c **** 
+ 228:Hardware/Src/hal_qspi_flash.c **** int hal_spi_flash_write(const void* buf, int32_t len, uint32_t* location)
+ 229:Hardware/Src/hal_qspi_flash.c **** {
+ 538              		.loc 1 229 0
+ 539              		.cfi_startproc
+ 540              		@ args = 0, pretend = 0, frame = 8
+ 541              		@ frame_needed = 0, uses_anonymous_args = 0
+ 542              	.LVL45:
+ 543 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 544              	.LCFI16:
+ 545              		.cfi_def_cfa_offset 48
+ 546              		.cfi_offset 4, -36
+ 547              		.cfi_offset 5, -32
+ 548              		.cfi_offset 6, -28
+ 549              		.cfi_offset 7, -24
+ 550              		.cfi_offset 8, -20
+ 551              		.cfi_offset 9, -16
+ 552              		.cfi_offset 10, -12
+ 553              		.cfi_offset 11, -8
+ 554              		.cfi_offset 14, -4
+ 555              		.loc 1 229 0
+ 556 0004 0D46     		mov	r5, r1
+ 557 0006 9146     		mov	r9, r2
+ 230:Hardware/Src/hal_qspi_flash.c ****     const uint8_t* pbuf = (const uint8_t*)buf;
+ 231:Hardware/Src/hal_qspi_flash.c ****     int page_cnt = 0;
+ 232:Hardware/Src/hal_qspi_flash.c ****     int remain_cnt = 0;
+ 233:Hardware/Src/hal_qspi_flash.c ****     int temp = 0;
+ 234:Hardware/Src/hal_qspi_flash.c ****     uint32_t loc_addr;
+ 235:Hardware/Src/hal_qspi_flash.c ****     uint8_t addr = 0;
+ 236:Hardware/Src/hal_qspi_flash.c ****     uint8_t count = 0;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 30
+
+
+ 237:Hardware/Src/hal_qspi_flash.c ****     int i;
+ 238:Hardware/Src/hal_qspi_flash.c ****     int ret = 0;
+ 239:Hardware/Src/hal_qspi_flash.c **** 
+ 240:Hardware/Src/hal_qspi_flash.c ****     if (NULL == pbuf
+ 558              		.loc 1 240 0
+ 559 0008 8046     		mov	r8, r0
+ 560 000a 0028     		cmp	r0, #0
+ 561 000c 67D0     		beq	.L46
+ 241:Hardware/Src/hal_qspi_flash.c ****         || NULL == location
+ 562              		.loc 1 241 0
+ 563 000e 002A     		cmp	r2, #0
+ 564 0010 65D0     		beq	.L46
+ 242:Hardware/Src/hal_qspi_flash.c ****         || len < 0
+ 565              		.loc 1 242 0
+ 566 0012 0029     		cmp	r1, #0
+ 567 0014 63DB     		blt	.L46
+ 243:Hardware/Src/hal_qspi_flash.c ****         || *location > QSPI_FLASH_TOTAL_SIZE
+ 568              		.loc 1 243 0
+ 569 0016 1468     		ldr	r4, [r2]
+ 570 0018 324B     		ldr	r3, .L64
+ 571 001a 9C42     		cmp	r4, r3
+ 572 001c 5FD8     		bhi	.L46
+ 244:Hardware/Src/hal_qspi_flash.c ****         || len + *location > QSPI_FLASH_TOTAL_SIZE)
+ 573              		.loc 1 244 0
+ 574 001e 0A19     		adds	r2, r1, r4
+ 575              	.LVL46:
+ 576 0020 9A42     		cmp	r2, r3
+ 577 0022 5CD8     		bhi	.L46
+ 578              	.LVL47:
+ 245:Hardware/Src/hal_qspi_flash.c ****     {
+ 246:Hardware/Src/hal_qspi_flash.c ****         return -1;
+ 247:Hardware/Src/hal_qspi_flash.c ****     }
+ 248:Hardware/Src/hal_qspi_flash.c **** 
+ 249:Hardware/Src/hal_qspi_flash.c ****     loc_addr = *location;
+ 250:Hardware/Src/hal_qspi_flash.c ****     addr = loc_addr % QSPI_FLASH_PAGESIZE;
+ 251:Hardware/Src/hal_qspi_flash.c ****     count = QSPI_FLASH_PAGESIZE - addr;
+ 252:Hardware/Src/hal_qspi_flash.c ****     page_cnt = len / QSPI_FLASH_PAGESIZE;
+ 253:Hardware/Src/hal_qspi_flash.c ****     remain_cnt = len % QSPI_FLASH_PAGESIZE;
+ 254:Hardware/Src/hal_qspi_flash.c **** 
+ 255:Hardware/Src/hal_qspi_flash.c ****     if (addr == 0) /* addr is aligned to SPI_FLASH_PAGESIZE */
+ 579              		.loc 1 255 0
+ 580 0024 14F0FF06 		ands	r6, r4, #255
+ 252:Hardware/Src/hal_qspi_flash.c ****     remain_cnt = len % QSPI_FLASH_PAGESIZE;
+ 581              		.loc 1 252 0
+ 582 0028 4FEA2123 		asr	r3, r1, #8
+ 583              	.LVL48:
+ 253:Hardware/Src/hal_qspi_flash.c **** 
+ 584              		.loc 1 253 0
+ 585 002c CFB2     		uxtb	r7, r1
+ 586              	.LVL49:
+ 587              		.loc 1 255 0
+ 588 002e 26D1     		bne	.L32
+ 256:Hardware/Src/hal_qspi_flash.c ****     {
+ 257:Hardware/Src/hal_qspi_flash.c ****         if (page_cnt == 0) /* len < SPI_FLASH_PAGESIZE */
+ 589              		.loc 1 257 0
+ 590 0030 1BB9     		cbnz	r3, .L33
+ 591              	.L39:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 31
+
+
+ 592              	.LVL50:
+ 593              	.LBB28:
+ 594              	.LBB29:
+ 154:Hardware/Src/hal_qspi_flash.c ****     {
+ 595              		.loc 1 154 0
+ 596 0032 DDB1     		cbz	r5, .L35
+ 597 0034 2A46     		mov	r2, r5
+ 598 0036 2146     		mov	r1, r4
+ 599              	.LVL51:
+ 600 0038 16E0     		b	.L60
+ 601              	.LVL52:
+ 602              	.L33:
+ 603 003a 1E02     		lsls	r6, r3, #8
+ 604 003c 04EB060B 		add	fp, r4, r6
+ 605              	.LBE29:
+ 606              	.LBE28:
+ 607              		.loc 1 257 0
+ 608 0040 A246     		mov	r10, r4
+ 609              	.LBB30:
+ 610              	.LBB31:
+ 611 0042 031B     		subs	r3, r0, r4
+ 612              	.LVL53:
+ 613              	.L36:
+ 614 0044 03EB0A00 		add	r0, r3, r10
+ 615 0048 5146     		mov	r1, r10
+ 616 004a 4FF48072 		mov	r2, #256
+ 617              	.LBE31:
+ 618              	.LBE30:
+ 258:Hardware/Src/hal_qspi_flash.c ****         {
+ 259:Hardware/Src/hal_qspi_flash.c ****             ret = prv_spi_flash_write_page(pbuf, loc_addr, len);
+ 260:Hardware/Src/hal_qspi_flash.c ****             CHECK_RET_RETURN(ret);
+ 261:Hardware/Src/hal_qspi_flash.c ****         }
+ 262:Hardware/Src/hal_qspi_flash.c ****         else /* len > SPI_FLASH_PAGESIZE */
+ 263:Hardware/Src/hal_qspi_flash.c ****         {
+ 264:Hardware/Src/hal_qspi_flash.c ****             for (i = 0; i < page_cnt; ++i)
+ 265:Hardware/Src/hal_qspi_flash.c ****             {
+ 266:Hardware/Src/hal_qspi_flash.c ****                 ret = prv_spi_flash_write_page(pbuf + i * QSPI_FLASH_PAGESIZE, loc_addr, QSPI_FLASH
+ 267:Hardware/Src/hal_qspi_flash.c ****                 CHECK_RET_RETURN(ret);
+ 268:Hardware/Src/hal_qspi_flash.c ****                 loc_addr += QSPI_FLASH_PAGESIZE;
+ 619              		.loc 1 268 0
+ 620 004e 0AF5807A 		add	r10, r10, #256
+ 621              	.LVL54:
+ 622              	.LBB33:
+ 623              	.LBB32:
+ 624 0052 0193     		str	r3, [sp, #4]
+ 625 0054 FFF7FEFF 		bl	prv_spi_flash_write_page.part.0
+ 626              	.LVL55:
+ 627              	.LBE32:
+ 628              	.LBE33:
+ 264:Hardware/Src/hal_qspi_flash.c ****             {
+ 629              		.loc 1 264 0
+ 630 0058 D345     		cmp	fp, r10
+ 631 005a 019B     		ldr	r3, [sp, #4]
+ 632 005c F2D1     		bne	.L36
+ 633 005e A119     		adds	r1, r4, r6
+ 634              	.LVL56:
+ 635              	.LBB34:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 32
+
+
+ 636              	.LBB35:
+ 154:Hardware/Src/hal_qspi_flash.c ****     {
+ 637              		.loc 1 154 0
+ 638 0060 27B1     		cbz	r7, .L35
+ 639 0062 3A46     		mov	r2, r7
+ 640              	.LVL57:
+ 641              	.L62:
+ 642              	.LBE35:
+ 643              	.LBE34:
+ 644              	.LBB36:
+ 645              	.LBB37:
+ 646 0064 08EB0600 		add	r0, r8, r6
+ 647              	.LVL58:
+ 648              	.L60:
+ 649              	.LBE37:
+ 650              	.LBE36:
+ 651              	.LBB39:
+ 652              	.LBB40:
+ 653 0068 FFF7FEFF 		bl	prv_spi_flash_write_page.part.0
+ 654              	.LVL59:
+ 655              	.L35:
+ 656              	.LBE40:
+ 657              	.LBE39:
+ 269:Hardware/Src/hal_qspi_flash.c ****             }
+ 270:Hardware/Src/hal_qspi_flash.c **** 
+ 271:Hardware/Src/hal_qspi_flash.c ****             ret = prv_spi_flash_write_page(pbuf + page_cnt * QSPI_FLASH_PAGESIZE, loc_addr, remain_
+ 272:Hardware/Src/hal_qspi_flash.c ****             CHECK_RET_RETURN(ret);
+ 273:Hardware/Src/hal_qspi_flash.c ****         }
+ 274:Hardware/Src/hal_qspi_flash.c ****     }
+ 275:Hardware/Src/hal_qspi_flash.c ****     else /* addr is not aligned to SPI_FLASH_PAGESIZE */
+ 276:Hardware/Src/hal_qspi_flash.c ****     {
+ 277:Hardware/Src/hal_qspi_flash.c ****         if (page_cnt == 0) /* len < SPI_FLASH_PAGESIZE */
+ 278:Hardware/Src/hal_qspi_flash.c ****         {
+ 279:Hardware/Src/hal_qspi_flash.c ****             if (remain_cnt > count) /* (len + loc_addr) > SPI_FLASH_PAGESIZE */
+ 280:Hardware/Src/hal_qspi_flash.c ****             {
+ 281:Hardware/Src/hal_qspi_flash.c ****                 temp = remain_cnt - count;
+ 282:Hardware/Src/hal_qspi_flash.c **** 
+ 283:Hardware/Src/hal_qspi_flash.c ****                 ret = prv_spi_flash_write_page(pbuf, loc_addr, count);
+ 284:Hardware/Src/hal_qspi_flash.c ****                 CHECK_RET_RETURN(ret);
+ 285:Hardware/Src/hal_qspi_flash.c **** 
+ 286:Hardware/Src/hal_qspi_flash.c ****                 ret = prv_spi_flash_write_page(pbuf + count, loc_addr + count, temp);
+ 287:Hardware/Src/hal_qspi_flash.c ****                 CHECK_RET_RETURN(ret);
+ 288:Hardware/Src/hal_qspi_flash.c ****             }
+ 289:Hardware/Src/hal_qspi_flash.c ****             else
+ 290:Hardware/Src/hal_qspi_flash.c ****             {
+ 291:Hardware/Src/hal_qspi_flash.c ****                 ret = prv_spi_flash_write_page(pbuf, loc_addr, len);
+ 292:Hardware/Src/hal_qspi_flash.c ****                 CHECK_RET_RETURN(ret);
+ 293:Hardware/Src/hal_qspi_flash.c ****             }
+ 294:Hardware/Src/hal_qspi_flash.c ****         }
+ 295:Hardware/Src/hal_qspi_flash.c ****         else /* len > SPI_FLASH_PAGESIZE */
+ 296:Hardware/Src/hal_qspi_flash.c ****         {
+ 297:Hardware/Src/hal_qspi_flash.c ****             len -= count;
+ 298:Hardware/Src/hal_qspi_flash.c ****             page_cnt = len / QSPI_FLASH_PAGESIZE;
+ 299:Hardware/Src/hal_qspi_flash.c ****             remain_cnt = len % QSPI_FLASH_PAGESIZE;
+ 300:Hardware/Src/hal_qspi_flash.c **** 
+ 301:Hardware/Src/hal_qspi_flash.c ****             ret = prv_spi_flash_write_page(pbuf, loc_addr, count);
+ 302:Hardware/Src/hal_qspi_flash.c ****             CHECK_RET_RETURN(ret);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 33
+
+
+ 303:Hardware/Src/hal_qspi_flash.c ****             loc_addr += count;
+ 304:Hardware/Src/hal_qspi_flash.c **** 
+ 305:Hardware/Src/hal_qspi_flash.c ****             for (i = 0; i < page_cnt; ++i)
+ 306:Hardware/Src/hal_qspi_flash.c ****             {
+ 307:Hardware/Src/hal_qspi_flash.c ****                 ret = prv_spi_flash_write_page(pbuf + count + i * QSPI_FLASH_PAGESIZE, loc_addr, QS
+ 308:Hardware/Src/hal_qspi_flash.c ****                 CHECK_RET_RETURN(ret);
+ 309:Hardware/Src/hal_qspi_flash.c ****                 loc_addr += QSPI_FLASH_PAGESIZE;
+ 310:Hardware/Src/hal_qspi_flash.c ****             }
+ 311:Hardware/Src/hal_qspi_flash.c **** 
+ 312:Hardware/Src/hal_qspi_flash.c ****             if (remain_cnt != 0)
+ 313:Hardware/Src/hal_qspi_flash.c ****             {
+ 314:Hardware/Src/hal_qspi_flash.c ****                 ret = prv_spi_flash_write_page(pbuf + count + page_cnt * QSPI_FLASH_PAGESIZE, loc_a
+ 315:Hardware/Src/hal_qspi_flash.c ****                 CHECK_RET_RETURN(ret);
+ 316:Hardware/Src/hal_qspi_flash.c ****             }
+ 317:Hardware/Src/hal_qspi_flash.c ****         }
+ 318:Hardware/Src/hal_qspi_flash.c ****     }
+ 319:Hardware/Src/hal_qspi_flash.c **** 
+ 320:Hardware/Src/hal_qspi_flash.c ****     *location += len;
+ 658              		.loc 1 320 0
+ 659 006c D9F80030 		ldr	r3, [r9]
+ 660 0070 1D44     		add	r5, r5, r3
+ 661              	.LVL60:
+ 662 0072 C9F80050 		str	r5, [r9]
+ 321:Hardware/Src/hal_qspi_flash.c ****     return ret;
+ 663              		.loc 1 321 0
+ 664 0076 0020     		movs	r0, #0
+ 665              	.L30:
+ 322:Hardware/Src/hal_qspi_flash.c **** 		
+ 323:Hardware/Src/hal_qspi_flash.c **** }
+ 666              		.loc 1 323 0
+ 667 0078 03B0     		add	sp, sp, #12
+ 668              	.LCFI17:
+ 669              		.cfi_remember_state
+ 670              		.cfi_def_cfa_offset 36
+ 671              		@ sp needed
+ 672 007a BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 673              	.LVL61:
+ 674              	.L32:
+ 675              	.LCFI18:
+ 676              		.cfi_restore_state
+ 251:Hardware/Src/hal_qspi_flash.c ****     page_cnt = len / QSPI_FLASH_PAGESIZE;
+ 677              		.loc 1 251 0
+ 678 007e 7642     		negs	r6, r6
+ 679 0080 F6B2     		uxtb	r6, r6
+ 277:Hardware/Src/hal_qspi_flash.c ****         {
+ 680              		.loc 1 277 0
+ 681 0082 5BB9     		cbnz	r3, .L38
+ 279:Hardware/Src/hal_qspi_flash.c ****             {
+ 682              		.loc 1 279 0
+ 683 0084 BE42     		cmp	r6, r7
+ 684 0086 D4DA     		bge	.L39
+ 281:Hardware/Src/hal_qspi_flash.c **** 
+ 685              		.loc 1 281 0
+ 686 0088 BF1B     		subs	r7, r7, r6
+ 687              	.LVL62:
+ 688              	.LBB42:
+ 689              	.LBB43:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 34
+
+
+ 690 008a 3246     		mov	r2, r6
+ 691 008c 2146     		mov	r1, r4
+ 692              	.LVL63:
+ 693 008e FFF7FEFF 		bl	prv_spi_flash_write_page.part.0
+ 694              	.LVL64:
+ 695              	.LBE43:
+ 696              	.LBE42:
+ 697              	.LBB44:
+ 698              	.LBB38:
+ 154:Hardware/Src/hal_qspi_flash.c ****     {
+ 699              		.loc 1 154 0
+ 700 0092 002F     		cmp	r7, #0
+ 701 0094 EAD0     		beq	.L35
+ 702 0096 3A46     		mov	r2, r7
+ 703 0098 A119     		adds	r1, r4, r6
+ 704 009a E3E7     		b	.L62
+ 705              	.LVL65:
+ 706              	.L38:
+ 707              	.LBE38:
+ 708              	.LBE44:
+ 297:Hardware/Src/hal_qspi_flash.c ****             page_cnt = len / QSPI_FLASH_PAGESIZE;
+ 709              		.loc 1 297 0
+ 710 009c 8D1B     		subs	r5, r1, r6
+ 711              	.LVL66:
+ 712              	.LBB45:
+ 713              	.LBB46:
+ 714 009e 3246     		mov	r2, r6
+ 715 00a0 2146     		mov	r1, r4
+ 716              	.LBE46:
+ 717              	.LBE45:
+ 298:Hardware/Src/hal_qspi_flash.c ****             remain_cnt = len % QSPI_FLASH_PAGESIZE;
+ 718              		.loc 1 298 0
+ 719 00a2 2F12     		asrs	r7, r5, #8
+ 720              	.LVL67:
+ 721              	.LBB48:
+ 722              	.LBB47:
+ 723 00a4 FFF7FEFF 		bl	prv_spi_flash_write_page.part.0
+ 724              	.LVL68:
+ 725              	.LBE47:
+ 726              	.LBE48:
+ 303:Hardware/Src/hal_qspi_flash.c **** 
+ 727              		.loc 1 303 0
+ 728 00a8 3444     		add	r4, r4, r6
+ 729              	.LVL69:
+ 730 00aa 3F02     		lsls	r7, r7, #8
+ 731              	.LVL70:
+ 732              	.LBB49:
+ 733              	.LBB50:
+ 734 00ac 08EB060A 		add	r10, r8, r6
+ 735 00b0 07EB040B 		add	fp, r7, r4
+ 736 00b4 AAEB040A 		sub	r10, r10, r4
+ 737              	.LVL71:
+ 738              	.L40:
+ 739              	.LBE50:
+ 740              	.LBE49:
+ 305:Hardware/Src/hal_qspi_flash.c ****             {
+ 741              		.loc 1 305 0 discriminator 1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 35
+
+
+ 742 00b8 5C45     		cmp	r4, fp
+ 743 00ba 06D1     		bne	.L41
+ 312:Hardware/Src/hal_qspi_flash.c ****             {
+ 744              		.loc 1 312 0
+ 745 00bc 15F0FF02 		ands	r2, r5, #255
+ 746 00c0 D4D0     		beq	.L35
+ 747              	.LVL72:
+ 314:Hardware/Src/hal_qspi_flash.c ****                 CHECK_RET_RETURN(ret);
+ 748              		.loc 1 314 0
+ 749 00c2 B819     		adds	r0, r7, r6
+ 750              	.LBB52:
+ 751              	.LBB41:
+ 752 00c4 2146     		mov	r1, r4
+ 753 00c6 4044     		add	r0, r0, r8
+ 754 00c8 CEE7     		b	.L60
+ 755              	.LVL73:
+ 756              	.L41:
+ 757              	.LBE41:
+ 758              	.LBE52:
+ 759              	.LBB53:
+ 760              	.LBB51:
+ 761 00ca 2146     		mov	r1, r4
+ 762 00cc 0AEB0400 		add	r0, r10, r4
+ 763 00d0 4FF48072 		mov	r2, #256
+ 764 00d4 FFF7FEFF 		bl	prv_spi_flash_write_page.part.0
+ 765              	.LVL74:
+ 766              	.LBE51:
+ 767              	.LBE53:
+ 309:Hardware/Src/hal_qspi_flash.c ****             }
+ 768              		.loc 1 309 0
+ 769 00d8 04F58074 		add	r4, r4, #256
+ 770              	.LVL75:
+ 771 00dc ECE7     		b	.L40
+ 772              	.LVL76:
+ 773              	.L46:
+ 246:Hardware/Src/hal_qspi_flash.c ****     }
+ 774              		.loc 1 246 0
+ 775 00de 4FF0FF30 		mov	r0, #-1
+ 776              	.LVL77:
+ 777 00e2 C9E7     		b	.L30
+ 778              	.L65:
+ 779              		.align	2
+ 780              	.L64:
+ 781 00e4 FFFF7F00 		.word	8388607
+ 782              		.cfi_endproc
+ 783              	.LFE289:
+ 785              		.section	.text.hal_spi_flash_erase_write,"ax",%progbits
+ 786              		.align	1
+ 787              		.global	hal_spi_flash_erase_write
+ 788              		.syntax unified
+ 789              		.thumb
+ 790              		.thumb_func
+ 791              		.fpu fpv4-sp-d16
+ 793              	hal_spi_flash_erase_write:
+ 794              	.LFB290:
+ 324:Hardware/Src/hal_qspi_flash.c **** 
+ 325:Hardware/Src/hal_qspi_flash.c **** int hal_spi_flash_erase_write(const void* buf, int32_t len, uint32_t location)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 36
+
+
+ 326:Hardware/Src/hal_qspi_flash.c **** {
+ 795              		.loc 1 326 0
+ 796              		.cfi_startproc
+ 797              		@ args = 0, pretend = 0, frame = 8
+ 798              		@ frame_needed = 0, uses_anonymous_args = 0
+ 799              	.LVL78:
+ 800 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 801              	.LCFI19:
+ 802              		.cfi_def_cfa_offset 24
+ 803              		.cfi_offset 4, -12
+ 804              		.cfi_offset 5, -8
+ 805              		.cfi_offset 14, -4
+ 806              		.loc 1 326 0
+ 807 0002 0446     		mov	r4, r0
+ 327:Hardware/Src/hal_qspi_flash.c ****     int ret = 0;
+ 328:Hardware/Src/hal_qspi_flash.c **** 
+ 329:Hardware/Src/hal_qspi_flash.c ****     ret = hal_spi_flash_erase(location, len);
+ 808              		.loc 1 329 0
+ 809 0004 1046     		mov	r0, r2
+ 810              	.LVL79:
+ 326:Hardware/Src/hal_qspi_flash.c ****     int ret = 0;
+ 811              		.loc 1 326 0
+ 812 0006 0D46     		mov	r5, r1
+ 813 0008 0192     		str	r2, [sp, #4]
+ 814              		.loc 1 329 0
+ 815 000a FFF7FEFF 		bl	hal_spi_flash_erase
+ 816              	.LVL80:
+ 330:Hardware/Src/hal_qspi_flash.c ****     CHECK_RET_RETURN(ret);
+ 817              		.loc 1 330 0
+ 818 000e 0028     		cmp	r0, #0
+ 819 0010 04DB     		blt	.L66
+ 331:Hardware/Src/hal_qspi_flash.c ****     ret = hal_spi_flash_write(buf, len, &location);
+ 820              		.loc 1 331 0
+ 821 0012 01AA     		add	r2, sp, #4
+ 822 0014 2946     		mov	r1, r5
+ 823 0016 2046     		mov	r0, r4
+ 824              	.LVL81:
+ 825 0018 FFF7FEFF 		bl	hal_spi_flash_write
+ 826              	.LVL82:
+ 827              	.L66:
+ 332:Hardware/Src/hal_qspi_flash.c **** 
+ 333:Hardware/Src/hal_qspi_flash.c ****     return ret;
+ 334:Hardware/Src/hal_qspi_flash.c **** }
+ 828              		.loc 1 334 0
+ 829 001c 03B0     		add	sp, sp, #12
+ 830              	.LCFI20:
+ 831              		.cfi_def_cfa_offset 12
+ 832              		@ sp needed
+ 833 001e 30BD     		pop	{r4, r5, pc}
+ 834              		.cfi_endproc
+ 835              	.LFE290:
+ 837              		.section	.text.hal_spi_flash_read,"ax",%progbits
+ 838              		.align	1
+ 839              		.global	hal_spi_flash_read
+ 840              		.syntax unified
+ 841              		.thumb
+ 842              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 37
+
+
+ 843              		.fpu fpv4-sp-d16
+ 845              	hal_spi_flash_read:
+ 846              	.LFB291:
+ 335:Hardware/Src/hal_qspi_flash.c **** 
+ 336:Hardware/Src/hal_qspi_flash.c **** int hal_spi_flash_read(void* buf, int32_t len, uint32_t location)
+ 337:Hardware/Src/hal_qspi_flash.c **** {
+ 847              		.loc 1 337 0
+ 848              		.cfi_startproc
+ 849              		@ args = 0, pretend = 0, frame = 0
+ 850              		@ frame_needed = 0, uses_anonymous_args = 0
+ 851              	.LVL83:
+ 852 0000 30B5     		push	{r4, r5, lr}
+ 853              	.LCFI21:
+ 854              		.cfi_def_cfa_offset 12
+ 855              		.cfi_offset 4, -12
+ 856              		.cfi_offset 5, -8
+ 857              		.cfi_offset 14, -4
+ 858 0002 0C46     		mov	r4, r1
+ 859 0004 85B0     		sub	sp, sp, #20
+ 860              	.LCFI22:
+ 861              		.cfi_def_cfa_offset 32
+ 862              		.loc 1 337 0
+ 863 0006 1146     		mov	r1, r2
+ 864              	.LVL84:
+ 338:Hardware/Src/hal_qspi_flash.c ****     int ret = 0;
+ 339:Hardware/Src/hal_qspi_flash.c ****     uint8_t* pbuf = (uint8_t*)buf;
+ 340:Hardware/Src/hal_qspi_flash.c **** 
+ 341:Hardware/Src/hal_qspi_flash.c ****     if (NULL == pbuf
+ 865              		.loc 1 341 0
+ 866 0008 0546     		mov	r5, r0
+ 867 000a E8B1     		cbz	r0, .L73
+ 342:Hardware/Src/hal_qspi_flash.c ****         || len < 0
+ 868              		.loc 1 342 0
+ 869 000c 002C     		cmp	r4, #0
+ 870 000e 1BDB     		blt	.L73
+ 343:Hardware/Src/hal_qspi_flash.c ****         || location > QSPI_FLASH_TOTAL_SIZE
+ 871              		.loc 1 343 0
+ 872 0010 0F4B     		ldr	r3, .L74
+ 873 0012 9A42     		cmp	r2, r3
+ 874 0014 18D8     		bhi	.L73
+ 344:Hardware/Src/hal_qspi_flash.c ****         || len + location > QSPI_FLASH_TOTAL_SIZE)
+ 875              		.loc 1 344 0
+ 876 0016 A218     		adds	r2, r4, r2
+ 877              	.LVL85:
+ 878 0018 9A42     		cmp	r2, r3
+ 879 001a 15D8     		bhi	.L73
+ 345:Hardware/Src/hal_qspi_flash.c ****     {
+ 346:Hardware/Src/hal_qspi_flash.c ****         return -1;
+ 347:Hardware/Src/hal_qspi_flash.c ****     }
+ 348:Hardware/Src/hal_qspi_flash.c **** 
+ 349:Hardware/Src/hal_qspi_flash.c **** 		QSPI_Send_CMD(QSPI_FLASH_FastReadData, location, 8, QSPI_INSTRUCTION_1_LINE, QSPI_ADDRESS_1_LINE,
+ 880              		.loc 1 349 0
+ 881 001c 4FF40053 		mov	r3, #8192
+ 882 0020 4FF08072 		mov	r2, #16777216
+ 883 0024 CDE90132 		strd	r3, r2, [sp, #4]
+ 884 0028 4FF48063 		mov	r3, #1024
+ 885 002c 0093     		str	r3, [sp]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 38
+
+
+ 886 002e 0822     		movs	r2, #8
+ 887 0030 4FF48073 		mov	r3, #256
+ 888 0034 0B20     		movs	r0, #11
+ 889              	.LVL86:
+ 890 0036 FFF7FEFF 		bl	QSPI_Send_CMD
+ 891              	.LVL87:
+ 350:Hardware/Src/hal_qspi_flash.c ****     QSPI_Receive(buf, len);
+ 892              		.loc 1 350 0
+ 893 003a 2146     		mov	r1, r4
+ 894 003c 2846     		mov	r0, r5
+ 895 003e FFF7FEFF 		bl	QSPI_Receive
+ 896              	.LVL88:
+ 351:Hardware/Src/hal_qspi_flash.c **** 		
+ 352:Hardware/Src/hal_qspi_flash.c ****     return ret;
+ 897              		.loc 1 352 0
+ 898 0042 0020     		movs	r0, #0
+ 899              	.L68:
+ 353:Hardware/Src/hal_qspi_flash.c **** 		
+ 354:Hardware/Src/hal_qspi_flash.c **** }
+ 900              		.loc 1 354 0
+ 901 0044 05B0     		add	sp, sp, #20
+ 902              	.LCFI23:
+ 903              		.cfi_remember_state
+ 904              		.cfi_def_cfa_offset 12
+ 905              		@ sp needed
+ 906 0046 30BD     		pop	{r4, r5, pc}
+ 907              	.LVL89:
+ 908              	.L73:
+ 909              	.LCFI24:
+ 910              		.cfi_restore_state
+ 346:Hardware/Src/hal_qspi_flash.c ****     }
+ 911              		.loc 1 346 0
+ 912 0048 4FF0FF30 		mov	r0, #-1
+ 913              	.LVL90:
+ 914 004c FAE7     		b	.L68
+ 915              	.L75:
+ 916 004e 00BF     		.align	2
+ 917              	.L74:
+ 918 0050 FFFF7F00 		.word	8388607
+ 919              		.cfi_endproc
+ 920              	.LFE291:
+ 922              		.section	.text.hal_spi_flash_get_id,"ax",%progbits
+ 923              		.align	1
+ 924              		.global	hal_spi_flash_get_id
+ 925              		.syntax unified
+ 926              		.thumb
+ 927              		.thumb_func
+ 928              		.fpu fpv4-sp-d16
+ 930              	hal_spi_flash_get_id:
+ 931              	.LFB292:
+ 355:Hardware/Src/hal_qspi_flash.c **** 
+ 356:Hardware/Src/hal_qspi_flash.c **** int hal_spi_flash_get_id(void)
+ 357:Hardware/Src/hal_qspi_flash.c **** {
+ 932              		.loc 1 357 0
+ 933              		.cfi_startproc
+ 934              		@ args = 0, pretend = 0, frame = 8
+ 935              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 39
+
+
+ 936 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 937              	.LCFI25:
+ 938              		.cfi_def_cfa_offset 32
+ 939              		.cfi_offset 14, -4
+ 358:Hardware/Src/hal_qspi_flash.c **** 		
+ 359:Hardware/Src/hal_qspi_flash.c **** 		uint8_t temp[2];
+ 360:Hardware/Src/hal_qspi_flash.c ****     uint16_t deviceid;
+ 361:Hardware/Src/hal_qspi_flash.c ****     QSPI_Send_CMD(QSPI_FLASH_JedecDeviceID, 0, 0, QSPI_INSTRUCTION_1_LINE, QSPI_ADDRESS_1_LINE, QSP
+ 940              		.loc 1 361 0
+ 941 0002 4FF40053 		mov	r3, #8192
+ 942 0006 4FF08072 		mov	r2, #16777216
+ 943 000a CDE90132 		strd	r3, r2, [sp, #4]
+ 944 000e 0022     		movs	r2, #0
+ 945 0010 4FF48063 		mov	r3, #1024
+ 946 0014 1146     		mov	r1, r2
+ 947 0016 0093     		str	r3, [sp]
+ 948 0018 9F20     		movs	r0, #159
+ 949 001a 4FF48073 		mov	r3, #256
+ 950 001e FFF7FEFF 		bl	QSPI_Send_CMD
+ 951              	.LVL91:
+ 362:Hardware/Src/hal_qspi_flash.c ****     QSPI_Receive(temp, 2);
+ 952              		.loc 1 362 0
+ 953 0022 0221     		movs	r1, #2
+ 954 0024 05A8     		add	r0, sp, #20
+ 955 0026 FFF7FEFF 		bl	QSPI_Receive
+ 956              	.LVL92:
+ 363:Hardware/Src/hal_qspi_flash.c ****     deviceid = (temp[0] << 8) | temp[1];
+ 957              		.loc 1 363 0
+ 958 002a 9DF81400 		ldrb	r0, [sp, #20]	@ zero_extendqisi2
+ 959 002e 9DF81530 		ldrb	r3, [sp, #21]	@ zero_extendqisi2
+ 364:Hardware/Src/hal_qspi_flash.c ****     return deviceid;
+ 365:Hardware/Src/hal_qspi_flash.c **** }
+ 960              		.loc 1 365 0
+ 961 0032 43EA0020 		orr	r0, r3, r0, lsl #8
+ 962 0036 07B0     		add	sp, sp, #28
+ 963              	.LCFI26:
+ 964              		.cfi_def_cfa_offset 4
+ 965              		@ sp needed
+ 966 0038 5DF804FB 		ldr	pc, [sp], #4
+ 967              		.cfi_endproc
+ 968              	.LFE292:
+ 970              		.text
+ 971              	.Letext0:
+ 972              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 973              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 974              		.file 5 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 975              		.file 6 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_st
+ 976              		.file 7 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l431
+ 977              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 978              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 979              		.file 10 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-e
+ 980              		.file 11 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 981              		.file 12 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4x
+ 982              		.file 13 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 983              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 984              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_qspi.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s 			page 40
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 hal_qspi_flash.c
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:18     .text.QSPI_Send_CMD:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:25     .text.QSPI_Send_CMD:00000000 QSPI_Send_CMD
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:82     .text.QSPI_Send_CMD:00000034 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:87     .text.prv_spi_flash_write_enable:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:93     .text.prv_spi_flash_write_enable:00000000 prv_spi_flash_write_enable
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:122    .text.QSPI_Receive:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:129    .text.QSPI_Receive:00000000 QSPI_Receive
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:164    .text.QSPI_Receive:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:169    .text.prv_spi_flash_wait_write_end:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:175    .text.prv_spi_flash_wait_write_end:00000000 prv_spi_flash_wait_write_end
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:224    .text.QSPI_Transmit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:231    .text.QSPI_Transmit:00000000 QSPI_Transmit
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:266    .text.QSPI_Transmit:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:271    .text.prv_spi_flash_write_page.part.0:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:277    .text.prv_spi_flash_write_page.part.0:00000000 prv_spi_flash_write_page.part.0
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:335    .text.prv_spi_flash_erase_sector:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:342    .text.prv_spi_flash_erase_sector:00000000 prv_spi_flash_erase_sector
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:389    .text.hal_spi_flash_config:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:396    .text.hal_spi_flash_config:00000000 hal_spi_flash_config
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:443    .text.hal_spi_flash_config:00000030 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:449    .text.hal_spi_flash_erase:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:456    .text.hal_spi_flash_erase:00000000 hal_spi_flash_erase
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:523    .text.hal_spi_flash_erase:0000003c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:529    .text.hal_spi_flash_write:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:536    .text.hal_spi_flash_write:00000000 hal_spi_flash_write
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:781    .text.hal_spi_flash_write:000000e4 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:786    .text.hal_spi_flash_erase_write:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:793    .text.hal_spi_flash_erase_write:00000000 hal_spi_flash_erase_write
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:838    .text.hal_spi_flash_read:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:845    .text.hal_spi_flash_read:00000000 hal_spi_flash_read
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:918    .text.hal_spi_flash_read:00000050 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:923    .text.hal_spi_flash_get_id:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccHGZdZG.s:930    .text.hal_spi_flash_get_id:00000000 hal_spi_flash_get_id
+
+UNDEFINED SYMBOLS
+HAL_QSPI_Command
+hqspi
+HAL_QSPI_Receive
+HAL_QSPI_Transmit

@@ -1,0 +1,208 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQmThaa.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"dma.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MX_DMA_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	MX_DMA_Init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	MX_DMA_Init:
+  26              	.LFB287:
+  27              		.file 1 "Src/dma.c"
+   1:Src/dma.c     **** /**
+   2:Src/dma.c     ****   ******************************************************************************
+   3:Src/dma.c     ****   * @file    dma.c
+   4:Src/dma.c     ****   * @brief   This file provides code for the configuration
+   5:Src/dma.c     ****   *          of all the requested memory to memory DMA transfers.
+   6:Src/dma.c     ****   ******************************************************************************
+   7:Src/dma.c     ****   * @attention
+   8:Src/dma.c     ****   *
+   9:Src/dma.c     ****   * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  10:Src/dma.c     ****   * All rights reserved.</center></h2>
+  11:Src/dma.c     ****   *
+  12:Src/dma.c     ****   * This software component is licensed by ST under BSD 3-Clause license,
+  13:Src/dma.c     ****   * the "License"; You may not use this file except in compliance with the
+  14:Src/dma.c     ****   * License. You may obtain a copy of the License at:
+  15:Src/dma.c     ****   *                        opensource.org/licenses/BSD-3-Clause
+  16:Src/dma.c     ****   *
+  17:Src/dma.c     ****   ******************************************************************************
+  18:Src/dma.c     ****   */
+  19:Src/dma.c     **** 
+  20:Src/dma.c     **** /* Includes ------------------------------------------------------------------*/
+  21:Src/dma.c     **** #include "dma.h"
+  22:Src/dma.c     **** 
+  23:Src/dma.c     **** /* USER CODE BEGIN 0 */
+  24:Src/dma.c     **** 
+  25:Src/dma.c     **** /* USER CODE END 0 */
+  26:Src/dma.c     **** 
+  27:Src/dma.c     **** /*----------------------------------------------------------------------------*/
+  28:Src/dma.c     **** /* Configure DMA                                                              */
+  29:Src/dma.c     **** /*----------------------------------------------------------------------------*/
+  30:Src/dma.c     **** 
+  31:Src/dma.c     **** /* USER CODE BEGIN 1 */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQmThaa.s 			page 2
+
+
+  32:Src/dma.c     **** 
+  33:Src/dma.c     **** /* USER CODE END 1 */
+  34:Src/dma.c     **** 
+  35:Src/dma.c     **** /**
+  36:Src/dma.c     ****   * Enable DMA controller clock
+  37:Src/dma.c     ****   */
+  38:Src/dma.c     **** void MX_DMA_Init(void)
+  39:Src/dma.c     **** {
+  28              		.loc 1 39 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LBB2:
+  40:Src/dma.c     **** 
+  41:Src/dma.c     ****   /* DMA controller clock enable */
+  42:Src/dma.c     ****   __HAL_RCC_DMA1_CLK_ENABLE();
+  33              		.loc 1 42 0
+  34 0000 124B     		ldr	r3, .L2
+  35              	.LBE2:
+  39:Src/dma.c     **** 
+  36              		.loc 1 39 0
+  37 0002 07B5     		push	{r0, r1, r2, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 16
+  40              		.cfi_offset 14, -4
+  41              	.LBB3:
+  42              		.loc 1 42 0
+  43 0004 9A6C     		ldr	r2, [r3, #72]
+  44 0006 42F00102 		orr	r2, r2, #1
+  45 000a 9A64     		str	r2, [r3, #72]
+  46 000c 9B6C     		ldr	r3, [r3, #72]
+  47              	.LBE3:
+  43:Src/dma.c     **** 
+  44:Src/dma.c     ****   /* DMA interrupt init */
+  45:Src/dma.c     ****   /* DMA1_Channel1_IRQn interrupt configuration */
+  46:Src/dma.c     ****   HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 0, 0);
+  48              		.loc 1 46 0
+  49 000e 0022     		movs	r2, #0
+  50              	.LBB4:
+  42:Src/dma.c     **** 
+  51              		.loc 1 42 0
+  52 0010 03F00103 		and	r3, r3, #1
+  53              	.LBE4:
+  54              		.loc 1 46 0
+  55 0014 1146     		mov	r1, r2
+  56              	.LBB5:
+  42:Src/dma.c     **** 
+  57              		.loc 1 42 0
+  58 0016 0193     		str	r3, [sp, #4]
+  59              	.LBE5:
+  60              		.loc 1 46 0
+  61 0018 0B20     		movs	r0, #11
+  62              	.LBB6:
+  42:Src/dma.c     **** 
+  63              		.loc 1 42 0
+  64 001a 019B     		ldr	r3, [sp, #4]
+  65              	.LBE6:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQmThaa.s 			page 3
+
+
+  66              		.loc 1 46 0
+  67 001c FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  68              	.LVL0:
+  47:Src/dma.c     ****   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  69              		.loc 1 47 0
+  70 0020 0B20     		movs	r0, #11
+  71 0022 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  72              	.LVL1:
+  48:Src/dma.c     **** 	
+  49:Src/dma.c     **** 	/* DMA1_Channel4_IRQn interrupt configuration */
+  50:Src/dma.c     ****   HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 0, 0);
+  73              		.loc 1 50 0
+  74 0026 0022     		movs	r2, #0
+  75 0028 1146     		mov	r1, r2
+  76 002a 0E20     		movs	r0, #14
+  77 002c FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  78              	.LVL2:
+  51:Src/dma.c     ****   HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
+  79              		.loc 1 51 0
+  80 0030 0E20     		movs	r0, #14
+  81 0032 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  82              	.LVL3:
+  52:Src/dma.c     ****   /* DMA1_Channel5_IRQn interrupt configuration */
+  53:Src/dma.c     ****   HAL_NVIC_SetPriority(DMA1_Channel5_IRQn, 0, 0);
+  83              		.loc 1 53 0
+  84 0036 0022     		movs	r2, #0
+  85 0038 1146     		mov	r1, r2
+  86 003a 0F20     		movs	r0, #15
+  87 003c FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  88              	.LVL4:
+  54:Src/dma.c     ****   HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
+  89              		.loc 1 54 0
+  90 0040 0F20     		movs	r0, #15
+  55:Src/dma.c     **** 
+  56:Src/dma.c     **** }
+  91              		.loc 1 56 0
+  92 0042 03B0     		add	sp, sp, #12
+  93              	.LCFI1:
+  94              		.cfi_def_cfa_offset 4
+  95              		@ sp needed
+  96 0044 5DF804EB 		ldr	lr, [sp], #4
+  97              	.LCFI2:
+  98              		.cfi_restore 14
+  99              		.cfi_def_cfa_offset 0
+  54:Src/dma.c     ****   HAL_NVIC_EnableIRQ(DMA1_Channel5_IRQn);
+ 100              		.loc 1 54 0
+ 101 0048 FFF7FEBF 		b	HAL_NVIC_EnableIRQ
+ 102              	.LVL5:
+ 103              	.L3:
+ 104              		.align	2
+ 105              	.L2:
+ 106 004c 00100240 		.word	1073876992
+ 107              		.cfi_endproc
+ 108              	.LFE287:
+ 110              		.text
+ 111              	.Letext0:
+ 112              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQmThaa.s 			page 4
+
+
+ 113              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 114              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 115              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 116              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 117              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 118              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 119              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 120              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 121              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l43
+ 122              		.file 12 "../../iot_link/os/liteos/include/los_config.h"
+ 123              		.file 13 "../../iot_link/os/liteos/include/los_err.h"
+ 124              		.file 14 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 125              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_cortex.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQmThaa.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dma.c
+C:\Users\LuckyE\AppData\Local\Temp\ccQmThaa.s:18     .text.MX_DMA_Init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccQmThaa.s:25     .text.MX_DMA_Init:00000000 MX_DMA_Init
+C:\Users\LuckyE\AppData\Local\Temp\ccQmThaa.s:106    .text.MX_DMA_Init:0000004c $d
+
+UNDEFINED SYMBOLS
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ

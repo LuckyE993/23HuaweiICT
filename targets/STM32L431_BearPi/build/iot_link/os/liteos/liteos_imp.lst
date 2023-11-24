@@ -1,0 +1,1371 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"liteos_imp.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.liteos_reboot,"ax",%progbits
+  18              		.align	1
+  19              		.weak	liteos_reboot
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	liteos_reboot:
+  26              	.LFB309:
+  27              		.file 1 "../../iot_link/os/liteos/liteos_imp.c"
+   1:../../iot_link/os/liteos/liteos_imp.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/liteos_imp.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/liteos_imp.c ****  * All rights reserved.
+   4:../../iot_link/os/liteos/liteos_imp.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/liteos_imp.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/liteos_imp.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/liteos_imp.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/liteos_imp.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/liteos_imp.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/liteos_imp.c ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/liteos_imp.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/liteos_imp.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/liteos_imp.c ****  * permission.
+  14:../../iot_link/os/liteos/liteos_imp.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/liteos_imp.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/liteos_imp.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/liteos_imp.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/liteos_imp.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/liteos_imp.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/liteos_imp.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/liteos_imp.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/liteos_imp.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/liteos_imp.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/liteos_imp.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/liteos_imp.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/liteos_imp.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/liteos_imp.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/liteos_imp.c ****  * ===============================================
+  29:../../iot_link/os/liteos/liteos_imp.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/liteos_imp.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/liteos_imp.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 2
+
+
+  32:../../iot_link/os/liteos/liteos_imp.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/liteos_imp.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/liteos_imp.c **** /**
+  35:../../iot_link/os/liteos/liteos_imp.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/os/liteos/liteos_imp.c ****  *  2019-05-14 17:22  zhangqianfu  The first version
+  37:../../iot_link/os/liteos/liteos_imp.c ****  *
+  38:../../iot_link/os/liteos/liteos_imp.c ****  */
+  39:../../iot_link/os/liteos/liteos_imp.c **** 
+  40:../../iot_link/os/liteos/liteos_imp.c **** //include the file which implement the function
+  41:../../iot_link/os/liteos/liteos_imp.c **** #include  <string.h>
+  42:../../iot_link/os/liteos/liteos_imp.c **** #include  <osal_imp.h>
+  43:../../iot_link/os/liteos/liteos_imp.c **** 
+  44:../../iot_link/os/liteos/liteos_imp.c **** ///< this is implement for the task
+  45:../../iot_link/os/liteos/liteos_imp.c **** #include <los_task.ph>
+  46:../../iot_link/os/liteos/liteos_imp.c **** #include <los_queue.h>
+  47:../../iot_link/os/liteos/liteos_imp.c **** static void __task_sleep(int ms)
+  48:../../iot_link/os/liteos/liteos_imp.c **** {
+  49:../../iot_link/os/liteos/liteos_imp.c ****     (void)LOS_TaskDelay(ms);//which tick is ms
+  50:../../iot_link/os/liteos/liteos_imp.c ****     return;
+  51:../../iot_link/os/liteos/liteos_imp.c **** }
+  52:../../iot_link/os/liteos/liteos_imp.c **** 
+  53:../../iot_link/os/liteos/liteos_imp.c **** static void *__task_create(const char *name,int (*task_entry)(void *args),\
+  54:../../iot_link/os/liteos/liteos_imp.c ****         void *args,int stack_size,void *stack,int prior)
+  55:../../iot_link/os/liteos/liteos_imp.c **** {
+  56:../../iot_link/os/liteos/liteos_imp.c ****     void *ret = NULL;
+  57:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 uwRet = LOS_OK;
+  58:../../iot_link/os/liteos/liteos_imp.c ****     UINT32  handle;
+  59:../../iot_link/os/liteos/liteos_imp.c ****     TSK_INIT_PARAM_S task_init_param;
+  60:../../iot_link/os/liteos/liteos_imp.c **** 
+  61:../../iot_link/os/liteos/liteos_imp.c ****     memset (&task_init_param, 0, sizeof (TSK_INIT_PARAM_S));
+  62:../../iot_link/os/liteos/liteos_imp.c **** 
+  63:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.uwArg = (unsigned int)(uintptr_t)args;
+  64:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.usTaskPrio = (unsigned short)prior;
+  65:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.pcName =(char *) name;
+  66:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.pfnTaskEntry = (TSK_ENTRY_FUNC)task_entry;
+  67:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.uwStackSize = stack_size;
+  68:../../iot_link/os/liteos/liteos_imp.c ****     uwRet = LOS_TaskCreate(&handle, &task_init_param);
+  69:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK != uwRet){
+  70:../../iot_link/os/liteos/liteos_imp.c ****         return ret;
+  71:../../iot_link/os/liteos/liteos_imp.c ****     }
+  72:../../iot_link/os/liteos/liteos_imp.c ****     ret = (void *)(uintptr_t)handle;
+  73:../../iot_link/os/liteos/liteos_imp.c ****     return ret;
+  74:../../iot_link/os/liteos/liteos_imp.c **** }
+  75:../../iot_link/os/liteos/liteos_imp.c **** 
+  76:../../iot_link/os/liteos/liteos_imp.c **** static int __task_kill(void *task)
+  77:../../iot_link/os/liteos/liteos_imp.c **** {
+  78:../../iot_link/os/liteos/liteos_imp.c ****     int ret = -1;
+  79:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 handle;
+  80:../../iot_link/os/liteos/liteos_imp.c ****     if(NULL != task)
+  81:../../iot_link/os/liteos/liteos_imp.c ****     {
+  82:../../iot_link/os/liteos/liteos_imp.c ****         handle = (UINT32) (uintptr_t)task;
+  83:../../iot_link/os/liteos/liteos_imp.c ****         if(LOS_OK == LOS_TaskDelete(handle))
+  84:../../iot_link/os/liteos/liteos_imp.c ****         {
+  85:../../iot_link/os/liteos/liteos_imp.c ****             ret = 0;
+  86:../../iot_link/os/liteos/liteos_imp.c ****         }
+  87:../../iot_link/os/liteos/liteos_imp.c ****     }
+  88:../../iot_link/os/liteos/liteos_imp.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 3
+
+
+  89:../../iot_link/os/liteos/liteos_imp.c ****     return ret;
+  90:../../iot_link/os/liteos/liteos_imp.c **** }
+  91:../../iot_link/os/liteos/liteos_imp.c **** 
+  92:../../iot_link/os/liteos/liteos_imp.c **** static void __task_exit()
+  93:../../iot_link/os/liteos/liteos_imp.c **** {
+  94:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 handle;
+  95:../../iot_link/os/liteos/liteos_imp.c ****     handle = LOS_CurTaskIDGet();
+  96:../../iot_link/os/liteos/liteos_imp.c **** 
+  97:../../iot_link/os/liteos/liteos_imp.c ****     (void) LOS_TaskDelete(handle);
+  98:../../iot_link/os/liteos/liteos_imp.c **** 
+  99:../../iot_link/os/liteos/liteos_imp.c ****     return;
+ 100:../../iot_link/os/liteos/liteos_imp.c **** }
+ 101:../../iot_link/os/liteos/liteos_imp.c **** 
+ 102:../../iot_link/os/liteos/liteos_imp.c **** ///< this is implement for the mutex
+ 103:../../iot_link/os/liteos/liteos_imp.c **** #include <los_mux.h>
+ 104:../../iot_link/os/liteos/liteos_imp.c **** //creat a mutex for the os
+ 105:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __mutex_create(osal_mutex_t *mutex)
+ 106:../../iot_link/os/liteos/liteos_imp.c **** {
+ 107:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_MuxCreate((UINT32 *)mutex))
+ 108:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 109:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 110:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 111:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 112:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 113:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 114:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 115:../../iot_link/os/liteos/liteos_imp.c **** }
+ 116:../../iot_link/os/liteos/liteos_imp.c **** //lock the mutex
+ 117:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __mutex_lock(osal_mutex_t mutex)
+ 118:../../iot_link/os/liteos/liteos_imp.c **** {
+ 119:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_MuxPend((UINT32)(uintptr_t)mutex,LOS_WAIT_FOREVER))
+ 120:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 121:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 122:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 123:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 124:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 125:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 126:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 127:../../iot_link/os/liteos/liteos_imp.c **** }
+ 128:../../iot_link/os/liteos/liteos_imp.c **** 
+ 129:../../iot_link/os/liteos/liteos_imp.c **** //unlock the mutex
+ 130:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __mutex_unlock(osal_mutex_t mutex)
+ 131:../../iot_link/os/liteos/liteos_imp.c **** {
+ 132:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_MuxPost((UINT32)(uintptr_t)mutex))
+ 133:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 134:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 135:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 136:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 137:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 138:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 139:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 140:../../iot_link/os/liteos/liteos_imp.c **** }
+ 141:../../iot_link/os/liteos/liteos_imp.c **** //delete the mutex
+ 142:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __mutex_del(osal_mutex_t mutex)
+ 143:../../iot_link/os/liteos/liteos_imp.c **** {
+ 144:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_MuxDelete((UINT32)(uintptr_t)mutex))
+ 145:../../iot_link/os/liteos/liteos_imp.c ****     {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 4
+
+
+ 146:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 147:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 148:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 149:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 150:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 151:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 152:../../iot_link/os/liteos/liteos_imp.c **** }
+ 153:../../iot_link/os/liteos/liteos_imp.c **** 
+ 154:../../iot_link/os/liteos/liteos_imp.c **** 
+ 155:../../iot_link/os/liteos/liteos_imp.c **** ///< this is implement for the semp
+ 156:../../iot_link/os/liteos/liteos_imp.c **** #include <los_sem.h>
+ 157:../../iot_link/os/liteos/liteos_imp.c **** 
+ 158:../../iot_link/os/liteos/liteos_imp.c **** 
+ 159:../../iot_link/os/liteos/liteos_imp.c **** //semp of the os
+ 160:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __semp_create(osal_semp_t *semp,int limit,int initvalue)
+ 161:../../iot_link/os/liteos/liteos_imp.c **** {
+ 162:../../iot_link/os/liteos/liteos_imp.c ****     extern UINT32 osSemCreate (UINT16 usCount, UINT16 usMaxCount, UINT32 *puwSemHandle);
+ 163:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == osSemCreate(initvalue,limit,(UINT32 *)semp))
+ 164:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 165:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 166:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 167:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 168:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 169:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 170:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 171:../../iot_link/os/liteos/liteos_imp.c **** }
+ 172:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __semp_pend(osal_semp_t semp,unsigned int timeout)
+ 173:../../iot_link/os/liteos/liteos_imp.c **** {
+ 174:../../iot_link/os/liteos/liteos_imp.c ****     if(timeout == cn_osal_timeout_forever)
+ 175:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 176:../../iot_link/os/liteos/liteos_imp.c ****         timeout = LOS_WAIT_FOREVER;
+ 177:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 178:../../iot_link/os/liteos/liteos_imp.c **** 
+ 179:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_SemPend((unsigned int)(UINT32)(uintptr_t)semp,(UINT32)timeout))
+ 180:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 181:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 182:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 183:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 184:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 185:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 186:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 187:../../iot_link/os/liteos/liteos_imp.c **** }
+ 188:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __semp_post(osal_semp_t semp)
+ 189:../../iot_link/os/liteos/liteos_imp.c **** {
+ 190:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_SemPost((UINT32)(uintptr_t)semp))
+ 191:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 192:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 193:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 194:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 195:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 196:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 197:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 198:../../iot_link/os/liteos/liteos_imp.c **** }
+ 199:../../iot_link/os/liteos/liteos_imp.c **** 
+ 200:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __semp_del(osal_semp_t semp)
+ 201:../../iot_link/os/liteos/liteos_imp.c **** {
+ 202:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_SemDelete((UINT32)(uintptr_t)semp))
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 5
+
+
+ 203:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 204:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 205:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 206:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 207:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 208:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 209:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 210:../../iot_link/os/liteos/liteos_imp.c **** }
+ 211:../../iot_link/os/liteos/liteos_imp.c **** 
+ 212:../../iot_link/os/liteos/liteos_imp.c **** 
+ 213:../../iot_link/os/liteos/liteos_imp.c **** #include "los_queue.h"
+ 214:../../iot_link/os/liteos/liteos_imp.c **** 
+ 215:../../iot_link/os/liteos/liteos_imp.c **** static bool_t __queue_create(osal_queue_t *queue,int len,int msgsize)
+ 216:../../iot_link/os/liteos/liteos_imp.c **** {
+ 217:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_QueueCreate("osal_queue",len,(UINT32 *)queue,0,msgsize)==LOS_OK)
+ 218:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 219:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 220:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 221:../../iot_link/os/liteos/liteos_imp.c **** }
+ 222:../../iot_link/os/liteos/liteos_imp.c **** 
+ 223:../../iot_link/os/liteos/liteos_imp.c **** static bool_t __queue_send(osal_queue_t queue, void *pbuf, unsigned int bufsize, unsigned int timeo
+ 224:../../iot_link/os/liteos/liteos_imp.c **** {
+ 225:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 ret = LOS_OK;
+ 226:../../iot_link/os/liteos/liteos_imp.c **** 
+ 227:../../iot_link/os/liteos/liteos_imp.c ****     if(timeout == cn_osal_timeout_forever)
+ 228:../../iot_link/os/liteos/liteos_imp.c ****         timeout = LOS_WAIT_FOREVER;
+ 229:../../iot_link/os/liteos/liteos_imp.c **** 
+ 230:../../iot_link/os/liteos/liteos_imp.c ****     ret=LOS_QueueWriteCopy((UINT32)queue, pbuf, bufsize, timeout);
+ 231:../../iot_link/os/liteos/liteos_imp.c **** 
+ 232:../../iot_link/os/liteos/liteos_imp.c ****     if(ret==LOS_OK)
+ 233:../../iot_link/os/liteos/liteos_imp.c ****         return  true;
+ 234:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 235:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 236:../../iot_link/os/liteos/liteos_imp.c **** }
+ 237:../../iot_link/os/liteos/liteos_imp.c **** 
+ 238:../../iot_link/os/liteos/liteos_imp.c **** 
+ 239:../../iot_link/os/liteos/liteos_imp.c **** static bool_t __queue_recv(osal_queue_t queue, void *pbuf, unsigned int *bufsize, unsigned int time
+ 240:../../iot_link/os/liteos/liteos_imp.c **** {
+ 241:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 ret = LOS_OK;
+ 242:../../iot_link/os/liteos/liteos_imp.c **** 
+ 243:../../iot_link/os/liteos/liteos_imp.c ****     ret = LOS_QueueReadCopy((UINT32)queue, pbuf, bufsize, timeout);
+ 244:../../iot_link/os/liteos/liteos_imp.c ****     if(ret==LOS_OK){
+ 245:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 246:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 247:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 248:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 249:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 250:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 251:../../iot_link/os/liteos/liteos_imp.c **** }
+ 252:../../iot_link/os/liteos/liteos_imp.c **** 
+ 253:../../iot_link/os/liteos/liteos_imp.c **** static bool_t __queue_del(osal_queue_t queue)
+ 254:../../iot_link/os/liteos/liteos_imp.c **** {
+ 255:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_QueueDelete((int)queue)==LOS_OK)
+ 256:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 257:../../iot_link/os/liteos/liteos_imp.c ****     else
+ 258:../../iot_link/os/liteos/liteos_imp.c ****         return false;
+ 259:../../iot_link/os/liteos/liteos_imp.c **** }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 6
+
+
+ 260:../../iot_link/os/liteos/liteos_imp.c **** 
+ 261:../../iot_link/os/liteos/liteos_imp.c **** 
+ 262:../../iot_link/os/liteos/liteos_imp.c **** ///< this implement for the memory management
+ 263:../../iot_link/os/liteos/liteos_imp.c **** #include <los_memory.h>
+ 264:../../iot_link/os/liteos/liteos_imp.c **** 
+ 265:../../iot_link/os/liteos/liteos_imp.c **** 
+ 266:../../iot_link/os/liteos/liteos_imp.c **** static void *__mem_malloc(int size)
+ 267:../../iot_link/os/liteos/liteos_imp.c **** {
+ 268:../../iot_link/os/liteos/liteos_imp.c ****     void *ret = NULL;
+ 269:../../iot_link/os/liteos/liteos_imp.c **** 
+ 270:../../iot_link/os/liteos/liteos_imp.c ****     if(size > 0)
+ 271:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 272:../../iot_link/os/liteos/liteos_imp.c ****         ret = LOS_MemAlloc(m_aucSysMem0,size);
+ 273:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 274:../../iot_link/os/liteos/liteos_imp.c **** 
+ 275:../../iot_link/os/liteos/liteos_imp.c ****     return ret;
+ 276:../../iot_link/os/liteos/liteos_imp.c **** }
+ 277:../../iot_link/os/liteos/liteos_imp.c **** 
+ 278:../../iot_link/os/liteos/liteos_imp.c **** static void __mem_free(void *addr)
+ 279:../../iot_link/os/liteos/liteos_imp.c **** {
+ 280:../../iot_link/os/liteos/liteos_imp.c ****     (void) LOS_MemFree(m_aucSysMem0,addr);
+ 281:../../iot_link/os/liteos/liteos_imp.c **** }
+ 282:../../iot_link/os/liteos/liteos_imp.c **** 
+ 283:../../iot_link/os/liteos/liteos_imp.c **** void *los_mem_realloc(void *old, int newlen)
+ 284:../../iot_link/os/liteos/liteos_imp.c **** {
+ 285:../../iot_link/os/liteos/liteos_imp.c **** 
+ 286:../../iot_link/os/liteos/liteos_imp.c ****     return LOS_MemRealloc(m_aucSysMem0, old, newlen);
+ 287:../../iot_link/os/liteos/liteos_imp.c **** }
+ 288:../../iot_link/os/liteos/liteos_imp.c **** 
+ 289:../../iot_link/os/liteos/liteos_imp.c **** 
+ 290:../../iot_link/os/liteos/liteos_imp.c **** ///< sys time
+ 291:../../iot_link/os/liteos/liteos_imp.c **** #include <los_sys.ph>
+ 292:../../iot_link/os/liteos/liteos_imp.c **** 
+ 293:../../iot_link/os/liteos/liteos_imp.c **** extern UINT64 osKernelGetTickCount (void);
+ 294:../../iot_link/os/liteos/liteos_imp.c **** static unsigned long long __get_sys_time()
+ 295:../../iot_link/os/liteos/liteos_imp.c **** {
+ 296:../../iot_link/os/liteos/liteos_imp.c ****     return osKernelGetTickCount() * (OS_SYS_MS_PER_SECOND / LOSCFG_BASE_CORE_TICK_PER_SECOND);
+ 297:../../iot_link/os/liteos/liteos_imp.c **** }
+ 298:../../iot_link/os/liteos/liteos_imp.c **** 
+ 299:../../iot_link/os/liteos/liteos_imp.c **** __attribute__((weak)) int liteos_reboot()
+ 300:../../iot_link/os/liteos/liteos_imp.c **** {
+  28              		.loc 1 300 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+ 301:../../iot_link/os/liteos/liteos_imp.c ****     ///< waiting for the dog if not impelment. you could implement it your self
+ 302:../../iot_link/os/liteos/liteos_imp.c ****     return 0;
+ 303:../../iot_link/os/liteos/liteos_imp.c **** }
+  33              		.loc 1 303 0
+  34 0000 0020     		movs	r0, #0
+  35 0002 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE309:
+  39              		.section	.text.__int_connect,"ax",%progbits
+  40              		.align	1
+  41              		.syntax unified
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 7
+
+
+  42              		.thumb
+  43              		.thumb_func
+  44              		.fpu fpv4-sp-d16
+  46              	__int_connect:
+  47              	.LFB310:
+ 304:../../iot_link/os/liteos/liteos_imp.c **** 
+ 305:../../iot_link/os/liteos/liteos_imp.c **** 
+ 306:../../iot_link/os/liteos/liteos_imp.c **** //interrupt
+ 307:../../iot_link/os/liteos/liteos_imp.c **** //#include <los_hwi.h>
+ 308:../../iot_link/os/liteos/liteos_imp.c **** static int __int_connect(int intnum, int prio, int mode, fn_interrupt_handle callback, void* arg)
+ 309:../../iot_link/os/liteos/liteos_imp.c **** {
+  48              		.loc 1 309 0
+  49              		.cfi_startproc
+  50              		@ args = 4, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		@ link register save eliminated.
+  53              	.LVL0:
+ 310:../../iot_link/os/liteos/liteos_imp.c **** 	extern UINT32 LOS_HwiCreate(HWI_HANDLE_T  uwHwiNum, \
+ 311:../../iot_link/os/liteos/liteos_imp.c **** 	                            HWI_PRIOR_T   usHwiPrio, \
+ 312:../../iot_link/os/liteos/liteos_imp.c **** 	                            HWI_MODE_T    usMode, \
+ 313:../../iot_link/os/liteos/liteos_imp.c **** 	                            HWI_PROC_FUNC pfnHandler, \
+ 314:../../iot_link/os/liteos/liteos_imp.c **** 	                            HWI_ARG_T     uwArg \
+ 315:../../iot_link/os/liteos/liteos_imp.c **** 	                            );
+ 316:../../iot_link/os/liteos/liteos_imp.c **** 	return LOS_HwiCreate((HWI_HANDLE_T)intnum, (HWI_PRIOR_T)prio,(HWI_MODE_T) mode, (HWI_PROC_FUNC)cal
+  54              		.loc 1 316 0
+  55 0000 92B2     		uxth	r2, r2
+  56              	.LVL1:
+  57 0002 89B2     		uxth	r1, r1
+  58              	.LVL2:
+  59 0004 FFF7FEBF 		b	LOS_HwiCreate
+  60              	.LVL3:
+  61              		.cfi_endproc
+  62              	.LFE310:
+  64              		.section	.text.__get_sys_time,"ax",%progbits
+  65              		.align	1
+  66              		.syntax unified
+  67              		.thumb
+  68              		.thumb_func
+  69              		.fpu fpv4-sp-d16
+  71              	__get_sys_time:
+  72              	.LFB308:
+ 295:../../iot_link/os/liteos/liteos_imp.c ****     return osKernelGetTickCount() * (OS_SYS_MS_PER_SECOND / LOSCFG_BASE_CORE_TICK_PER_SECOND);
+  73              		.loc 1 295 0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77              		@ link register save eliminated.
+ 296:../../iot_link/os/liteos/liteos_imp.c **** }
+  78              		.loc 1 296 0
+  79 0000 FFF7FEBF 		b	osKernelGetTickCount
+  80              	.LVL4:
+  81              		.cfi_endproc
+  82              	.LFE308:
+  84              		.section	.text.__mem_free,"ax",%progbits
+  85              		.align	1
+  86              		.syntax unified
+  87              		.thumb
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 8
+
+
+  88              		.thumb_func
+  89              		.fpu fpv4-sp-d16
+  91              	__mem_free:
+  92              	.LFB304:
+ 279:../../iot_link/os/liteos/liteos_imp.c ****     (void) LOS_MemFree(m_aucSysMem0,addr);
+  93              		.loc 1 279 0
+  94              		.cfi_startproc
+  95              		@ args = 0, pretend = 0, frame = 0
+  96              		@ frame_needed = 0, uses_anonymous_args = 0
+  97              		@ link register save eliminated.
+  98              	.LVL5:
+ 280:../../iot_link/os/liteos/liteos_imp.c **** }
+  99              		.loc 1 280 0
+ 100 0000 024B     		ldr	r3, .L5
+ 101 0002 0146     		mov	r1, r0
+ 102 0004 1868     		ldr	r0, [r3]
+ 103              	.LVL6:
+ 104 0006 FFF7FEBF 		b	LOS_MemFree
+ 105              	.LVL7:
+ 106              	.L6:
+ 107 000a 00BF     		.align	2
+ 108              	.L5:
+ 109 000c 00000000 		.word	m_aucSysMem0
+ 110              		.cfi_endproc
+ 111              	.LFE304:
+ 113              		.section	.text.__mem_malloc,"ax",%progbits
+ 114              		.align	1
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.fpu fpv4-sp-d16
+ 120              	__mem_malloc:
+ 121              	.LFB303:
+ 267:../../iot_link/os/liteos/liteos_imp.c ****     void *ret = NULL;
+ 122              		.loc 1 267 0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 0
+ 125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126              		@ link register save eliminated.
+ 127              	.LVL8:
+ 270:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 128              		.loc 1 270 0
+ 129 0000 011E     		subs	r1, r0, #0
+ 130 0002 03DD     		ble	.L8
+ 272:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 131              		.loc 1 272 0
+ 132 0004 024B     		ldr	r3, .L9
+ 133 0006 1868     		ldr	r0, [r3]
+ 134              	.LVL9:
+ 135 0008 FFF7FEBF 		b	LOS_MemAlloc
+ 136              	.LVL10:
+ 137              	.L8:
+ 276:../../iot_link/os/liteos/liteos_imp.c **** 
+ 138              		.loc 1 276 0
+ 139 000c 0020     		movs	r0, #0
+ 140              	.LVL11:
+ 141 000e 7047     		bx	lr
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 9
+
+
+ 142              	.L10:
+ 143              		.align	2
+ 144              	.L9:
+ 145 0010 00000000 		.word	m_aucSysMem0
+ 146              		.cfi_endproc
+ 147              	.LFE303:
+ 149              		.section	.text.__queue_del,"ax",%progbits
+ 150              		.align	1
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 154              		.fpu fpv4-sp-d16
+ 156              	__queue_del:
+ 157              	.LFB302:
+ 254:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_QueueDelete((int)queue)==LOS_OK)
+ 158              		.loc 1 254 0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              	.LVL12:
+ 163 0000 08B5     		push	{r3, lr}
+ 164              	.LCFI0:
+ 165              		.cfi_def_cfa_offset 8
+ 166              		.cfi_offset 3, -8
+ 167              		.cfi_offset 14, -4
+ 255:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 168              		.loc 1 255 0
+ 169 0002 FFF7FEFF 		bl	LOS_QueueDelete
+ 170              	.LVL13:
+ 259:../../iot_link/os/liteos/liteos_imp.c **** 
+ 171              		.loc 1 259 0
+ 172 0006 B0FA80F0 		clz	r0, r0
+ 173 000a 4009     		lsrs	r0, r0, #5
+ 174 000c 08BD     		pop	{r3, pc}
+ 175              		.cfi_endproc
+ 176              	.LFE302:
+ 178              		.section	.text.__queue_recv,"ax",%progbits
+ 179              		.align	1
+ 180              		.syntax unified
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.fpu fpv4-sp-d16
+ 185              	__queue_recv:
+ 186              	.LFB301:
+ 240:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 ret = LOS_OK;
+ 187              		.loc 1 240 0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 191              	.LVL14:
+ 192 0000 08B5     		push	{r3, lr}
+ 193              	.LCFI1:
+ 194              		.cfi_def_cfa_offset 8
+ 195              		.cfi_offset 3, -8
+ 196              		.cfi_offset 14, -4
+ 243:../../iot_link/os/liteos/liteos_imp.c ****     if(ret==LOS_OK){
+ 197              		.loc 1 243 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 10
+
+
+ 198 0002 FFF7FEFF 		bl	LOS_QueueReadCopy
+ 199              	.LVL15:
+ 251:../../iot_link/os/liteos/liteos_imp.c **** 
+ 200              		.loc 1 251 0
+ 201 0006 B0FA80F0 		clz	r0, r0
+ 202              	.LVL16:
+ 203 000a 4009     		lsrs	r0, r0, #5
+ 204 000c 08BD     		pop	{r3, pc}
+ 205              		.cfi_endproc
+ 206              	.LFE301:
+ 208              		.section	.text.__queue_send,"ax",%progbits
+ 209              		.align	1
+ 210              		.syntax unified
+ 211              		.thumb
+ 212              		.thumb_func
+ 213              		.fpu fpv4-sp-d16
+ 215              	__queue_send:
+ 216              	.LFB300:
+ 224:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 ret = LOS_OK;
+ 217              		.loc 1 224 0
+ 218              		.cfi_startproc
+ 219              		@ args = 0, pretend = 0, frame = 0
+ 220              		@ frame_needed = 0, uses_anonymous_args = 0
+ 221              	.LVL17:
+ 222 0000 08B5     		push	{r3, lr}
+ 223              	.LCFI2:
+ 224              		.cfi_def_cfa_offset 8
+ 225              		.cfi_offset 3, -8
+ 226              		.cfi_offset 14, -4
+ 230:../../iot_link/os/liteos/liteos_imp.c **** 
+ 227              		.loc 1 230 0
+ 228 0002 FFF7FEFF 		bl	LOS_QueueWriteCopy
+ 229              	.LVL18:
+ 236:../../iot_link/os/liteos/liteos_imp.c **** 
+ 230              		.loc 1 236 0
+ 231 0006 B0FA80F0 		clz	r0, r0
+ 232              	.LVL19:
+ 233 000a 4009     		lsrs	r0, r0, #5
+ 234 000c 08BD     		pop	{r3, pc}
+ 235              		.cfi_endproc
+ 236              	.LFE300:
+ 238              		.section	.text.__queue_create,"ax",%progbits
+ 239              		.align	1
+ 240              		.syntax unified
+ 241              		.thumb
+ 242              		.thumb_func
+ 243              		.fpu fpv4-sp-d16
+ 245              	__queue_create:
+ 246              	.LFB299:
+ 216:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_QueueCreate("osal_queue",len,(UINT32 *)queue,0,msgsize)==LOS_OK)
+ 247              		.loc 1 216 0
+ 248              		.cfi_startproc
+ 249              		@ args = 0, pretend = 0, frame = 0
+ 250              		@ frame_needed = 0, uses_anonymous_args = 0
+ 251              	.LVL20:
+ 252 0000 07B5     		push	{r0, r1, r2, lr}
+ 253              	.LCFI3:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 11
+
+
+ 254              		.cfi_def_cfa_offset 16
+ 255              		.cfi_offset 14, -4
+ 217:../../iot_link/os/liteos/liteos_imp.c ****         return true;
+ 256              		.loc 1 217 0
+ 257 0002 92B2     		uxth	r2, r2
+ 258              	.LVL21:
+ 259 0004 0092     		str	r2, [sp]
+ 260 0006 0023     		movs	r3, #0
+ 261 0008 0246     		mov	r2, r0
+ 262 000a 89B2     		uxth	r1, r1
+ 263              	.LVL22:
+ 264 000c 0448     		ldr	r0, .L15
+ 265              	.LVL23:
+ 266 000e FFF7FEFF 		bl	LOS_QueueCreate
+ 267              	.LVL24:
+ 221:../../iot_link/os/liteos/liteos_imp.c **** 
+ 268              		.loc 1 221 0
+ 269 0012 B0FA80F0 		clz	r0, r0
+ 270 0016 4009     		lsrs	r0, r0, #5
+ 271 0018 03B0     		add	sp, sp, #12
+ 272              	.LCFI4:
+ 273              		.cfi_def_cfa_offset 4
+ 274              		@ sp needed
+ 275 001a 5DF804FB 		ldr	pc, [sp], #4
+ 276              	.L16:
+ 277 001e 00BF     		.align	2
+ 278              	.L15:
+ 279 0020 00000000 		.word	.LC0
+ 280              		.cfi_endproc
+ 281              	.LFE299:
+ 283              		.section	.text.__semp_del,"ax",%progbits
+ 284              		.align	1
+ 285              		.syntax unified
+ 286              		.thumb
+ 287              		.thumb_func
+ 288              		.fpu fpv4-sp-d16
+ 290              	__semp_del:
+ 291              	.LFB298:
+ 201:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_SemDelete((UINT32)(uintptr_t)semp))
+ 292              		.loc 1 201 0
+ 293              		.cfi_startproc
+ 294              		@ args = 0, pretend = 0, frame = 0
+ 295              		@ frame_needed = 0, uses_anonymous_args = 0
+ 296              	.LVL25:
+ 297 0000 08B5     		push	{r3, lr}
+ 298              	.LCFI5:
+ 299              		.cfi_def_cfa_offset 8
+ 300              		.cfi_offset 3, -8
+ 301              		.cfi_offset 14, -4
+ 202:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 302              		.loc 1 202 0
+ 303 0002 FFF7FEFF 		bl	LOS_SemDelete
+ 304              	.LVL26:
+ 210:../../iot_link/os/liteos/liteos_imp.c **** 
+ 305              		.loc 1 210 0
+ 306 0006 B0FA80F0 		clz	r0, r0
+ 307 000a 4009     		lsrs	r0, r0, #5
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 12
+
+
+ 308 000c 08BD     		pop	{r3, pc}
+ 309              		.cfi_endproc
+ 310              	.LFE298:
+ 312              		.section	.text.__semp_post,"ax",%progbits
+ 313              		.align	1
+ 314              		.syntax unified
+ 315              		.thumb
+ 316              		.thumb_func
+ 317              		.fpu fpv4-sp-d16
+ 319              	__semp_post:
+ 320              	.LFB297:
+ 189:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_SemPost((UINT32)(uintptr_t)semp))
+ 321              		.loc 1 189 0
+ 322              		.cfi_startproc
+ 323              		@ args = 0, pretend = 0, frame = 0
+ 324              		@ frame_needed = 0, uses_anonymous_args = 0
+ 325              	.LVL27:
+ 326 0000 08B5     		push	{r3, lr}
+ 327              	.LCFI6:
+ 328              		.cfi_def_cfa_offset 8
+ 329              		.cfi_offset 3, -8
+ 330              		.cfi_offset 14, -4
+ 190:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 331              		.loc 1 190 0
+ 332 0002 FFF7FEFF 		bl	LOS_SemPost
+ 333              	.LVL28:
+ 198:../../iot_link/os/liteos/liteos_imp.c **** 
+ 334              		.loc 1 198 0
+ 335 0006 B0FA80F0 		clz	r0, r0
+ 336 000a 4009     		lsrs	r0, r0, #5
+ 337 000c 08BD     		pop	{r3, pc}
+ 338              		.cfi_endproc
+ 339              	.LFE297:
+ 341              		.section	.text.__semp_pend,"ax",%progbits
+ 342              		.align	1
+ 343              		.syntax unified
+ 344              		.thumb
+ 345              		.thumb_func
+ 346              		.fpu fpv4-sp-d16
+ 348              	__semp_pend:
+ 349              	.LFB296:
+ 173:../../iot_link/os/liteos/liteos_imp.c ****     if(timeout == cn_osal_timeout_forever)
+ 350              		.loc 1 173 0
+ 351              		.cfi_startproc
+ 352              		@ args = 0, pretend = 0, frame = 0
+ 353              		@ frame_needed = 0, uses_anonymous_args = 0
+ 354              	.LVL29:
+ 355 0000 08B5     		push	{r3, lr}
+ 356              	.LCFI7:
+ 357              		.cfi_def_cfa_offset 8
+ 358              		.cfi_offset 3, -8
+ 359              		.cfi_offset 14, -4
+ 179:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 360              		.loc 1 179 0
+ 361 0002 FFF7FEFF 		bl	LOS_SemPend
+ 362              	.LVL30:
+ 187:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __semp_post(osal_semp_t semp)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 13
+
+
+ 363              		.loc 1 187 0
+ 364 0006 B0FA80F0 		clz	r0, r0
+ 365 000a 4009     		lsrs	r0, r0, #5
+ 366 000c 08BD     		pop	{r3, pc}
+ 367              		.cfi_endproc
+ 368              	.LFE296:
+ 370              		.section	.text.__semp_create,"ax",%progbits
+ 371              		.align	1
+ 372              		.syntax unified
+ 373              		.thumb
+ 374              		.thumb_func
+ 375              		.fpu fpv4-sp-d16
+ 377              	__semp_create:
+ 378              	.LFB295:
+ 161:../../iot_link/os/liteos/liteos_imp.c ****     extern UINT32 osSemCreate (UINT16 usCount, UINT16 usMaxCount, UINT32 *puwSemHandle);
+ 379              		.loc 1 161 0
+ 380              		.cfi_startproc
+ 381              		@ args = 0, pretend = 0, frame = 0
+ 382              		@ frame_needed = 0, uses_anonymous_args = 0
+ 383              	.LVL31:
+ 384 0000 08B5     		push	{r3, lr}
+ 385              	.LCFI8:
+ 386              		.cfi_def_cfa_offset 8
+ 387              		.cfi_offset 3, -8
+ 388              		.cfi_offset 14, -4
+ 163:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 389              		.loc 1 163 0
+ 390 0002 93B2     		uxth	r3, r2
+ 391 0004 89B2     		uxth	r1, r1
+ 392              	.LVL32:
+ 393 0006 0246     		mov	r2, r0
+ 394              	.LVL33:
+ 395 0008 1846     		mov	r0, r3
+ 396              	.LVL34:
+ 397 000a FFF7FEFF 		bl	osSemCreate
+ 398              	.LVL35:
+ 171:../../iot_link/os/liteos/liteos_imp.c **** static bool_t  __semp_pend(osal_semp_t semp,unsigned int timeout)
+ 399              		.loc 1 171 0
+ 400 000e B0FA80F0 		clz	r0, r0
+ 401 0012 4009     		lsrs	r0, r0, #5
+ 402 0014 08BD     		pop	{r3, pc}
+ 403              		.cfi_endproc
+ 404              	.LFE295:
+ 406              		.section	.text.__mutex_del,"ax",%progbits
+ 407              		.align	1
+ 408              		.syntax unified
+ 409              		.thumb
+ 410              		.thumb_func
+ 411              		.fpu fpv4-sp-d16
+ 413              	__mutex_del:
+ 414              	.LFB294:
+ 143:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_MuxDelete((UINT32)(uintptr_t)mutex))
+ 415              		.loc 1 143 0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 0
+ 418              		@ frame_needed = 0, uses_anonymous_args = 0
+ 419              	.LVL36:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 14
+
+
+ 420 0000 08B5     		push	{r3, lr}
+ 421              	.LCFI9:
+ 422              		.cfi_def_cfa_offset 8
+ 423              		.cfi_offset 3, -8
+ 424              		.cfi_offset 14, -4
+ 144:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 425              		.loc 1 144 0
+ 426 0002 FFF7FEFF 		bl	LOS_MuxDelete
+ 427              	.LVL37:
+ 152:../../iot_link/os/liteos/liteos_imp.c **** 
+ 428              		.loc 1 152 0
+ 429 0006 B0FA80F0 		clz	r0, r0
+ 430 000a 4009     		lsrs	r0, r0, #5
+ 431 000c 08BD     		pop	{r3, pc}
+ 432              		.cfi_endproc
+ 433              	.LFE294:
+ 435              		.section	.text.__mutex_unlock,"ax",%progbits
+ 436              		.align	1
+ 437              		.syntax unified
+ 438              		.thumb
+ 439              		.thumb_func
+ 440              		.fpu fpv4-sp-d16
+ 442              	__mutex_unlock:
+ 443              	.LFB293:
+ 131:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_MuxPost((UINT32)(uintptr_t)mutex))
+ 444              		.loc 1 131 0
+ 445              		.cfi_startproc
+ 446              		@ args = 0, pretend = 0, frame = 0
+ 447              		@ frame_needed = 0, uses_anonymous_args = 0
+ 448              	.LVL38:
+ 449 0000 08B5     		push	{r3, lr}
+ 450              	.LCFI10:
+ 451              		.cfi_def_cfa_offset 8
+ 452              		.cfi_offset 3, -8
+ 453              		.cfi_offset 14, -4
+ 132:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 454              		.loc 1 132 0
+ 455 0002 FFF7FEFF 		bl	LOS_MuxPost
+ 456              	.LVL39:
+ 140:../../iot_link/os/liteos/liteos_imp.c **** //delete the mutex
+ 457              		.loc 1 140 0
+ 458 0006 B0FA80F0 		clz	r0, r0
+ 459 000a 4009     		lsrs	r0, r0, #5
+ 460 000c 08BD     		pop	{r3, pc}
+ 461              		.cfi_endproc
+ 462              	.LFE293:
+ 464              		.section	.text.__mutex_lock,"ax",%progbits
+ 465              		.align	1
+ 466              		.syntax unified
+ 467              		.thumb
+ 468              		.thumb_func
+ 469              		.fpu fpv4-sp-d16
+ 471              	__mutex_lock:
+ 472              	.LFB292:
+ 118:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_MuxPend((UINT32)(uintptr_t)mutex,LOS_WAIT_FOREVER))
+ 473              		.loc 1 118 0
+ 474              		.cfi_startproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 15
+
+
+ 475              		@ args = 0, pretend = 0, frame = 0
+ 476              		@ frame_needed = 0, uses_anonymous_args = 0
+ 477              	.LVL40:
+ 478 0000 08B5     		push	{r3, lr}
+ 479              	.LCFI11:
+ 480              		.cfi_def_cfa_offset 8
+ 481              		.cfi_offset 3, -8
+ 482              		.cfi_offset 14, -4
+ 119:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 483              		.loc 1 119 0
+ 484 0002 4FF0FF31 		mov	r1, #-1
+ 485 0006 FFF7FEFF 		bl	LOS_MuxPend
+ 486              	.LVL41:
+ 127:../../iot_link/os/liteos/liteos_imp.c **** 
+ 487              		.loc 1 127 0
+ 488 000a B0FA80F0 		clz	r0, r0
+ 489 000e 4009     		lsrs	r0, r0, #5
+ 490 0010 08BD     		pop	{r3, pc}
+ 491              		.cfi_endproc
+ 492              	.LFE292:
+ 494              		.section	.text.__mutex_create,"ax",%progbits
+ 495              		.align	1
+ 496              		.syntax unified
+ 497              		.thumb
+ 498              		.thumb_func
+ 499              		.fpu fpv4-sp-d16
+ 501              	__mutex_create:
+ 502              	.LFB291:
+ 106:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK == LOS_MuxCreate((UINT32 *)mutex))
+ 503              		.loc 1 106 0
+ 504              		.cfi_startproc
+ 505              		@ args = 0, pretend = 0, frame = 0
+ 506              		@ frame_needed = 0, uses_anonymous_args = 0
+ 507              	.LVL42:
+ 508 0000 08B5     		push	{r3, lr}
+ 509              	.LCFI12:
+ 510              		.cfi_def_cfa_offset 8
+ 511              		.cfi_offset 3, -8
+ 512              		.cfi_offset 14, -4
+ 107:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 513              		.loc 1 107 0
+ 514 0002 FFF7FEFF 		bl	LOS_MuxCreate
+ 515              	.LVL43:
+ 115:../../iot_link/os/liteos/liteos_imp.c **** //lock the mutex
+ 516              		.loc 1 115 0
+ 517 0006 B0FA80F0 		clz	r0, r0
+ 518 000a 4009     		lsrs	r0, r0, #5
+ 519 000c 08BD     		pop	{r3, pc}
+ 520              		.cfi_endproc
+ 521              	.LFE291:
+ 523              		.section	.text.__task_sleep,"ax",%progbits
+ 524              		.align	1
+ 525              		.syntax unified
+ 526              		.thumb
+ 527              		.thumb_func
+ 528              		.fpu fpv4-sp-d16
+ 530              	__task_sleep:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 16
+
+
+ 531              	.LFB287:
+  48:../../iot_link/os/liteos/liteos_imp.c ****     (void)LOS_TaskDelay(ms);//which tick is ms
+ 532              		.loc 1 48 0
+ 533              		.cfi_startproc
+ 534              		@ args = 0, pretend = 0, frame = 0
+ 535              		@ frame_needed = 0, uses_anonymous_args = 0
+ 536              		@ link register save eliminated.
+ 537              	.LVL44:
+  49:../../iot_link/os/liteos/liteos_imp.c ****     return;
+ 538              		.loc 1 49 0
+ 539 0000 FFF7FEBF 		b	LOS_TaskDelay
+ 540              	.LVL45:
+ 541              		.cfi_endproc
+ 542              	.LFE287:
+ 544              		.section	.text.__task_exit,"ax",%progbits
+ 545              		.align	1
+ 546              		.syntax unified
+ 547              		.thumb
+ 548              		.thumb_func
+ 549              		.fpu fpv4-sp-d16
+ 551              	__task_exit:
+ 552              	.LFB290:
+  93:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 handle;
+ 553              		.loc 1 93 0
+ 554              		.cfi_startproc
+ 555              		@ args = 0, pretend = 0, frame = 0
+ 556              		@ frame_needed = 0, uses_anonymous_args = 0
+ 557 0000 08B5     		push	{r3, lr}
+ 558              	.LCFI13:
+ 559              		.cfi_def_cfa_offset 8
+ 560              		.cfi_offset 3, -8
+ 561              		.cfi_offset 14, -4
+  95:../../iot_link/os/liteos/liteos_imp.c **** 
+ 562              		.loc 1 95 0
+ 563 0002 FFF7FEFF 		bl	LOS_CurTaskIDGet
+ 564              	.LVL46:
+ 100:../../iot_link/os/liteos/liteos_imp.c **** 
+ 565              		.loc 1 100 0
+ 566 0006 BDE80840 		pop	{r3, lr}
+ 567              	.LCFI14:
+ 568              		.cfi_restore 14
+ 569              		.cfi_restore 3
+ 570              		.cfi_def_cfa_offset 0
+  97:../../iot_link/os/liteos/liteos_imp.c **** 
+ 571              		.loc 1 97 0
+ 572 000a FFF7FEBF 		b	LOS_TaskDelete
+ 573              	.LVL47:
+ 574              		.cfi_endproc
+ 575              	.LFE290:
+ 577              		.section	.text.__task_kill,"ax",%progbits
+ 578              		.align	1
+ 579              		.syntax unified
+ 580              		.thumb
+ 581              		.thumb_func
+ 582              		.fpu fpv4-sp-d16
+ 584              	__task_kill:
+ 585              	.LFB289:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 17
+
+
+  77:../../iot_link/os/liteos/liteos_imp.c ****     int ret = -1;
+ 586              		.loc 1 77 0
+ 587              		.cfi_startproc
+ 588              		@ args = 0, pretend = 0, frame = 0
+ 589              		@ frame_needed = 0, uses_anonymous_args = 0
+ 590              	.LVL48:
+ 591 0000 08B5     		push	{r3, lr}
+ 592              	.LCFI15:
+ 593              		.cfi_def_cfa_offset 8
+ 594              		.cfi_offset 3, -8
+ 595              		.cfi_offset 14, -4
+  80:../../iot_link/os/liteos/liteos_imp.c ****     {
+ 596              		.loc 1 80 0
+ 597 0002 30B1     		cbz	r0, .L29
+  83:../../iot_link/os/liteos/liteos_imp.c ****         {
+ 598              		.loc 1 83 0
+ 599 0004 FFF7FEFF 		bl	LOS_TaskDelete
+ 600              	.LVL49:
+ 601 0008 0030     		adds	r0, r0, #0
+ 602 000a 18BF     		it	ne
+ 603 000c 0120     		movne	r0, #1
+ 604 000e 4042     		negs	r0, r0
+ 605              	.L27:
+  90:../../iot_link/os/liteos/liteos_imp.c **** 
+ 606              		.loc 1 90 0
+ 607 0010 08BD     		pop	{r3, pc}
+ 608              	.LVL50:
+ 609              	.L29:
+  78:../../iot_link/os/liteos/liteos_imp.c ****     UINT32 handle;
+ 610              		.loc 1 78 0
+ 611 0012 4FF0FF30 		mov	r0, #-1
+ 612              	.LVL51:
+  89:../../iot_link/os/liteos/liteos_imp.c **** }
+ 613              		.loc 1 89 0
+ 614 0016 FBE7     		b	.L27
+ 615              		.cfi_endproc
+ 616              	.LFE289:
+ 618              		.section	.text.__task_create,"ax",%progbits
+ 619              		.align	1
+ 620              		.syntax unified
+ 621              		.thumb
+ 622              		.thumb_func
+ 623              		.fpu fpv4-sp-d16
+ 625              	__task_create:
+ 626              	.LFB288:
+  55:../../iot_link/os/liteos/liteos_imp.c ****     void *ret = NULL;
+ 627              		.loc 1 55 0
+ 628              		.cfi_startproc
+ 629              		@ args = 8, pretend = 0, frame = 32
+ 630              		@ frame_needed = 0, uses_anonymous_args = 0
+ 631              	.LVL52:
+ 632 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 633              	.LCFI16:
+ 634              		.cfi_def_cfa_offset 20
+ 635              		.cfi_offset 4, -20
+ 636              		.cfi_offset 5, -16
+ 637              		.cfi_offset 6, -12
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 18
+
+
+ 638              		.cfi_offset 7, -8
+ 639              		.cfi_offset 14, -4
+ 640 0002 89B0     		sub	sp, sp, #36
+ 641              	.LCFI17:
+ 642              		.cfi_def_cfa_offset 56
+  55:../../iot_link/os/liteos/liteos_imp.c ****     void *ret = NULL;
+ 643              		.loc 1 55 0
+ 644 0004 0646     		mov	r6, r0
+ 645 0006 0D46     		mov	r5, r1
+ 646 0008 1746     		mov	r7, r2
+  61:../../iot_link/os/liteos/liteos_imp.c **** 
+ 647              		.loc 1 61 0
+ 648 000a 0021     		movs	r1, #0
+ 649              	.LVL53:
+ 650 000c 1222     		movs	r2, #18
+ 651              	.LVL54:
+ 652 000e 0DF10E00 		add	r0, sp, #14
+ 653              	.LVL55:
+  55:../../iot_link/os/liteos/liteos_imp.c ****     void *ret = NULL;
+ 654              		.loc 1 55 0
+ 655 0012 1C46     		mov	r4, r3
+  61:../../iot_link/os/liteos/liteos_imp.c **** 
+ 656              		.loc 1 61 0
+ 657 0014 FFF7FEFF 		bl	memset
+ 658              	.LVL56:
+  64:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.pcName =(char *) name;
+ 659              		.loc 1 64 0
+ 660 0018 0F9B     		ldr	r3, [sp, #60]
+  63:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.usTaskPrio = (unsigned short)prior;
+ 661              		.loc 1 63 0
+ 662 001a 0497     		str	r7, [sp, #16]
+  68:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK != uwRet){
+ 663              		.loc 1 68 0
+ 664 001c 02A9     		add	r1, sp, #8
+ 665 001e 01A8     		add	r0, sp, #4
+  64:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.pcName =(char *) name;
+ 666              		.loc 1 64 0
+ 667 0020 ADF80C30 		strh	r3, [sp, #12]	@ movhi
+  65:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.pfnTaskEntry = (TSK_ENTRY_FUNC)task_entry;
+ 668              		.loc 1 65 0
+ 669 0024 0696     		str	r6, [sp, #24]
+  66:../../iot_link/os/liteos/liteos_imp.c ****     task_init_param.uwStackSize = stack_size;
+ 670              		.loc 1 66 0
+ 671 0026 0295     		str	r5, [sp, #8]
+  67:../../iot_link/os/liteos/liteos_imp.c ****     uwRet = LOS_TaskCreate(&handle, &task_init_param);
+ 672              		.loc 1 67 0
+ 673 0028 0594     		str	r4, [sp, #20]
+  68:../../iot_link/os/liteos/liteos_imp.c ****     if(LOS_OK != uwRet){
+ 674              		.loc 1 68 0
+ 675 002a FFF7FEFF 		bl	LOS_TaskCreate
+ 676              	.LVL57:
+  69:../../iot_link/os/liteos/liteos_imp.c ****         return ret;
+ 677              		.loc 1 69 0
+ 678 002e 10B9     		cbnz	r0, .L32
+  72:../../iot_link/os/liteos/liteos_imp.c ****     return ret;
+ 679              		.loc 1 72 0
+ 680 0030 0198     		ldr	r0, [sp, #4]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 19
+
+
+ 681              	.LVL58:
+ 682              	.L30:
+  74:../../iot_link/os/liteos/liteos_imp.c **** 
+ 683              		.loc 1 74 0
+ 684 0032 09B0     		add	sp, sp, #36
+ 685              	.LCFI18:
+ 686              		.cfi_remember_state
+ 687              		.cfi_def_cfa_offset 20
+ 688              		@ sp needed
+ 689 0034 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 690              	.LVL59:
+ 691              	.L32:
+ 692              	.LCFI19:
+ 693              		.cfi_restore_state
+  70:../../iot_link/os/liteos/liteos_imp.c ****     }
+ 694              		.loc 1 70 0
+ 695 0036 0020     		movs	r0, #0
+ 696              	.LVL60:
+ 697 0038 FBE7     		b	.L30
+ 698              		.cfi_endproc
+ 699              	.LFE288:
+ 701              		.section	.text.los_mem_realloc,"ax",%progbits
+ 702              		.align	1
+ 703              		.global	los_mem_realloc
+ 704              		.syntax unified
+ 705              		.thumb
+ 706              		.thumb_func
+ 707              		.fpu fpv4-sp-d16
+ 709              	los_mem_realloc:
+ 710              	.LFB305:
+ 284:../../iot_link/os/liteos/liteos_imp.c **** 
+ 711              		.loc 1 284 0
+ 712              		.cfi_startproc
+ 713              		@ args = 0, pretend = 0, frame = 0
+ 714              		@ frame_needed = 0, uses_anonymous_args = 0
+ 715              		@ link register save eliminated.
+ 716              	.LVL61:
+ 286:../../iot_link/os/liteos/liteos_imp.c **** }
+ 717              		.loc 1 286 0
+ 718 0000 024B     		ldr	r3, .L34
+ 719 0002 0A46     		mov	r2, r1
+ 720 0004 0146     		mov	r1, r0
+ 721              	.LVL62:
+ 722 0006 1868     		ldr	r0, [r3]
+ 723              	.LVL63:
+ 724 0008 FFF7FEBF 		b	LOS_MemRealloc
+ 725              	.LVL64:
+ 726              	.L35:
+ 727              		.align	2
+ 728              	.L34:
+ 729 000c 00000000 		.word	m_aucSysMem0
+ 730              		.cfi_endproc
+ 731              	.LFE305:
+ 733              		.section	.text.os_imp_init,"ax",%progbits
+ 734              		.align	1
+ 735              		.global	os_imp_init
+ 736              		.syntax unified
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 20
+
+
+ 737              		.thumb
+ 738              		.thumb_func
+ 739              		.fpu fpv4-sp-d16
+ 741              	os_imp_init:
+ 742              	.LFB311:
+ 317:../../iot_link/os/liteos/liteos_imp.c **** }
+ 318:../../iot_link/os/liteos/liteos_imp.c **** 
+ 319:../../iot_link/os/liteos/liteos_imp.c **** static const tag_os_ops s_liteos_ops =
+ 320:../../iot_link/os/liteos/liteos_imp.c **** {
+ 321:../../iot_link/os/liteos/liteos_imp.c ****     .task_sleep = __task_sleep,
+ 322:../../iot_link/os/liteos/liteos_imp.c ****     .task_create = __task_create,
+ 323:../../iot_link/os/liteos/liteos_imp.c ****     .task_kill = __task_kill,
+ 324:../../iot_link/os/liteos/liteos_imp.c ****     .task_exit = __task_exit,
+ 325:../../iot_link/os/liteos/liteos_imp.c **** 
+ 326:../../iot_link/os/liteos/liteos_imp.c ****     .mutex_create = __mutex_create,
+ 327:../../iot_link/os/liteos/liteos_imp.c ****     .mutex_lock = __mutex_lock,
+ 328:../../iot_link/os/liteos/liteos_imp.c ****     .mutex_unlock = __mutex_unlock,
+ 329:../../iot_link/os/liteos/liteos_imp.c ****     .mutex_del = __mutex_del,
+ 330:../../iot_link/os/liteos/liteos_imp.c **** 
+ 331:../../iot_link/os/liteos/liteos_imp.c ****     .semp_create = __semp_create,
+ 332:../../iot_link/os/liteos/liteos_imp.c ****     .semp_pend = __semp_pend,
+ 333:../../iot_link/os/liteos/liteos_imp.c ****     .semp_post = __semp_post,
+ 334:../../iot_link/os/liteos/liteos_imp.c ****     .semp_del = __semp_del,
+ 335:../../iot_link/os/liteos/liteos_imp.c **** 
+ 336:../../iot_link/os/liteos/liteos_imp.c ****     .queue_create = __queue_create,
+ 337:../../iot_link/os/liteos/liteos_imp.c ****     .queue_send = __queue_send,
+ 338:../../iot_link/os/liteos/liteos_imp.c ****     .queue_recv = __queue_recv,
+ 339:../../iot_link/os/liteos/liteos_imp.c ****     .queue_del = __queue_del,
+ 340:../../iot_link/os/liteos/liteos_imp.c **** 
+ 341:../../iot_link/os/liteos/liteos_imp.c ****     .malloc = __mem_malloc,
+ 342:../../iot_link/os/liteos/liteos_imp.c ****     .free = __mem_free,
+ 343:../../iot_link/os/liteos/liteos_imp.c **** 
+ 344:../../iot_link/os/liteos/liteos_imp.c ****     .get_sys_time = __get_sys_time,
+ 345:../../iot_link/os/liteos/liteos_imp.c ****     .reboot = liteos_reboot,
+ 346:../../iot_link/os/liteos/liteos_imp.c **** 
+ 347:../../iot_link/os/liteos/liteos_imp.c **** 	.int_connect = __int_connect,
+ 348:../../iot_link/os/liteos/liteos_imp.c **** };
+ 349:../../iot_link/os/liteos/liteos_imp.c **** 
+ 350:../../iot_link/os/liteos/liteos_imp.c **** 
+ 351:../../iot_link/os/liteos/liteos_imp.c **** 
+ 352:../../iot_link/os/liteos/liteos_imp.c **** static const tag_os s_link_liteos =
+ 353:../../iot_link/os/liteos/liteos_imp.c **** {
+ 354:../../iot_link/os/liteos/liteos_imp.c ****     .name = "LiteOS",
+ 355:../../iot_link/os/liteos/liteos_imp.c ****     .ops = &s_liteos_ops,
+ 356:../../iot_link/os/liteos/liteos_imp.c **** };
+ 357:../../iot_link/os/liteos/liteos_imp.c **** 
+ 358:../../iot_link/os/liteos/liteos_imp.c **** int os_imp_init(void)
+ 359:../../iot_link/os/liteos/liteos_imp.c **** {
+ 743              		.loc 1 359 0
+ 744              		.cfi_startproc
+ 745              		@ args = 0, pretend = 0, frame = 0
+ 746              		@ frame_needed = 0, uses_anonymous_args = 0
+ 747              		@ link register save eliminated.
+ 748              	.LVL65:
+ 360:../../iot_link/os/liteos/liteos_imp.c ****     int ret = -1;
+ 361:../../iot_link/os/liteos/liteos_imp.c **** 
+ 362:../../iot_link/os/liteos/liteos_imp.c ****     ret = osal_install(&s_link_liteos);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 21
+
+
+ 749              		.loc 1 362 0
+ 750 0000 0148     		ldr	r0, .L37
+ 751 0002 FFF7FEBF 		b	osal_install
+ 752              	.LVL66:
+ 753              	.L38:
+ 754 0006 00BF     		.align	2
+ 755              	.L37:
+ 756 0008 00000000 		.word	.LANCHOR0
+ 757              		.cfi_endproc
+ 758              	.LFE311:
+ 760              		.section	.rodata.__queue_create.str1.1,"aMS",%progbits,1
+ 761              	.LC0:
+ 762 0000 6F73616C 		.ascii	"osal_queue\000"
+ 762      5F717565 
+ 762      756500
+ 763              		.section	.rodata.s_link_liteos,"a",%progbits
+ 764              		.align	2
+ 765              		.set	.LANCHOR0,. + 0
+ 768              	s_link_liteos:
+ 769 0000 00000000 		.word	.LC1
+ 770 0004 00000000 		.word	s_liteos_ops
+ 771              		.section	.rodata.s_liteos_ops,"a",%progbits
+ 772              		.align	2
+ 775              	s_liteos_ops:
+ 776 0000 00000000 		.word	__task_create
+ 777 0004 00000000 		.word	__task_kill
+ 778 0008 00000000 		.word	__task_exit
+ 779 000c 00000000 		.word	__task_sleep
+ 780 0010 00000000 		.word	__mutex_create
+ 781 0014 00000000 		.word	__mutex_lock
+ 782 0018 00000000 		.word	__mutex_unlock
+ 783 001c 00000000 		.word	__mutex_del
+ 784 0020 00000000 		.word	__semp_create
+ 785 0024 00000000 		.word	__semp_pend
+ 786 0028 00000000 		.word	__semp_post
+ 787 002c 00000000 		.word	__semp_del
+ 788 0030 00000000 		.word	__queue_create
+ 789 0034 00000000 		.word	__queue_send
+ 790 0038 00000000 		.word	__queue_recv
+ 791 003c 00000000 		.word	__queue_del
+ 792 0040 00000000 		.word	__mem_malloc
+ 793 0044 00000000 		.word	__mem_free
+ 794 0048 00000000 		.space	4
+ 795 004c 00000000 		.word	__get_sys_time
+ 796 0050 00000000 		.word	liteos_reboot
+ 797 0054 00000000 		.word	__int_connect
+ 798              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 799              	.LC1:
+ 800 0000 4C697465 		.ascii	"LiteOS\000"
+ 800      4F5300
+ 801              		.text
+ 802              	.Letext0:
+ 803              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 804              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 805              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 806              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 807              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 22
+
+
+ 808              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 809              		.file 8 "../../iot_link/os/osal/osal_types.h"
+ 810              		.file 9 "../../iot_link/os/osal/osal_imp.h"
+ 811              		.file 10 "../../iot_link/os/liteos/include/los_typedef.h"
+ 812              		.file 11 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 813              		.file 12 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 814              		.file 13 "../../iot_link/os/liteos/include/los_config.h"
+ 815              		.file 14 "../../iot_link/os/liteos/include/los_list.h"
+ 816              		.file 15 "../../iot_link/os/liteos/include/los_err.h"
+ 817              		.file 16 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 818              		.file 17 "../../iot_link/os/liteos/include/los_tick.h"
+ 819              		.file 18 "../../iot_link/os/liteos/include/los_event.h"
+ 820              		.file 19 "../../iot_link/os/liteos/include/los_task.h"
+ 821              		.file 20 "../../iot_link/os/liteos/base/include/los_task.ph"
+ 822              		.file 21 "../../iot_link/os/liteos/include/los_memory.h"
+ 823              		.file 22 "../../iot_link/os/liteos/include/los_queue.h"
+ 824              		.file 23 "../../iot_link/os/liteos/include/los_sem.h"
+ 825              		.file 24 "../../iot_link/os/liteos/include/los_mux.h"
+ 826              		.file 25 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 23
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 liteos_imp.c
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:18     .text.liteos_reboot:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:25     .text.liteos_reboot:00000000 liteos_reboot
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:40     .text.__int_connect:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:46     .text.__int_connect:00000000 __int_connect
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:65     .text.__get_sys_time:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:71     .text.__get_sys_time:00000000 __get_sys_time
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:85     .text.__mem_free:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:91     .text.__mem_free:00000000 __mem_free
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:109    .text.__mem_free:0000000c $d
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:114    .text.__mem_malloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:120    .text.__mem_malloc:00000000 __mem_malloc
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:145    .text.__mem_malloc:00000010 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:150    .text.__queue_del:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:156    .text.__queue_del:00000000 __queue_del
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:179    .text.__queue_recv:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:185    .text.__queue_recv:00000000 __queue_recv
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:209    .text.__queue_send:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:215    .text.__queue_send:00000000 __queue_send
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:239    .text.__queue_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:245    .text.__queue_create:00000000 __queue_create
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:279    .text.__queue_create:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:284    .text.__semp_del:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:290    .text.__semp_del:00000000 __semp_del
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:313    .text.__semp_post:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:319    .text.__semp_post:00000000 __semp_post
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:342    .text.__semp_pend:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:348    .text.__semp_pend:00000000 __semp_pend
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:371    .text.__semp_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:377    .text.__semp_create:00000000 __semp_create
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:407    .text.__mutex_del:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:413    .text.__mutex_del:00000000 __mutex_del
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:436    .text.__mutex_unlock:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:442    .text.__mutex_unlock:00000000 __mutex_unlock
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:465    .text.__mutex_lock:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:471    .text.__mutex_lock:00000000 __mutex_lock
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:495    .text.__mutex_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:501    .text.__mutex_create:00000000 __mutex_create
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:524    .text.__task_sleep:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:530    .text.__task_sleep:00000000 __task_sleep
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:545    .text.__task_exit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:551    .text.__task_exit:00000000 __task_exit
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:578    .text.__task_kill:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:584    .text.__task_kill:00000000 __task_kill
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:619    .text.__task_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:625    .text.__task_create:00000000 __task_create
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:702    .text.los_mem_realloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:709    .text.los_mem_realloc:00000000 los_mem_realloc
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:729    .text.los_mem_realloc:0000000c $d
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:734    .text.os_imp_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:741    .text.os_imp_init:00000000 os_imp_init
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:756    .text.os_imp_init:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:764    .rodata.s_link_liteos:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:768    .rodata.s_link_liteos:00000000 s_link_liteos
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:775    .rodata.s_liteos_ops:00000000 s_liteos_ops
+C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s:772    .rodata.s_liteos_ops:00000000 $d
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc1tYkjZ.s 			page 24
+
+
+
+UNDEFINED SYMBOLS
+LOS_HwiCreate
+osKernelGetTickCount
+LOS_MemFree
+m_aucSysMem0
+LOS_MemAlloc
+LOS_QueueDelete
+LOS_QueueReadCopy
+LOS_QueueWriteCopy
+LOS_QueueCreate
+LOS_SemDelete
+LOS_SemPost
+LOS_SemPend
+osSemCreate
+LOS_MuxDelete
+LOS_MuxPost
+LOS_MuxPend
+LOS_MuxCreate
+LOS_TaskDelay
+LOS_CurTaskIDGet
+LOS_TaskDelete
+memset
+LOS_TaskCreate
+LOS_MemRealloc
+osal_install

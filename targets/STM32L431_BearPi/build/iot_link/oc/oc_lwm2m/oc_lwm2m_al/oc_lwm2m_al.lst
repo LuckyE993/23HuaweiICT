@@ -1,0 +1,688 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"oc_lwm2m_al.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.oc_lwm2m_register,"ax",%progbits
+  18              		.align	1
+  19              		.global	oc_lwm2m_register
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	oc_lwm2m_register:
+  26              	.LFB3:
+  27              		.file 1 "../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c"
+   1:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * All rights reserved.
+   4:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * provided with the distribution.
+  11:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * permission.
+  14:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * Notice of Export Control Law
+  28:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * ===============================================
+  29:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 2
+
+
+  32:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** /**
+  35:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  *  2019-05-14 17:22  zhangqianfu  The first version
+  37:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  *
+  38:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****  */
+  39:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  40:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** #include <stdint.h>
+  41:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** #include <stddef.h>
+  42:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  43:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** #include <string.h>
+  44:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  45:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** #include <stdlib.h>
+  46:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** #include <osal.h>
+  47:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** #include <oc_lwm2m_al.h>
+  48:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  49:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** typedef struct
+  50:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+  51:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     const char            *name;    ///< lwm2m implement name
+  52:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     const oc_lwm2m_opt_t  *opt;     ///< lwm2m implement method
+  53:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** } oc_lwm2m_t;
+  54:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** static oc_lwm2m_t  s_oc_lwm2m_ops;
+  55:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  56:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  57:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** int oc_lwm2m_register(const char *name, const oc_lwm2m_opt_t *opt)
+  58:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+  28              		.loc 1 58 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  59:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     int ret = -1;
+  60:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  61:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     if (NULL == s_oc_lwm2m_ops.opt)
+  34              		.loc 1 61 0
+  35 0000 044A     		ldr	r2, .L4
+  36 0002 5368     		ldr	r3, [r2, #4]
+  37 0004 1BB9     		cbnz	r3, .L3
+  62:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     {
+  63:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         s_oc_lwm2m_ops.name = name;
+  64:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         s_oc_lwm2m_ops.opt =  opt;
+  38              		.loc 1 64 0
+  39 0006 C2E90001 		strd	r0, r1, [r2]
+  40              	.LVL1:
+  65:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         ret = 0;
+  41              		.loc 1 65 0
+  42 000a 1846     		mov	r0, r3
+  43              	.LVL2:
+  44 000c 7047     		bx	lr
+  45              	.LVL3:
+  46              	.L3:
+  59:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     int ret = -1;
+  47              		.loc 1 59 0
+  48 000e 4FF0FF30 		mov	r0, #-1
+  49              	.LVL4:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 3
+
+
+  66:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     }
+  67:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  68:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     return ret;
+  69:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+  50              		.loc 1 69 0
+  51 0012 7047     		bx	lr
+  52              	.L5:
+  53              		.align	2
+  54              	.L4:
+  55 0014 00000000 		.word	.LANCHOR0
+  56              		.cfi_endproc
+  57              	.LFE3:
+  59              		.section	.text.oc_lwm2m_unregister,"ax",%progbits
+  60              		.align	1
+  61              		.global	oc_lwm2m_unregister
+  62              		.syntax unified
+  63              		.thumb
+  64              		.thumb_func
+  65              		.fpu fpv4-sp-d16
+  67              	oc_lwm2m_unregister:
+  68              	.LFB4:
+  70:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  71:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** int oc_lwm2m_unregister(const char *name)
+  72:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+  69              		.loc 1 72 0
+  70              		.cfi_startproc
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73              	.LVL5:
+  74 0000 10B5     		push	{r4, lr}
+  75              	.LCFI0:
+  76              		.cfi_def_cfa_offset 8
+  77              		.cfi_offset 4, -8
+  78              		.cfi_offset 14, -4
+  73:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     int ret = -1;
+  74:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  75:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     if ((NULL != name) && (NULL != s_oc_lwm2m_ops.name))
+  79              		.loc 1 75 0
+  80 0002 40B1     		cbz	r0, .L10
+  81              		.loc 1 75 0 is_stmt 0 discriminator 1
+  82 0004 054C     		ldr	r4, .L11
+  83 0006 2168     		ldr	r1, [r4]
+  84 0008 29B1     		cbz	r1, .L10
+  76:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     {
+  77:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         if (0 == strcmp(name, s_oc_lwm2m_ops.name))
+  85              		.loc 1 77 0 is_stmt 1
+  86 000a FFF7FEFF 		bl	strcmp
+  87              	.LVL6:
+  88 000e 10B9     		cbnz	r0, .L10
+  78:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         {
+  79:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****             s_oc_lwm2m_ops.opt = NULL;   ///< also think about clear all the ops in the context,
+  80:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****             s_oc_lwm2m_ops.name = NULL;
+  89              		.loc 1 80 0
+  90 0010 C4E90000 		strd	r0, r0, [r4]
+  91              	.LVL7:
+  92              	.L6:
+  81:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****             ret = 0;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 4
+
+
+  82:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         }
+  83:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     }
+  84:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  85:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     return ret;
+  86:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+  93              		.loc 1 86 0
+  94 0014 10BD     		pop	{r4, pc}
+  95              	.LVL8:
+  96              	.L10:
+  73:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  97              		.loc 1 73 0
+  98 0016 4FF0FF30 		mov	r0, #-1
+  85:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+  99              		.loc 1 85 0
+ 100 001a FBE7     		b	.L6
+ 101              	.L12:
+ 102              		.align	2
+ 103              	.L11:
+ 104 001c 00000000 		.word	.LANCHOR0
+ 105              		.cfi_endproc
+ 106              	.LFE4:
+ 108              		.section	.text.oc_lwm2m_report,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	oc_lwm2m_report
+ 111              		.syntax unified
+ 112              		.thumb
+ 113              		.thumb_func
+ 114              		.fpu fpv4-sp-d16
+ 116              	oc_lwm2m_report:
+ 117              	.LFB5:
+  87:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  88:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  89:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** //////////////////////////APPLICATION INTERFACE/////////////////////////////////
+  90:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** int oc_lwm2m_report(char  *buf, int len, int timeout)
+  91:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+ 118              		.loc 1 91 0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		@ link register save eliminated.
+ 123              	.LVL9:
+  92:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     int ret = (int)en_oc_lwm2m_err_system;
+  93:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  94:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     if ((NULL != s_oc_lwm2m_ops.opt) && (NULL != s_oc_lwm2m_ops.opt->report))
+ 124              		.loc 1 94 0
+ 125 0000 034B     		ldr	r3, .L19
+ 126 0002 5B68     		ldr	r3, [r3, #4]
+ 127 0004 13B1     		cbz	r3, .L13
+ 128              		.loc 1 94 0 is_stmt 0 discriminator 1
+ 129 0006 5B68     		ldr	r3, [r3, #4]
+ 130 0008 03B1     		cbz	r3, .L13
+  95:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     {
+  96:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         ret = s_oc_lwm2m_ops.opt->report(buf, len, timeout);
+ 131              		.loc 1 96 0 is_stmt 1
+ 132 000a 1847     		bx	r3
+ 133              	.LVL10:
+ 134              	.L13:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 5
+
+
+  97:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     }
+  98:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+  99:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     return ret;
+ 100:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+ 135              		.loc 1 100 0
+ 136 000c 0920     		movs	r0, #9
+ 137              	.LVL11:
+ 138 000e 7047     		bx	lr
+ 139              	.L20:
+ 140              		.align	2
+ 141              	.L19:
+ 142 0010 00000000 		.word	.LANCHOR0
+ 143              		.cfi_endproc
+ 144              	.LFE5:
+ 146              		.section	.text.oc_lwm2m_config,"ax",%progbits
+ 147              		.align	1
+ 148              		.global	oc_lwm2m_config
+ 149              		.syntax unified
+ 150              		.thumb
+ 151              		.thumb_func
+ 152              		.fpu fpv4-sp-d16
+ 154              	oc_lwm2m_config:
+ 155              	.LFB6:
+ 101:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 102:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 103:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** int oc_lwm2m_config( oc_config_param_t *param)
+ 104:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+ 156              		.loc 1 104 0
+ 157              		.cfi_startproc
+ 158              		@ args = 0, pretend = 0, frame = 0
+ 159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 160              		@ link register save eliminated.
+ 161              	.LVL12:
+ 105:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     int ret = (int)en_oc_lwm2m_err_system;
+ 106:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 107:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     if ((NULL != s_oc_lwm2m_ops.opt) && (NULL != s_oc_lwm2m_ops.opt->config))
+ 162              		.loc 1 107 0
+ 163 0000 054B     		ldr	r3, .L26
+ 164 0002 5B68     		ldr	r3, [r3, #4]
+ 165 0004 1BB1     		cbz	r3, .L24
+ 166              		.loc 1 107 0 is_stmt 0 discriminator 1
+ 167 0006 1B68     		ldr	r3, [r3]
+ 168 0008 0BB1     		cbz	r3, .L24
+ 108:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     {
+ 109:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         if(NULL != param)
+ 169              		.loc 1 109 0 is_stmt 1
+ 170 000a 10B1     		cbz	r0, .L25
+ 110:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         {
+ 111:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****             ret = s_oc_lwm2m_ops.opt->config(param);
+ 171              		.loc 1 111 0
+ 172 000c 1847     		bx	r3
+ 173              	.LVL13:
+ 174              	.L24:
+ 105:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 175              		.loc 1 105 0
+ 176 000e 0920     		movs	r0, #9
+ 177              	.LVL14:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 6
+
+
+ 178 0010 7047     		bx	lr
+ 179              	.LVL15:
+ 180              	.L25:
+ 112:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         }
+ 113:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         else
+ 114:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         {
+ 115:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****             ret = (int)en_oc_lwm2m_err_parafmt;
+ 181              		.loc 1 115 0
+ 182 0012 0120     		movs	r0, #1
+ 183              	.LVL16:
+ 116:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         }
+ 117:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     }
+ 118:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 119:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     return ret;
+ 120:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+ 184              		.loc 1 120 0
+ 185 0014 7047     		bx	lr
+ 186              	.L27:
+ 187 0016 00BF     		.align	2
+ 188              	.L26:
+ 189 0018 00000000 		.word	.LANCHOR0
+ 190              		.cfi_endproc
+ 191              	.LFE6:
+ 193              		.section	.text.oc_lwm2m_deconfig,"ax",%progbits
+ 194              		.align	1
+ 195              		.global	oc_lwm2m_deconfig
+ 196              		.syntax unified
+ 197              		.thumb
+ 198              		.thumb_func
+ 199              		.fpu fpv4-sp-d16
+ 201              	oc_lwm2m_deconfig:
+ 202              	.LFB7:
+ 121:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 122:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 123:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** int oc_lwm2m_deconfig(void)
+ 124:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+ 203              		.loc 1 124 0
+ 204              		.cfi_startproc
+ 205              		@ args = 0, pretend = 0, frame = 0
+ 206              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207              		@ link register save eliminated.
+ 208              	.LVL17:
+ 125:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     int ret = (int)en_oc_lwm2m_err_system;
+ 126:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 127:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     if ((NULL != s_oc_lwm2m_ops.opt) && (NULL != s_oc_lwm2m_ops.opt->deconfig))
+ 209              		.loc 1 127 0
+ 210 0000 034B     		ldr	r3, .L34
+ 211 0002 5B68     		ldr	r3, [r3, #4]
+ 212 0004 13B1     		cbz	r3, .L28
+ 213              		.loc 1 127 0 is_stmt 0 discriminator 1
+ 214 0006 9B68     		ldr	r3, [r3, #8]
+ 215 0008 03B1     		cbz	r3, .L28
+ 128:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     {
+ 129:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****         ret = s_oc_lwm2m_ops.opt->deconfig();
+ 216              		.loc 1 129 0 is_stmt 1
+ 217 000a 1847     		bx	r3
+ 218              	.LVL18:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 7
+
+
+ 219              	.L28:
+ 130:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     }
+ 131:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 132:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     return ret;
+ 133:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+ 220              		.loc 1 133 0
+ 221 000c 0920     		movs	r0, #9
+ 222 000e 7047     		bx	lr
+ 223              	.L35:
+ 224              		.align	2
+ 225              	.L34:
+ 226 0010 00000000 		.word	.LANCHOR0
+ 227              		.cfi_endproc
+ 228              	.LFE7:
+ 230              		.section	.text.oc_lwm2m_imp_init,"ax",%progbits
+ 231              		.align	1
+ 232              		.weak	oc_lwm2m_imp_init
+ 233              		.syntax unified
+ 234              		.thumb
+ 235              		.thumb_func
+ 236              		.fpu fpv4-sp-d16
+ 238              	oc_lwm2m_imp_init:
+ 239              	.LFB8:
+ 134:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 135:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** ///////////////////////OC LWM2M AGENT INITIALIZE////////////////////////////////
+ 136:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** __attribute__ ((weak)) int oc_lwm2m_imp_init(void)
+ 137:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+ 240              		.loc 1 137 0
+ 241              		.cfi_startproc
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 244 0000 10B5     		push	{r4, lr}
+ 245              	.LCFI1:
+ 246              		.cfi_def_cfa_offset 8
+ 247              		.cfi_offset 4, -8
+ 248              		.cfi_offset 14, -4
+ 138:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     LINK_LOG_WARN("Please implement the oc lwm2m yourself \n\r");
+ 249              		.loc 1 138 0
+ 250 0002 0320     		movs	r0, #3
+ 251 0004 FFF7FEFF 		bl	link_log_level_name
+ 252              	.LVL19:
+ 253 0008 0446     		mov	r4, r0
+ 254 000a FFF7FEFF 		bl	osal_sys_time
+ 255              	.LVL20:
+ 256 000e 2146     		mov	r1, r4
+ 257 0010 0246     		mov	r2, r0
+ 258 0012 064B     		ldr	r3, .L37
+ 259 0014 0648     		ldr	r0, .L37+4
+ 260 0016 FFF7FEFF 		bl	printf
+ 261              	.LVL21:
+ 262 001a 064B     		ldr	r3, .L37+8
+ 263 001c 1B68     		ldr	r3, [r3]
+ 264 001e 9868     		ldr	r0, [r3, #8]
+ 265 0020 FFF7FEFF 		bl	fflush
+ 266              	.LVL22:
+ 139:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     return -1;
+ 140:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 8
+
+
+ 267              		.loc 1 140 0
+ 268 0024 4FF0FF30 		mov	r0, #-1
+ 269 0028 10BD     		pop	{r4, pc}
+ 270              	.L38:
+ 271 002a 00BF     		.align	2
+ 272              	.L37:
+ 273 002c 00000000 		.word	.LANCHOR1
+ 274 0030 00000000 		.word	.LC0
+ 275 0034 00000000 		.word	_impure_ptr
+ 276              		.cfi_endproc
+ 277              	.LFE8:
+ 279              		.section	.text.oc_lwm2m_demo_main,"ax",%progbits
+ 280              		.align	1
+ 281              		.weak	oc_lwm2m_demo_main
+ 282              		.syntax unified
+ 283              		.thumb
+ 284              		.thumb_func
+ 285              		.fpu fpv4-sp-d16
+ 287              	oc_lwm2m_demo_main:
+ 288              	.LFB9:
+ 141:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 142:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** __attribute__ ((weak)) int oc_lwm2m_demo_main(void)
+ 143:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+ 289              		.loc 1 143 0
+ 290              		.cfi_startproc
+ 291              		@ args = 0, pretend = 0, frame = 0
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+ 293 0000 10B5     		push	{r4, lr}
+ 294              	.LCFI2:
+ 295              		.cfi_def_cfa_offset 8
+ 296              		.cfi_offset 4, -8
+ 297              		.cfi_offset 14, -4
+ 144:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     LINK_LOG_WARN("Please implement the oc lwm2m demo yourself \n\r");
+ 298              		.loc 1 144 0
+ 299 0002 0320     		movs	r0, #3
+ 300 0004 FFF7FEFF 		bl	link_log_level_name
+ 301              	.LVL23:
+ 302 0008 0446     		mov	r4, r0
+ 303 000a FFF7FEFF 		bl	osal_sys_time
+ 304              	.LVL24:
+ 305 000e 2146     		mov	r1, r4
+ 306 0010 0246     		mov	r2, r0
+ 307 0012 064B     		ldr	r3, .L40
+ 308 0014 0648     		ldr	r0, .L40+4
+ 309 0016 FFF7FEFF 		bl	printf
+ 310              	.LVL25:
+ 311 001a 064B     		ldr	r3, .L40+8
+ 312 001c 1B68     		ldr	r3, [r3]
+ 313 001e 9868     		ldr	r0, [r3, #8]
+ 314 0020 FFF7FEFF 		bl	fflush
+ 315              	.LVL26:
+ 145:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     return -1;
+ 146:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+ 316              		.loc 1 146 0
+ 317 0024 4FF0FF30 		mov	r0, #-1
+ 318 0028 10BD     		pop	{r4, pc}
+ 319              	.L41:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 9
+
+
+ 320 002a 00BF     		.align	2
+ 321              	.L40:
+ 322 002c 00000000 		.word	.LANCHOR2
+ 323 0030 00000000 		.word	.LC1
+ 324 0034 00000000 		.word	_impure_ptr
+ 325              		.cfi_endproc
+ 326              	.LFE9:
+ 328              		.section	.text.oc_lwm2m_init,"ax",%progbits
+ 329              		.align	1
+ 330              		.global	oc_lwm2m_init
+ 331              		.syntax unified
+ 332              		.thumb
+ 333              		.thumb_func
+ 334              		.fpu fpv4-sp-d16
+ 336              	oc_lwm2m_init:
+ 337              	.LFB10:
+ 147:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 148:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** int oc_lwm2m_init()
+ 149:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** {
+ 338              		.loc 1 149 0
+ 339              		.cfi_startproc
+ 340              		@ args = 0, pretend = 0, frame = 0
+ 341              		@ frame_needed = 0, uses_anonymous_args = 0
+ 342 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 343              	.LCFI3:
+ 344              		.cfi_def_cfa_offset 24
+ 345              		.cfi_offset 4, -12
+ 346              		.cfi_offset 5, -8
+ 347              		.cfi_offset 14, -4
+ 150:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     int ret;
+ 151:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 152:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     ret = oc_lwm2m_imp_init();
+ 348              		.loc 1 152 0
+ 349 0002 FFF7FEFF 		bl	oc_lwm2m_imp_init
+ 350              	.LVL27:
+ 351 0006 0546     		mov	r5, r0
+ 352              	.LVL28:
+ 153:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 154:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     LINK_LOG_DEBUG("IOT_LINK:DO OC LWM2M LOAD-IMPLEMENT RET:%d\n\r",ret);
+ 353              		.loc 1 154 0
+ 354 0008 FFF7FEFF 		bl	link_log_level_get
+ 355              	.LVL29:
+ 356 000c 0128     		cmp	r0, #1
+ 357 000e 11D8     		bhi	.L43
+ 358              		.loc 1 154 0 is_stmt 0 discriminator 1
+ 359 0010 0120     		movs	r0, #1
+ 360 0012 FFF7FEFF 		bl	link_log_level_name
+ 361              	.LVL30:
+ 362 0016 0446     		mov	r4, r0
+ 363 0018 FFF7FEFF 		bl	osal_sys_time
+ 364              	.LVL31:
+ 365 001c 074B     		ldr	r3, .L44
+ 366 001e 0095     		str	r5, [sp]
+ 367 0020 0246     		mov	r2, r0
+ 368 0022 2146     		mov	r1, r4
+ 369 0024 0648     		ldr	r0, .L44+4
+ 370 0026 FFF7FEFF 		bl	printf
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 10
+
+
+ 371              	.LVL32:
+ 372 002a 064B     		ldr	r3, .L44+8
+ 373 002c 1B68     		ldr	r3, [r3]
+ 374 002e 9868     		ldr	r0, [r3, #8]
+ 375 0030 FFF7FEFF 		bl	fflush
+ 376              	.LVL33:
+ 377              	.L43:
+ 155:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 156:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** #ifdef  CONFIG_OCLWM2M_DEMO_ENABLE
+ 157:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     (void) oc_lwm2m_demo_main();
+ 158:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** #endif
+ 159:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** 
+ 160:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c ****     return 0;
+ 161:../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.c **** }
+ 378              		.loc 1 161 0 is_stmt 1
+ 379 0034 0020     		movs	r0, #0
+ 380 0036 03B0     		add	sp, sp, #12
+ 381              	.LCFI4:
+ 382              		.cfi_def_cfa_offset 12
+ 383              		@ sp needed
+ 384 0038 30BD     		pop	{r4, r5, pc}
+ 385              	.LVL34:
+ 386              	.L45:
+ 387 003a 00BF     		.align	2
+ 388              	.L44:
+ 389 003c 00000000 		.word	.LANCHOR3
+ 390 0040 00000000 		.word	.LC2
+ 391 0044 00000000 		.word	_impure_ptr
+ 392              		.cfi_endproc
+ 393              	.LFE10:
+ 395              		.section	.bss.s_oc_lwm2m_ops,"aw",%nobits
+ 396              		.align	2
+ 397              		.set	.LANCHOR0,. + 0
+ 400              	s_oc_lwm2m_ops:
+ 401 0000 00000000 		.space	8
+ 401      00000000 
+ 402              		.section	.rodata.__FUNCTION__.7327,"a",%progbits
+ 403              		.set	.LANCHOR1,. + 0
+ 406              	__FUNCTION__.7327:
+ 407 0000 6F635F6C 		.ascii	"oc_lwm2m_imp_init\000"
+ 407      776D326D 
+ 407      5F696D70 
+ 407      5F696E69 
+ 407      7400
+ 408              		.section	.rodata.__FUNCTION__.7331,"a",%progbits
+ 409              		.set	.LANCHOR2,. + 0
+ 412              	__FUNCTION__.7331:
+ 413 0000 6F635F6C 		.ascii	"oc_lwm2m_demo_main\000"
+ 413      776D326D 
+ 413      5F64656D 
+ 413      6F5F6D61 
+ 413      696E00
+ 414              		.section	.rodata.__FUNCTION__.7335,"a",%progbits
+ 415              		.set	.LANCHOR3,. + 0
+ 418              	__FUNCTION__.7335:
+ 419 0000 6F635F6C 		.ascii	"oc_lwm2m_init\000"
+ 419      776D326D 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 11
+
+
+ 419      5F696E69 
+ 419      7400
+ 420              		.section	.rodata.oc_lwm2m_demo_main.str1.1,"aMS",%progbits,1
+ 421              	.LC1:
+ 422 0000 5B25735D 		.ascii	"[%s][%u][%s] Please implement the oc lwm2m demo you"
+ 422      5B25755D 
+ 422      5B25735D 
+ 422      20506C65 
+ 422      61736520 
+ 423 0033 7273656C 		.ascii	"rself \012\015\015\012\000"
+ 423      66200A0D 
+ 423      0D0A00
+ 424              		.section	.rodata.oc_lwm2m_imp_init.str1.1,"aMS",%progbits,1
+ 425              	.LC0:
+ 426 0000 5B25735D 		.ascii	"[%s][%u][%s] Please implement the oc lwm2m yourself"
+ 426      5B25755D 
+ 426      5B25735D 
+ 426      20506C65 
+ 426      61736520 
+ 427 0033 200A0D0D 		.ascii	" \012\015\015\012\000"
+ 427      0A00
+ 428              		.section	.rodata.oc_lwm2m_init.str1.1,"aMS",%progbits,1
+ 429              	.LC2:
+ 430 0000 5B25735D 		.ascii	"[%s][%u][%s] IOT_LINK:DO OC LWM2M LOAD-IMPLEMENT RE"
+ 430      5B25755D 
+ 430      5B25735D 
+ 430      20494F54 
+ 430      5F4C494E 
+ 431 0033 543A2564 		.ascii	"T:%d\012\015\015\012\000"
+ 431      0A0D0D0A 
+ 431      00
+ 432              		.text
+ 433              	.Letext0:
+ 434              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 435              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 436              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 437              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 438              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 439              		.file 7 "../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.h"
+ 440              		.file 8 "../../iot_link/inc/link_log.h"
+ 441              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 442              		.file 10 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oc_lwm2m_al.c
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:18     .text.oc_lwm2m_register:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:25     .text.oc_lwm2m_register:00000000 oc_lwm2m_register
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:55     .text.oc_lwm2m_register:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:60     .text.oc_lwm2m_unregister:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:67     .text.oc_lwm2m_unregister:00000000 oc_lwm2m_unregister
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:104    .text.oc_lwm2m_unregister:0000001c $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:109    .text.oc_lwm2m_report:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:116    .text.oc_lwm2m_report:00000000 oc_lwm2m_report
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:142    .text.oc_lwm2m_report:00000010 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:147    .text.oc_lwm2m_config:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:154    .text.oc_lwm2m_config:00000000 oc_lwm2m_config
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:189    .text.oc_lwm2m_config:00000018 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:194    .text.oc_lwm2m_deconfig:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:201    .text.oc_lwm2m_deconfig:00000000 oc_lwm2m_deconfig
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:226    .text.oc_lwm2m_deconfig:00000010 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:231    .text.oc_lwm2m_imp_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:238    .text.oc_lwm2m_imp_init:00000000 oc_lwm2m_imp_init
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:273    .text.oc_lwm2m_imp_init:0000002c $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:280    .text.oc_lwm2m_demo_main:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:287    .text.oc_lwm2m_demo_main:00000000 oc_lwm2m_demo_main
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:322    .text.oc_lwm2m_demo_main:0000002c $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:329    .text.oc_lwm2m_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:336    .text.oc_lwm2m_init:00000000 oc_lwm2m_init
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:389    .text.oc_lwm2m_init:0000003c $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:396    .bss.s_oc_lwm2m_ops:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:400    .bss.s_oc_lwm2m_ops:00000000 s_oc_lwm2m_ops
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:406    .rodata.__FUNCTION__.7327:00000000 __FUNCTION__.7327
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:412    .rodata.__FUNCTION__.7331:00000000 __FUNCTION__.7331
+C:\Users\LuckyE\AppData\Local\Temp\cc9ATXCb.s:418    .rodata.__FUNCTION__.7335:00000000 __FUNCTION__.7335
+
+UNDEFINED SYMBOLS
+strcmp
+link_log_level_name
+osal_sys_time
+printf
+fflush
+_impure_ptr
+link_log_level_get

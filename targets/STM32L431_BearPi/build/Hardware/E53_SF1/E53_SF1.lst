@@ -1,0 +1,473 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"E53_SF1.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__aeabi_f2d
+  18              		.global	__aeabi_dmul
+  19              		.global	__aeabi_d2f
+  20              		.global	__aeabi_ddiv
+  21              		.section	.text.E53_SF1_Init,"ax",%progbits
+  22              		.align	1
+  23              		.global	E53_SF1_Init
+  24              		.syntax unified
+  25              		.thumb
+  26              		.thumb_func
+  27              		.fpu fpv4-sp-d16
+  29              	E53_SF1_Init:
+  30              	.LFB289:
+  31              		.file 1 "Hardware/E53_SF1/E53_SF1.c"
+   1:Hardware/E53_SF1/E53_SF1.c **** /********************************************************************************
+   2:Hardware/E53_SF1/E53_SF1.c ****     * 文件名称 ：E53_SF1.c
+   3:Hardware/E53_SF1/E53_SF1.c ****     * 作     者：小熊派开源社区
+   4:Hardware/E53_SF1/E53_SF1.c ****     * 版     本：V1.0
+   5:Hardware/E53_SF1/E53_SF1.c ****     * 编写日期 ：2019-5-27
+   6:Hardware/E53_SF1/E53_SF1.c ****     * 功     能：E53_SF1扩展板驱动
+   7:Hardware/E53_SF1/E53_SF1.c **** *********************************************************************************
+   8:Hardware/E53_SF1/E53_SF1.c ****     * 说    明 ：本例程配套小熊派开源社区开发板使用
+   9:Hardware/E53_SF1/E53_SF1.c ****     *
+  10:Hardware/E53_SF1/E53_SF1.c ****     * 淘     宝：https://shop336827451.taobao.com/
+  11:Hardware/E53_SF1/E53_SF1.c ****     * 论     坛：https://bbs.huaweicloud.com/forum/forum-734-1.html
+  12:Hardware/E53_SF1/E53_SF1.c ****     * 微信公众号：小熊派开源社区
+  13:Hardware/E53_SF1/E53_SF1.c **** *********************************************************************************/
+  14:Hardware/E53_SF1/E53_SF1.c **** 
+  15:Hardware/E53_SF1/E53_SF1.c **** #include "E53_SF1.h"
+  16:Hardware/E53_SF1/E53_SF1.c **** #include "stm32l4xx.h"
+  17:Hardware/E53_SF1/E53_SF1.c **** #include "adc.h"
+  18:Hardware/E53_SF1/E53_SF1.c **** #include "math.h"
+  19:Hardware/E53_SF1/E53_SF1.c **** 
+  20:Hardware/E53_SF1/E53_SF1.c **** uint16_t ADCvalue = 0;
+  21:Hardware/E53_SF1/E53_SF1.c **** static float R0; // 元件在洁净空气中的阻值
+  22:Hardware/E53_SF1/E53_SF1.c **** 
+  23:Hardware/E53_SF1/E53_SF1.c **** /***************************************************************
+  24:Hardware/E53_SF1/E53_SF1.c **** * 函数名称: GetVoltage
+  25:Hardware/E53_SF1/E53_SF1.c **** * 说    明: 获取电压值函数
+  26:Hardware/E53_SF1/E53_SF1.c **** * 参    数: 无
+  27:Hardware/E53_SF1/E53_SF1.c **** *
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 2
+
+
+  28:Hardware/E53_SF1/E53_SF1.c **** * 返 回 值: 无
+  29:Hardware/E53_SF1/E53_SF1.c **** ***************************************************************/
+  30:Hardware/E53_SF1/E53_SF1.c **** static float GetVoltage(void)
+  31:Hardware/E53_SF1/E53_SF1.c **** {
+  32:Hardware/E53_SF1/E53_SF1.c ****     return (float)ADCvalue * 3.41 / 4096;
+  33:Hardware/E53_SF1/E53_SF1.c **** }
+  34:Hardware/E53_SF1/E53_SF1.c **** 
+  35:Hardware/E53_SF1/E53_SF1.c **** /***************************************************************
+  36:Hardware/E53_SF1/E53_SF1.c ****  * 函数名称: MQ2PPMCalibration
+  37:Hardware/E53_SF1/E53_SF1.c ****  * 说    明: 传感器校准函数
+  38:Hardware/E53_SF1/E53_SF1.c ****  * 参    数: 无
+  39:Hardware/E53_SF1/E53_SF1.c ****  * 返 回 值: 无
+  40:Hardware/E53_SF1/E53_SF1.c ****  ***************************************************************/
+  41:Hardware/E53_SF1/E53_SF1.c **** static void MQ2PPMCalibration(void)
+  42:Hardware/E53_SF1/E53_SF1.c **** {
+  43:Hardware/E53_SF1/E53_SF1.c ****     float voltage = GetVoltage();
+  44:Hardware/E53_SF1/E53_SF1.c ****     if (voltage != 0) {
+  45:Hardware/E53_SF1/E53_SF1.c ****         float RS = (MQ2_CONSTANT_1 - voltage) / voltage * RL;
+  46:Hardware/E53_SF1/E53_SF1.c ****         R0 = RS / pow(CAL_PPM / MQ2_CONSTANT_2, 1 / MQ2_CONSTANT_3);
+  47:Hardware/E53_SF1/E53_SF1.c ****     }
+  48:Hardware/E53_SF1/E53_SF1.c **** }
+  49:Hardware/E53_SF1/E53_SF1.c **** 
+  50:Hardware/E53_SF1/E53_SF1.c **** /***************************************************************
+  51:Hardware/E53_SF1/E53_SF1.c **** * 函数名称: E53_SF1_Init
+  52:Hardware/E53_SF1/E53_SF1.c **** * 说    明: 初始化E53_SF1扩展板
+  53:Hardware/E53_SF1/E53_SF1.c **** * 参    数: 无
+  54:Hardware/E53_SF1/E53_SF1.c **** * 返 回 值: 无
+  55:Hardware/E53_SF1/E53_SF1.c **** ***************************************************************/
+  56:Hardware/E53_SF1/E53_SF1.c **** void E53_SF1_Init(void)
+  57:Hardware/E53_SF1/E53_SF1.c **** {
+  32              		.loc 1 57 0
+  33              		.cfi_startproc
+  34              		@ args = 0, pretend = 0, frame = 0
+  35              		@ frame_needed = 0, uses_anonymous_args = 0
+  36 0000 10B5     		push	{r4, lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 8
+  39              		.cfi_offset 4, -8
+  40              		.cfi_offset 14, -4
+  58:Hardware/E53_SF1/E53_SF1.c ****     HAL_ADC_Start_DMA(&hadc1,(uint32_t*)&ADCvalue,1);
+  41              		.loc 1 58 0
+  42 0002 214C     		ldr	r4, .L3+16
+  43 0004 2148     		ldr	r0, .L3+20
+  44 0006 0122     		movs	r2, #1
+  45 0008 2146     		mov	r1, r4
+  46 000a FFF7FEFF 		bl	HAL_ADC_Start_DMA
+  47              	.LVL0:
+  59:Hardware/E53_SF1/E53_SF1.c ****     HAL_Delay(1000);
+  48              		.loc 1 59 0
+  49 000e 4FF47A70 		mov	r0, #1000
+  50 0012 FFF7FEFF 		bl	HAL_Delay
+  51              	.LVL1:
+  52              	.LBB7:
+  53              	.LBB8:
+  54              	.LBB9:
+  55              	.LBB10:
+  32:Hardware/E53_SF1/E53_SF1.c **** }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 3
+
+
+  56              		.loc 1 32 0
+  57 0016 2088     		ldrh	r0, [r4]
+  58 0018 07EE900A 		vmov	s15, r0	@ int
+  59 001c F8EE677A 		vcvt.f32.u32	s15, s15
+  60 0020 17EE900A 		vmov	r0, s15
+  61 0024 FFF7FEFF 		bl	__aeabi_f2d
+  62              	.LVL2:
+  63 0028 13A3     		adr	r3, .L3
+  64 002a D3E90023 		ldrd	r2, [r3]
+  65 002e FFF7FEFF 		bl	__aeabi_dmul
+  66              	.LVL3:
+  67 0032 0022     		movs	r2, #0
+  68 0034 164B     		ldr	r3, .L3+24
+  69 0036 FFF7FEFF 		bl	__aeabi_dmul
+  70              	.LVL4:
+  71 003a FFF7FEFF 		bl	__aeabi_d2f
+  72              	.LVL5:
+  73 003e 07EE900A 		vmov	s15, r0
+  74              	.LBE10:
+  75              	.LBE9:
+  44:Hardware/E53_SF1/E53_SF1.c ****         float RS = (MQ2_CONSTANT_1 - voltage) / voltage * RL;
+  76              		.loc 1 44 0
+  77 0042 F5EE407A 		vcmp.f32	s15, #0
+  78 0046 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  79 004a 12D0     		beq	.L1
+  80              	.LVL6:
+  81              	.LBB11:
+  45:Hardware/E53_SF1/E53_SF1.c ****         R0 = RS / pow(CAL_PPM / MQ2_CONSTANT_2, 1 / MQ2_CONSTANT_3);
+  82              		.loc 1 45 0
+  83 004c B1EE007A 		vmov.f32	s14, #4.0e+0
+  84 0050 37EE677A 		vsub.f32	s14, s14, s15
+  46:Hardware/E53_SF1/E53_SF1.c ****     }
+  85              		.loc 1 46 0
+  86 0054 C7EE277A 		vdiv.f32	s15, s14, s15
+  87              	.LVL7:
+  88 0058 17EE900A 		vmov	r0, s15
+  89 005c FFF7FEFF 		bl	__aeabi_f2d
+  90              	.LVL8:
+  91 0060 07A3     		adr	r3, .L3+8
+  92 0062 D3E90023 		ldrd	r2, [r3]
+  93 0066 FFF7FEFF 		bl	__aeabi_ddiv
+  94              	.LVL9:
+  95 006a FFF7FEFF 		bl	__aeabi_d2f
+  96              	.LVL10:
+  97 006e 094B     		ldr	r3, .L3+28
+  98 0070 1860     		str	r0, [r3]	@ float
+  99              	.L1:
+ 100              	.LBE11:
+ 101              	.LBE8:
+ 102              	.LBE7:
+  60:Hardware/E53_SF1/E53_SF1.c ****     MQ2PPMCalibration();
+  61:Hardware/E53_SF1/E53_SF1.c **** }
+ 103              		.loc 1 61 0
+ 104 0072 10BD     		pop	{r4, pc}
+ 105              	.L4:
+ 106 0074 AFF30080 		.align	3
+ 107              	.L3:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 4
+
+
+ 108 0078 48E17A14 		.word	343597384
+ 109 007c AE470B40 		.word	1074481070
+ 110 0080 DF81FD5D 		.word	1576894943
+ 111 0084 17D91440 		.word	1075108119
+ 112 0088 00000000 		.word	.LANCHOR0
+ 113 008c 00000000 		.word	hadc1
+ 114 0090 0000303F 		.word	1060110336
+ 115 0094 00000000 		.word	.LANCHOR1
+ 116              		.cfi_endproc
+ 117              	.LFE289:
+ 119              		.section	.text.E53_SF1_Read_Data,"ax",%progbits
+ 120              		.align	1
+ 121              		.global	E53_SF1_Read_Data
+ 122              		.syntax unified
+ 123              		.thumb
+ 124              		.thumb_func
+ 125              		.fpu fpv4-sp-d16
+ 127              	E53_SF1_Read_Data:
+ 128              	.LFB290:
+  62:Hardware/E53_SF1/E53_SF1.c **** 
+  63:Hardware/E53_SF1/E53_SF1.c **** /***************************************************************
+  64:Hardware/E53_SF1/E53_SF1.c ****  * 函数名称: E53_SF1_Read_Data
+  65:Hardware/E53_SF1/E53_SF1.c ****  * 说    明: 获取PPM函数
+  66:Hardware/E53_SF1/E53_SF1.c ****  * 参    数: ppm 烟雾浓度
+  67:Hardware/E53_SF1/E53_SF1.c ****  * 返 回 值: 0 成功; -1 失败
+  68:Hardware/E53_SF1/E53_SF1.c ****  ***************************************************************/
+  69:Hardware/E53_SF1/E53_SF1.c **** int E53_SF1_Read_Data(float *ppm)
+  70:Hardware/E53_SF1/E53_SF1.c **** {
+ 129              		.loc 1 70 0
+ 130              		.cfi_startproc
+ 131              		@ args = 0, pretend = 0, frame = 0
+ 132              		@ frame_needed = 0, uses_anonymous_args = 0
+ 133              	.LVL11:
+ 134              	.LBB14:
+ 135              	.LBB15:
+  32:Hardware/E53_SF1/E53_SF1.c **** }
+ 136              		.loc 1 32 0
+ 137 0000 234B     		ldr	r3, .L6+24
+ 138              	.LBE15:
+ 139              	.LBE14:
+ 140              		.loc 1 70 0
+ 141 0002 10B5     		push	{r4, lr}
+ 142              	.LCFI1:
+ 143              		.cfi_def_cfa_offset 8
+ 144              		.cfi_offset 4, -8
+ 145              		.cfi_offset 14, -4
+ 146              		.loc 1 70 0
+ 147 0004 0446     		mov	r4, r0
+ 148              	.LBB17:
+ 149              	.LBB16:
+  32:Hardware/E53_SF1/E53_SF1.c **** }
+ 150              		.loc 1 32 0
+ 151 0006 1888     		ldrh	r0, [r3]
+ 152              	.LVL12:
+ 153 0008 07EE900A 		vmov	s15, r0	@ int
+ 154 000c F8EE677A 		vcvt.f32.u32	s15, s15
+ 155 0010 17EE900A 		vmov	r0, s15
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 5
+
+
+ 156 0014 FFF7FEFF 		bl	__aeabi_f2d
+ 157              	.LVL13:
+ 158 0018 17A3     		adr	r3, .L6
+ 159 001a D3E90023 		ldrd	r2, [r3]
+ 160 001e FFF7FEFF 		bl	__aeabi_dmul
+ 161              	.LVL14:
+ 162 0022 0022     		movs	r2, #0
+ 163 0024 1B4B     		ldr	r3, .L6+28
+ 164 0026 FFF7FEFF 		bl	__aeabi_dmul
+ 165              	.LVL15:
+ 166 002a FFF7FEFF 		bl	__aeabi_d2f
+ 167              	.LVL16:
+ 168              	.LBE16:
+ 169              	.LBE17:
+  71:Hardware/E53_SF1/E53_SF1.c ****     float voltage, RS;
+  72:Hardware/E53_SF1/E53_SF1.c **** 
+  73:Hardware/E53_SF1/E53_SF1.c ****     voltage = GetVoltage();
+  74:Hardware/E53_SF1/E53_SF1.c ****     RS = (MQ2_CONSTANT_1 - voltage) / voltage * RL;     // 计算RS
+ 170              		.loc 1 74 0
+ 171 002e 07EE100A 		vmov	s14, r0
+ 172 0032 F1EE007A 		vmov.f32	s15, #4.0e+0
+ 173 0036 77EEC77A 		vsub.f32	s15, s15, s14
+  75:Hardware/E53_SF1/E53_SF1.c ****     *ppm = MQ2_CONSTANT_2 * pow(RS / R0, MQ2_CONSTANT_3); // 计算ppm
+ 174              		.loc 1 75 0
+ 175 003a 174B     		ldr	r3, .L6+32
+  74:Hardware/E53_SF1/E53_SF1.c ****     *ppm = MQ2_CONSTANT_2 * pow(RS / R0, MQ2_CONSTANT_3); // 计算ppm
+ 176              		.loc 1 74 0
+ 177 003c 87EE877A 		vdiv.f32	s14, s15, s14
+ 178              	.LVL17:
+ 179              		.loc 1 75 0
+ 180 0040 D3ED007A 		vldr.32	s15, [r3]
+ 181 0044 C7EE277A 		vdiv.f32	s15, s14, s15
+ 182 0048 17EE900A 		vmov	r0, s15
+ 183 004c FFF7FEFF 		bl	__aeabi_f2d
+ 184              	.LVL18:
+ 185 0050 9FED0B1B 		vldr.64	d1, .L6+8
+ 186 0054 41EC100B 		vmov	d0, r0, r1
+ 187 0058 FFF7FEFF 		bl	pow
+ 188              	.LVL19:
+ 189 005c 0AA3     		adr	r3, .L6+16
+ 190 005e D3E90023 		ldrd	r2, [r3]
+ 191 0062 51EC100B 		vmov	r0, r1, d0
+ 192 0066 FFF7FEFF 		bl	__aeabi_dmul
+ 193              	.LVL20:
+ 194 006a FFF7FEFF 		bl	__aeabi_d2f
+ 195              	.LVL21:
+ 196 006e 2060     		str	r0, [r4]	@ float
+  76:Hardware/E53_SF1/E53_SF1.c ****     return 0;
+  77:Hardware/E53_SF1/E53_SF1.c **** }
+ 197              		.loc 1 77 0
+ 198 0070 0020     		movs	r0, #0
+ 199 0072 10BD     		pop	{r4, pc}
+ 200              	.LVL22:
+ 201              	.L7:
+ 202 0074 AFF30080 		.align	3
+ 203              	.L6:
+ 204 0078 48E17A14 		.word	343597384
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 6
+
+
+ 205 007c AE470B40 		.word	1074481070
+ 206 0080 00000040 		.word	1073741824
+ 207 0084 8D9700C0 		.word	-1073703027
+ 208 0088 00000040 		.word	1073741824
+ 209 008c 332F8340 		.word	1082339123
+ 210 0090 00000000 		.word	.LANCHOR0
+ 211 0094 0000303F 		.word	1060110336
+ 212 0098 00000000 		.word	.LANCHOR1
+ 213              		.cfi_endproc
+ 214              	.LFE290:
+ 216              		.section	.text.E53_SF1_LED_Set,"ax",%progbits
+ 217              		.align	1
+ 218              		.global	E53_SF1_LED_Set
+ 219              		.syntax unified
+ 220              		.thumb
+ 221              		.thumb_func
+ 222              		.fpu fpv4-sp-d16
+ 224              	E53_SF1_LED_Set:
+ 225              	.LFB291:
+  78:Hardware/E53_SF1/E53_SF1.c **** 
+  79:Hardware/E53_SF1/E53_SF1.c **** /***************************************************************
+  80:Hardware/E53_SF1/E53_SF1.c **** * 函数名称: E53_SF1_LED_Set
+  81:Hardware/E53_SF1/E53_SF1.c **** * 说    明: E53_SF1开发板上的LED灯的亮灭控制
+  82:Hardware/E53_SF1/E53_SF1.c **** * 参    数: status,LED灯的状态
+  83:Hardware/E53_SF1/E53_SF1.c **** *                                    OFF,关灯
+  84:Hardware/E53_SF1/E53_SF1.c **** *                                    ON,开灯
+  85:Hardware/E53_SF1/E53_SF1.c **** * 返 回 值: 无
+  86:Hardware/E53_SF1/E53_SF1.c **** ***************************************************************/
+  87:Hardware/E53_SF1/E53_SF1.c **** void E53_SF1_LED_Set(E53_SF1_Status status)
+  88:Hardware/E53_SF1/E53_SF1.c **** {
+ 226              		.loc 1 88 0
+ 227              		.cfi_startproc
+ 228              		@ args = 0, pretend = 0, frame = 0
+ 229              		@ frame_needed = 0, uses_anonymous_args = 0
+ 230              		@ link register save eliminated.
+ 231              	.LVL23:
+  89:Hardware/E53_SF1/E53_SF1.c ****     HAL_GPIO_WritePin(E53_GPIO1_GPIO_Port, E53_GPIO1_Pin, status != ON ? GPIO_PIN_RESET : GPIO_PIN_
+ 232              		.loc 1 89 0
+ 233 0000 431E     		subs	r3, r0, #1
+ 234 0002 5A42     		rsbs	r2, r3, #0
+ 235 0004 5A41     		adcs	r2, r2, r3
+ 236 0006 0121     		movs	r1, #1
+ 237 0008 4FF09040 		mov	r0, #1207959552
+ 238              	.LVL24:
+ 239 000c FFF7FEBF 		b	HAL_GPIO_WritePin
+ 240              	.LVL25:
+ 241              		.cfi_endproc
+ 242              	.LFE291:
+ 244              		.section	.text.E53_SF1_Beep_Set,"ax",%progbits
+ 245              		.align	1
+ 246              		.global	E53_SF1_Beep_Set
+ 247              		.syntax unified
+ 248              		.thumb
+ 249              		.thumb_func
+ 250              		.fpu fpv4-sp-d16
+ 252              	E53_SF1_Beep_Set:
+ 253              	.LFB292:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 7
+
+
+  90:Hardware/E53_SF1/E53_SF1.c **** }
+  91:Hardware/E53_SF1/E53_SF1.c **** 
+  92:Hardware/E53_SF1/E53_SF1.c **** /***************************************************************
+  93:Hardware/E53_SF1/E53_SF1.c **** * 函数名称: E53_SF1_Beep_Set
+  94:Hardware/E53_SF1/E53_SF1.c **** * 说    明: E53_SF1蜂鸣器报警与否
+  95:Hardware/E53_SF1/E53_SF1.c **** * 参    数: status,ENUM枚举的数据
+  96:Hardware/E53_SF1/E53_SF1.c **** *                                    OFF,蜂鸣器
+  97:Hardware/E53_SF1/E53_SF1.c **** *                                    ON,开蜂鸣器
+  98:Hardware/E53_SF1/E53_SF1.c **** * 返 回 值: 无
+  99:Hardware/E53_SF1/E53_SF1.c **** ***************************************************************/
+ 100:Hardware/E53_SF1/E53_SF1.c **** // void E53_SF1_Beep_Set(E53_SF1_Status status)
+ 101:Hardware/E53_SF1/E53_SF1.c **** // {
+ 102:Hardware/E53_SF1/E53_SF1.c **** //   if (status == ON)
+ 103:Hardware/E53_SF1/E53_SF1.c **** //     HAL_TIM_PWM_Start(&htim16, TIM_CHANNEL_1);
+ 104:Hardware/E53_SF1/E53_SF1.c **** //   if (status == OFF)
+ 105:Hardware/E53_SF1/E53_SF1.c **** //     HAL_TIM_PWM_Stop(&htim16, TIM_CHANNEL_1);
+ 106:Hardware/E53_SF1/E53_SF1.c **** // }
+ 107:Hardware/E53_SF1/E53_SF1.c **** void E53_SF1_Beep_Set(E53_SF1_Status status)
+ 108:Hardware/E53_SF1/E53_SF1.c **** {
+ 254              		.loc 1 108 0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              		@ link register save eliminated.
+ 259              	.LVL26:
+ 109:Hardware/E53_SF1/E53_SF1.c ****   HAL_GPIO_WritePin(E53_GPIO3_GPIO_Port, E53_GPIO3_Pin, status != ON ? GPIO_PIN_RESET : GPIO_PIN_SE
+ 260              		.loc 1 109 0
+ 261 0000 431E     		subs	r3, r0, #1
+ 262 0002 5A42     		rsbs	r2, r3, #0
+ 263 0004 5A41     		adcs	r2, r2, r3
+ 264 0006 4FF48071 		mov	r1, #256
+ 265 000a 0148     		ldr	r0, .L10
+ 266              	.LVL27:
+ 267 000c FFF7FEBF 		b	HAL_GPIO_WritePin
+ 268              	.LVL28:
+ 269              	.L11:
+ 270              		.align	2
+ 271              	.L10:
+ 272 0010 00040048 		.word	1207960576
+ 273              		.cfi_endproc
+ 274              	.LFE292:
+ 276              		.global	ADCvalue
+ 277              		.section	.bss.ADCvalue,"aw",%nobits
+ 278              		.align	1
+ 279              		.set	.LANCHOR0,. + 0
+ 282              	ADCvalue:
+ 283 0000 0000     		.space	2
+ 284              		.section	.bss.R0,"aw",%nobits
+ 285              		.align	2
+ 286              		.set	.LANCHOR1,. + 0
+ 289              	R0:
+ 290 0000 00000000 		.space	4
+ 291              		.text
+ 292              	.Letext0:
+ 293              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 294              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 295              		.file 4 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 8
+
+
+ 296              		.file 5 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_st
+ 297              		.file 6 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l431
+ 298              		.file 7 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4xx
+ 299              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 300              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 301              		.file 10 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-e
+ 302              		.file 11 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 303              		.file 12 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 304              		.file 13 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 305              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 306              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h"
+ 307              		.file 16 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h"
+ 308              		.file 17 "Hardware/E53_SF1/E53_SF1.h"
+ 309              		.file 18 "../../iot_link/os/liteos/include/los_typedef.h"
+ 310              		.file 19 "../../iot_link/os/liteos/include/los_config.h"
+ 311              		.file 20 "../../iot_link/os/liteos/include/los_err.h"
+ 312              		.file 21 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 313              		.file 22 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 314              		.file 23 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 E53_SF1.c
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:22     .text.E53_SF1_Init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:29     .text.E53_SF1_Init:00000000 E53_SF1_Init
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:108    .text.E53_SF1_Init:00000078 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:120    .text.E53_SF1_Read_Data:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:127    .text.E53_SF1_Read_Data:00000000 E53_SF1_Read_Data
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:204    .text.E53_SF1_Read_Data:00000078 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:217    .text.E53_SF1_LED_Set:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:224    .text.E53_SF1_LED_Set:00000000 E53_SF1_LED_Set
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:245    .text.E53_SF1_Beep_Set:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:252    .text.E53_SF1_Beep_Set:00000000 E53_SF1_Beep_Set
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:272    .text.E53_SF1_Beep_Set:00000010 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:282    .bss.ADCvalue:00000000 ADCvalue
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:278    .bss.ADCvalue:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:285    .bss.R0:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccRBI0Hj.s:289    .bss.R0:00000000 R0
+
+UNDEFINED SYMBOLS
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_d2f
+__aeabi_ddiv
+HAL_ADC_Start_DMA
+HAL_Delay
+hadc1
+pow
+HAL_GPIO_WritePin

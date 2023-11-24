@@ -1,0 +1,941 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"stm32l4xx_it.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.NMI_Handler,"ax",%progbits
+  18              		.align	1
+  19              		.global	NMI_Handler
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	NMI_Handler:
+  26              	.LFB287:
+  27              		.file 1 "Src/stm32l4xx_it.c"
+   1:Src/stm32l4xx_it.c **** /* USER CODE BEGIN Header */
+   2:Src/stm32l4xx_it.c **** /**
+   3:Src/stm32l4xx_it.c ****   ******************************************************************************
+   4:Src/stm32l4xx_it.c ****   * @file    stm32l4xx_it.c
+   5:Src/stm32l4xx_it.c ****   * @brief   Interrupt Service Routines.
+   6:Src/stm32l4xx_it.c ****   ******************************************************************************
+   7:Src/stm32l4xx_it.c ****   * @attention
+   8:Src/stm32l4xx_it.c ****   *
+   9:Src/stm32l4xx_it.c ****   * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  10:Src/stm32l4xx_it.c ****   * All rights reserved.</center></h2>
+  11:Src/stm32l4xx_it.c ****   *
+  12:Src/stm32l4xx_it.c ****   * This software component is licensed by ST under BSD 3-Clause license,
+  13:Src/stm32l4xx_it.c ****   * the "License"; You may not use this file except in compliance with the
+  14:Src/stm32l4xx_it.c ****   * License. You may obtain a copy of the License at:
+  15:Src/stm32l4xx_it.c ****   *                        opensource.org/licenses/BSD-3-Clause
+  16:Src/stm32l4xx_it.c ****   *
+  17:Src/stm32l4xx_it.c ****   ******************************************************************************
+  18:Src/stm32l4xx_it.c ****   */
+  19:Src/stm32l4xx_it.c **** /* USER CODE END Header */
+  20:Src/stm32l4xx_it.c **** 
+  21:Src/stm32l4xx_it.c **** /* Includes ------------------------------------------------------------------*/
+  22:Src/stm32l4xx_it.c **** #include "main.h"
+  23:Src/stm32l4xx_it.c **** #include "stm32l4xx_it.h"
+  24:Src/stm32l4xx_it.c **** /* Private includes ----------------------------------------------------------*/
+  25:Src/stm32l4xx_it.c **** /* USER CODE BEGIN Includes */
+  26:Src/stm32l4xx_it.c **** /* USER CODE END Includes */
+  27:Src/stm32l4xx_it.c **** 
+  28:Src/stm32l4xx_it.c **** /* Private typedef -----------------------------------------------------------*/
+  29:Src/stm32l4xx_it.c **** /* USER CODE BEGIN TD */
+  30:Src/stm32l4xx_it.c **** 
+  31:Src/stm32l4xx_it.c **** /* USER CODE END TD */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 2
+
+
+  32:Src/stm32l4xx_it.c **** 
+  33:Src/stm32l4xx_it.c **** /* Private define ------------------------------------------------------------*/
+  34:Src/stm32l4xx_it.c **** /* USER CODE BEGIN PD */
+  35:Src/stm32l4xx_it.c **** 
+  36:Src/stm32l4xx_it.c **** /* USER CODE END PD */
+  37:Src/stm32l4xx_it.c **** 
+  38:Src/stm32l4xx_it.c **** /* Private macro -------------------------------------------------------------*/
+  39:Src/stm32l4xx_it.c **** /* USER CODE BEGIN PM */
+  40:Src/stm32l4xx_it.c **** 
+  41:Src/stm32l4xx_it.c **** /* USER CODE END PM */
+  42:Src/stm32l4xx_it.c **** 
+  43:Src/stm32l4xx_it.c **** /* Private variables ---------------------------------------------------------*/
+  44:Src/stm32l4xx_it.c **** /* USER CODE BEGIN PV */
+  45:Src/stm32l4xx_it.c **** 
+  46:Src/stm32l4xx_it.c **** /* USER CODE END PV */
+  47:Src/stm32l4xx_it.c **** 
+  48:Src/stm32l4xx_it.c **** /* Private function prototypes -----------------------------------------------*/
+  49:Src/stm32l4xx_it.c **** /* USER CODE BEGIN PFP */
+  50:Src/stm32l4xx_it.c **** 
+  51:Src/stm32l4xx_it.c **** /* USER CODE END PFP */
+  52:Src/stm32l4xx_it.c **** 
+  53:Src/stm32l4xx_it.c **** /* Private user code ---------------------------------------------------------*/
+  54:Src/stm32l4xx_it.c **** /* USER CODE BEGIN 0 */
+  55:Src/stm32l4xx_it.c **** 
+  56:Src/stm32l4xx_it.c **** /* USER CODE END 0 */
+  57:Src/stm32l4xx_it.c **** 
+  58:Src/stm32l4xx_it.c **** /* External variables --------------------------------------------------------*/
+  59:Src/stm32l4xx_it.c **** extern DMA_HandleTypeDef hdma_adc1;
+  60:Src/stm32l4xx_it.c **** extern DMA_HandleTypeDef hdma_usart1_rx;
+  61:Src/stm32l4xx_it.c **** extern DMA_HandleTypeDef hdma_usart1_tx;
+  62:Src/stm32l4xx_it.c **** extern ADC_HandleTypeDef hadc1;
+  63:Src/stm32l4xx_it.c **** extern UART_HandleTypeDef hlpuart1;
+  64:Src/stm32l4xx_it.c **** extern UART_HandleTypeDef huart3;
+  65:Src/stm32l4xx_it.c **** extern UART_HandleTypeDef huart1;
+  66:Src/stm32l4xx_it.c **** extern TIM_HandleTypeDef htim2;
+  67:Src/stm32l4xx_it.c **** extern SD_HandleTypeDef hsd1;
+  68:Src/stm32l4xx_it.c **** /* USER CODE BEGIN EV */
+  69:Src/stm32l4xx_it.c **** 
+  70:Src/stm32l4xx_it.c **** /* USER CODE END EV */
+  71:Src/stm32l4xx_it.c **** 
+  72:Src/stm32l4xx_it.c **** /******************************************************************************/
+  73:Src/stm32l4xx_it.c **** /*           Cortex-M4 Processor Interruption and Exception Handlers          */
+  74:Src/stm32l4xx_it.c **** /******************************************************************************/
+  75:Src/stm32l4xx_it.c **** /**
+  76:Src/stm32l4xx_it.c ****   * @brief This function handles Non maskable interrupt.
+  77:Src/stm32l4xx_it.c ****   */
+  78:Src/stm32l4xx_it.c **** void NMI_Handler(void)
+  79:Src/stm32l4xx_it.c **** {
+  28              		.loc 1 79 0
+  29              		.cfi_startproc
+  30              		@ Volatile: function does not return.
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.L2:
+  35 0000 FEE7     		b	.L2
+  36              		.cfi_endproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 3
+
+
+  37              	.LFE287:
+  39              		.section	.text.HardFault_Handler,"ax",%progbits
+  40              		.align	1
+  41              		.global	HardFault_Handler
+  42              		.syntax unified
+  43              		.thumb
+  44              		.thumb_func
+  45              		.fpu fpv4-sp-d16
+  47              	HardFault_Handler:
+  48              	.LFB288:
+  80:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
+  81:Src/stm32l4xx_it.c **** 
+  82:Src/stm32l4xx_it.c ****   /* USER CODE END NonMaskableInt_IRQn 0 */
+  83:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
+  84:Src/stm32l4xx_it.c ****   while (1)
+  85:Src/stm32l4xx_it.c ****   {
+  86:Src/stm32l4xx_it.c ****   }
+  87:Src/stm32l4xx_it.c ****   /* USER CODE END NonMaskableInt_IRQn 1 */
+  88:Src/stm32l4xx_it.c **** }
+  89:Src/stm32l4xx_it.c **** 
+  90:Src/stm32l4xx_it.c **** /**
+  91:Src/stm32l4xx_it.c ****   * @brief This function handles Hard fault interrupt.
+  92:Src/stm32l4xx_it.c ****   */
+  93:Src/stm32l4xx_it.c **** void HardFault_Handler(void)
+  94:Src/stm32l4xx_it.c **** {
+  49              		.loc 1 94 0
+  50              		.cfi_startproc
+  51              		@ Volatile: function does not return.
+  52              		@ args = 0, pretend = 0, frame = 0
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  54              		@ link register save eliminated.
+  55              	.L4:
+  56 0000 FEE7     		b	.L4
+  57              		.cfi_endproc
+  58              	.LFE288:
+  60              		.section	.text.MemManage_Handler,"ax",%progbits
+  61              		.align	1
+  62              		.global	MemManage_Handler
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  66              		.fpu fpv4-sp-d16
+  68              	MemManage_Handler:
+  69              	.LFB289:
+  95:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN HardFault_IRQn 0 */
+  96:Src/stm32l4xx_it.c **** 
+  97:Src/stm32l4xx_it.c ****   /* USER CODE END HardFault_IRQn 0 */
+  98:Src/stm32l4xx_it.c ****   while (1)
+  99:Src/stm32l4xx_it.c ****   {
+ 100:Src/stm32l4xx_it.c ****     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+ 101:Src/stm32l4xx_it.c ****     /* USER CODE END W1_HardFault_IRQn 0 */
+ 102:Src/stm32l4xx_it.c ****   }
+ 103:Src/stm32l4xx_it.c **** }
+ 104:Src/stm32l4xx_it.c **** 
+ 105:Src/stm32l4xx_it.c **** /**
+ 106:Src/stm32l4xx_it.c ****   * @brief This function handles Memory management fault.
+ 107:Src/stm32l4xx_it.c ****   */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 4
+
+
+ 108:Src/stm32l4xx_it.c **** void MemManage_Handler(void)
+ 109:Src/stm32l4xx_it.c **** {
+  70              		.loc 1 109 0
+  71              		.cfi_startproc
+  72              		@ Volatile: function does not return.
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              		@ link register save eliminated.
+  76              	.L6:
+  77 0000 FEE7     		b	.L6
+  78              		.cfi_endproc
+  79              	.LFE289:
+  81              		.section	.text.BusFault_Handler,"ax",%progbits
+  82              		.align	1
+  83              		.global	BusFault_Handler
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  87              		.fpu fpv4-sp-d16
+  89              	BusFault_Handler:
+  90              	.LFB290:
+ 110:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN MemoryManagement_IRQn 0 */
+ 111:Src/stm32l4xx_it.c **** 
+ 112:Src/stm32l4xx_it.c ****   /* USER CODE END MemoryManagement_IRQn 0 */
+ 113:Src/stm32l4xx_it.c ****   while (1)
+ 114:Src/stm32l4xx_it.c ****   {
+ 115:Src/stm32l4xx_it.c ****     /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
+ 116:Src/stm32l4xx_it.c ****     /* USER CODE END W1_MemoryManagement_IRQn 0 */
+ 117:Src/stm32l4xx_it.c ****   }
+ 118:Src/stm32l4xx_it.c **** }
+ 119:Src/stm32l4xx_it.c **** 
+ 120:Src/stm32l4xx_it.c **** /**
+ 121:Src/stm32l4xx_it.c ****   * @brief This function handles Prefetch fault, memory access fault.
+ 122:Src/stm32l4xx_it.c ****   */
+ 123:Src/stm32l4xx_it.c **** void BusFault_Handler(void)
+ 124:Src/stm32l4xx_it.c **** {
+  91              		.loc 1 124 0
+  92              		.cfi_startproc
+  93              		@ Volatile: function does not return.
+  94              		@ args = 0, pretend = 0, frame = 0
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              		@ link register save eliminated.
+  97              	.L8:
+  98 0000 FEE7     		b	.L8
+  99              		.cfi_endproc
+ 100              	.LFE290:
+ 102              		.section	.text.UsageFault_Handler,"ax",%progbits
+ 103              		.align	1
+ 104              		.global	UsageFault_Handler
+ 105              		.syntax unified
+ 106              		.thumb
+ 107              		.thumb_func
+ 108              		.fpu fpv4-sp-d16
+ 110              	UsageFault_Handler:
+ 111              	.LFB291:
+ 125:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN BusFault_IRQn 0 */
+ 126:Src/stm32l4xx_it.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 5
+
+
+ 127:Src/stm32l4xx_it.c ****   /* USER CODE END BusFault_IRQn 0 */
+ 128:Src/stm32l4xx_it.c ****   while (1)
+ 129:Src/stm32l4xx_it.c ****   {
+ 130:Src/stm32l4xx_it.c ****     /* USER CODE BEGIN W1_BusFault_IRQn 0 */
+ 131:Src/stm32l4xx_it.c ****     /* USER CODE END W1_BusFault_IRQn 0 */
+ 132:Src/stm32l4xx_it.c ****   }
+ 133:Src/stm32l4xx_it.c **** }
+ 134:Src/stm32l4xx_it.c **** 
+ 135:Src/stm32l4xx_it.c **** /**
+ 136:Src/stm32l4xx_it.c ****   * @brief This function handles Undefined instruction or illegal state.
+ 137:Src/stm32l4xx_it.c ****   */
+ 138:Src/stm32l4xx_it.c **** void UsageFault_Handler(void)
+ 139:Src/stm32l4xx_it.c **** {
+ 112              		.loc 1 139 0
+ 113              		.cfi_startproc
+ 114              		@ Volatile: function does not return.
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              		@ link register save eliminated.
+ 118              	.L10:
+ 119 0000 FEE7     		b	.L10
+ 120              		.cfi_endproc
+ 121              	.LFE291:
+ 123              		.section	.text.SVC_Handler,"ax",%progbits
+ 124              		.align	1
+ 125              		.global	SVC_Handler
+ 126              		.syntax unified
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.fpu fpv4-sp-d16
+ 131              	SVC_Handler:
+ 132              	.LFB292:
+ 140:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN UsageFault_IRQn 0 */
+ 141:Src/stm32l4xx_it.c **** 
+ 142:Src/stm32l4xx_it.c ****   /* USER CODE END UsageFault_IRQn 0 */
+ 143:Src/stm32l4xx_it.c ****   while (1)
+ 144:Src/stm32l4xx_it.c ****   {
+ 145:Src/stm32l4xx_it.c ****     /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+ 146:Src/stm32l4xx_it.c ****     /* USER CODE END W1_UsageFault_IRQn 0 */
+ 147:Src/stm32l4xx_it.c ****   }
+ 148:Src/stm32l4xx_it.c **** }
+ 149:Src/stm32l4xx_it.c **** 
+ 150:Src/stm32l4xx_it.c **** /**
+ 151:Src/stm32l4xx_it.c ****   * @brief This function handles System service call via SWI instruction.
+ 152:Src/stm32l4xx_it.c ****   */
+ 153:Src/stm32l4xx_it.c **** void SVC_Handler(void)
+ 154:Src/stm32l4xx_it.c **** {
+ 133              		.loc 1 154 0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+ 155:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN SVCall_IRQn 0 */
+ 156:Src/stm32l4xx_it.c **** 
+ 157:Src/stm32l4xx_it.c ****   /* USER CODE END SVCall_IRQn 0 */
+ 158:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN SVCall_IRQn 1 */
+ 159:Src/stm32l4xx_it.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 6
+
+
+ 160:Src/stm32l4xx_it.c ****   /* USER CODE END SVCall_IRQn 1 */
+ 161:Src/stm32l4xx_it.c **** }
+ 138              		.loc 1 161 0
+ 139 0000 7047     		bx	lr
+ 140              		.cfi_endproc
+ 141              	.LFE292:
+ 143              		.section	.text.DebugMon_Handler,"ax",%progbits
+ 144              		.align	1
+ 145              		.global	DebugMon_Handler
+ 146              		.syntax unified
+ 147              		.thumb
+ 148              		.thumb_func
+ 149              		.fpu fpv4-sp-d16
+ 151              	DebugMon_Handler:
+ 152              	.LFB308:
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 0
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156              		@ link register save eliminated.
+ 157 0000 7047     		bx	lr
+ 158              		.cfi_endproc
+ 159              	.LFE308:
+ 161              		.section	.text.PendSV_Handler,"ax",%progbits
+ 162              		.align	1
+ 163              		.weak	PendSV_Handler
+ 164              		.syntax unified
+ 165              		.thumb
+ 166              		.thumb_func
+ 167              		.fpu fpv4-sp-d16
+ 169              	PendSV_Handler:
+ 170              	.LFB294:
+ 162:Src/stm32l4xx_it.c **** 
+ 163:Src/stm32l4xx_it.c **** /**
+ 164:Src/stm32l4xx_it.c ****   * @brief This function handles Debug monitor.
+ 165:Src/stm32l4xx_it.c ****   */
+ 166:Src/stm32l4xx_it.c **** void DebugMon_Handler(void)
+ 167:Src/stm32l4xx_it.c **** {
+ 168:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN DebugMonitor_IRQn 0 */
+ 169:Src/stm32l4xx_it.c **** 
+ 170:Src/stm32l4xx_it.c ****   /* USER CODE END DebugMonitor_IRQn 0 */
+ 171:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN DebugMonitor_IRQn 1 */
+ 172:Src/stm32l4xx_it.c **** 
+ 173:Src/stm32l4xx_it.c ****   /* USER CODE END DebugMonitor_IRQn 1 */
+ 174:Src/stm32l4xx_it.c **** }
+ 175:Src/stm32l4xx_it.c **** 
+ 176:Src/stm32l4xx_it.c **** /**
+ 177:Src/stm32l4xx_it.c ****   * @brief This function handles Pendable request for system service.
+ 178:Src/stm32l4xx_it.c ****   */
+ 179:Src/stm32l4xx_it.c **** __weak void PendSV_Handler(void)
+ 180:Src/stm32l4xx_it.c **** {
+ 171              		.loc 1 180 0
+ 172              		.cfi_startproc
+ 173              		@ args = 0, pretend = 0, frame = 0
+ 174              		@ frame_needed = 0, uses_anonymous_args = 0
+ 175              		@ link register save eliminated.
+ 181:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN PendSV_IRQn 0 */
+ 182:Src/stm32l4xx_it.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 7
+
+
+ 183:Src/stm32l4xx_it.c ****   /* USER CODE END PendSV_IRQn 0 */
+ 184:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN PendSV_IRQn 1 */
+ 185:Src/stm32l4xx_it.c **** 
+ 186:Src/stm32l4xx_it.c ****   /* USER CODE END PendSV_IRQn 1 */
+ 187:Src/stm32l4xx_it.c **** }
+ 176              		.loc 1 187 0
+ 177 0000 7047     		bx	lr
+ 178              		.cfi_endproc
+ 179              	.LFE294:
+ 181              		.section	.text.SysTick_Handler,"ax",%progbits
+ 182              		.align	1
+ 183              		.weak	SysTick_Handler
+ 184              		.syntax unified
+ 185              		.thumb
+ 186              		.thumb_func
+ 187              		.fpu fpv4-sp-d16
+ 189              	SysTick_Handler:
+ 190              	.LFB295:
+ 188:Src/stm32l4xx_it.c **** 
+ 189:Src/stm32l4xx_it.c **** /**
+ 190:Src/stm32l4xx_it.c ****   * @brief This function handles System tick timer.
+ 191:Src/stm32l4xx_it.c ****   */
+ 192:Src/stm32l4xx_it.c **** __weak void SysTick_Handler(void)
+ 193:Src/stm32l4xx_it.c **** {
+ 191              		.loc 1 193 0
+ 192              		.cfi_startproc
+ 193              		@ args = 0, pretend = 0, frame = 0
+ 194              		@ frame_needed = 0, uses_anonymous_args = 0
+ 195              		@ link register save eliminated.
+ 194:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN SysTick_IRQn 0 */
+ 195:Src/stm32l4xx_it.c **** 
+ 196:Src/stm32l4xx_it.c ****   /* USER CODE END SysTick_IRQn 0 */
+ 197:Src/stm32l4xx_it.c ****   HAL_IncTick();
+ 196              		.loc 1 197 0
+ 197 0000 FFF7FEBF 		b	HAL_IncTick
+ 198              	.LVL0:
+ 199              		.cfi_endproc
+ 200              	.LFE295:
+ 202              		.section	.text.EXTI2_IRQHandler,"ax",%progbits
+ 203              		.align	1
+ 204              		.global	EXTI2_IRQHandler
+ 205              		.syntax unified
+ 206              		.thumb
+ 207              		.thumb_func
+ 208              		.fpu fpv4-sp-d16
+ 210              	EXTI2_IRQHandler:
+ 211              	.LFB296:
+ 198:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN SysTick_IRQn 1 */
+ 199:Src/stm32l4xx_it.c **** 
+ 200:Src/stm32l4xx_it.c ****   /* USER CODE END SysTick_IRQn 1 */
+ 201:Src/stm32l4xx_it.c **** }
+ 202:Src/stm32l4xx_it.c **** 
+ 203:Src/stm32l4xx_it.c **** /******************************************************************************/
+ 204:Src/stm32l4xx_it.c **** /* STM32L4xx Peripheral Interrupt Handlers                                    */
+ 205:Src/stm32l4xx_it.c **** /* Add here the Interrupt Handlers for the used peripherals.                  */
+ 206:Src/stm32l4xx_it.c **** /* For the available peripheral interrupt handler names,                      */
+ 207:Src/stm32l4xx_it.c **** /* please refer to the startup file (startup_stm32l4xx.s).                    */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 8
+
+
+ 208:Src/stm32l4xx_it.c **** /******************************************************************************/
+ 209:Src/stm32l4xx_it.c **** 
+ 210:Src/stm32l4xx_it.c **** /**
+ 211:Src/stm32l4xx_it.c ****   * @brief This function handles EXTI line2 interrupt.
+ 212:Src/stm32l4xx_it.c ****   */
+ 213:Src/stm32l4xx_it.c **** void EXTI2_IRQHandler(void)
+ 214:Src/stm32l4xx_it.c **** {
+ 212              		.loc 1 214 0
+ 213              		.cfi_startproc
+ 214              		@ args = 0, pretend = 0, frame = 0
+ 215              		@ frame_needed = 0, uses_anonymous_args = 0
+ 216              		@ link register save eliminated.
+ 215:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN EXTI2_IRQn 0 */
+ 216:Src/stm32l4xx_it.c **** 
+ 217:Src/stm32l4xx_it.c ****   /* USER CODE END EXTI2_IRQn 0 */
+ 218:Src/stm32l4xx_it.c ****   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
+ 217              		.loc 1 218 0
+ 218 0000 0420     		movs	r0, #4
+ 219 0002 FFF7FEBF 		b	HAL_GPIO_EXTI_IRQHandler
+ 220              	.LVL1:
+ 221              		.cfi_endproc
+ 222              	.LFE296:
+ 224              		.section	.text.EXTI3_IRQHandler,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	EXTI3_IRQHandler
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 230              		.fpu fpv4-sp-d16
+ 232              	EXTI3_IRQHandler:
+ 233              	.LFB297:
+ 219:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN EXTI2_IRQn 1 */
+ 220:Src/stm32l4xx_it.c **** 
+ 221:Src/stm32l4xx_it.c ****   /* USER CODE END EXTI2_IRQn 1 */
+ 222:Src/stm32l4xx_it.c **** }
+ 223:Src/stm32l4xx_it.c **** 
+ 224:Src/stm32l4xx_it.c **** /**
+ 225:Src/stm32l4xx_it.c ****   * @brief This function handles EXTI line3 interrupt.
+ 226:Src/stm32l4xx_it.c ****   */
+ 227:Src/stm32l4xx_it.c **** void EXTI3_IRQHandler(void)
+ 228:Src/stm32l4xx_it.c **** {
+ 234              		.loc 1 228 0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238              		@ link register save eliminated.
+ 229:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN EXTI3_IRQn 0 */
+ 230:Src/stm32l4xx_it.c **** 
+ 231:Src/stm32l4xx_it.c ****   /* USER CODE END EXTI3_IRQn 0 */
+ 232:Src/stm32l4xx_it.c ****   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
+ 239              		.loc 1 232 0
+ 240 0000 0820     		movs	r0, #8
+ 241 0002 FFF7FEBF 		b	HAL_GPIO_EXTI_IRQHandler
+ 242              	.LVL2:
+ 243              		.cfi_endproc
+ 244              	.LFE297:
+ 246              		.section	.text.DMA1_Channel1_IRQHandler,"ax",%progbits
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 9
+
+
+ 247              		.align	1
+ 248              		.global	DMA1_Channel1_IRQHandler
+ 249              		.syntax unified
+ 250              		.thumb
+ 251              		.thumb_func
+ 252              		.fpu fpv4-sp-d16
+ 254              	DMA1_Channel1_IRQHandler:
+ 255              	.LFB298:
+ 233:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN EXTI3_IRQn 1 */
+ 234:Src/stm32l4xx_it.c **** 
+ 235:Src/stm32l4xx_it.c ****   /* USER CODE END EXTI3_IRQn 1 */
+ 236:Src/stm32l4xx_it.c **** }
+ 237:Src/stm32l4xx_it.c **** 
+ 238:Src/stm32l4xx_it.c **** /**
+ 239:Src/stm32l4xx_it.c ****   * @brief This function handles DMA1 channel1 global interrupt.
+ 240:Src/stm32l4xx_it.c ****   */
+ 241:Src/stm32l4xx_it.c **** void DMA1_Channel1_IRQHandler(void)
+ 242:Src/stm32l4xx_it.c **** {
+ 256              		.loc 1 242 0
+ 257              		.cfi_startproc
+ 258              		@ args = 0, pretend = 0, frame = 0
+ 259              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260              		@ link register save eliminated.
+ 243:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
+ 244:Src/stm32l4xx_it.c **** 
+ 245:Src/stm32l4xx_it.c ****   /* USER CODE END DMA1_Channel1_IRQn 0 */
+ 246:Src/stm32l4xx_it.c ****   HAL_DMA_IRQHandler(&hdma_adc1);
+ 261              		.loc 1 246 0
+ 262 0000 0148     		ldr	r0, .L18
+ 263 0002 FFF7FEBF 		b	HAL_DMA_IRQHandler
+ 264              	.LVL3:
+ 265              	.L19:
+ 266 0006 00BF     		.align	2
+ 267              	.L18:
+ 268 0008 00000000 		.word	hdma_adc1
+ 269              		.cfi_endproc
+ 270              	.LFE298:
+ 272              		.section	.text.DMA1_Channel4_IRQHandler,"ax",%progbits
+ 273              		.align	1
+ 274              		.global	DMA1_Channel4_IRQHandler
+ 275              		.syntax unified
+ 276              		.thumb
+ 277              		.thumb_func
+ 278              		.fpu fpv4-sp-d16
+ 280              	DMA1_Channel4_IRQHandler:
+ 281              	.LFB299:
+ 247:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+ 248:Src/stm32l4xx_it.c **** 
+ 249:Src/stm32l4xx_it.c ****   /* USER CODE END DMA1_Channel1_IRQn 1 */
+ 250:Src/stm32l4xx_it.c **** }
+ 251:Src/stm32l4xx_it.c **** 
+ 252:Src/stm32l4xx_it.c **** /**
+ 253:Src/stm32l4xx_it.c **** * @brief This function handles DMA1 channel4 global interrupt.
+ 254:Src/stm32l4xx_it.c **** */
+ 255:Src/stm32l4xx_it.c **** void DMA1_Channel4_IRQHandler(void)
+ 256:Src/stm32l4xx_it.c **** {
+ 282              		.loc 1 256 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 10
+
+
+ 283              		.cfi_startproc
+ 284              		@ args = 0, pretend = 0, frame = 0
+ 285              		@ frame_needed = 0, uses_anonymous_args = 0
+ 286              		@ link register save eliminated.
+ 257:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN DMA1_Channel4_IRQn 0 */
+ 258:Src/stm32l4xx_it.c **** 
+ 259:Src/stm32l4xx_it.c ****   /* USER CODE END DMA1_Channel4_IRQn 0 */
+ 260:Src/stm32l4xx_it.c ****   HAL_DMA_IRQHandler(&hdma_usart1_tx);
+ 287              		.loc 1 260 0
+ 288 0000 0148     		ldr	r0, .L21
+ 289 0002 FFF7FEBF 		b	HAL_DMA_IRQHandler
+ 290              	.LVL4:
+ 291              	.L22:
+ 292 0006 00BF     		.align	2
+ 293              	.L21:
+ 294 0008 00000000 		.word	hdma_usart1_tx
+ 295              		.cfi_endproc
+ 296              	.LFE299:
+ 298              		.section	.text.DMA1_Channel5_IRQHandler,"ax",%progbits
+ 299              		.align	1
+ 300              		.global	DMA1_Channel5_IRQHandler
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 304              		.fpu fpv4-sp-d16
+ 306              	DMA1_Channel5_IRQHandler:
+ 307              	.LFB300:
+ 261:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN DMA1_Channel4_IRQn 1 */
+ 262:Src/stm32l4xx_it.c **** 
+ 263:Src/stm32l4xx_it.c ****   /* USER CODE END DMA1_Channel4_IRQn 1 */
+ 264:Src/stm32l4xx_it.c **** }
+ 265:Src/stm32l4xx_it.c **** 
+ 266:Src/stm32l4xx_it.c **** /**
+ 267:Src/stm32l4xx_it.c **** * @brief This function handles DMA1 channel5 global interrupt.
+ 268:Src/stm32l4xx_it.c **** */
+ 269:Src/stm32l4xx_it.c **** void DMA1_Channel5_IRQHandler(void)
+ 270:Src/stm32l4xx_it.c **** {
+ 308              		.loc 1 270 0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              		@ link register save eliminated.
+ 271:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN DMA1_Channel5_IRQn 0 */
+ 272:Src/stm32l4xx_it.c **** 
+ 273:Src/stm32l4xx_it.c ****   /* USER CODE END DMA1_Channel5_IRQn 0 */
+ 274:Src/stm32l4xx_it.c ****   HAL_DMA_IRQHandler(&hdma_usart1_rx);
+ 313              		.loc 1 274 0
+ 314 0000 0148     		ldr	r0, .L24
+ 315 0002 FFF7FEBF 		b	HAL_DMA_IRQHandler
+ 316              	.LVL5:
+ 317              	.L25:
+ 318 0006 00BF     		.align	2
+ 319              	.L24:
+ 320 0008 00000000 		.word	hdma_usart1_rx
+ 321              		.cfi_endproc
+ 322              	.LFE300:
+ 324              		.section	.text.ADC1_IRQHandler,"ax",%progbits
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 11
+
+
+ 325              		.align	1
+ 326              		.global	ADC1_IRQHandler
+ 327              		.syntax unified
+ 328              		.thumb
+ 329              		.thumb_func
+ 330              		.fpu fpv4-sp-d16
+ 332              	ADC1_IRQHandler:
+ 333              	.LFB301:
+ 275:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN DMA1_Channel5_IRQn 1 */
+ 276:Src/stm32l4xx_it.c **** 
+ 277:Src/stm32l4xx_it.c ****   /* USER CODE END DMA1_Channel5_IRQn 1 */
+ 278:Src/stm32l4xx_it.c **** }
+ 279:Src/stm32l4xx_it.c **** /**
+ 280:Src/stm32l4xx_it.c ****   * @brief This function handles ADC1 global interrupt.
+ 281:Src/stm32l4xx_it.c ****   */
+ 282:Src/stm32l4xx_it.c **** void ADC1_IRQHandler(void)
+ 283:Src/stm32l4xx_it.c **** {
+ 334              		.loc 1 283 0
+ 335              		.cfi_startproc
+ 336              		@ args = 0, pretend = 0, frame = 0
+ 337              		@ frame_needed = 0, uses_anonymous_args = 0
+ 338              		@ link register save eliminated.
+ 284:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN ADC1_IRQn 0 */
+ 285:Src/stm32l4xx_it.c **** 
+ 286:Src/stm32l4xx_it.c ****   /* USER CODE END ADC1_IRQn 0 */
+ 287:Src/stm32l4xx_it.c ****   HAL_ADC_IRQHandler(&hadc1);
+ 339              		.loc 1 287 0
+ 340 0000 0148     		ldr	r0, .L27
+ 341 0002 FFF7FEBF 		b	HAL_ADC_IRQHandler
+ 342              	.LVL6:
+ 343              	.L28:
+ 344 0006 00BF     		.align	2
+ 345              	.L27:
+ 346 0008 00000000 		.word	hadc1
+ 347              		.cfi_endproc
+ 348              	.LFE301:
+ 350              		.section	.text.USART1_IRQHandler,"ax",%progbits
+ 351              		.align	1
+ 352              		.global	USART1_IRQHandler
+ 353              		.syntax unified
+ 354              		.thumb
+ 355              		.thumb_func
+ 356              		.fpu fpv4-sp-d16
+ 358              	USART1_IRQHandler:
+ 359              	.LFB302:
+ 288:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN ADC1_IRQn 1 */
+ 289:Src/stm32l4xx_it.c **** 
+ 290:Src/stm32l4xx_it.c ****   /* USER CODE END ADC1_IRQn 1 */
+ 291:Src/stm32l4xx_it.c **** }
+ 292:Src/stm32l4xx_it.c **** 
+ 293:Src/stm32l4xx_it.c **** /**
+ 294:Src/stm32l4xx_it.c **** * @brief This function handles USART1 global interrupt.
+ 295:Src/stm32l4xx_it.c **** */
+ 296:Src/stm32l4xx_it.c **** void USART1_IRQHandler(void)
+ 297:Src/stm32l4xx_it.c **** {
+ 360              		.loc 1 297 0
+ 361              		.cfi_startproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 12
+
+
+ 362              		@ args = 0, pretend = 0, frame = 0
+ 363              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364              		@ link register save eliminated.
+ 298:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN USART1_IRQn 0 */
+ 299:Src/stm32l4xx_it.c **** 
+ 300:Src/stm32l4xx_it.c ****   /* USER CODE END USART1_IRQn 0 */
+ 301:Src/stm32l4xx_it.c ****   HAL_UART_IRQHandler(&huart1);
+ 365              		.loc 1 301 0
+ 366 0000 0148     		ldr	r0, .L30
+ 367 0002 FFF7FEBF 		b	HAL_UART_IRQHandler
+ 368              	.LVL7:
+ 369              	.L31:
+ 370 0006 00BF     		.align	2
+ 371              	.L30:
+ 372 0008 00000000 		.word	huart1
+ 373              		.cfi_endproc
+ 374              	.LFE302:
+ 376              		.section	.text.USART3_IRQHandler,"ax",%progbits
+ 377              		.align	1
+ 378              		.global	USART3_IRQHandler
+ 379              		.syntax unified
+ 380              		.thumb
+ 381              		.thumb_func
+ 382              		.fpu fpv4-sp-d16
+ 384              	USART3_IRQHandler:
+ 385              	.LFB303:
+ 302:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN USART1_IRQn 1 */
+ 303:Src/stm32l4xx_it.c **** 
+ 304:Src/stm32l4xx_it.c ****   /* USER CODE END USART1_IRQn 1 */
+ 305:Src/stm32l4xx_it.c **** }
+ 306:Src/stm32l4xx_it.c **** 
+ 307:Src/stm32l4xx_it.c **** /**
+ 308:Src/stm32l4xx_it.c ****   * @brief This function handles USART3 global interrupt.
+ 309:Src/stm32l4xx_it.c ****   */
+ 310:Src/stm32l4xx_it.c **** void USART3_IRQHandler(void)
+ 311:Src/stm32l4xx_it.c **** {
+ 386              		.loc 1 311 0
+ 387              		.cfi_startproc
+ 388              		@ args = 0, pretend = 0, frame = 0
+ 389              		@ frame_needed = 0, uses_anonymous_args = 0
+ 390              		@ link register save eliminated.
+ 312:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN USART3_IRQn 0 */
+ 313:Src/stm32l4xx_it.c **** 
+ 314:Src/stm32l4xx_it.c ****   /* USER CODE END USART3_IRQn 0 */
+ 315:Src/stm32l4xx_it.c ****   HAL_UART_IRQHandler(&huart3);
+ 391              		.loc 1 315 0
+ 392 0000 0148     		ldr	r0, .L33
+ 393 0002 FFF7FEBF 		b	HAL_UART_IRQHandler
+ 394              	.LVL8:
+ 395              	.L34:
+ 396 0006 00BF     		.align	2
+ 397              	.L33:
+ 398 0008 00000000 		.word	huart3
+ 399              		.cfi_endproc
+ 400              	.LFE303:
+ 402              		.section	.text.LPUART1_IRQHandler,"ax",%progbits
+ 403              		.align	1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 13
+
+
+ 404              		.global	LPUART1_IRQHandler
+ 405              		.syntax unified
+ 406              		.thumb
+ 407              		.thumb_func
+ 408              		.fpu fpv4-sp-d16
+ 410              	LPUART1_IRQHandler:
+ 411              	.LFB304:
+ 316:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN USART3_IRQn 1 */
+ 317:Src/stm32l4xx_it.c **** 
+ 318:Src/stm32l4xx_it.c ****   /* USER CODE END USART3_IRQn 1 */
+ 319:Src/stm32l4xx_it.c **** }
+ 320:Src/stm32l4xx_it.c **** 
+ 321:Src/stm32l4xx_it.c **** /**
+ 322:Src/stm32l4xx_it.c ****   * @brief This function handles LPUART1 global interrupt.
+ 323:Src/stm32l4xx_it.c ****   */
+ 324:Src/stm32l4xx_it.c **** void LPUART1_IRQHandler(void)
+ 325:Src/stm32l4xx_it.c **** {
+ 412              		.loc 1 325 0
+ 413              		.cfi_startproc
+ 414              		@ args = 0, pretend = 0, frame = 0
+ 415              		@ frame_needed = 0, uses_anonymous_args = 0
+ 416              		@ link register save eliminated.
+ 326:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN LPUART1_IRQn 0 */
+ 327:Src/stm32l4xx_it.c **** 
+ 328:Src/stm32l4xx_it.c ****   /* USER CODE END LPUART1_IRQn 0 */
+ 329:Src/stm32l4xx_it.c ****   HAL_UART_IRQHandler(&hlpuart1);
+ 417              		.loc 1 329 0
+ 418 0000 0148     		ldr	r0, .L36
+ 419 0002 FFF7FEBF 		b	HAL_UART_IRQHandler
+ 420              	.LVL9:
+ 421              	.L37:
+ 422 0006 00BF     		.align	2
+ 423              	.L36:
+ 424 0008 00000000 		.word	hlpuart1
+ 425              		.cfi_endproc
+ 426              	.LFE304:
+ 428              		.section	.text.TIM2_IRQHandler,"ax",%progbits
+ 429              		.align	1
+ 430              		.global	TIM2_IRQHandler
+ 431              		.syntax unified
+ 432              		.thumb
+ 433              		.thumb_func
+ 434              		.fpu fpv4-sp-d16
+ 436              	TIM2_IRQHandler:
+ 437              	.LFB305:
+ 330:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN LPUART1_IRQn 1 */
+ 331:Src/stm32l4xx_it.c **** 
+ 332:Src/stm32l4xx_it.c ****   /* USER CODE END LPUART1_IRQn 1 */
+ 333:Src/stm32l4xx_it.c **** }
+ 334:Src/stm32l4xx_it.c **** 
+ 335:Src/stm32l4xx_it.c **** /**
+ 336:Src/stm32l4xx_it.c **** * @brief This function handles TIM2 global interrupt.
+ 337:Src/stm32l4xx_it.c **** */
+ 338:Src/stm32l4xx_it.c **** void TIM2_IRQHandler(void)
+ 339:Src/stm32l4xx_it.c **** {
+ 438              		.loc 1 339 0
+ 439              		.cfi_startproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 14
+
+
+ 440              		@ args = 0, pretend = 0, frame = 0
+ 441              		@ frame_needed = 0, uses_anonymous_args = 0
+ 442              		@ link register save eliminated.
+ 340:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN TIM2_IRQn 0 */
+ 341:Src/stm32l4xx_it.c **** 
+ 342:Src/stm32l4xx_it.c ****   /* USER CODE END TIM2_IRQn 0 */
+ 343:Src/stm32l4xx_it.c ****   HAL_TIM_IRQHandler(&htim2);
+ 443              		.loc 1 343 0
+ 444 0000 0148     		ldr	r0, .L39
+ 445 0002 FFF7FEBF 		b	HAL_TIM_IRQHandler
+ 446              	.LVL10:
+ 447              	.L40:
+ 448 0006 00BF     		.align	2
+ 449              	.L39:
+ 450 0008 00000000 		.word	htim2
+ 451              		.cfi_endproc
+ 452              	.LFE305:
+ 454              		.section	.text.SDMMC1_IRQHandler,"ax",%progbits
+ 455              		.align	1
+ 456              		.global	SDMMC1_IRQHandler
+ 457              		.syntax unified
+ 458              		.thumb
+ 459              		.thumb_func
+ 460              		.fpu fpv4-sp-d16
+ 462              	SDMMC1_IRQHandler:
+ 463              	.LFB306:
+ 344:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN TIM2_IRQn 1 */
+ 345:Src/stm32l4xx_it.c **** 
+ 346:Src/stm32l4xx_it.c ****   /* USER CODE END TIM2_IRQn 1 */
+ 347:Src/stm32l4xx_it.c **** }
+ 348:Src/stm32l4xx_it.c **** 
+ 349:Src/stm32l4xx_it.c **** /**
+ 350:Src/stm32l4xx_it.c **** * @brief This function handles SDMMC1 global interrupt.
+ 351:Src/stm32l4xx_it.c **** */
+ 352:Src/stm32l4xx_it.c **** void SDMMC1_IRQHandler(void)
+ 353:Src/stm32l4xx_it.c **** {
+ 464              		.loc 1 353 0
+ 465              		.cfi_startproc
+ 466              		@ args = 0, pretend = 0, frame = 0
+ 467              		@ frame_needed = 0, uses_anonymous_args = 0
+ 468              		@ link register save eliminated.
+ 354:Src/stm32l4xx_it.c ****   /* USER CODE BEGIN SDMMC1_IRQn 0 */
+ 355:Src/stm32l4xx_it.c **** 
+ 356:Src/stm32l4xx_it.c ****   /* USER CODE END SDMMC1_IRQn 0 */
+ 357:Src/stm32l4xx_it.c ****   HAL_SD_IRQHandler(&hsd1);
+ 469              		.loc 1 357 0
+ 470 0000 0148     		ldr	r0, .L42
+ 471 0002 FFF7FEBF 		b	HAL_SD_IRQHandler
+ 472              	.LVL11:
+ 473              	.L43:
+ 474 0006 00BF     		.align	2
+ 475              	.L42:
+ 476 0008 00000000 		.word	hsd1
+ 477              		.cfi_endproc
+ 478              	.LFE306:
+ 480              		.text
+ 481              	.Letext0:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 15
+
+
+ 482              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 483              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 484              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 485              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 486              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 487              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 488              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 489              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 490              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 491              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l43
+ 492              		.file 12 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4x
+ 493              		.file 13 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 494              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 495              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h"
+ 496              		.file 16 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_sdmmc.h"
+ 497              		.file 17 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_sd.h"
+ 498              		.file 18 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h"
+ 499              		.file 19 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h"
+ 500              		.file 20 "../../iot_link/os/liteos/include/los_config.h"
+ 501              		.file 21 "../../iot_link/os/liteos/include/los_err.h"
+ 502              		.file 22 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 503              		.file 23 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 504              		.file 24 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32l4xx_it.c
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:18     .text.NMI_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:25     .text.NMI_Handler:00000000 NMI_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:40     .text.HardFault_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:47     .text.HardFault_Handler:00000000 HardFault_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:61     .text.MemManage_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:68     .text.MemManage_Handler:00000000 MemManage_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:82     .text.BusFault_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:89     .text.BusFault_Handler:00000000 BusFault_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:103    .text.UsageFault_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:110    .text.UsageFault_Handler:00000000 UsageFault_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:124    .text.SVC_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:131    .text.SVC_Handler:00000000 SVC_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:144    .text.DebugMon_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:151    .text.DebugMon_Handler:00000000 DebugMon_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:162    .text.PendSV_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:169    .text.PendSV_Handler:00000000 PendSV_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:182    .text.SysTick_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:189    .text.SysTick_Handler:00000000 SysTick_Handler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:203    .text.EXTI2_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:210    .text.EXTI2_IRQHandler:00000000 EXTI2_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:225    .text.EXTI3_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:232    .text.EXTI3_IRQHandler:00000000 EXTI3_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:247    .text.DMA1_Channel1_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:254    .text.DMA1_Channel1_IRQHandler:00000000 DMA1_Channel1_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:268    .text.DMA1_Channel1_IRQHandler:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:273    .text.DMA1_Channel4_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:280    .text.DMA1_Channel4_IRQHandler:00000000 DMA1_Channel4_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:294    .text.DMA1_Channel4_IRQHandler:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:299    .text.DMA1_Channel5_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:306    .text.DMA1_Channel5_IRQHandler:00000000 DMA1_Channel5_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:320    .text.DMA1_Channel5_IRQHandler:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:325    .text.ADC1_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:332    .text.ADC1_IRQHandler:00000000 ADC1_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:346    .text.ADC1_IRQHandler:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:351    .text.USART1_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:358    .text.USART1_IRQHandler:00000000 USART1_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:372    .text.USART1_IRQHandler:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:377    .text.USART3_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:384    .text.USART3_IRQHandler:00000000 USART3_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:398    .text.USART3_IRQHandler:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:403    .text.LPUART1_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:410    .text.LPUART1_IRQHandler:00000000 LPUART1_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:424    .text.LPUART1_IRQHandler:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:429    .text.TIM2_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:436    .text.TIM2_IRQHandler:00000000 TIM2_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:450    .text.TIM2_IRQHandler:00000008 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:455    .text.SDMMC1_IRQHandler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:462    .text.SDMMC1_IRQHandler:00000000 SDMMC1_IRQHandler
+C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s:476    .text.SDMMC1_IRQHandler:00000008 $d
+
+UNDEFINED SYMBOLS
+HAL_IncTick
+HAL_GPIO_EXTI_IRQHandler
+HAL_DMA_IRQHandler
+hdma_adc1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccxWnztk.s 			page 17
+
+
+hdma_usart1_tx
+hdma_usart1_rx
+HAL_ADC_IRQHandler
+hadc1
+HAL_UART_IRQHandler
+huart1
+huart3
+hlpuart1
+HAL_TIM_IRQHandler
+htim2
+HAL_SD_IRQHandler
+hsd1

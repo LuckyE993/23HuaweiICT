@@ -1,0 +1,1221 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"los_slabmem.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.osSlabBlockHeadFill,"ax",%progbits
+  18              		.align	1
+  19              		.global	osSlabBlockHeadFill
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	osSlabBlockHeadFill:
+  26              	.LFB287:
+  27              		.file 1 "../../iot_link/os/liteos/base/mem/common/los_slabmem.c"
+   1:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * Copyright (c) <2013-2017>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * All rights reserved.
+   4:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * permission.
+  14:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * ===============================================
+  29:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 2
+
+
+  32:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #define _LOS_SLAB_MEM_C_
+  35:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+  36:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #include <los_printf.h>
+  37:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #include <los_slab.ph>
+  38:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #include <los_hwi.h>
+  39:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+  40:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #if (LOSCFG_MEM_TASK_USED_STATISTICS == YES)
+  41:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #include "los_memstat.inc"
+  42:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #endif
+  43:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+  44:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** VOID *osSlabBlockHeadFill(OS_SLAB_BLOCK_NODE *pstSlabNode, UINT32 uwBlkSz)
+  45:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** {
+  28              		.loc 1 45 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  46:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_MAGIC_SET(pstSlabNode);
+  34              		.loc 1 46 0
+  35 0000 4DF6DE63 		movw	r3, #57054
+  36 0004 0380     		strh	r3, [r0]	@ movhi
+  47:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_SIZE_SET(pstSlabNode, uwBlkSz);
+  48:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_ID_SET(pstSlabNode, 0);//now undefine how to use ID
+  37              		.loc 1 48 0
+  38 0006 0023     		movs	r3, #0
+  47:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_SIZE_SET(pstSlabNode, uwBlkSz);
+  39              		.loc 1 47 0
+  40 0008 8170     		strb	r1, [r0, #2]
+  41              		.loc 1 48 0
+  42 000a C370     		strb	r3, [r0, #3]
+  49:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return (VOID *)(pstSlabNode + 1);
+  50:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+  43              		.loc 1 50 0
+  44 000c 0430     		adds	r0, r0, #4
+  45              	.LVL1:
+  46 000e 7047     		bx	lr
+  47              		.cfi_endproc
+  48              	.LFE287:
+  50              		.section	.text.osSlabMemInit,"ax",%progbits
+  51              		.align	1
+  52              		.global	osSlabMemInit
+  53              		.syntax unified
+  54              		.thumb
+  55              		.thumb_func
+  56              		.fpu fpv4-sp-d16
+  58              	osSlabMemInit:
+  59              	.LFB288:
+  51:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+  52:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** /*****************************************************************************
+  53:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Function : osSlabMemInit
+  54:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Description : To initialize the slab memory management
+  55:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Input       : None
+  56:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Output      : None
+  57:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Return      : None
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 3
+
+
+  58:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** *****************************************************************************/
+  59:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** BOOL osSlabMemInit(VOID *pPool)
+  60:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** {
+  60              		.loc 1 60 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 0
+  63              		@ frame_needed = 0, uses_anonymous_args = 0
+  64              	.LVL2:
+  65 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  66              	.LCFI0:
+  67              		.cfi_def_cfa_offset 32
+  68              		.cfi_offset 4, -32
+  69              		.cfi_offset 5, -28
+  70              		.cfi_offset 6, -24
+  71              		.cfi_offset 7, -20
+  72              		.cfi_offset 8, -16
+  73              		.cfi_offset 9, -12
+  74              		.cfi_offset 10, -8
+  75              		.cfi_offset 14, -4
+  76              		.loc 1 60 0
+  77 0004 0746     		mov	r7, r0
+  61:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     struct LOS_SLAB_CONTROL_HEADER *pstSlabMemHead = osSlabCtrlHdrGet(pPool);
+  78              		.loc 1 61 0
+  79 0006 FFF7FEFF 		bl	osSlabCtrlHdrGet
+  80              	.LVL3:
+  62:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwIdx = 0;
+  63:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwTmp = 0;
+  81              		.loc 1 63 0
+  82 000a 0025     		movs	r5, #0
+  61:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     struct LOS_SLAB_CONTROL_HEADER *pstSlabMemHead = osSlabCtrlHdrGet(pPool);
+  83              		.loc 1 61 0
+  84 000c 0446     		mov	r4, r0
+  85              	.LVL4:
+  64:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwBlkSz = 0;
+  65:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwBlkCnt = 0;
+  66:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+  67:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     for (uwIdx = 0; uwIdx < SLAB_MEM_COUNT; uwIdx++)
+  86              		.loc 1 67 0
+  87 000e 2E46     		mov	r6, r5
+  68:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+  69:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwBlkSz = (SLAB_MEM_CALSS_STEP_SIZE << uwIdx);
+  88              		.loc 1 69 0
+  89 0010 4FF01008 		mov	r8, #16
+  70:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwBlkCnt = SLAB_MEM_ALLOCATOR_SIZE / uwBlkSz;
+  90              		.loc 1 70 0
+  91 0014 4FF40079 		mov	r9, #512
+  71:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMemHead->stSlabClass[uwIdx].blkSz = uwBlkSz;
+  72:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMemHead->stSlabClass[uwIdx].blkCnt = uwBlkCnt;
+  73:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMemHead->stSlabClass[uwIdx].blkUsedCnt = 0;
+  92              		.loc 1 73 0
+  93 0018 AA46     		mov	r10, r5
+  94              	.LVL5:
+  95              	.L5:
+  74:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         if (NULL != pstSlabMemHead->stSlabClass[uwIdx].alloc)
+  96              		.loc 1 74 0
+  97 001a E268     		ldr	r2, [r4, #12]
+  73:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         if (NULL != pstSlabMemHead->stSlabClass[uwIdx].alloc)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 4
+
+
+  98              		.loc 1 73 0
+  99 001c C4F808A0 		str	r10, [r4, #8]
+  69:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwBlkCnt = SLAB_MEM_ALLOCATOR_SIZE / uwBlkSz;
+ 100              		.loc 1 69 0
+ 101 0020 08FA06F1 		lsl	r1, r8, r6
+ 102              	.LVL6:
+  70:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMemHead->stSlabClass[uwIdx].blkSz = uwBlkSz;
+ 103              		.loc 1 70 0
+ 104 0024 B9FBF1F3 		udiv	r3, r9, r1
+ 105              	.LVL7:
+  72:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMemHead->stSlabClass[uwIdx].blkUsedCnt = 0;
+ 106              		.loc 1 72 0
+ 107 0028 C4E90013 		strd	r1, r3, [r4]
+ 108              		.loc 1 74 0
+ 109 002c 52B1     		cbz	r2, .L3
+  75:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+  76:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             PRINT_WARN("SlabMemAllocator[%d] inited before\n", uwIdx);
+  77:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             uwTmp++;
+ 110              		.loc 1 77 0
+ 111 002e 0135     		adds	r5, r5, #1
+ 112              	.LVL8:
+ 113              	.L4:
+  67:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 114              		.loc 1 67 0 discriminator 2
+ 115 0030 0136     		adds	r6, r6, #1
+ 116              	.LVL9:
+ 117 0032 042E     		cmp	r6, #4
+ 118 0034 04F11004 		add	r4, r4, #16
+ 119 0038 EFD1     		bne	.L5
+  78:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         }
+  79:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         else
+  80:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+  81:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             pstSlabMemHead->stSlabClass[uwIdx].alloc = osSlabAllocatorNew(pPool, uwBlkSz + sizeof(O
+  82:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         }
+  83:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+  84:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+  85:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return ((0 == uwTmp) ? TRUE : FALSE);
+  86:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 120              		.loc 1 86 0
+ 121 003a B5FA85F0 		clz	r0, r5
+ 122 003e 4009     		lsrs	r0, r0, #5
+ 123 0040 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 124              	.LVL10:
+ 125              	.L3:
+  81:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         }
+ 126              		.loc 1 81 0
+ 127 0044 0422     		movs	r2, #4
+ 128 0046 1144     		add	r1, r1, r2
+ 129              	.LVL11:
+ 130 0048 3846     		mov	r0, r7
+ 131 004a FFF7FEFF 		bl	osSlabAllocatorNew
+ 132              	.LVL12:
+ 133 004e E060     		str	r0, [r4, #12]
+ 134 0050 EEE7     		b	.L4
+ 135              		.cfi_endproc
+ 136              	.LFE288:
+ 138              		.section	.text.osSlabMemAlloc,"ax",%progbits
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 5
+
+
+ 139              		.align	1
+ 140              		.global	osSlabMemAlloc
+ 141              		.syntax unified
+ 142              		.thumb
+ 143              		.thumb_func
+ 144              		.fpu fpv4-sp-d16
+ 146              	osSlabMemAlloc:
+ 147              	.LFB289:
+  87:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+  88:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** /*****************************************************************************
+  89:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Function : osSlabMemAlloc
+  90:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Description : To alloc memory block
+  91:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Input       :  UITN32 sz --- size of the  memory we want to alloc
+  92:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Output      : None
+  93:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Return      : pointer :the address of the memory we alloced
+  94:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** *****************************************************************************/
+  95:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** VOID *osSlabMemAlloc(VOID *pPool, UINT32 uwSz)
+  96:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** {
+ 148              		.loc 1 96 0
+ 149              		.cfi_startproc
+ 150              		@ args = 0, pretend = 0, frame = 0
+ 151              		@ frame_needed = 0, uses_anonymous_args = 0
+ 152              	.LVL13:
+ 153 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 154              	.LCFI1:
+ 155              		.cfi_def_cfa_offset 24
+ 156              		.cfi_offset 4, -24
+ 157              		.cfi_offset 5, -20
+ 158              		.cfi_offset 6, -16
+ 159              		.cfi_offset 7, -12
+ 160              		.cfi_offset 8, -8
+ 161              		.cfi_offset 14, -4
+ 162              		.loc 1 96 0
+ 163 0004 0C46     		mov	r4, r1
+  97:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     VOID *pRet = NULL;
+  98:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINTPTR uvIntSave;
+  99:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     struct LOS_SLAB_CONTROL_HEADER *pstSlabMem = osSlabCtrlHdrGet(pPool);
+ 164              		.loc 1 99 0
+ 165 0006 FFF7FEFF 		bl	osSlabCtrlHdrGet
+ 166              	.LVL14:
+ 100:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc = NULL;
+ 101:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwIdx = 0;
+ 102:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 103:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     if (uwSz > (SLAB_MEM_CALSS_STEP_SIZE << (SLAB_MEM_COUNT - 1)))
+ 167              		.loc 1 103 0
+ 168 000a 802C     		cmp	r4, #128
+  99:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc = NULL;
+ 169              		.loc 1 99 0
+ 170 000c 0646     		mov	r6, r0
+ 171              	.LVL15:
+ 172              		.loc 1 103 0
+ 173 000e 0ED8     		bhi	.L14
+ 104:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 105:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         return NULL;
+ 106:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 107:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 108:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     for (uwIdx = 0; uwIdx < SLAB_MEM_COUNT; uwIdx++)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 6
+
+
+ 174              		.loc 1 108 0
+ 175 0010 0023     		movs	r3, #0
+ 176              	.LVL16:
+ 177              	.L13:
+ 178 0012 1F01     		lsls	r7, r3, #4
+ 109:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 110:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         if (uwSz<= pstSlabMem->stSlabClass[uwIdx].blkSz)
+ 179              		.loc 1 110 0
+ 180 0014 F259     		ldr	r2, [r6, r7]
+ 181 0016 A242     		cmp	r2, r4
+ 182 0018 24D3     		bcc	.L9
+ 183 001a F519     		adds	r5, r6, r7
+ 111:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+ 112:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             uvIntSave = LOS_IntLock();
+ 184              		.loc 1 112 0
+ 185 001c FFF7FEFF 		bl	LOS_IntLock
+ 186              	.LVL17:
+ 113:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 114:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             if (pstSlabMem->stSlabClass[uwIdx].blkUsedCnt >= pstSlabMem->stSlabClass[uwIdx].blkCnt)
+ 187              		.loc 1 114 0
+ 188 0020 D5E90132 		ldrd	r3, r2, [r5, #4]
+ 189 0024 9A42     		cmp	r2, r3
+ 112:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 190              		.loc 1 112 0
+ 191 0026 8046     		mov	r8, r0
+ 192              	.LVL18:
+ 193              		.loc 1 114 0
+ 194 0028 03D3     		bcc	.L10
+ 115:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             {
+ 116:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 (VOID)LOS_IntRestore(uvIntSave);
+ 195              		.loc 1 116 0
+ 196 002a FFF7FEFF 		bl	LOS_IntRestore
+ 197              	.LVL19:
+ 198              	.L14:
+ 105:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 199              		.loc 1 105 0
+ 200 002e 0024     		movs	r4, #0
+ 201              	.LVL20:
+ 202 0030 03E0     		b	.L7
+ 203              	.LVL21:
+ 204              	.L10:
+ 117:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 return NULL;
+ 118:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             }
+ 119:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 120:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             if (NULL == pstSlabMem->stSlabClass[uwIdx].alloc)
+ 205              		.loc 1 120 0
+ 206 0032 EC68     		ldr	r4, [r5, #12]
+ 207              	.LVL22:
+ 208 0034 24B9     		cbnz	r4, .L11
+ 209              	.LVL23:
+ 210              	.L19:
+ 121:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             {
+ 122:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 (VOID)LOS_IntRestore(uvIntSave);
+ 123:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 return NULL;
+ 124:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             }
+ 125:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 126:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             pstSlabAlloc = &(pstSlabMem->stSlabClass[uwIdx]);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 7
+
+
+ 127:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             pRet = osSlabAllocatorAlloc(pstSlabAlloc->alloc);
+ 128:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             if (NULL != pRet)
+ 129:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             {
+ 130:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 /* alloc success */
+ 131:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 pRet = osSlabBlockHeadFill((OS_SLAB_BLOCK_NODE *)pRet, pstSlabMem->stSlabClass[uwId
+ 132:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 pstSlabMem->stSlabClass[uwIdx].blkUsedCnt++;
+ 133:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #if (LOSCFG_MEM_TASK_USED_STATISTICS == YES)
+ 134:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 OS_MEM_ADD_USED(pstSlabMem->stSlabClass[uwIdx].blkSz);
+ 135:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #endif
+ 136:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             }
+ 137:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 138:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             (VOID)LOS_IntRestore(uvIntSave);
+ 211              		.loc 1 138 0
+ 212 0036 FFF7FEFF 		bl	LOS_IntRestore
+ 213              	.LVL24:
+ 214              	.L7:
+ 139:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             return pRet;
+ 140:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         }
+ 141:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 142:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 143:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return NULL;
+ 144:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 215              		.loc 1 144 0
+ 216 003a 2046     		mov	r0, r4
+ 217 003c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 218              	.LVL25:
+ 219              	.L11:
+ 127:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             if (NULL != pRet)
+ 220              		.loc 1 127 0
+ 221 0040 2046     		mov	r0, r4
+ 222              	.LVL26:
+ 223 0042 FFF7FEFF 		bl	osSlabAllocatorAlloc
+ 224              	.LVL27:
+ 128:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             {
+ 225              		.loc 1 128 0
+ 226 0046 0446     		mov	r4, r0
+ 227 0048 50B1     		cbz	r0, .L12
+ 131:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 pstSlabMem->stSlabClass[uwIdx].blkUsedCnt++;
+ 228              		.loc 1 131 0
+ 229 004a F359     		ldr	r3, [r6, r7]
+ 230              	.LVL28:
+ 231              	.LBB4:
+ 232              	.LBB5:
+  47:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_ID_SET(pstSlabNode, 0);//now undefine how to use ID
+ 233              		.loc 1 47 0
+ 234 004c 8370     		strb	r3, [r0, #2]
+  48:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return (VOID *)(pstSlabNode + 1);
+ 235              		.loc 1 48 0
+ 236 004e 0023     		movs	r3, #0
+ 237              	.LVL29:
+ 238 0050 C370     		strb	r3, [r0, #3]
+ 239              	.LBE5:
+ 240              	.LBE4:
+ 132:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #if (LOSCFG_MEM_TASK_USED_STATISTICS == YES)
+ 241              		.loc 1 132 0
+ 242 0052 AB68     		ldr	r3, [r5, #8]
+ 243              	.LBB8:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 8
+
+
+ 244              	.LBB6:
+  46:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_SIZE_SET(pstSlabNode, uwBlkSz);
+ 245              		.loc 1 46 0
+ 246 0054 4DF6DE62 		movw	r2, #57054
+ 247              	.LBE6:
+ 248              	.LBE8:
+ 132:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #if (LOSCFG_MEM_TASK_USED_STATISTICS == YES)
+ 249              		.loc 1 132 0
+ 250 0058 0133     		adds	r3, r3, #1
+ 251              	.LBB9:
+ 252              	.LBB7:
+  46:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_SIZE_SET(pstSlabNode, uwBlkSz);
+ 253              		.loc 1 46 0
+ 254 005a 0280     		strh	r2, [r0]	@ movhi
+  49:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 255              		.loc 1 49 0
+ 256 005c 0434     		adds	r4, r4, #4
+ 257              	.LVL30:
+ 258              	.LBE7:
+ 259              	.LBE9:
+ 132:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #if (LOSCFG_MEM_TASK_USED_STATISTICS == YES)
+ 260              		.loc 1 132 0
+ 261 005e AB60     		str	r3, [r5, #8]
+ 262              	.L12:
+ 263              	.LVL31:
+ 138:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             return pRet;
+ 264              		.loc 1 138 0
+ 265 0060 4046     		mov	r0, r8
+ 266 0062 E8E7     		b	.L19
+ 267              	.LVL32:
+ 268              	.L9:
+ 108:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 269              		.loc 1 108 0 discriminator 2
+ 270 0064 0133     		adds	r3, r3, #1
+ 271              	.LVL33:
+ 272 0066 042B     		cmp	r3, #4
+ 273 0068 D3D1     		bne	.L13
+ 274 006a E0E7     		b	.L14
+ 275              		.cfi_endproc
+ 276              	.LFE289:
+ 278              		.section	.text.osSlabMemFree,"ax",%progbits
+ 279              		.align	1
+ 280              		.global	osSlabMemFree
+ 281              		.syntax unified
+ 282              		.thumb
+ 283              		.thumb_func
+ 284              		.fpu fpv4-sp-d16
+ 286              	osSlabMemFree:
+ 287              	.LFB290:
+ 145:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 146:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** /*****************************************************************************
+ 147:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Function : osSlabMemFree
+ 148:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Description : To free the  memory block
+ 149:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Input       : VOID* pPtr: the pointer of heap memory we want to free
+ 150:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Output      : None
+ 151:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Return      : TRUE:success FALSE:error
+ 152:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** *****************************************************************************/
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 9
+
+
+ 153:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** BOOL osSlabMemFree(VOID *pPool, VOID* pPtr)
+ 154:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** {
+ 288              		.loc 1 154 0
+ 289              		.cfi_startproc
+ 290              		@ args = 0, pretend = 0, frame = 0
+ 291              		@ frame_needed = 0, uses_anonymous_args = 0
+ 292              	.LVL34:
+ 293 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 294              	.LCFI2:
+ 295              		.cfi_def_cfa_offset 24
+ 296              		.cfi_offset 3, -24
+ 297              		.cfi_offset 4, -20
+ 298              		.cfi_offset 5, -16
+ 299              		.cfi_offset 6, -12
+ 300              		.cfi_offset 7, -8
+ 301              		.cfi_offset 14, -4
+ 302              		.loc 1 154 0
+ 303 0002 0D46     		mov	r5, r1
+ 155:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINTPTR uvIntSave;
+ 156:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     struct LOS_SLAB_CONTROL_HEADER *pstSlabMem = osSlabCtrlHdrGet(pPool);
+ 304              		.loc 1 156 0
+ 305 0004 FFF7FEFF 		bl	osSlabCtrlHdrGet
+ 306              	.LVL35:
+ 157:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     BOOL bRet = FALSE;
+ 158:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc;
+ 159:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwIdx = 0;
+ 160:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_NODE *pstSlabNode = OS_SLAB_BLOCK_HEAD_GET(pPtr);
+ 161:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 162:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     if (!OS_ALLOC_FROM_SLAB_CHECK(pstSlabNode))
+ 307              		.loc 1 162 0
+ 308 0008 35F8042C 		ldrh	r2, [r5, #-4]
+ 309 000c 4DF6DE63 		movw	r3, #57054
+ 310 0010 9A42     		cmp	r2, r3
+ 156:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     BOOL bRet = FALSE;
+ 311              		.loc 1 156 0
+ 312 0012 0446     		mov	r4, r0
+ 313              	.LVL36:
+ 314              		.loc 1 162 0
+ 315 0014 1FD1     		bne	.L25
+ 163:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 164:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         return FALSE;
+ 165:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 166:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     for (uwIdx = 0; uwIdx < SLAB_MEM_COUNT; uwIdx++)
+ 167:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 168:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         if (OS_SLAB_BLOCK_SIZE_GET(pstSlabNode) <= pstSlabMem->stSlabClass[uwIdx].blkSz)
+ 316              		.loc 1 168 0
+ 317 0016 15F8022C 		ldrb	r2, [r5, #-2]	@ zero_extendqisi2
+ 166:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 318              		.loc 1 166 0
+ 319 001a 0023     		movs	r3, #0
+ 320              	.LVL37:
+ 321              	.L24:
+ 322              		.loc 1 168 0
+ 323 001c 1E01     		lsls	r6, r3, #4
+ 324 001e A159     		ldr	r1, [r4, r6]
+ 325 0020 8A42     		cmp	r2, r1
+ 326 0022 15D8     		bhi	.L22
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 10
+
+
+ 169:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+ 170:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             uvIntSave = LOS_IntLock();
+ 327              		.loc 1 170 0
+ 328 0024 FFF7FEFF 		bl	LOS_IntLock
+ 329              	.LVL38:
+ 171:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 172:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             pstSlabAlloc = &(pstSlabMem->stSlabClass[uwIdx]);
+ 173:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             if (TRUE == osSlabAllocatorFree(pstSlabAlloc->alloc, pstSlabNode))
+ 330              		.loc 1 173 0
+ 331 0028 3444     		add	r4, r4, r6
+ 332              	.LVL39:
+ 170:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 333              		.loc 1 170 0
+ 334 002a 0746     		mov	r7, r0
+ 335              	.LVL40:
+ 336              		.loc 1 173 0
+ 337 002c 291F     		subs	r1, r5, #4
+ 338 002e E068     		ldr	r0, [r4, #12]
+ 339              	.LVL41:
+ 340 0030 FFF7FEFF 		bl	osSlabAllocatorFree
+ 341              	.LVL42:
+ 342 0034 0128     		cmp	r0, #1
+ 343              	.LVL43:
+ 174:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             {
+ 175:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 bRet = TRUE;
+ 176:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 pstSlabMem->stSlabClass[uwIdx].blkUsedCnt--;
+ 344              		.loc 1 176 0
+ 345 0036 01BF     		itttt	eq
+ 346 0038 A368     		ldreq	r3, [r4, #8]
+ 347 003a 03F1FF33 		addeq	r3, r3, #-1
+ 348 003e A360     		streq	r3, [r4, #8]
+ 175:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 pstSlabMem->stSlabClass[uwIdx].blkUsedCnt--;
+ 349              		.loc 1 175 0
+ 350 0040 0446     		moveq	r4, r0
+ 177:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #if (LOSCFG_MEM_TASK_USED_STATISTICS == YES)
+ 178:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 OS_MEM_REDUCE_USED(pstSlabMem->stSlabClass[uwIdx].blkSz);
+ 179:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** #endif
+ 180:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             }
+ 181:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 182:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             (VOID)LOS_IntRestore(uvIntSave);
+ 351              		.loc 1 182 0
+ 352 0042 3846     		mov	r0, r7
+ 157:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc;
+ 353              		.loc 1 157 0
+ 354 0044 18BF     		it	ne
+ 355 0046 0024     		movne	r4, #0
+ 356              	.LVL44:
+ 357              		.loc 1 182 0
+ 358 0048 FFF7FEFF 		bl	LOS_IntRestore
+ 359              	.LVL45:
+ 360              	.L20:
+ 183:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             return bRet;
+ 184:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         }
+ 185:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 186:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return FALSE;
+ 187:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 361              		.loc 1 187 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 11
+
+
+ 362 004c 2046     		mov	r0, r4
+ 363 004e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 364              	.LVL46:
+ 365              	.L22:
+ 166:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 366              		.loc 1 166 0 discriminator 2
+ 367 0050 0133     		adds	r3, r3, #1
+ 368              	.LVL47:
+ 369 0052 042B     		cmp	r3, #4
+ 370 0054 E2D1     		bne	.L24
+ 371              	.LVL48:
+ 372              	.L25:
+ 164:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 373              		.loc 1 164 0
+ 374 0056 0024     		movs	r4, #0
+ 375 0058 F8E7     		b	.L20
+ 376              		.cfi_endproc
+ 377              	.LFE290:
+ 379              		.section	.text.osSlabMemDeinit,"ax",%progbits
+ 380              		.align	1
+ 381              		.global	osSlabMemDeinit
+ 382              		.syntax unified
+ 383              		.thumb
+ 384              		.thumb_func
+ 385              		.fpu fpv4-sp-d16
+ 387              	osSlabMemDeinit:
+ 388              	.LFB291:
+ 188:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 189:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** /*****************************************************************************
+ 190:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Function : osSlabMemDeinit
+ 191:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Description :  deinitialize the slab memory ,set back to the original status
+ 192:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Input       : None
+ 193:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Output      : None
+ 194:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****  Return      : None
+ 195:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** *****************************************************************************/
+ 196:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** VOID osSlabMemDeinit(VOID *pPool)
+ 197:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** {
+ 389              		.loc 1 197 0
+ 390              		.cfi_startproc
+ 391              		@ args = 0, pretend = 0, frame = 0
+ 392              		@ frame_needed = 0, uses_anonymous_args = 0
+ 393              	.LVL49:
+ 394 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 395              	.LCFI3:
+ 396              		.cfi_def_cfa_offset 32
+ 397              		.cfi_offset 3, -32
+ 398              		.cfi_offset 4, -28
+ 399              		.cfi_offset 5, -24
+ 400              		.cfi_offset 6, -20
+ 401              		.cfi_offset 7, -16
+ 402              		.cfi_offset 8, -12
+ 403              		.cfi_offset 9, -8
+ 404              		.cfi_offset 14, -4
+ 198:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwIdx;
+ 199:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     struct LOS_SLAB_CONTROL_HEADER *pstSlabMem = NULL;
+ 200:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc;
+ 201:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwBlkSz;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 12
+
+
+ 202:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwBlkCnt;
+ 203:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 204:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     if (NULL == pPool)
+ 405              		.loc 1 204 0
+ 406 0004 0646     		mov	r6, r0
+ 407 0006 C8B1     		cbz	r0, .L28
+ 205:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 206:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         return ;
+ 207:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 208:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstSlabMem = osSlabCtrlHdrGet(pPool);
+ 408              		.loc 1 208 0
+ 409 0008 FFF7FEFF 		bl	osSlabCtrlHdrGet
+ 410              	.LVL50:
+ 209:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 210:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     for (uwIdx = 0; uwIdx < SLAB_MEM_COUNT; uwIdx++)
+ 411              		.loc 1 210 0
+ 412 000c 0025     		movs	r5, #0
+ 208:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 413              		.loc 1 208 0
+ 414 000e 0446     		mov	r4, r0
+ 415              	.LVL51:
+ 211:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 212:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwBlkSz = (0x10 << uwIdx);
+ 416              		.loc 1 212 0
+ 417 0010 1027     		movs	r7, #16
+ 213:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwBlkCnt = SLAB_MEM_ALLOCATOR_SIZE / uwBlkSz;
+ 418              		.loc 1 213 0
+ 419 0012 4FF40078 		mov	r8, #512
+ 214:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMem->stSlabClass[uwIdx].blkSz = uwBlkSz;
+ 215:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMem->stSlabClass[uwIdx].blkCnt = uwBlkCnt;
+ 216:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         if (NULL != pstSlabMem->stSlabClass[uwIdx].alloc)
+ 217:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+ 218:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             pstSlabAlloc = &(pstSlabMem->stSlabClass[uwIdx]);
+ 219:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             osSlabAllocatorDestroy(pPool, pstSlabAlloc->alloc);
+ 220:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             pstSlabMem->stSlabClass[uwIdx].alloc = NULL;
+ 420              		.loc 1 220 0
+ 421 0016 A946     		mov	r9, r5
+ 422              	.LVL52:
+ 423              	.L31:
+ 216:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+ 424              		.loc 1 216 0
+ 425 0018 E168     		ldr	r1, [r4, #12]
+ 212:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwBlkCnt = SLAB_MEM_ALLOCATOR_SIZE / uwBlkSz;
+ 426              		.loc 1 212 0
+ 427 001a 07FA05F3 		lsl	r3, r7, r5
+ 428              	.LVL53:
+ 214:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMem->stSlabClass[uwIdx].blkSz = uwBlkSz;
+ 429              		.loc 1 214 0
+ 430 001e 2360     		str	r3, [r4]
+ 213:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabMem->stSlabClass[uwIdx].blkSz = uwBlkSz;
+ 431              		.loc 1 213 0
+ 432 0020 B8FBF3F3 		udiv	r3, r8, r3
+ 433              	.LVL54:
+ 215:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         if (NULL != pstSlabMem->stSlabClass[uwIdx].alloc)
+ 434              		.loc 1 215 0
+ 435 0024 6360     		str	r3, [r4, #4]
+ 216:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 13
+
+
+ 436              		.loc 1 216 0
+ 437 0026 21B1     		cbz	r1, .L30
+ 438              	.LVL55:
+ 219:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             pstSlabMem->stSlabClass[uwIdx].alloc = NULL;
+ 439              		.loc 1 219 0
+ 440 0028 3046     		mov	r0, r6
+ 441 002a FFF7FEFF 		bl	osSlabAllocatorDestroy
+ 442              	.LVL56:
+ 443              		.loc 1 220 0
+ 444 002e C4F80C90 		str	r9, [r4, #12]
+ 445              	.L30:
+ 210:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 446              		.loc 1 210 0 discriminator 2
+ 447 0032 0135     		adds	r5, r5, #1
+ 448              	.LVL57:
+ 449 0034 042D     		cmp	r5, #4
+ 450 0036 04F11004 		add	r4, r4, #16
+ 451 003a EDD1     		bne	.L31
+ 452              	.LVL58:
+ 453              	.L28:
+ 221:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         }
+ 222:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 223:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return ;
+ 224:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 454              		.loc 1 224 0
+ 455 003c BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 456              		.cfi_endproc
+ 457              	.LFE291:
+ 459              		.section	.text.osSlabMemCheck,"ax",%progbits
+ 460              		.align	1
+ 461              		.global	osSlabMemCheck
+ 462              		.syntax unified
+ 463              		.thumb
+ 464              		.thumb_func
+ 465              		.fpu fpv4-sp-d16
+ 467              	osSlabMemCheck:
+ 468              	.LFB292:
+ 225:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 226:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** UINT32 osSlabMemCheck(VOID *pPool, VOID* pPtr)
+ 227:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** {
+ 469              		.loc 1 227 0
+ 470              		.cfi_startproc
+ 471              		@ args = 0, pretend = 0, frame = 0
+ 472              		@ frame_needed = 0, uses_anonymous_args = 0
+ 473              	.LVL59:
+ 474 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 475              	.LCFI4:
+ 476              		.cfi_def_cfa_offset 24
+ 477              		.cfi_offset 4, -24
+ 478              		.cfi_offset 5, -20
+ 479              		.cfi_offset 6, -16
+ 480              		.cfi_offset 7, -12
+ 481              		.cfi_offset 8, -8
+ 482              		.cfi_offset 14, -4
+ 483              		.loc 1 227 0
+ 484 0004 0D46     		mov	r5, r1
+ 228:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINTPTR uvIntSave;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 14
+
+
+ 229:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     struct LOS_SLAB_CONTROL_HEADER *pstSlabMem = osSlabCtrlHdrGet(pPool);
+ 485              		.loc 1 229 0
+ 486 0006 FFF7FEFF 		bl	osSlabCtrlHdrGet
+ 487              	.LVL60:
+ 230:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwRetBlkSz = (UINT32)-1;
+ 231:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc;
+ 232:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwIdx = 0;
+ 233:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_BLOCK_NODE *pstSlabNode = OS_SLAB_BLOCK_HEAD_GET(pPtr);
+ 234:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 235:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     if ((!OS_ALLOC_FROM_SLAB_CHECK(pstSlabNode))
+ 488              		.loc 1 235 0
+ 489 000a 35F8042C 		ldrh	r2, [r5, #-4]
+ 490 000e 4DF6DE63 		movw	r3, #57054
+ 491 0012 9A42     		cmp	r2, r3
+ 229:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwRetBlkSz = (UINT32)-1;
+ 492              		.loc 1 229 0
+ 493 0014 0746     		mov	r7, r0
+ 494              	.LVL61:
+ 495              		.loc 1 235 0
+ 496 0016 1CD1     		bne	.L44
+ 236:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         || (OS_SLAB_BLOCK_SIZE_GET(pstSlabNode) > pstSlabMem->stSlabClass[SLAB_MEM_COUNT - 1].blkSz
+ 497              		.loc 1 236 0
+ 498 0018 15F8022C 		ldrb	r2, [r5, #-2]	@ zero_extendqisi2
+ 499 001c 036B     		ldr	r3, [r0, #48]
+ 500 001e 9A42     		cmp	r2, r3
+ 501 0020 17D8     		bhi	.L44
+ 237:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 238:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         return uwRetBlkSz;
+ 239:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 240:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 241:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     uvIntSave = LOS_IntLock();
+ 502              		.loc 1 241 0
+ 503 0022 FFF7FEFF 		bl	LOS_IntLock
+ 504              	.LVL62:
+ 505 0026 0024     		movs	r4, #0
+ 506 0028 8046     		mov	r8, r0
+ 507              	.LVL63:
+ 230:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc;
+ 508              		.loc 1 230 0
+ 509 002a 4FF0FF36 		mov	r6, #-1
+ 233:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 510              		.loc 1 233 0
+ 511 002e 043D     		subs	r5, r5, #4
+ 512              	.LVL64:
+ 513              	.L42:
+ 242:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     for (uwIdx = 0; uwIdx < SLAB_MEM_COUNT; uwIdx++)
+ 243:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 244:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabAlloc = &(pstSlabMem->stSlabClass[uwIdx]);
+ 245:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         if (osSlabAllocatorCheck(pstSlabAlloc->alloc, pstSlabNode) == TRUE)
+ 514              		.loc 1 245 0
+ 515 0030 3B19     		adds	r3, r7, r4
+ 516 0032 2946     		mov	r1, r5
+ 517 0034 D868     		ldr	r0, [r3, #12]
+ 518 0036 FFF7FEFF 		bl	osSlabAllocatorCheck
+ 519              	.LVL65:
+ 520 003a 0128     		cmp	r0, #1
+ 246:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 15
+
+
+ 247:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             uwRetBlkSz = pstSlabMem->stSlabClass[uwIdx].blkSz;
+ 521              		.loc 1 247 0
+ 522 003c 08BF     		it	eq
+ 523 003e 3E59     		ldreq	r6, [r7, r4]
+ 524              	.LVL66:
+ 525 0040 1034     		adds	r4, r4, #16
+ 242:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     for (uwIdx = 0; uwIdx < SLAB_MEM_COUNT; uwIdx++)
+ 526              		.loc 1 242 0
+ 527 0042 402C     		cmp	r4, #64
+ 528 0044 F4D1     		bne	.L42
+ 248:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         }
+ 249:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 250:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     (VOID)LOS_IntRestore(uvIntSave);
+ 529              		.loc 1 250 0
+ 530 0046 4046     		mov	r0, r8
+ 531 0048 FFF7FEFF 		bl	LOS_IntRestore
+ 532              	.LVL67:
+ 533              	.L39:
+ 251:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 252:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return uwRetBlkSz;
+ 253:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 534              		.loc 1 253 0
+ 535 004c 3046     		mov	r0, r6
+ 536 004e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 537              	.LVL68:
+ 538              	.L44:
+ 238:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 539              		.loc 1 238 0
+ 540 0052 4FF0FF36 		mov	r6, #-1
+ 541 0056 F9E7     		b	.L39
+ 542              		.cfi_endproc
+ 543              	.LFE292:
+ 545              		.section	.text.osSlabStatisticsGet,"ax",%progbits
+ 546              		.align	1
+ 547              		.global	osSlabStatisticsGet
+ 548              		.syntax unified
+ 549              		.thumb
+ 550              		.thumb_func
+ 551              		.fpu fpv4-sp-d16
+ 553              	osSlabStatisticsGet:
+ 554              	.LFB293:
+ 254:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 255:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** UINT32 osSlabStatisticsGet(VOID *pPool, LOS_SLAB_STATUS *pstStatus)
+ 256:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** {
+ 555              		.loc 1 256 0
+ 556              		.cfi_startproc
+ 557              		@ args = 0, pretend = 0, frame = 16
+ 558              		@ frame_needed = 0, uses_anonymous_args = 0
+ 559              	.LVL69:
+ 560 0000 2DE9FF47 		push	{r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, lr}
+ 561              	.LCFI5:
+ 562              		.cfi_def_cfa_offset 48
+ 563              		.cfi_offset 4, -32
+ 564              		.cfi_offset 5, -28
+ 565              		.cfi_offset 6, -24
+ 566              		.cfi_offset 7, -20
+ 567              		.cfi_offset 8, -16
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 16
+
+
+ 568              		.cfi_offset 9, -12
+ 569              		.cfi_offset 10, -8
+ 570              		.cfi_offset 14, -4
+ 257:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     struct LOS_SLAB_CONTROL_HEADER *pstSlabMem = NULL;
+ 258:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc;
+ 259:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwItemSz = 0;
+ 571              		.loc 1 259 0
+ 572 0004 0024     		movs	r4, #0
+ 260:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwItemCnt = 0;
+ 573              		.loc 1 260 0
+ 574 0006 CDE90144 		strd	r4, r4, [sp, #4]
+ 261:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwCurUsage = 0;
+ 575              		.loc 1 261 0
+ 576 000a 0394     		str	r4, [sp, #12]
+ 577              	.LVL70:
+ 262:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwTotalUsage = 0;
+ 263:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwTotalMem = 0;
+ 264:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwTotalallocCount = 0;
+ 265:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwTotalfreeCount = 0;
+ 266:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwIdx = 0;
+ 267:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 268:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     if ((NULL == pstStatus) || (NULL == pPool))
+ 578              		.loc 1 268 0
+ 579 000c 8846     		mov	r8, r1
+ 580 000e 19B9     		cbnz	r1, .L47
+ 581              	.LVL71:
+ 582              	.L49:
+ 269:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 270:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         return LOS_NOK;
+ 583              		.loc 1 270 0
+ 584 0010 0120     		movs	r0, #1
+ 585              	.L46:
+ 271:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 272:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstSlabMem = osSlabCtrlHdrGet(pPool);
+ 273:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 274:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     for (uwIdx = 0; uwIdx < SLAB_MEM_COUNT; uwIdx++)
+ 275:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 276:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabAlloc = &(pstSlabMem->stSlabClass[uwIdx]);
+ 277:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 278:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         osSlabAllocatorGetSlabInfo(pstSlabAlloc->alloc, &uwItemSz, &uwItemCnt, &uwCurUsage);
+ 279:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalUsage += (uwCurUsage * uwItemSz);
+ 280:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalMem += (uwItemCnt * uwItemSz);
+ 281:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalallocCount += pstSlabMem->stSlabClass[uwIdx].blkUsedCnt;
+ 282:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalfreeCount  += pstSlabMem->stSlabClass[uwIdx].blkCnt - pstSlabMem->stSlabClass[uwIdx]
+ 283:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 284:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 285:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     if (uwTotalMem < uwTotalUsage)
+ 286:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 287:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         return LOS_NOK;
+ 288:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 289:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 290:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstStatus->totalSize  = uwTotalMem;
+ 291:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstStatus->usedSize   = uwTotalUsage;
+ 292:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstStatus->freeSize   = pstStatus->totalSize - pstStatus->usedSize;
+ 293:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstStatus->allocCount = uwTotalallocCount;
+ 294:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstStatus->freeCount  = uwTotalfreeCount;
+ 295:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return LOS_OK;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 17
+
+
+ 296:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 586              		.loc 1 296 0
+ 587 0012 04B0     		add	sp, sp, #16
+ 588              	.LCFI6:
+ 589              		.cfi_remember_state
+ 590              		.cfi_def_cfa_offset 32
+ 591              		@ sp needed
+ 592 0014 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 593              	.LVL72:
+ 594              	.L47:
+ 595              	.LCFI7:
+ 596              		.cfi_restore_state
+ 268:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 597              		.loc 1 268 0 discriminator 1
+ 598 0018 0028     		cmp	r0, #0
+ 599 001a F9D0     		beq	.L49
+ 272:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 600              		.loc 1 272 0
+ 601 001c FFF7FEFF 		bl	osSlabCtrlHdrGet
+ 602              	.LVL73:
+ 264:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwTotalfreeCount = 0;
+ 603              		.loc 1 264 0
+ 604 0020 A146     		mov	r9, r4
+ 272:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 605              		.loc 1 272 0
+ 606 0022 0746     		mov	r7, r0
+ 607              	.LVL74:
+ 608 0024 00F1400A 		add	r10, r0, #64
+ 263:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwTotalallocCount = 0;
+ 609              		.loc 1 263 0
+ 610 0028 2546     		mov	r5, r4
+ 262:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwTotalMem = 0;
+ 611              		.loc 1 262 0
+ 612 002a 2646     		mov	r6, r4
+ 613              	.LVL75:
+ 614              	.L50:
+ 278:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalUsage += (uwCurUsage * uwItemSz);
+ 615              		.loc 1 278 0 discriminator 3
+ 616 002c F868     		ldr	r0, [r7, #12]
+ 617 002e 03AB     		add	r3, sp, #12
+ 618 0030 02AA     		add	r2, sp, #8
+ 619 0032 01A9     		add	r1, sp, #4
+ 620 0034 FFF7FEFF 		bl	osSlabAllocatorGetSlabInfo
+ 621              	.LVL76:
+ 279:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalMem += (uwItemCnt * uwItemSz);
+ 622              		.loc 1 279 0 discriminator 3
+ 623 0038 019B     		ldr	r3, [sp, #4]
+ 624 003a 039A     		ldr	r2, [sp, #12]
+ 625 003c 02FB0366 		mla	r6, r2, r3, r6
+ 626              	.LVL77:
+ 280:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalallocCount += pstSlabMem->stSlabClass[uwIdx].blkUsedCnt;
+ 627              		.loc 1 280 0 discriminator 3
+ 628 0040 029A     		ldr	r2, [sp, #8]
+ 629 0042 02FB0355 		mla	r5, r2, r3, r5
+ 630              	.LVL78:
+ 281:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalfreeCount  += pstSlabMem->stSlabClass[uwIdx].blkCnt - pstSlabMem->stSlabClass[uwIdx]
+ 631              		.loc 1 281 0 discriminator 3
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 18
+
+
+ 632 0046 BA68     		ldr	r2, [r7, #8]
+ 282:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 633              		.loc 1 282 0 discriminator 3
+ 634 0048 7B68     		ldr	r3, [r7, #4]
+ 635 004a 1037     		adds	r7, r7, #16
+ 636 004c 9B1A     		subs	r3, r3, r2
+ 274:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 637              		.loc 1 274 0 discriminator 3
+ 638 004e 5745     		cmp	r7, r10
+ 281:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         uwTotalfreeCount  += pstSlabMem->stSlabClass[uwIdx].blkCnt - pstSlabMem->stSlabClass[uwIdx]
+ 639              		.loc 1 281 0 discriminator 3
+ 640 0050 9144     		add	r9, r9, r2
+ 641              	.LVL79:
+ 282:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 642              		.loc 1 282 0 discriminator 3
+ 643 0052 1C44     		add	r4, r4, r3
+ 644              	.LVL80:
+ 274:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 645              		.loc 1 274 0 discriminator 3
+ 646 0054 EAD1     		bne	.L50
+ 285:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 647              		.loc 1 285 0
+ 648 0056 AE42     		cmp	r6, r5
+ 649 0058 DAD8     		bhi	.L49
+ 291:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstStatus->freeSize   = pstStatus->totalSize - pstStatus->usedSize;
+ 650              		.loc 1 291 0
+ 651 005a C8E90056 		strd	r5, r6, [r8]
+ 292:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstStatus->allocCount = uwTotalallocCount;
+ 652              		.loc 1 292 0
+ 653 005e AD1B     		subs	r5, r5, r6
+ 654              	.LVL81:
+ 293:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     pstStatus->freeCount  = uwTotalfreeCount;
+ 655              		.loc 1 293 0
+ 656 0060 C8E90259 		strd	r5, r9, [r8, #8]
+ 294:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return LOS_OK;
+ 657              		.loc 1 294 0
+ 658 0064 C8F81040 		str	r4, [r8, #16]
+ 295:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 659              		.loc 1 295 0
+ 660 0068 0020     		movs	r0, #0
+ 661 006a D2E7     		b	.L46
+ 662              		.cfi_endproc
+ 663              	.LFE293:
+ 665              		.section	.text.osSlabGetMaxFreeBlkSize,"ax",%progbits
+ 666              		.align	1
+ 667              		.global	osSlabGetMaxFreeBlkSize
+ 668              		.syntax unified
+ 669              		.thumb
+ 670              		.thumb_func
+ 671              		.fpu fpv4-sp-d16
+ 673              	osSlabGetMaxFreeBlkSize:
+ 674              	.LFB294:
+ 297:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 298:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** UINT32 osSlabGetMaxFreeBlkSize(VOID *pPool)
+ 299:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** {
+ 675              		.loc 1 299 0
+ 676              		.cfi_startproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 19
+
+
+ 677              		@ args = 0, pretend = 0, frame = 16
+ 678              		@ frame_needed = 0, uses_anonymous_args = 0
+ 679              	.LVL82:
+ 680 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 681              	.LCFI8:
+ 682              		.cfi_def_cfa_offset 32
+ 683              		.cfi_offset 4, -16
+ 684              		.cfi_offset 5, -12
+ 685              		.cfi_offset 6, -8
+ 686              		.cfi_offset 14, -4
+ 300:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     struct LOS_SLAB_CONTROL_HEADER *pstSlabMem = osSlabCtrlHdrGet(pPool);
+ 687              		.loc 1 300 0
+ 688 0002 FFF7FEFF 		bl	osSlabCtrlHdrGet
+ 689              	.LVL83:
+ 301:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     OS_SLAB_MEM *pstSlabAlloc;
+ 302:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwItemSz = 0;
+ 303:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwItemCnt = 0;
+ 304:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwCurUsage = 0;
+ 690              		.loc 1 304 0
+ 691 0006 04AD     		add	r5, sp, #16
+ 302:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwItemCnt = 0;
+ 692              		.loc 1 302 0
+ 693 0008 0023     		movs	r3, #0
+ 303:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     UINT32 uwCurUsage = 0;
+ 694              		.loc 1 303 0
+ 695 000a CDE90133 		strd	r3, r3, [sp, #4]
+ 696              		.loc 1 304 0
+ 697 000e 45F8043D 		str	r3, [r5, #-4]!
+ 698              	.LVL84:
+ 699 0012 0446     		mov	r4, r0
+ 700 0014 A0F14006 		sub	r6, r0, #64
+ 701              	.LVL85:
+ 702              	.L58:
+ 305:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     int uwIdx = 0;
+ 306:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 307:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     for (uwIdx = SLAB_MEM_COUNT - 1; uwIdx >= 0; uwIdx--)
+ 308:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 309:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         pstSlabAlloc = &(pstSlabMem->stSlabClass[uwIdx]);
+ 310:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         if (pstSlabAlloc->alloc)
+ 703              		.loc 1 310 0
+ 704 0018 E06B     		ldr	r0, [r4, #60]
+ 705 001a 58B1     		cbz	r0, .L56
+ 311:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         {
+ 312:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             osSlabAllocatorGetSlabInfo(pstSlabAlloc->alloc, &uwItemSz, &uwItemCnt, &uwCurUsage);
+ 706              		.loc 1 312 0
+ 707 001c 2B46     		mov	r3, r5
+ 708 001e 02AA     		add	r2, sp, #8
+ 709 0020 01A9     		add	r1, sp, #4
+ 710 0022 FFF7FEFF 		bl	osSlabAllocatorGetSlabInfo
+ 711              	.LVL86:
+ 313:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             if (uwCurUsage != uwItemCnt)
+ 712              		.loc 1 313 0
+ 713 0026 DDE90232 		ldrd	r3, r2, [sp, #8]
+ 714 002a 9A42     		cmp	r2, r3
+ 715 002c 02D0     		beq	.L56
+ 314:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             {
+ 315:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****                 return uwItemSz;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 20
+
+
+ 716              		.loc 1 315 0
+ 717 002e 0198     		ldr	r0, [sp, #4]
+ 718              	.L55:
+ 316:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****             }
+ 317:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****         }
+ 318:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     }
+ 319:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** 
+ 320:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     return 0;
+ 321:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 719              		.loc 1 321 0
+ 720 0030 04B0     		add	sp, sp, #16
+ 721              	.LCFI9:
+ 722              		.cfi_remember_state
+ 723              		.cfi_def_cfa_offset 16
+ 724              		@ sp needed
+ 725 0032 70BD     		pop	{r4, r5, r6, pc}
+ 726              	.LVL87:
+ 727              	.L56:
+ 728              	.LCFI10:
+ 729              		.cfi_restore_state
+ 730 0034 103C     		subs	r4, r4, #16
+ 307:../../iot_link/os/liteos/base/mem/common/los_slabmem.c ****     {
+ 731              		.loc 1 307 0
+ 732 0036 B442     		cmp	r4, r6
+ 733 0038 EED1     		bne	.L58
+ 320:../../iot_link/os/liteos/base/mem/common/los_slabmem.c **** }
+ 734              		.loc 1 320 0
+ 735 003a 0020     		movs	r0, #0
+ 736 003c F8E7     		b	.L55
+ 737              		.cfi_endproc
+ 738              	.LFE294:
+ 740              		.text
+ 741              	.Letext0:
+ 742              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 743              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 744              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 745              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 746              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 747              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 748              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 749              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 750              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 751              		.file 11 "../../iot_link/os/liteos/include/los_config.h"
+ 752              		.file 12 "../../iot_link/os/liteos/include/los_err.h"
+ 753              		.file 13 "../../iot_link/os/liteos/base/include/los_slab.ph"
+ 754              		.file 14 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 los_slabmem.c
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:18     .text.osSlabBlockHeadFill:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:25     .text.osSlabBlockHeadFill:00000000 osSlabBlockHeadFill
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:51     .text.osSlabMemInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:58     .text.osSlabMemInit:00000000 osSlabMemInit
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:139    .text.osSlabMemAlloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:146    .text.osSlabMemAlloc:00000000 osSlabMemAlloc
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:279    .text.osSlabMemFree:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:286    .text.osSlabMemFree:00000000 osSlabMemFree
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:380    .text.osSlabMemDeinit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:387    .text.osSlabMemDeinit:00000000 osSlabMemDeinit
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:460    .text.osSlabMemCheck:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:467    .text.osSlabMemCheck:00000000 osSlabMemCheck
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:546    .text.osSlabStatisticsGet:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:553    .text.osSlabStatisticsGet:00000000 osSlabStatisticsGet
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:666    .text.osSlabGetMaxFreeBlkSize:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cceDGPNP.s:673    .text.osSlabGetMaxFreeBlkSize:00000000 osSlabGetMaxFreeBlkSize
+
+UNDEFINED SYMBOLS
+osSlabCtrlHdrGet
+osSlabAllocatorNew
+LOS_IntLock
+LOS_IntRestore
+osSlabAllocatorAlloc
+osSlabAllocatorFree
+osSlabAllocatorDestroy
+osSlabAllocatorCheck
+osSlabAllocatorGetSlabInfo

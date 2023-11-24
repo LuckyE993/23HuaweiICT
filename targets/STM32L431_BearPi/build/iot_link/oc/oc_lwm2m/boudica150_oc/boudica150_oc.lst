@@ -1,0 +1,3540 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"boudica150_oc.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.boudica150_oc_deconfig,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	boudica150_oc_deconfig:
+  25              	.LFB26:
+  26              		.file 1 "../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c"
+   1:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * All rights reserved.
+   4:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * provided with the distribution.
+  11:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * permission.
+  14:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * Notice of Export Control Law
+  28:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * ===============================================
+  29:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  * applicable export control laws and regulations.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 2
+
+
+  33:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  35:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** ///< you must config the at module ,for the NB modules need the at
+  36:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  37:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  38:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #include <string.h>
+  39:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #include <at.h>
+  40:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #include <boudica150_oc.h>
+  41:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #include <oc_lwm2m_al.h>
+  42:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #include <osal.h>
+  43:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  44:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** ///<  only support the bootstrap mode
+  45:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  46:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #define cn_boudica150_cmd_timeout  (2*1000)
+  47:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #define cn_boudica150_try_times    (32)
+  48:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #define cn_boudica150_rcvindex     "\r\n+NNMI:"
+  49:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #define cn_urc_qlwevtind           "\r\n+QLWEVTIND:"
+  50:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #define cn_boudica150_cachelen     128
+  51:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  52:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** typedef struct
+  53:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+  54:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //initialize by the NB module init
+  55:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     const char *plmn;
+  56:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     const char *apn;
+  57:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     const char *bands;
+  58:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  59:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //initialized by the applicaiton
+  60:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     oc_config_param_t  oc_param;
+  61:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  62:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //this is the control block
+  63:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t            sndenable;
+  64:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     unsigned char     sndbuf[cn_boudica150_cachelen];  //used for the receive
+  65:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     unsigned char     rcvbuf[cn_boudica150_cachelen];
+  66:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //for the debug
+  67:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     unsigned int   rcvlen;
+  68:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     unsigned int   sndlen;
+  69:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //states for the lwm2m
+  70:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t         lwm2m_observe;
+  71:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  72:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }boudica150_cb_t;
+  73:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static boudica150_cb_t   s_boudica150_oc_cb;
+  74:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static osal_mutex_t s_report_mutex;
+  75:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static void  *s_oc_handle = NULL;
+  76:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  77:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** int wireless_stats[4] = {0};
+  78:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  79:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //bc95 common at command
+  80:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_atcmd(const char *cmd,const char *index)
+  81:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+  82:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+  83:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = at_command((unsigned char *)cmd,strlen(cmd),index,NULL,0,cn_boudica150_cmd_timeout);
+  84:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(ret >= 0)
+  85:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+  86:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return true;
+  87:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+  88:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     else
+  89:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 3
+
+
+  90:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return false;
+  91:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+  92:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+  93:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  94:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //nb command  with response
+  95:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //bc95 common at command
+  96:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_atcmd_response(const char *cmd,const char *index,char *buf, int len)
+  97:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+  98:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+  99:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = at_command((unsigned char *)cmd,strlen(cmd),index,(char *)buf,len,cn_boudica150_cmd_timeo
+ 100:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(ret >= 0)
+ 101:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 102:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return true;
+ 103:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 104:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     else
+ 105:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 106:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return false;
+ 107:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 108:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 109:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 110:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 111:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 112:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //make a byte to 2 ascii hex
+ 113:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static int byte_to_hexstr(const unsigned char *bufin, int len, char *bufout)
+ 114:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 115:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int i = 0;
+ 116:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (NULL == bufin || len <= 0 || NULL == bufout)
+ 117:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 118:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return -1;
+ 119:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 120:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     for(i = 0; i < len; i++)
+ 121:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 122:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) sprintf(bufout+i*2, "%02X", bufin[i]);
+ 123:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 124:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return 0;
+ 125:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 126:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 127:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 128:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static int boudica150_oc_report(unsigned char *buf,int len, int timeout)
+ 129:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 130:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = en_oc_lwm2m_err_noconfigured;
+ 131:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     const char *cmd = "AT+NMGS=";
+ 132:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     const char *index = "OK";
+ 133:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 134:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL == s_oc_handle)
+ 135:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 136:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret;
+ 137:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 138:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 139:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if ((NULL == buf) || (len >= cn_boudica150_cachelen/2 )||(false == s_boudica150_oc_cb.sndenable
+ 140:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 141:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = en_oc_lwm2m_err_parafmt;
+ 142:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret;
+ 143:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 144:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     osal_mutex_lock(s_report_mutex);
+ 145:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(s_boudica150_oc_cb.sndbuf, 0, cn_boudica150_cachelen);
+ 146:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf((char *)s_boudica150_oc_cb.sndbuf,cn_boudica150_cachelen,"%s%d,",cmd,len);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 4
+
+
+ 147:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = byte_to_hexstr((unsigned char *)buf, len, (char *)&s_boudica150_oc_cb.sndbuf[strlen((char
+ 148:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.sndbuf[strlen((char *)s_boudica150_oc_cb.sndbuf)]='\r';
+ 149:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 150:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = at_command((unsigned char *)s_boudica150_oc_cb.sndbuf,strlen((char *)s_boudica150_oc_cb.s
+ 151:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) osal_mutex_unlock(s_report_mutex);
+ 152:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(ret >= 0)
+ 153:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 154:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = en_oc_lwm2m_err_ok;
+ 155:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 156:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     else
+ 157:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 158:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = en_oc_lwm2m_err_network;
+ 159:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 160:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 161:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 162:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 163:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 164:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 165:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static int hexstr_to_byte(const char *bufin, int len, char *bufout)
+ 166:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 167:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int i = 0;
+ 168:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     unsigned char tmp2 = 0x0;
+ 169:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     unsigned int tmp = 0;
+ 170:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (NULL == bufin || len <= 0 || NULL == bufout)
+ 171:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 172:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return -1;
+ 173:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 174:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     for(i = 0; i < len; i = i+2)
+ 175:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 176:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         tmp2 =  bufin[i];
+ 177:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         tmp2 =  tmp2 <= '9'?tmp2-0x30:tmp2-0x37;
+ 178:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         tmp =  bufin[i+1];
+ 179:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         tmp =  tmp <= '9'?tmp-0x30:tmp-0x37;
+ 180:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         bufout[i/2] =(tmp2<<4)|(tmp&0x0F);
+ 181:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 182:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return 0;
+ 183:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 184:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 185:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static int boudica150_rcvdeal(void *args,void *msg,size_t len)
+ 186:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 187:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+ 188:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int datalen;
+ 189:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char *data;
+ 190:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char  *str;
+ 191:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 192:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     data = msg;
+ 193:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(len <strlen(cn_boudica150_rcvindex))
+ 194:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 195:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         LINK_LOG_DEBUG("%s:invalid frame:%d byte:%s\n\r",__FUNCTION__,len,(char *)data);
+ 196:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret;
+ 197:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 198:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //now deal the data
+ 199:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     str = strstr((char *)data,":");
+ 200:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL == str)
+ 201:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 202:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         LINK_LOG_DEBUG("%s:format error\n\r",__FUNCTION__);
+ 203:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //format error
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 5
+
+
+ 204:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 205:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     str++;
+ 206:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     datalen = 0;
+ 207:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     for (; *str <= '9' && *str >= '0' ;str++)
+ 208:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 209:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         datalen = (datalen * 10 + (*str - '0'));
+ 210:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 211:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     str++;
+ 212:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //now this is data of hex string
+ 213:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if((unsigned int)(str + datalen*2 +2) > (unsigned int)(data + len))
+ 214:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 215:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         LINK_LOG_DEBUG("%s:implement error\n\r",__FUNCTION__);
+ 216:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //
+ 217:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 218:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(datalen > cn_boudica150_cachelen)
+ 219:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 220:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         LINK_LOG_DEBUG("%s:frame over: frame:%d  cachelen:%d \n\r",__FUNCTION__,datalen,cn_boudica1
+ 221:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //
+ 222:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 223:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(s_boudica150_oc_cb.rcvbuf,0,cn_boudica150_cachelen);
+ 224:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     hexstr_to_byte(str,datalen*2,(char *)s_boudica150_oc_cb.rcvbuf);
+ 225:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 226:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL != s_boudica150_oc_cb.oc_param.rcv_func)
+ 227:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 228:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         s_boudica150_oc_cb.oc_param.rcv_func(s_boudica150_oc_cb.oc_param.usr_data,EN_OC_LWM2M_MSG_A
+ 229:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****                                              (char *)s_boudica150_oc_cb.rcvbuf,datalen);
+ 230:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 231:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 232:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return len;
+ 233:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 234:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 235:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //enable the echooff
+ 236:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_echo(int enable)
+ 237:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 238:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret ;
+ 239:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 240:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 241:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"ATE%d\r",enable);
+ 242:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 243:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = boudica150_atcmd(cmd,"OK");
+ 244:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 245:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 246:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 247:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 248:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_regmode(int mode)
+ 249:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 250:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret ;
+ 251:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 252:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 253:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+QREGSWT=%d\r",mode);
+ 254:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 255:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = boudica150_atcmd(cmd,"OK");
+ 256:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 257:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 258:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 259:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 260:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //use this function to do the module reboot
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 6
+
+
+ 261:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_reboot(void)
+ 262:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 263:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //do the module reset
+ 264:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     boudica150_set_echo (0);
+ 265:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     boudica150_set_echo (0);
+ 266:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 267:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     boudica150_atcmd("AT+NRB\r","REBOOTING");
+ 268:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     osal_task_sleep(10000); //wait for the module boot
+ 269:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //do the module reset
+ 270:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     boudica150_set_echo (0);
+ 271:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     boudica150_set_echo (0);
+ 272:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 273:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return true;
+ 274:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 275:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 276:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //enable the cfun
+ 277:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_fun(int enable)  //unit second
+ 278:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 279:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret ;
+ 280:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 281:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 282:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 283:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CFUN=%d\r",enable);
+ 284:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 285:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = boudica150_atcmd(cmd,"OK");
+ 286:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //i think we should do some wait here
+ 287:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     osal_task_sleep(2000);
+ 288:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 289:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 290:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 291:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 292:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //use this function to set the band
+ 293:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_bands(const char *bands)
+ 294:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 295:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 296:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char resp[64];
+ 297:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret = true;
+ 298:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 299:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL != bands)  //which means we need to set if the default is not the same
+ 300:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 301:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(resp,0,64);
+ 302:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+NBAND?\r","OK",resp,64);
+ 303:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 304:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmd,0,64);
+ 305:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+NBAND:%s\r",bands);
+ 306:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 307:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if((false == ret)||(NULL == strstr(resp,cmd)))//which means we need to set it
+ 308:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 309:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             boudica150_set_fun(0);
+ 310:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 311:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) memset(cmd,0,64);
+ 312:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) snprintf(cmd,63,"AT+NBAND=%s\r",bands);
+ 313:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = boudica150_atcmd(cmd,"OK");
+ 314:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 315:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             boudica150_set_fun(1);
+ 316:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 317:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         else
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 7
+
+
+ 318:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 319:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = true;  //we need not to set
+ 320:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 321:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 322:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 323:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 324:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 325:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //set the plmn
+ 326:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_plmn(const char *plmn)
+ 327:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 328:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 329:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char resp[64];
+ 330:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret;
+ 331:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 332:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL != plmn)  //which measn we need to set if the default is not the same
+ 333:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 334:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(resp,0,64);
+ 335:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+COPS?\r","+COPS",resp,64);
+ 336:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 337:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmd,0,64);
+ 338:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+COPS:1,2,\"%s\"\r",plmn);
+ 339:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 340:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if((false == ret)||(NULL == strstr(resp,cmd)))//which means we need to set it
+ 341:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 342:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) memset(cmd,0,64);
+ 343:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) snprintf(cmd,63,"AT+COPS=1,2,\"%s\"\r",plmn);
+ 344:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 345:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = boudica150_atcmd(cmd,"OK");
+ 346:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 347:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         else
+ 348:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 349:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = true;  //we need not to set
+ 350:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 351:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 352:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     else  //set it to auto
+ 353:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 354:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmd,0,64);
+ 355:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,64,"AT+COPS=0\r");
+ 356:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd(cmd,"OK");
+ 357:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 358:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 359:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 360:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 361:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 362:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //set the apn
+ 363:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_apn(const char *apn)
+ 364:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 365:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 366:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char resp[64];
+ 367:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 368:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret = true;
+ 369:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 370:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL != apn)  //which measn we need to set if the default is not the same
+ 371:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 372:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(resp,0,64);
+ 373:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+CGDCONT?\r","OK",resp,64);
+ 374:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 8
+
+
+ 375:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmd,0,64);
+ 376:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+CGDCONT:\"%s\"\r",apn); //TODO, check if it is right
+ 377:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if((false == ret)||(NULL == strstr(resp,cmd)))//which means we need to set it
+ 378:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 379:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) memset(cmd,0,64);
+ 380:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) snprintf(cmd,63,"AT+CGDCONT=%s\r",apn);
+ 381:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = boudica150_atcmd(cmd,"OK");
+ 382:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 383:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         else
+ 384:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 385:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = true;  //we need not to set
+ 386:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 387:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 388:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 389:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 390:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 391:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //set the cdp
+ 392:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_cdp(const char *server,const char *port)
+ 393:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 394:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 395:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char resp[64];
+ 396:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmp[64];
+ 397:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret = true;
+ 398:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 399:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL != server)  //which measn we need to set if the default is not the same
+ 400:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 401:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(resp,0,64);
+ 402:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmp,0,64);
+ 403:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmd,0,64);
+ 404:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+NCDP?\r","OK",resp,64);
+ 405:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmp,64,"+NCDP:%s,%s\r",server,port);
+ 406:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if((false == ret)||(NULL == strstr(resp,cmp)))//which means we need to set it
+ 407:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 408:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) memset(cmd,0,64);
+ 409:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) snprintf(cmd,64,"AT+NCDP=%s,%s\r",server,port);
+ 410:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = boudica150_atcmd(cmd,"OK");
+ 411:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 412:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         else
+ 413:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 414:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = true;  //we need not to set
+ 415:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 416:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 417:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 418:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 419:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 420:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //enable the cmee
+ 421:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 422:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_cmee(int enable)
+ 423:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 424:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret;
+ 425:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 426:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 427:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 428:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CMEE=%d\r",enable);
+ 429:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 430:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = boudica150_atcmd(cmd,"OK");
+ 431:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 9
+
+
+ 432:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 433:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 434:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 435:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //enable the network
+ 436:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_cgatt(int enable)  //unit second
+ 437:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 438:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret ;
+ 439:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 440:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 441:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 442:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CGATT=%d\r",enable);
+ 443:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 444:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = boudica150_atcmd(cmd,"OK");
+ 445:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 446:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 447:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 448:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 449:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //enable the NNMI
+ 450:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_nnmi(int enable)  //unit second
+ 451:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 452:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret ;
+ 453:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 454:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 455:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 456:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+NNMI=%d\r",enable);
+ 457:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 458:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = boudica150_atcmd(cmd,"OK");
+ 459:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 460:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 461:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 462:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 463:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 464:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //wait for the lwm2m observe
+ 465:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static int urc_qlwevtind(void *args,void *msg,size_t len)
+ 466:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 467:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 468:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char *data;
+ 469:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int index_str;
+ 470:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ind;
+ 471:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 472:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     data = msg;
+ 473:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     index_str = strlen(cn_urc_qlwevtind);
+ 474:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 475:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(len > index_str)
+ 476:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 477:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ind = data[index_str]-'0';
+ 478:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         LINK_LOG_DEBUG("GET THE LWM2M:ind:%d\n\r",ind);
+ 479:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(ind == 3)
+ 480:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 481:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             s_boudica150_oc_cb.lwm2m_observe = true;
+ 482:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 483:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 484:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return len;
+ 485:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 486:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 487:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 488:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //check the lwm2m server observed
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 10
+
+
+ 489:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_check_observe(int time)  //unit second
+ 490:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 491:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //wait for the server observed
+ 492:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret = false;
+ 493:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int times;
+ 494:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 495:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     for(times =0;times <time;times++ )
+ 496:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 497:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(s_boudica150_oc_cb.lwm2m_observe )
+ 498:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 499:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = true;
+ 500:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             break;
+ 501:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 502:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         osal_task_sleep(1000);
+ 503:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 504:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 505:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 506:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 507:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 508:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //check if attached to the network
+ 509:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_check_netattach(int time)  //unit second
+ 510:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 511:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //wait for the server observed
+ 512:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret = false;
+ 513:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int times;
+ 514:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 515:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     for(times =0;times <time;times++ )
+ 516:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 517:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(boudica150_atcmd("AT+CGATT?\r", "CGATT:1"))
+ 518:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 519:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = true;
+ 520:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             break;
+ 521:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 522:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         osal_task_sleep(1000);
+ 523:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 524:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 525:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 526:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 527:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 528:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //set the autoconfig mode
+ 529:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_set_autoconnect(int enable)
+ 530:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 531:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 532:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char resp[64];
+ 533:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret = true;
+ 534:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     const char *mode;
+ 535:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 536:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(enable)
+ 537:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 538:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         mode = "AUTOCONNECT,TRUE";
+ 539:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 540:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     else
+ 541:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 542:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         mode = "AUTOCONNECT,FALSE";
+ 543:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 544:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 545:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(resp,0,64);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 11
+
+
+ 546:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = boudica150_atcmd_response("AT+NCONFIG?\r","+NCONFIG",resp,64);
+ 547:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if((false == ret)||(NULL == strstr(resp,mode)))//which means we need to set it
+ 548:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 549:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmd,0,64);
+ 550:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,64,"AT+NCONFIG=%s\r",mode);
+ 551:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd(cmd,"OK");
+ 552:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 553:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_reboot();
+ 554:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 555:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     else
+ 556:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 557:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = true;  //we need not to set
+ 558:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 559:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 560:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 561:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 562:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 563:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //use this function to set the band,which corresponding with YUNYINGSHANG AND MOZU
+ 564:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static bool_t boudica150_boot(const char *plmn, const char *apn, const char *bands,const char *serv
+ 565:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 566:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //(void) memset(&s_boudica150_oc_cb,0,sizeof(s_boudica150_oc_cb));
+ 567:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     at_oobregister("qlwevind",cn_urc_qlwevtind,strlen(cn_urc_qlwevtind),urc_qlwevtind,NULL);
+ 568:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     at_oobregister("boudica150rcv",cn_boudica150_rcvindex,strlen(cn_boudica150_rcvindex),boudica150
+ 569:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 570:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     while(1)
+ 571:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 572:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 573:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         s_boudica150_oc_cb.lwm2m_observe = false;
+ 574:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 575:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_reboot();
+ 576:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 577:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_echo (0);
+ 578:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 579:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_regmode(1);
+ 580:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 581:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_cmee(1);
+ 582:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 583:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_autoconnect(1);     //cgatt and cfun must be called if autoconnect is false
+ 584:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 585:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_bands(bands);
+ 586:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 587:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_fun(1);
+ 588:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 589:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_plmn(plmn);
+ 590:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 591:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_apn(apn);
+ 592:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 593:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_cdp(server,port);
+ 594:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 595:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_cgatt(1);
+ 596:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 597:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         boudica150_set_nnmi(1);
+ 598:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 599:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(false == boudica150_check_netattach(16))
+ 600:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 601:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             continue;
+ 602:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 12
+
+
+ 603:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 604:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(false == boudica150_check_observe(16)) //TODO--maybe this only compatible with QUETEL MO
+ 605:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 606:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             continue; //we should do the reboot for the nB
+ 607:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 608:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 609:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         break;
+ 610:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 611:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****    //reach here means everything is ok, we can go now
+ 612:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.sndenable = true;
+ 613:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     LINK_LOG_DEBUG("NB MODULE RXTX READY NOW\n\r");
+ 614:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return true;
+ 615:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 616:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 617:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 618:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static int boudica150_oc_config(oc_config_param_t *param)
+ 619:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 620:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = en_oc_lwm2m_err_configured;
+ 621:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 622:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL == param)
+ 623:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 624:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = en_oc_lwm2m_err_parafmt;
+ 625:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret;
+ 626:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 627:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 628:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL == s_oc_handle)
+ 629:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 630:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         s_boudica150_oc_cb.oc_param = *param;
+ 631:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 632:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(boudica150_boot(s_boudica150_oc_cb.plmn,s_boudica150_oc_cb.apn,s_boudica150_oc_cb.bands,
+ 633:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****                 s_boudica150_oc_cb.oc_param.app_server.address,s_boudica150_oc_cb.oc_param.app_serv
+ 634:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 635:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             s_oc_handle = &s_boudica150_oc_cb;
+ 636:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = en_oc_lwm2m_err_ok;
+ 637:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 638:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         else
+ 639:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 640:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = en_oc_lwm2m_err_network;
+ 641:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 642:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 643:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 644:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 645:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 646:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 647:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** static int boudica150_oc_deconfig(void)
+ 648:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+  27              		.loc 1 648 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              	.LVL0:
+ 649:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = en_oc_lwm2m_err_noconfigured;
+ 650:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 651:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL != s_oc_handle)
+  33              		.loc 1 651 0
+  34 0000 034B     		ldr	r3, .L4
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 13
+
+
+  35 0002 1A68     		ldr	r2, [r3]
+  36 0004 12B1     		cbz	r2, .L3
+ 652:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 653:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         s_oc_handle = NULL;
+  37              		.loc 1 653 0
+  38 0006 0020     		movs	r0, #0
+  39 0008 1860     		str	r0, [r3]
+  40              	.LVL1:
+  41 000a 7047     		bx	lr
+  42              	.LVL2:
+  43              	.L3:
+ 649:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = en_oc_lwm2m_err_noconfigured;
+  44              		.loc 1 649 0
+  45 000c 0420     		movs	r0, #4
+ 654:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = en_oc_lwm2m_err_ok;
+ 655:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 656:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 657:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+  46              		.loc 1 657 0
+  47 000e 7047     		bx	lr
+  48              	.L5:
+  49              		.align	2
+  50              	.L4:
+  51 0010 00000000 		.word	.LANCHOR0
+  52              		.cfi_endproc
+  53              	.LFE26:
+  55              		.section	.text.boudica150_atcmd_response,"ax",%progbits
+  56              		.align	1
+  57              		.syntax unified
+  58              		.thumb
+  59              		.thumb_func
+  60              		.fpu fpv4-sp-d16
+  62              	boudica150_atcmd_response:
+  63              	.LFB4:
+  97:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+  64              		.loc 1 97 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              	.LVL3:
+  69 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+  70              	.LCFI0:
+  71              		.cfi_def_cfa_offset 32
+  72              		.cfi_offset 4, -20
+  73              		.cfi_offset 5, -16
+  74              		.cfi_offset 6, -12
+  75              		.cfi_offset 7, -8
+  76              		.cfi_offset 14, -4
+  97:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+  77              		.loc 1 97 0
+  78 0002 0D46     		mov	r5, r1
+  79 0004 1646     		mov	r6, r2
+  80 0006 1F46     		mov	r7, r3
+  81 0008 0446     		mov	r4, r0
+  99:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(ret >= 0)
+  82              		.loc 1 99 0
+  83 000a FFF7FEFF 		bl	strlen
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 14
+
+
+  84              	.LVL4:
+  85 000e 4FF4FA63 		mov	r3, #2000
+  86 0012 CDE90073 		strd	r7, r3, [sp]
+  87 0016 0146     		mov	r1, r0
+  88 0018 3346     		mov	r3, r6
+  89 001a 2A46     		mov	r2, r5
+  90 001c 2046     		mov	r0, r4
+  91 001e FFF7FEFF 		bl	at_command
+  92              	.LVL5:
+ 108:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+  93              		.loc 1 108 0
+  94 0022 C043     		mvns	r0, r0
+  95              	.LVL6:
+  96 0024 C00F     		lsrs	r0, r0, #31
+  97              	.LVL7:
+  98 0026 03B0     		add	sp, sp, #12
+  99              	.LCFI1:
+ 100              		.cfi_def_cfa_offset 20
+ 101              		@ sp needed
+ 102 0028 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 103              		.cfi_endproc
+ 104              	.LFE4:
+ 106              		.section	.text.boudica150_atcmd,"ax",%progbits
+ 107              		.align	1
+ 108              		.syntax unified
+ 109              		.thumb
+ 110              		.thumb_func
+ 111              		.fpu fpv4-sp-d16
+ 113              	boudica150_atcmd:
+ 114              	.LFB3:
+  81:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+ 115              		.loc 1 81 0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              	.LVL8:
+ 120 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 121              	.LCFI2:
+ 122              		.cfi_def_cfa_offset 24
+ 123              		.cfi_offset 4, -12
+ 124              		.cfi_offset 5, -8
+ 125              		.cfi_offset 14, -4
+  81:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+ 126              		.loc 1 81 0
+ 127 0002 0D46     		mov	r5, r1
+ 128 0004 0446     		mov	r4, r0
+  83:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(ret >= 0)
+ 129              		.loc 1 83 0
+ 130 0006 FFF7FEFF 		bl	strlen
+ 131              	.LVL9:
+ 132 000a 0023     		movs	r3, #0
+ 133 000c 4FF4FA62 		mov	r2, #2000
+ 134 0010 CDE90032 		strd	r3, r2, [sp]
+ 135 0014 0146     		mov	r1, r0
+ 136 0016 2A46     		mov	r2, r5
+ 137 0018 2046     		mov	r0, r4
+ 138 001a FFF7FEFF 		bl	at_command
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 15
+
+
+ 139              	.LVL10:
+  92:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 140              		.loc 1 92 0
+ 141 001e C043     		mvns	r0, r0
+ 142              	.LVL11:
+ 143 0020 C00F     		lsrs	r0, r0, #31
+ 144              	.LVL12:
+ 145 0022 03B0     		add	sp, sp, #12
+ 146              	.LCFI3:
+ 147              		.cfi_def_cfa_offset 12
+ 148              		@ sp needed
+ 149 0024 30BD     		pop	{r4, r5, pc}
+ 150              		.cfi_endproc
+ 151              	.LFE3:
+ 153              		.section	.text.urc_qlwevtind,"ax",%progbits
+ 154              		.align	1
+ 155              		.syntax unified
+ 156              		.thumb
+ 157              		.thumb_func
+ 158              		.fpu fpv4-sp-d16
+ 160              	urc_qlwevtind:
+ 161              	.LFB20:
+ 466:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 162              		.loc 1 466 0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166              	.LVL13:
+ 475:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 167              		.loc 1 475 0
+ 168 0000 0D2A     		cmp	r2, #13
+ 466:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 169              		.loc 1 466 0
+ 170 0002 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 171              	.LCFI4:
+ 172              		.cfi_def_cfa_offset 24
+ 173              		.cfi_offset 4, -16
+ 174              		.cfi_offset 5, -12
+ 175              		.cfi_offset 6, -8
+ 176              		.cfi_offset 14, -4
+ 466:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 177              		.loc 1 466 0
+ 178 0004 1546     		mov	r5, r2
+ 475:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 179              		.loc 1 475 0
+ 180 0006 1ED9     		bls	.L10
+ 477:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         LINK_LOG_DEBUG("GET THE LWM2M:ind:%d\n\r",ind);
+ 181              		.loc 1 477 0
+ 182 0008 4C7B     		ldrb	r4, [r1, #13]	@ zero_extendqisi2
+ 478:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(ind == 3)
+ 183              		.loc 1 478 0
+ 184 000a FFF7FEFF 		bl	link_log_level_get
+ 185              	.LVL14:
+ 186 000e 0128     		cmp	r0, #1
+ 477:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         LINK_LOG_DEBUG("GET THE LWM2M:ind:%d\n\r",ind);
+ 187              		.loc 1 477 0
+ 188 0010 A4F13004 		sub	r4, r4, #48
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 16
+
+
+ 189              	.LVL15:
+ 478:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(ind == 3)
+ 190              		.loc 1 478 0
+ 191 0014 11D8     		bhi	.L11
+ 478:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(ind == 3)
+ 192              		.loc 1 478 0 is_stmt 0 discriminator 1
+ 193 0016 0120     		movs	r0, #1
+ 194 0018 FFF7FEFF 		bl	link_log_level_name
+ 195              	.LVL16:
+ 196 001c 0646     		mov	r6, r0
+ 197 001e FFF7FEFF 		bl	osal_sys_time
+ 198              	.LVL17:
+ 199 0022 0A4B     		ldr	r3, .L13
+ 200 0024 0094     		str	r4, [sp]
+ 201 0026 0246     		mov	r2, r0
+ 202 0028 3146     		mov	r1, r6
+ 203 002a 0948     		ldr	r0, .L13+4
+ 204 002c FFF7FEFF 		bl	printf
+ 205              	.LVL18:
+ 206 0030 084B     		ldr	r3, .L13+8
+ 207 0032 1B68     		ldr	r3, [r3]
+ 208 0034 9868     		ldr	r0, [r3, #8]
+ 209 0036 FFF7FEFF 		bl	fflush
+ 210              	.LVL19:
+ 211              	.L11:
+ 479:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 212              		.loc 1 479 0 is_stmt 1
+ 213 003a 032C     		cmp	r4, #3
+ 481:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 214              		.loc 1 481 0
+ 215 003c 02BF     		ittt	eq
+ 216 003e 064B     		ldreq	r3, .L13+12
+ 217 0040 0122     		moveq	r2, #1
+ 218 0042 C3F85421 		streq	r2, [r3, #340]
+ 219              	.LVL20:
+ 220              	.L10:
+ 485:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 221              		.loc 1 485 0
+ 222 0046 2846     		mov	r0, r5
+ 223 0048 02B0     		add	sp, sp, #8
+ 224              	.LCFI5:
+ 225              		.cfi_def_cfa_offset 16
+ 226              		@ sp needed
+ 227 004a 70BD     		pop	{r4, r5, r6, pc}
+ 228              	.LVL21:
+ 229              	.L14:
+ 230              		.align	2
+ 231              	.L13:
+ 232 004c 00000000 		.word	.LANCHOR1
+ 233 0050 00000000 		.word	.LC0
+ 234 0054 00000000 		.word	_impure_ptr
+ 235 0058 00000000 		.word	.LANCHOR2
+ 236              		.cfi_endproc
+ 237              	.LFE20:
+ 239              		.section	.text.boudica150_set_fun,"ax",%progbits
+ 240              		.align	1
+ 241              		.syntax unified
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 17
+
+
+ 242              		.thumb
+ 243              		.thumb_func
+ 244              		.fpu fpv4-sp-d16
+ 246              	boudica150_set_fun:
+ 247              	.LFB12:
+ 278:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret ;
+ 248              		.loc 1 278 0
+ 249              		.cfi_startproc
+ 250              		@ args = 0, pretend = 0, frame = 64
+ 251              		@ frame_needed = 0, uses_anonymous_args = 0
+ 252              	.LVL22:
+ 253 0000 30B5     		push	{r4, r5, lr}
+ 254              	.LCFI6:
+ 255              		.cfi_def_cfa_offset 12
+ 256              		.cfi_offset 4, -12
+ 257              		.cfi_offset 5, -8
+ 258              		.cfi_offset 14, -4
+ 282:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CFUN=%d\r",enable);
+ 259              		.loc 1 282 0
+ 260 0002 4024     		movs	r4, #64
+ 278:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret ;
+ 261              		.loc 1 278 0
+ 262 0004 91B0     		sub	sp, sp, #68
+ 263              	.LCFI7:
+ 264              		.cfi_def_cfa_offset 80
+ 278:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     bool_t ret ;
+ 265              		.loc 1 278 0
+ 266 0006 0546     		mov	r5, r0
+ 282:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CFUN=%d\r",enable);
+ 267              		.loc 1 282 0
+ 268 0008 2246     		mov	r2, r4
+ 269 000a 0021     		movs	r1, #0
+ 270 000c 6846     		mov	r0, sp
+ 271              	.LVL23:
+ 272 000e FFF7FEFF 		bl	memset
+ 273              	.LVL24:
+ 283:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 274              		.loc 1 283 0
+ 275 0012 2B46     		mov	r3, r5
+ 276 0014 084A     		ldr	r2, .L16
+ 277 0016 2146     		mov	r1, r4
+ 278 0018 6846     		mov	r0, sp
+ 279 001a FFF7FEFF 		bl	snprintf
+ 280              	.LVL25:
+ 285:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //i think we should do some wait here
+ 281              		.loc 1 285 0
+ 282 001e 0749     		ldr	r1, .L16+4
+ 283 0020 6846     		mov	r0, sp
+ 284 0022 FFF7FEFF 		bl	boudica150_atcmd
+ 285              	.LVL26:
+ 286 0026 0446     		mov	r4, r0
+ 287              	.LVL27:
+ 287:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 288              		.loc 1 287 0
+ 289 0028 4FF4FA60 		mov	r0, #2000
+ 290              	.LVL28:
+ 291 002c FFF7FEFF 		bl	osal_task_sleep
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 18
+
+
+ 292              	.LVL29:
+ 290:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 293              		.loc 1 290 0
+ 294 0030 2046     		mov	r0, r4
+ 295 0032 11B0     		add	sp, sp, #68
+ 296              	.LCFI8:
+ 297              		.cfi_def_cfa_offset 12
+ 298              		@ sp needed
+ 299 0034 30BD     		pop	{r4, r5, pc}
+ 300              	.LVL30:
+ 301              	.L17:
+ 302 0036 00BF     		.align	2
+ 303              	.L16:
+ 304 0038 00000000 		.word	.LC1
+ 305 003c 0C000000 		.word	.LC2
+ 306              		.cfi_endproc
+ 307              	.LFE12:
+ 309              		.section	.text.boudica150_oc_report,"ax",%progbits
+ 310              		.align	1
+ 311              		.syntax unified
+ 312              		.thumb
+ 313              		.thumb_func
+ 314              		.fpu fpv4-sp-d16
+ 316              	boudica150_oc_report:
+ 317              	.LFB6:
+ 129:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = en_oc_lwm2m_err_noconfigured;
+ 318              		.loc 1 129 0
+ 319              		.cfi_startproc
+ 320              		@ args = 0, pretend = 0, frame = 0
+ 321              		@ frame_needed = 0, uses_anonymous_args = 0
+ 322              	.LVL31:
+ 134:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 323              		.loc 1 134 0
+ 324 0000 2F4B     		ldr	r3, .L28
+ 325 0002 1B68     		ldr	r3, [r3]
+ 129:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = en_oc_lwm2m_err_noconfigured;
+ 326              		.loc 1 129 0
+ 327 0004 2DE9F347 		push	{r0, r1, r4, r5, r6, r7, r8, r9, r10, lr}
+ 328              	.LCFI9:
+ 329              		.cfi_def_cfa_offset 40
+ 330              		.cfi_offset 4, -32
+ 331              		.cfi_offset 5, -28
+ 332              		.cfi_offset 6, -24
+ 333              		.cfi_offset 7, -20
+ 334              		.cfi_offset 8, -16
+ 335              		.cfi_offset 9, -12
+ 336              		.cfi_offset 10, -8
+ 337              		.cfi_offset 14, -4
+ 129:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = en_oc_lwm2m_err_noconfigured;
+ 338              		.loc 1 129 0
+ 339 0008 8146     		mov	r9, r0
+ 340 000a 0E46     		mov	r6, r1
+ 341 000c 1746     		mov	r7, r2
+ 134:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 342              		.loc 1 134 0
+ 343 000e 002B     		cmp	r3, #0
+ 344 0010 51D0     		beq	.L22
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 19
+
+
+ 139:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 345              		.loc 1 139 0
+ 346 0012 0028     		cmp	r0, #0
+ 347 0014 51D0     		beq	.L25
+ 139:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 348              		.loc 1 139 0 is_stmt 0 discriminator 1
+ 349 0016 3F29     		cmp	r1, #63
+ 350 0018 4FDC     		bgt	.L25
+ 139:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 351              		.loc 1 139 0 discriminator 2
+ 352 001a 2A4C     		ldr	r4, .L28+4
+ 353 001c A36C     		ldr	r3, [r4, #72]
+ 354 001e 002B     		cmp	r3, #0
+ 355 0020 4BD0     		beq	.L25
+ 356              	.LVL32:
+ 357              	.LBB6:
+ 358              	.LBB7:
+ 144:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(s_boudica150_oc_cb.sndbuf, 0, cn_boudica150_cachelen);
+ 359              		.loc 1 144 0 is_stmt 1
+ 360 0022 DFF8B480 		ldr	r8, .L28+24
+ 361 0026 D8F80000 		ldr	r0, [r8]
+ 362              	.LVL33:
+ 363 002a FFF7FEFF 		bl	osal_mutex_lock
+ 364              	.LVL34:
+ 145:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf((char *)s_boudica150_oc_cb.sndbuf,cn_boudica150_cachelen,"%s%d,",cmd,len);
+ 365              		.loc 1 145 0
+ 366 002e 8022     		movs	r2, #128
+ 367 0030 0021     		movs	r1, #0
+ 368 0032 04F14C00 		add	r0, r4, #76
+ 369 0036 FFF7FEFF 		bl	memset
+ 370              	.LVL35:
+ 146:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = byte_to_hexstr((unsigned char *)buf, len, (char *)&s_boudica150_oc_cb.sndbuf[strlen((char
+ 371              		.loc 1 146 0
+ 372 003a 234B     		ldr	r3, .L28+8
+ 373 003c 234A     		ldr	r2, .L28+12
+ 374 003e 0096     		str	r6, [sp]
+ 375 0040 8021     		movs	r1, #128
+ 376 0042 04F14C00 		add	r0, r4, #76
+ 377 0046 FFF7FEFF 		bl	snprintf
+ 378              	.LVL36:
+ 147:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.sndbuf[strlen((char *)s_boudica150_oc_cb.sndbuf)]='\r';
+ 379              		.loc 1 147 0
+ 380 004a 04F14C00 		add	r0, r4, #76
+ 381 004e FFF7FEFF 		bl	strlen
+ 382              	.LVL37:
+ 383              	.LBB8:
+ 384              	.LBB9:
+ 116:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 385              		.loc 1 116 0
+ 386 0052 002E     		cmp	r6, #0
+ 387              	.LBE9:
+ 388              	.LBE8:
+ 147:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.sndbuf[strlen((char *)s_boudica150_oc_cb.sndbuf)]='\r';
+ 389              		.loc 1 147 0
+ 390 0054 00F14C05 		add	r5, r0, #76
+ 391 0058 2544     		add	r5, r5, r4
+ 392              	.LVL38:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 20
+
+
+ 393              	.LBB11:
+ 394              	.LBB10:
+ 116:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 395              		.loc 1 116 0
+ 396 005a 0EDD     		ble	.L20
+ 122:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 397              		.loc 1 122 0
+ 398 005c DFF87CA0 		ldr	r10, .L28+28
+ 399 0060 09F1FF39 		add	r9, r9, #-1
+ 400              	.LVL39:
+ 401 0064 05EB4606 		add	r6, r5, r6, lsl #1
+ 402              	.LVL40:
+ 403              	.L21:
+ 404 0068 2846     		mov	r0, r5
+ 405 006a 19F8012F 		ldrb	r2, [r9, #1]!	@ zero_extendqisi2
+ 406              	.LVL41:
+ 407 006e 5146     		mov	r1, r10
+ 408 0070 0235     		adds	r5, r5, #2
+ 409 0072 FFF7FEFF 		bl	sprintf
+ 410              	.LVL42:
+ 120:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 411              		.loc 1 120 0
+ 412 0076 B542     		cmp	r5, r6
+ 413 0078 F6D1     		bne	.L21
+ 414              	.LVL43:
+ 415              	.L20:
+ 416              	.LBE10:
+ 417              	.LBE11:
+ 148:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 418              		.loc 1 148 0
+ 419 007a 1548     		ldr	r0, .L28+16
+ 420 007c FFF7FEFF 		bl	strlen
+ 421              	.LVL44:
+ 422 0080 2044     		add	r0, r0, r4
+ 423 0082 0D23     		movs	r3, #13
+ 424 0084 80F84C30 		strb	r3, [r0, #76]
+ 150:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) osal_mutex_unlock(s_report_mutex);
+ 425              		.loc 1 150 0
+ 426 0088 1148     		ldr	r0, .L28+16
+ 427 008a FFF7FEFF 		bl	strlen
+ 428              	.LVL45:
+ 429 008e 0023     		movs	r3, #0
+ 430 0090 0146     		mov	r1, r0
+ 431 0092 0093     		str	r3, [sp]
+ 432 0094 0F4A     		ldr	r2, .L28+20
+ 433 0096 0197     		str	r7, [sp, #4]
+ 434 0098 0D48     		ldr	r0, .L28+16
+ 435 009a FFF7FEFF 		bl	at_command
+ 436              	.LVL46:
+ 437 009e 0446     		mov	r4, r0
+ 438              	.LVL47:
+ 151:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(ret >= 0)
+ 439              		.loc 1 151 0
+ 440 00a0 D8F80000 		ldr	r0, [r8]
+ 441              	.LVL48:
+ 442 00a4 FFF7FEFF 		bl	osal_mutex_unlock
+ 443              	.LVL49:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 21
+
+
+ 158:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 444              		.loc 1 158 0
+ 445 00a8 002C     		cmp	r4, #0
+ 446 00aa ACBF     		ite	ge
+ 447 00ac 0020     		movge	r0, #0
+ 448 00ae 0220     		movlt	r0, #2
+ 449              	.LVL50:
+ 450              	.L18:
+ 451              	.LBE7:
+ 452              	.LBE6:
+ 162:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 453              		.loc 1 162 0
+ 454 00b0 02B0     		add	sp, sp, #8
+ 455              	.LCFI10:
+ 456              		.cfi_remember_state
+ 457              		.cfi_def_cfa_offset 32
+ 458              		@ sp needed
+ 459 00b2 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 460              	.LVL51:
+ 461              	.L22:
+ 462              	.LCFI11:
+ 463              		.cfi_restore_state
+ 136:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 464              		.loc 1 136 0
+ 465 00b6 0420     		movs	r0, #4
+ 466              	.LVL52:
+ 467 00b8 FAE7     		b	.L18
+ 468              	.LVL53:
+ 469              	.L25:
+ 142:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 470              		.loc 1 142 0
+ 471 00ba 0120     		movs	r0, #1
+ 472              	.LVL54:
+ 473 00bc F8E7     		b	.L18
+ 474              	.L29:
+ 475 00be 00BF     		.align	2
+ 476              	.L28:
+ 477 00c0 00000000 		.word	.LANCHOR0
+ 478 00c4 00000000 		.word	.LANCHOR2
+ 479 00c8 00000000 		.word	.LC3
+ 480 00cc 09000000 		.word	.LC4
+ 481 00d0 4C000000 		.word	.LANCHOR2+76
+ 482 00d4 0C000000 		.word	.LC2
+ 483 00d8 00000000 		.word	.LANCHOR3
+ 484 00dc 0F000000 		.word	.LC5
+ 485              		.cfi_endproc
+ 486              	.LFE6:
+ 488              		.section	.text.boudica150_set_echo.constprop.6,"ax",%progbits
+ 489              		.align	1
+ 490              		.syntax unified
+ 491              		.thumb
+ 492              		.thumb_func
+ 493              		.fpu fpv4-sp-d16
+ 495              	boudica150_set_echo.constprop.6:
+ 496              	.LFB38:
+ 236:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 497              		.loc 1 236 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 22
+
+
+ 498              		.cfi_startproc
+ 499              		@ args = 0, pretend = 0, frame = 64
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501              	.LVL55:
+ 502 0000 10B5     		push	{r4, lr}
+ 503              	.LCFI12:
+ 504              		.cfi_def_cfa_offset 8
+ 505              		.cfi_offset 4, -8
+ 506              		.cfi_offset 14, -4
+ 240:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"ATE%d\r",enable);
+ 507              		.loc 1 240 0
+ 508 0002 4024     		movs	r4, #64
+ 236:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 509              		.loc 1 236 0
+ 510 0004 90B0     		sub	sp, sp, #64
+ 511              	.LCFI13:
+ 512              		.cfi_def_cfa_offset 72
+ 240:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"ATE%d\r",enable);
+ 513              		.loc 1 240 0
+ 514 0006 2246     		mov	r2, r4
+ 515 0008 0021     		movs	r1, #0
+ 516 000a 6846     		mov	r0, sp
+ 517 000c FFF7FEFF 		bl	memset
+ 518              	.LVL56:
+ 241:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 519              		.loc 1 241 0
+ 520 0010 0023     		movs	r3, #0
+ 521 0012 054A     		ldr	r2, .L31
+ 522 0014 2146     		mov	r1, r4
+ 523 0016 6846     		mov	r0, sp
+ 524 0018 FFF7FEFF 		bl	snprintf
+ 525              	.LVL57:
+ 243:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 526              		.loc 1 243 0
+ 527 001c 0349     		ldr	r1, .L31+4
+ 528 001e 6846     		mov	r0, sp
+ 529 0020 FFF7FEFF 		bl	boudica150_atcmd
+ 530              	.LVL58:
+ 246:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 531              		.loc 1 246 0
+ 532 0024 10B0     		add	sp, sp, #64
+ 533              	.LCFI14:
+ 534              		.cfi_def_cfa_offset 8
+ 535              		@ sp needed
+ 536 0026 10BD     		pop	{r4, pc}
+ 537              	.L32:
+ 538              		.align	2
+ 539              	.L31:
+ 540 0028 00000000 		.word	.LC6
+ 541 002c 0C000000 		.word	.LC2
+ 542              		.cfi_endproc
+ 543              	.LFE38:
+ 545              		.section	.text.boudica150_reboot,"ax",%progbits
+ 546              		.align	1
+ 547              		.syntax unified
+ 548              		.thumb
+ 549              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 23
+
+
+ 550              		.fpu fpv4-sp-d16
+ 552              	boudica150_reboot:
+ 553              	.LFB11:
+ 262:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //do the module reset
+ 554              		.loc 1 262 0
+ 555              		.cfi_startproc
+ 556              		@ args = 0, pretend = 0, frame = 0
+ 557              		@ frame_needed = 0, uses_anonymous_args = 0
+ 558 0000 08B5     		push	{r3, lr}
+ 559              	.LCFI15:
+ 560              		.cfi_def_cfa_offset 8
+ 561              		.cfi_offset 3, -8
+ 562              		.cfi_offset 14, -4
+ 264:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     boudica150_set_echo (0);
+ 563              		.loc 1 264 0
+ 564 0002 FFF7FEFF 		bl	boudica150_set_echo.constprop.6
+ 565              	.LVL59:
+ 265:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 566              		.loc 1 265 0
+ 567 0006 FFF7FEFF 		bl	boudica150_set_echo.constprop.6
+ 568              	.LVL60:
+ 267:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     osal_task_sleep(10000); //wait for the module boot
+ 569              		.loc 1 267 0
+ 570 000a 0749     		ldr	r1, .L34
+ 571 000c 0748     		ldr	r0, .L34+4
+ 572 000e FFF7FEFF 		bl	boudica150_atcmd
+ 573              	.LVL61:
+ 268:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     //do the module reset
+ 574              		.loc 1 268 0
+ 575 0012 42F21070 		movw	r0, #10000
+ 576 0016 FFF7FEFF 		bl	osal_task_sleep
+ 577              	.LVL62:
+ 270:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     boudica150_set_echo (0);
+ 578              		.loc 1 270 0
+ 579 001a FFF7FEFF 		bl	boudica150_set_echo.constprop.6
+ 580              	.LVL63:
+ 271:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 581              		.loc 1 271 0
+ 582 001e FFF7FEFF 		bl	boudica150_set_echo.constprop.6
+ 583              	.LVL64:
+ 274:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 584              		.loc 1 274 0
+ 585 0022 0120     		movs	r0, #1
+ 586 0024 08BD     		pop	{r3, pc}
+ 587              	.L35:
+ 588 0026 00BF     		.align	2
+ 589              	.L34:
+ 590 0028 00000000 		.word	.LC7
+ 591 002c 0A000000 		.word	.LC8
+ 592              		.cfi_endproc
+ 593              	.LFE11:
+ 595              		.section	.text.boudica150_oc_config,"ax",%progbits
+ 596              		.align	1
+ 597              		.syntax unified
+ 598              		.thumb
+ 599              		.thumb_func
+ 600              		.fpu fpv4-sp-d16
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 24
+
+
+ 602              	boudica150_oc_config:
+ 603              	.LFB25:
+ 619:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = en_oc_lwm2m_err_configured;
+ 604              		.loc 1 619 0
+ 605              		.cfi_startproc
+ 606              		@ args = 0, pretend = 0, frame = 200
+ 607              		@ frame_needed = 0, uses_anonymous_args = 0
+ 608              	.LVL65:
+ 609 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 610              	.LCFI16:
+ 611              		.cfi_def_cfa_offset 36
+ 612              		.cfi_offset 4, -36
+ 613              		.cfi_offset 5, -32
+ 614              		.cfi_offset 6, -28
+ 615              		.cfi_offset 7, -24
+ 616              		.cfi_offset 8, -20
+ 617              		.cfi_offset 9, -16
+ 618              		.cfi_offset 10, -12
+ 619              		.cfi_offset 11, -8
+ 620              		.cfi_offset 14, -4
+ 621 0004 B5B0     		sub	sp, sp, #212
+ 622              	.LCFI17:
+ 623              		.cfi_def_cfa_offset 248
+ 622:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 624              		.loc 1 622 0
+ 625 0006 0028     		cmp	r0, #0
+ 626 0008 00F0CE81 		beq	.L62
+ 628:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 627              		.loc 1 628 0
+ 628 000c BB4B     		ldr	r3, .L83
+ 629 000e 0393     		str	r3, [sp, #12]
+ 630 0010 D3F80090 		ldr	r9, [r3]
+ 631 0014 B9F1000F 		cmp	r9, #0
+ 632 0018 40F0C881 		bne	.L63
+ 633              	.LVL66:
+ 634              	.LBB38:
+ 635              	.LBB39:
+ 630:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 636              		.loc 1 630 0
+ 637 001c 0446     		mov	r4, r0
+ 638 001e 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 639              	.LVL67:
+ 640 0020 B74D     		ldr	r5, .L83+4
+ 641 0022 05F10C06 		add	r6, r5, #12
+ 642 0026 0FC6     		stmia	r6!, {r0, r1, r2, r3}
+ 643 0028 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 644              	.LVL68:
+ 645 002a 0FC6     		stmia	r6!, {r0, r1, r2, r3}
+ 646 002c 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 647              	.LVL69:
+ 648 002e 0FC6     		stmia	r6!, {r0, r1, r2, r3}
+ 649 0030 94E80700 		ldm	r4, {r0, r1, r2}
+ 650              	.LBB40:
+ 651              	.LBB41:
+ 567:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     at_oobregister("boudica150rcv",cn_boudica150_rcvindex,strlen(cn_boudica150_rcvindex),boudica150
+ 652              		.loc 1 567 0
+ 653 0034 B34B     		ldr	r3, .L83+8
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 25
+
+
+ 654              	.LBB42:
+ 655              	.LBB43:
+ 255:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 656              		.loc 1 255 0
+ 657 0036 B44C     		ldr	r4, .L83+12
+ 658              	.LVL70:
+ 659              	.LBE43:
+ 660              	.LBE42:
+ 661              	.LBE41:
+ 662              	.LBE40:
+ 630:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 663              		.loc 1 630 0
+ 664 0038 86E80700 		stm	r6, {r0, r1, r2}
+ 665              	.LBB74:
+ 666              	.LBB70:
+ 567:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     at_oobregister("boudica150rcv",cn_boudica150_rcvindex,strlen(cn_boudica150_rcvindex),boudica150
+ 667              		.loc 1 567 0
+ 668 003c 0D22     		movs	r2, #13
+ 669 003e B349     		ldr	r1, .L83+16
+ 670 0040 B348     		ldr	r0, .L83+20
+ 671              	.LBE70:
+ 672              	.LBE74:
+ 632:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****                 s_boudica150_oc_cb.oc_param.app_server.address,s_boudica150_oc_cb.oc_param.app_serv
+ 673              		.loc 1 632 0
+ 674 0042 D5E9006B 		ldrd	r6, fp, [r5]
+ 675 0046 AF68     		ldr	r7, [r5, #8]
+ 676              	.LBB75:
+ 677              	.LBB71:
+ 567:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     at_oobregister("boudica150rcv",cn_boudica150_rcvindex,strlen(cn_boudica150_rcvindex),boudica150
+ 678              		.loc 1 567 0
+ 679 0048 CDF80090 		str	r9, [sp]
+ 680              	.LBE71:
+ 681              	.LBE75:
+ 633:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 682              		.loc 1 633 0
+ 683 004c D5E90B8A 		ldrd	r8, r10, [r5, #44]
+ 684              	.LVL71:
+ 685              	.LBB76:
+ 686              	.LBB72:
+ 567:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     at_oobregister("boudica150rcv",cn_boudica150_rcvindex,strlen(cn_boudica150_rcvindex),boudica150
+ 687              		.loc 1 567 0
+ 688 0050 FFF7FEFF 		bl	at_oobregister
+ 689              	.LVL72:
+ 568:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 690              		.loc 1 568 0
+ 691 0054 CDF80090 		str	r9, [sp]
+ 692 0058 AE4B     		ldr	r3, .L83+24
+ 693 005a AF49     		ldr	r1, .L83+28
+ 694 005c AF48     		ldr	r0, .L83+32
+ 695 005e 0822     		movs	r2, #8
+ 696 0060 FFF7FEFF 		bl	at_oobregister
+ 697              	.LVL73:
+ 573:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 698              		.loc 1 573 0
+ 699 0064 CDF80890 		str	r9, [sp, #8]
+ 700              	.L57:
+ 701 0068 029B     		ldr	r3, [sp, #8]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 26
+
+
+ 702 006a C5F85431 		str	r3, [r5, #340]
+ 575:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 703              		.loc 1 575 0
+ 704 006e FFF7FEFF 		bl	boudica150_reboot
+ 705              	.LVL74:
+ 577:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 706              		.loc 1 577 0
+ 707 0072 FFF7FEFF 		bl	boudica150_set_echo.constprop.6
+ 708              	.LVL75:
+ 709              	.LBB45:
+ 710              	.LBB44:
+ 252:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+QREGSWT=%d\r",mode);
+ 711              		.loc 1 252 0
+ 712 0076 4022     		movs	r2, #64
+ 713 0078 0021     		movs	r1, #0
+ 714 007a 24A8     		add	r0, sp, #144
+ 715 007c FFF7FEFF 		bl	memset
+ 716              	.LVL76:
+ 253:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 717              		.loc 1 253 0
+ 718 0080 0123     		movs	r3, #1
+ 719 0082 A74A     		ldr	r2, .L83+36
+ 720 0084 4021     		movs	r1, #64
+ 721 0086 24A8     		add	r0, sp, #144
+ 722 0088 FFF7FEFF 		bl	snprintf
+ 723              	.LVL77:
+ 255:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 724              		.loc 1 255 0
+ 725 008c 2146     		mov	r1, r4
+ 726 008e 24A8     		add	r0, sp, #144
+ 727 0090 FFF7FEFF 		bl	boudica150_atcmd
+ 728              	.LVL78:
+ 729              	.LBE44:
+ 730              	.LBE45:
+ 731              	.LBB46:
+ 732              	.LBB47:
+ 427:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CMEE=%d\r",enable);
+ 733              		.loc 1 427 0
+ 734 0094 4022     		movs	r2, #64
+ 735 0096 0021     		movs	r1, #0
+ 736 0098 24A8     		add	r0, sp, #144
+ 737 009a FFF7FEFF 		bl	memset
+ 738              	.LVL79:
+ 428:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 739              		.loc 1 428 0
+ 740 009e 0123     		movs	r3, #1
+ 741 00a0 A04A     		ldr	r2, .L83+40
+ 742 00a2 4021     		movs	r1, #64
+ 743 00a4 24A8     		add	r0, sp, #144
+ 744 00a6 FFF7FEFF 		bl	snprintf
+ 745              	.LVL80:
+ 430:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 746              		.loc 1 430 0
+ 747 00aa 2146     		mov	r1, r4
+ 748 00ac 24A8     		add	r0, sp, #144
+ 749 00ae FFF7FEFF 		bl	boudica150_atcmd
+ 750              	.LVL81:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 27
+
+
+ 751              	.LBE47:
+ 752              	.LBE46:
+ 753              	.LBB48:
+ 754              	.LBB49:
+ 545:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = boudica150_atcmd_response("AT+NCONFIG?\r","+NCONFIG",resp,64);
+ 755              		.loc 1 545 0
+ 756 00b2 4022     		movs	r2, #64
+ 757 00b4 0021     		movs	r1, #0
+ 758 00b6 24A8     		add	r0, sp, #144
+ 759 00b8 FFF7FEFF 		bl	memset
+ 760              	.LVL82:
+ 546:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if((false == ret)||(NULL == strstr(resp,mode)))//which means we need to set it
+ 761              		.loc 1 546 0
+ 762 00bc 4023     		movs	r3, #64
+ 763 00be 24AA     		add	r2, sp, #144
+ 764 00c0 9949     		ldr	r1, .L83+44
+ 765 00c2 9A48     		ldr	r0, .L83+48
+ 766 00c4 FFF7FEFF 		bl	boudica150_atcmd_response
+ 767              	.LVL83:
+ 547:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 768              		.loc 1 547 0
+ 769 00c8 20B1     		cbz	r0, .L38
+ 770 00ca 9949     		ldr	r1, .L83+52
+ 771 00cc 24A8     		add	r0, sp, #144
+ 772              	.LVL84:
+ 773 00ce FFF7FEFF 		bl	strstr
+ 774              	.LVL85:
+ 775 00d2 80B9     		cbnz	r0, .L39
+ 776              	.L38:
+ 549:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,64,"AT+NCONFIG=%s\r",mode);
+ 777              		.loc 1 549 0
+ 778 00d4 4022     		movs	r2, #64
+ 779 00d6 0021     		movs	r1, #0
+ 780 00d8 14A8     		add	r0, sp, #80
+ 781 00da FFF7FEFF 		bl	memset
+ 782              	.LVL86:
+ 550:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd(cmd,"OK");
+ 783              		.loc 1 550 0
+ 784 00de 944B     		ldr	r3, .L83+52
+ 785 00e0 944A     		ldr	r2, .L83+56
+ 786 00e2 4021     		movs	r1, #64
+ 787 00e4 14A8     		add	r0, sp, #80
+ 788 00e6 FFF7FEFF 		bl	snprintf
+ 789              	.LVL87:
+ 551:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 790              		.loc 1 551 0
+ 791 00ea 2146     		mov	r1, r4
+ 792 00ec 14A8     		add	r0, sp, #80
+ 793 00ee FFF7FEFF 		bl	boudica150_atcmd
+ 794              	.LVL88:
+ 553:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 795              		.loc 1 553 0
+ 796 00f2 FFF7FEFF 		bl	boudica150_reboot
+ 797              	.LVL89:
+ 798              	.L39:
+ 799              	.LBE49:
+ 800              	.LBE48:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 28
+
+
+ 801              	.LBB50:
+ 802              	.LBB51:
+ 299:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 803              		.loc 1 299 0
+ 804 00f6 002F     		cmp	r7, #0
+ 805 00f8 33D0     		beq	.L41
+ 301:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+NBAND?\r","OK",resp,64);
+ 806              		.loc 1 301 0
+ 807 00fa 4022     		movs	r2, #64
+ 808 00fc 0021     		movs	r1, #0
+ 809 00fe 24A8     		add	r0, sp, #144
+ 810 0100 FFF7FEFF 		bl	memset
+ 811              	.LVL90:
+ 302:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 812              		.loc 1 302 0
+ 813 0104 4023     		movs	r3, #64
+ 814 0106 24AA     		add	r2, sp, #144
+ 815 0108 2146     		mov	r1, r4
+ 816 010a 8B48     		ldr	r0, .L83+60
+ 817 010c FFF7FEFF 		bl	boudica150_atcmd_response
+ 818              	.LVL91:
+ 304:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+NBAND:%s\r",bands);
+ 819              		.loc 1 304 0
+ 820 0110 4022     		movs	r2, #64
+ 302:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 821              		.loc 1 302 0
+ 822 0112 8146     		mov	r9, r0
+ 823              	.LVL92:
+ 304:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+NBAND:%s\r",bands);
+ 824              		.loc 1 304 0
+ 825 0114 0021     		movs	r1, #0
+ 826 0116 14A8     		add	r0, sp, #80
+ 827              	.LVL93:
+ 828 0118 FFF7FEFF 		bl	memset
+ 829              	.LVL94:
+ 305:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 830              		.loc 1 305 0
+ 831 011c 3B46     		mov	r3, r7
+ 832 011e 874A     		ldr	r2, .L83+64
+ 833 0120 3F21     		movs	r1, #63
+ 834 0122 14A8     		add	r0, sp, #80
+ 835 0124 FFF7FEFF 		bl	snprintf
+ 836              	.LVL95:
+ 307:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 837              		.loc 1 307 0
+ 838 0128 B9F1000F 		cmp	r9, #0
+ 839 012c 04D0     		beq	.L42
+ 840 012e 14A9     		add	r1, sp, #80
+ 841 0130 24A8     		add	r0, sp, #144
+ 842 0132 FFF7FEFF 		bl	strstr
+ 843              	.LVL96:
+ 844 0136 A0B9     		cbnz	r0, .L41
+ 845              	.L42:
+ 309:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 846              		.loc 1 309 0
+ 847 0138 0020     		movs	r0, #0
+ 848 013a FFF7FEFF 		bl	boudica150_set_fun
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 29
+
+
+ 849              	.LVL97:
+ 311:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) snprintf(cmd,63,"AT+NBAND=%s\r",bands);
+ 850              		.loc 1 311 0
+ 851 013e 4022     		movs	r2, #64
+ 852 0140 0021     		movs	r1, #0
+ 853 0142 14A8     		add	r0, sp, #80
+ 854 0144 FFF7FEFF 		bl	memset
+ 855              	.LVL98:
+ 312:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = boudica150_atcmd(cmd,"OK");
+ 856              		.loc 1 312 0
+ 857 0148 3B46     		mov	r3, r7
+ 858 014a 7D4A     		ldr	r2, .L83+68
+ 859 014c 3F21     		movs	r1, #63
+ 860 014e 14A8     		add	r0, sp, #80
+ 861 0150 FFF7FEFF 		bl	snprintf
+ 862              	.LVL99:
+ 313:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 863              		.loc 1 313 0
+ 864 0154 2146     		mov	r1, r4
+ 865 0156 14A8     		add	r0, sp, #80
+ 866 0158 FFF7FEFF 		bl	boudica150_atcmd
+ 867              	.LVL100:
+ 315:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 868              		.loc 1 315 0
+ 869 015c 0120     		movs	r0, #1
+ 870 015e FFF7FEFF 		bl	boudica150_set_fun
+ 871              	.LVL101:
+ 872              	.L41:
+ 873              	.LBE51:
+ 874              	.LBE50:
+ 587:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 875              		.loc 1 587 0
+ 876 0162 0120     		movs	r0, #1
+ 877 0164 FFF7FEFF 		bl	boudica150_set_fun
+ 878              	.LVL102:
+ 879              	.LBB52:
+ 880              	.LBB53:
+ 334:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+COPS?\r","+COPS",resp,64);
+ 881              		.loc 1 334 0
+ 882 0168 4022     		movs	r2, #64
+ 332:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 883              		.loc 1 332 0
+ 884 016a 002E     		cmp	r6, #0
+ 885 016c 00F00681 		beq	.L44
+ 334:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+COPS?\r","+COPS",resp,64);
+ 886              		.loc 1 334 0
+ 887 0170 0021     		movs	r1, #0
+ 888 0172 24A8     		add	r0, sp, #144
+ 889 0174 FFF7FEFF 		bl	memset
+ 890              	.LVL103:
+ 335:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 891              		.loc 1 335 0
+ 892 0178 4023     		movs	r3, #64
+ 893 017a 24AA     		add	r2, sp, #144
+ 894 017c 7149     		ldr	r1, .L83+72
+ 895 017e 7248     		ldr	r0, .L83+76
+ 896 0180 FFF7FEFF 		bl	boudica150_atcmd_response
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 30
+
+
+ 897              	.LVL104:
+ 337:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+COPS:1,2,\"%s\"\r",plmn);
+ 898              		.loc 1 337 0
+ 899 0184 4022     		movs	r2, #64
+ 335:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 900              		.loc 1 335 0
+ 901 0186 8146     		mov	r9, r0
+ 902              	.LVL105:
+ 337:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+COPS:1,2,\"%s\"\r",plmn);
+ 903              		.loc 1 337 0
+ 904 0188 0021     		movs	r1, #0
+ 905 018a 14A8     		add	r0, sp, #80
+ 906              	.LVL106:
+ 907 018c FFF7FEFF 		bl	memset
+ 908              	.LVL107:
+ 338:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 909              		.loc 1 338 0
+ 910 0190 3346     		mov	r3, r6
+ 911 0192 6E4A     		ldr	r2, .L83+80
+ 912 0194 3F21     		movs	r1, #63
+ 913 0196 14A8     		add	r0, sp, #80
+ 914 0198 FFF7FEFF 		bl	snprintf
+ 915              	.LVL108:
+ 340:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 916              		.loc 1 340 0
+ 917 019c B9F1000F 		cmp	r9, #0
+ 918 01a0 04D0     		beq	.L45
+ 919 01a2 14A9     		add	r1, sp, #80
+ 920 01a4 24A8     		add	r0, sp, #144
+ 921 01a6 FFF7FEFF 		bl	strstr
+ 922              	.LVL109:
+ 923 01aa 70B9     		cbnz	r0, .L46
+ 924              	.L45:
+ 342:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) snprintf(cmd,63,"AT+COPS=1,2,\"%s\"\r",plmn);
+ 925              		.loc 1 342 0
+ 926 01ac 4022     		movs	r2, #64
+ 927 01ae 0021     		movs	r1, #0
+ 928 01b0 14A8     		add	r0, sp, #80
+ 929 01b2 FFF7FEFF 		bl	memset
+ 930              	.LVL110:
+ 343:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 931              		.loc 1 343 0
+ 932 01b6 3346     		mov	r3, r6
+ 933 01b8 654A     		ldr	r2, .L83+84
+ 934 01ba 3F21     		movs	r1, #63
+ 935 01bc 14A8     		add	r0, sp, #80
+ 936 01be FFF7FEFF 		bl	snprintf
+ 937              	.LVL111:
+ 938              	.L82:
+ 356:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 939              		.loc 1 356 0
+ 940 01c2 2146     		mov	r1, r4
+ 941 01c4 14A8     		add	r0, sp, #80
+ 942 01c6 FFF7FEFF 		bl	boudica150_atcmd
+ 943              	.LVL112:
+ 944              	.L46:
+ 945              	.LBE53:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 31
+
+
+ 946              	.LBE52:
+ 947              	.LBB55:
+ 948              	.LBB56:
+ 370:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 949              		.loc 1 370 0
+ 950 01ca BBF1000F 		cmp	fp, #0
+ 951 01ce 2DD0     		beq	.L48
+ 372:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+CGDCONT?\r","OK",resp,64);
+ 952              		.loc 1 372 0
+ 953 01d0 4022     		movs	r2, #64
+ 954 01d2 0021     		movs	r1, #0
+ 955 01d4 24A8     		add	r0, sp, #144
+ 956 01d6 FFF7FEFF 		bl	memset
+ 957              	.LVL113:
+ 373:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 958              		.loc 1 373 0
+ 959 01da 4023     		movs	r3, #64
+ 960 01dc 24AA     		add	r2, sp, #144
+ 961 01de 2146     		mov	r1, r4
+ 962 01e0 5C48     		ldr	r0, .L83+88
+ 963 01e2 FFF7FEFF 		bl	boudica150_atcmd_response
+ 964              	.LVL114:
+ 375:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+CGDCONT:\"%s\"\r",apn); //TODO, check if it is right
+ 965              		.loc 1 375 0
+ 966 01e6 4022     		movs	r2, #64
+ 373:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 967              		.loc 1 373 0
+ 968 01e8 8146     		mov	r9, r0
+ 969              	.LVL115:
+ 375:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,63,"+CGDCONT:\"%s\"\r",apn); //TODO, check if it is right
+ 970              		.loc 1 375 0
+ 971 01ea 0021     		movs	r1, #0
+ 972 01ec 14A8     		add	r0, sp, #80
+ 973              	.LVL116:
+ 974 01ee FFF7FEFF 		bl	memset
+ 975              	.LVL117:
+ 376:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if((false == ret)||(NULL == strstr(resp,cmd)))//which means we need to set it
+ 976              		.loc 1 376 0
+ 977 01f2 5B46     		mov	r3, fp
+ 978 01f4 584A     		ldr	r2, .L83+92
+ 979 01f6 3F21     		movs	r1, #63
+ 980 01f8 14A8     		add	r0, sp, #80
+ 981 01fa FFF7FEFF 		bl	snprintf
+ 982              	.LVL118:
+ 377:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 983              		.loc 1 377 0
+ 984 01fe B9F1000F 		cmp	r9, #0
+ 985 0202 04D0     		beq	.L49
+ 986 0204 14A9     		add	r1, sp, #80
+ 987 0206 24A8     		add	r0, sp, #144
+ 988 0208 FFF7FEFF 		bl	strstr
+ 989              	.LVL119:
+ 990 020c 70B9     		cbnz	r0, .L48
+ 991              	.L49:
+ 379:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) snprintf(cmd,63,"AT+CGDCONT=%s\r",apn);
+ 992              		.loc 1 379 0
+ 993 020e 4022     		movs	r2, #64
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 32
+
+
+ 994 0210 0021     		movs	r1, #0
+ 995 0212 14A8     		add	r0, sp, #80
+ 996 0214 FFF7FEFF 		bl	memset
+ 997              	.LVL120:
+ 380:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = boudica150_atcmd(cmd,"OK");
+ 998              		.loc 1 380 0
+ 999 0218 3F21     		movs	r1, #63
+ 1000 021a 5B46     		mov	r3, fp
+ 1001 021c 4F4A     		ldr	r2, .L83+96
+ 1002 021e 14A8     		add	r0, sp, #80
+ 1003 0220 FFF7FEFF 		bl	snprintf
+ 1004              	.LVL121:
+ 381:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 1005              		.loc 1 381 0
+ 1006 0224 2146     		mov	r1, r4
+ 1007 0226 14A8     		add	r0, sp, #80
+ 1008 0228 FFF7FEFF 		bl	boudica150_atcmd
+ 1009              	.LVL122:
+ 1010              	.L48:
+ 1011              	.LBE56:
+ 1012              	.LBE55:
+ 1013              	.LBB57:
+ 1014              	.LBB58:
+ 399:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1015              		.loc 1 399 0
+ 1016 022c B8F1000F 		cmp	r8, #0
+ 1017 0230 36D0     		beq	.L52
+ 401:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmp,0,64);
+ 1018              		.loc 1 401 0
+ 1019 0232 4022     		movs	r2, #64
+ 1020 0234 0021     		movs	r1, #0
+ 1021 0236 14A8     		add	r0, sp, #80
+ 1022 0238 FFF7FEFF 		bl	memset
+ 1023              	.LVL123:
+ 402:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) memset(cmd,0,64);
+ 1024              		.loc 1 402 0
+ 1025 023c 4022     		movs	r2, #64
+ 1026 023e 0021     		movs	r1, #0
+ 1027 0240 24A8     		add	r0, sp, #144
+ 1028 0242 FFF7FEFF 		bl	memset
+ 1029              	.LVL124:
+ 403:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd_response("AT+NCDP?\r","OK",resp,64);
+ 1030              		.loc 1 403 0
+ 1031 0246 4022     		movs	r2, #64
+ 1032 0248 0021     		movs	r1, #0
+ 1033 024a 04A8     		add	r0, sp, #16
+ 1034 024c FFF7FEFF 		bl	memset
+ 1035              	.LVL125:
+ 404:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmp,64,"+NCDP:%s,%s\r",server,port);
+ 1036              		.loc 1 404 0
+ 1037 0250 4023     		movs	r3, #64
+ 1038 0252 14AA     		add	r2, sp, #80
+ 1039 0254 2146     		mov	r1, r4
+ 1040 0256 4248     		ldr	r0, .L83+100
+ 1041 0258 FFF7FEFF 		bl	boudica150_atcmd_response
+ 1042              	.LVL126:
+ 405:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if((false == ret)||(NULL == strstr(resp,cmp)))//which means we need to set it
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 33
+
+
+ 1043              		.loc 1 405 0
+ 1044 025c CDF800A0 		str	r10, [sp]
+ 404:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmp,64,"+NCDP:%s,%s\r",server,port);
+ 1045              		.loc 1 404 0
+ 1046 0260 8146     		mov	r9, r0
+ 1047              	.LVL127:
+ 405:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if((false == ret)||(NULL == strstr(resp,cmp)))//which means we need to set it
+ 1048              		.loc 1 405 0
+ 1049 0262 4346     		mov	r3, r8
+ 1050 0264 3F4A     		ldr	r2, .L83+104
+ 1051 0266 4021     		movs	r1, #64
+ 1052 0268 24A8     		add	r0, sp, #144
+ 1053              	.LVL128:
+ 1054 026a FFF7FEFF 		bl	snprintf
+ 1055              	.LVL129:
+ 406:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 1056              		.loc 1 406 0
+ 1057 026e B9F1000F 		cmp	r9, #0
+ 1058 0272 04D0     		beq	.L53
+ 1059 0274 24A9     		add	r1, sp, #144
+ 1060 0276 14A8     		add	r0, sp, #80
+ 1061 0278 FFF7FEFF 		bl	strstr
+ 1062              	.LVL130:
+ 1063 027c 80B9     		cbnz	r0, .L52
+ 1064              	.L53:
+ 408:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             (void) snprintf(cmd,64,"AT+NCDP=%s,%s\r",server,port);
+ 1065              		.loc 1 408 0
+ 1066 027e 4022     		movs	r2, #64
+ 1067 0280 0021     		movs	r1, #0
+ 1068 0282 04A8     		add	r0, sp, #16
+ 1069 0284 FFF7FEFF 		bl	memset
+ 1070              	.LVL131:
+ 409:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = boudica150_atcmd(cmd,"OK");
+ 1071              		.loc 1 409 0
+ 1072 0288 4021     		movs	r1, #64
+ 1073 028a CDF800A0 		str	r10, [sp]
+ 1074 028e 4346     		mov	r3, r8
+ 1075 0290 354A     		ldr	r2, .L83+108
+ 1076 0292 04A8     		add	r0, sp, #16
+ 1077 0294 FFF7FEFF 		bl	snprintf
+ 1078              	.LVL132:
+ 410:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 1079              		.loc 1 410 0
+ 1080 0298 2146     		mov	r1, r4
+ 1081 029a 04A8     		add	r0, sp, #16
+ 1082 029c FFF7FEFF 		bl	boudica150_atcmd
+ 1083              	.LVL133:
+ 1084              	.L52:
+ 1085              	.LBE58:
+ 1086              	.LBE57:
+ 1087              	.LBB59:
+ 1088              	.LBB60:
+ 441:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CGATT=%d\r",enable);
+ 1089              		.loc 1 441 0
+ 1090 02a0 4022     		movs	r2, #64
+ 1091 02a2 0021     		movs	r1, #0
+ 1092 02a4 24A8     		add	r0, sp, #144
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 34
+
+
+ 1093 02a6 FFF7FEFF 		bl	memset
+ 1094              	.LVL134:
+ 442:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1095              		.loc 1 442 0
+ 1096 02aa 0123     		movs	r3, #1
+ 1097 02ac 2F4A     		ldr	r2, .L83+112
+ 1098 02ae 4021     		movs	r1, #64
+ 1099 02b0 24A8     		add	r0, sp, #144
+ 1100 02b2 FFF7FEFF 		bl	snprintf
+ 1101              	.LVL135:
+ 444:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1102              		.loc 1 444 0
+ 1103 02b6 2146     		mov	r1, r4
+ 1104 02b8 24A8     		add	r0, sp, #144
+ 1105 02ba FFF7FEFF 		bl	boudica150_atcmd
+ 1106              	.LVL136:
+ 1107              	.LBE60:
+ 1108              	.LBE59:
+ 1109              	.LBB61:
+ 1110              	.LBB62:
+ 455:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+NNMI=%d\r",enable);
+ 1111              		.loc 1 455 0
+ 1112 02be 4022     		movs	r2, #64
+ 1113 02c0 0021     		movs	r1, #0
+ 1114 02c2 24A8     		add	r0, sp, #144
+ 1115 02c4 FFF7FEFF 		bl	memset
+ 1116              	.LVL137:
+ 456:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1117              		.loc 1 456 0
+ 1118 02c8 0123     		movs	r3, #1
+ 1119 02ca 294A     		ldr	r2, .L83+116
+ 1120 02cc 4021     		movs	r1, #64
+ 1121 02ce 24A8     		add	r0, sp, #144
+ 1122 02d0 FFF7FEFF 		bl	snprintf
+ 1123              	.LVL138:
+ 458:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1124              		.loc 1 458 0
+ 1125 02d4 2146     		mov	r1, r4
+ 1126 02d6 24A8     		add	r0, sp, #144
+ 1127 02d8 FFF7FEFF 		bl	boudica150_atcmd
+ 1128              	.LVL139:
+ 1129 02dc 4FF01009 		mov	r9, #16
+ 1130              	.LVL140:
+ 1131              	.L56:
+ 1132              	.LBE62:
+ 1133              	.LBE61:
+ 1134              	.LBB63:
+ 1135              	.LBB64:
+ 517:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 1136              		.loc 1 517 0
+ 1137 02e0 2449     		ldr	r1, .L83+120
+ 1138 02e2 2548     		ldr	r0, .L83+124
+ 1139 02e4 FFF7FEFF 		bl	boudica150_atcmd
+ 1140              	.LVL141:
+ 1141 02e8 0028     		cmp	r0, #0
+ 1142 02ea 50D1     		bne	.L64
+ 522:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 35
+
+
+ 1143              		.loc 1 522 0
+ 1144 02ec 4FF47A70 		mov	r0, #1000
+ 1145 02f0 FFF7FEFF 		bl	osal_task_sleep
+ 1146              	.LVL142:
+ 515:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1147              		.loc 1 515 0
+ 1148 02f4 B9F10109 		subs	r9, r9, #1
+ 1149              	.LVL143:
+ 1150 02f8 F2D1     		bne	.L56
+ 1151 02fa B5E6     		b	.L57
+ 1152              	.L84:
+ 1153              		.align	2
+ 1154              	.L83:
+ 1155 02fc 00000000 		.word	.LANCHOR0
+ 1156 0300 00000000 		.word	.LANCHOR2
+ 1157 0304 00000000 		.word	urc_qlwevtind
+ 1158 0308 0C000000 		.word	.LC2
+ 1159 030c 00000000 		.word	.LC9
+ 1160 0310 0E000000 		.word	.LC10
+ 1161 0314 00000000 		.word	boudica150_rcvdeal
+ 1162 0318 17000000 		.word	.LC11
+ 1163 031c 20000000 		.word	.LC12
+ 1164 0320 2E000000 		.word	.LC13
+ 1165 0324 3D000000 		.word	.LC14
+ 1166 0328 49000000 		.word	.LC15
+ 1167 032c 52000000 		.word	.LC16
+ 1168 0330 5F000000 		.word	.LC17
+ 1169 0334 70000000 		.word	.LC18
+ 1170 0338 7F000000 		.word	.LC19
+ 1171 033c 8A000000 		.word	.LC20
+ 1172 0340 95000000 		.word	.LC21
+ 1173 0344 A2000000 		.word	.LC22
+ 1174 0348 A8000000 		.word	.LC23
+ 1175 034c B2000000 		.word	.LC24
+ 1176 0350 C2000000 		.word	.LC25
+ 1177 0354 DF000000 		.word	.LC27
+ 1178 0358 EC000000 		.word	.LC28
+ 1179 035c FB000000 		.word	.LC29
+ 1180 0360 0A010000 		.word	.LC30
+ 1181 0364 14010000 		.word	.LC31
+ 1182 0368 21010000 		.word	.LC32
+ 1183 036c 30010000 		.word	.LC33
+ 1184 0370 3D010000 		.word	.LC34
+ 1185 0374 49010000 		.word	.LC35
+ 1186 0378 51010000 		.word	.LC36
+ 1187              	.LVL144:
+ 1188              	.L44:
+ 1189              	.LBE64:
+ 1190              	.LBE63:
+ 1191              	.LBB66:
+ 1192              	.LBB54:
+ 354:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         (void) snprintf(cmd,64,"AT+COPS=0\r");
+ 1193              		.loc 1 354 0
+ 1194 037c 3146     		mov	r1, r6
+ 1195 037e 14A8     		add	r0, sp, #80
+ 1196 0380 FFF7FEFF 		bl	memset
+ 1197              	.LVL145:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 36
+
+
+ 355:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         ret = boudica150_atcmd(cmd,"OK");
+ 1198              		.loc 1 355 0
+ 1199 0384 1949     		ldr	r1, .L85
+ 1200 0386 14A8     		add	r0, sp, #80
+ 1201 0388 FFF7FEFF 		bl	strcpy
+ 1202              	.LVL146:
+ 1203 038c 19E7     		b	.L82
+ 1204              	.LVL147:
+ 1205              	.L64:
+ 1206              	.LBE54:
+ 1207              	.LBE66:
+ 1208              	.LBB67:
+ 1209              	.LBB65:
+ 517:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 1210              		.loc 1 517 0
+ 1211 038e 4FF01009 		mov	r9, #16
+ 1212              	.LVL148:
+ 1213              	.L55:
+ 1214              	.LBE65:
+ 1215              	.LBE67:
+ 1216              	.LBB68:
+ 1217              	.LBB69:
+ 497:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 1218              		.loc 1 497 0
+ 1219 0392 D5F85431 		ldr	r3, [r5, #340]
+ 1220 0396 5BB9     		cbnz	r3, .L58
+ 502:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1221              		.loc 1 502 0
+ 1222 0398 4FF47A70 		mov	r0, #1000
+ 1223 039c FFF7FEFF 		bl	osal_task_sleep
+ 1224              	.LVL149:
+ 495:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1225              		.loc 1 495 0
+ 1226 03a0 B9F10109 		subs	r9, r9, #1
+ 1227              	.LVL150:
+ 1228 03a4 F5D1     		bne	.L55
+ 1229 03a6 5FE6     		b	.L57
+ 1230              	.LVL151:
+ 1231              	.L62:
+ 1232              	.LBE69:
+ 1233              	.LBE68:
+ 1234              	.LBE72:
+ 1235              	.LBE76:
+ 1236              	.LBE39:
+ 1237              	.LBE38:
+ 625:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1238              		.loc 1 625 0
+ 1239 03a8 0120     		movs	r0, #1
+ 1240              	.LVL152:
+ 1241 03aa 1BE0     		b	.L36
+ 1242              	.LVL153:
+ 1243              	.L63:
+ 620:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1244              		.loc 1 620 0
+ 1245 03ac 0520     		movs	r0, #5
+ 1246              	.LVL154:
+ 1247 03ae 19E0     		b	.L36
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 37
+
+
+ 1248              	.LVL155:
+ 1249              	.L58:
+ 1250              	.LBB79:
+ 1251              	.LBB78:
+ 1252              	.LBB77:
+ 1253              	.LBB73:
+ 612:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     LINK_LOG_DEBUG("NB MODULE RXTX READY NOW\n\r");
+ 1254              		.loc 1 612 0
+ 1255 03b0 0124     		movs	r4, #1
+ 1256 03b2 AC64     		str	r4, [r5, #72]
+ 613:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return true;
+ 1257              		.loc 1 613 0
+ 1258 03b4 FFF7FEFF 		bl	link_log_level_get
+ 1259              	.LVL156:
+ 1260 03b8 A042     		cmp	r0, r4
+ 1261 03ba 10D8     		bhi	.L61
+ 1262 03bc 2046     		mov	r0, r4
+ 1263 03be FFF7FEFF 		bl	link_log_level_name
+ 1264              	.LVL157:
+ 1265 03c2 0446     		mov	r4, r0
+ 1266 03c4 FFF7FEFF 		bl	osal_sys_time
+ 1267              	.LVL158:
+ 1268 03c8 094B     		ldr	r3, .L85+4
+ 1269 03ca 0246     		mov	r2, r0
+ 1270 03cc 2146     		mov	r1, r4
+ 1271 03ce 0948     		ldr	r0, .L85+8
+ 1272 03d0 FFF7FEFF 		bl	printf
+ 1273              	.LVL159:
+ 1274 03d4 084B     		ldr	r3, .L85+12
+ 1275 03d6 1B68     		ldr	r3, [r3]
+ 1276 03d8 9868     		ldr	r0, [r3, #8]
+ 1277 03da FFF7FEFF 		bl	fflush
+ 1278              	.LVL160:
+ 1279              	.L61:
+ 1280              	.LBE73:
+ 1281              	.LBE77:
+ 635:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             ret = en_oc_lwm2m_err_ok;
+ 1282              		.loc 1 635 0
+ 1283 03de 039B     		ldr	r3, [sp, #12]
+ 1284 03e0 0020     		movs	r0, #0
+ 1285 03e2 1D60     		str	r5, [r3]
+ 1286              	.LVL161:
+ 1287              	.L36:
+ 1288              	.LBE78:
+ 1289              	.LBE79:
+ 645:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1290              		.loc 1 645 0
+ 1291 03e4 35B0     		add	sp, sp, #212
+ 1292              	.LCFI18:
+ 1293              		.cfi_def_cfa_offset 36
+ 1294              		@ sp needed
+ 1295 03e6 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1296              	.L86:
+ 1297 03ea 00BF     		.align	2
+ 1298              	.L85:
+ 1299 03ec D4000000 		.word	.LC26
+ 1300 03f0 00000000 		.word	.LANCHOR4
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 38
+
+
+ 1301 03f4 5C010000 		.word	.LC37
+ 1302 03f8 00000000 		.word	_impure_ptr
+ 1303              		.cfi_endproc
+ 1304              	.LFE25:
+ 1306              		.section	.text.boudica150_rcvdeal,"ax",%progbits
+ 1307              		.align	1
+ 1308              		.syntax unified
+ 1309              		.thumb
+ 1310              		.thumb_func
+ 1311              		.fpu fpv4-sp-d16
+ 1313              	boudica150_rcvdeal:
+ 1314              	.LFB8:
+ 186:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+ 1315              		.loc 1 186 0
+ 1316              		.cfi_startproc
+ 1317              		@ args = 0, pretend = 0, frame = 0
+ 1318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1319              	.LVL162:
+ 193:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1320              		.loc 1 193 0
+ 1321 0000 072A     		cmp	r2, #7
+ 186:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+ 1322              		.loc 1 186 0
+ 1323 0002 2DE9FF41 		push	{r0, r1, r2, r3, r4, r5, r6, r7, r8, lr}
+ 1324              	.LCFI19:
+ 1325              		.cfi_def_cfa_offset 40
+ 1326              		.cfi_offset 4, -24
+ 1327              		.cfi_offset 5, -20
+ 1328              		.cfi_offset 6, -16
+ 1329              		.cfi_offset 7, -12
+ 1330              		.cfi_offset 8, -8
+ 1331              		.cfi_offset 14, -4
+ 186:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = 0;
+ 1332              		.loc 1 186 0
+ 1333 0006 8846     		mov	r8, r1
+ 1334              	.LVL163:
+ 1335 0008 1446     		mov	r4, r2
+ 193:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1336              		.loc 1 193 0
+ 1337 000a 17D8     		bhi	.L88
+ 195:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret;
+ 1338              		.loc 1 195 0
+ 1339 000c FFF7FEFF 		bl	link_log_level_get
+ 1340              	.LVL164:
+ 1341 0010 0128     		cmp	r0, #1
+ 1342 0012 03D9     		bls	.L89
+ 1343              	.LVL165:
+ 1344              	.L116:
+ 1345              	.LBB84:
+ 1346              	.LBB85:
+ 221:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1347              		.loc 1 221 0
+ 1348 0014 0020     		movs	r0, #0
+ 1349              	.L87:
+ 1350              	.LBE85:
+ 1351              	.LBE84:
+ 233:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 39
+
+
+ 1352              		.loc 1 233 0
+ 1353 0016 04B0     		add	sp, sp, #16
+ 1354              	.LCFI20:
+ 1355              		.cfi_remember_state
+ 1356              		.cfi_def_cfa_offset 24
+ 1357              		@ sp needed
+ 1358 0018 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1359              	.LVL166:
+ 1360              	.L89:
+ 1361              	.LCFI21:
+ 1362              		.cfi_restore_state
+ 195:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret;
+ 1363              		.loc 1 195 0 discriminator 1
+ 1364 001c 0120     		movs	r0, #1
+ 1365 001e FFF7FEFF 		bl	link_log_level_name
+ 1366              	.LVL167:
+ 1367 0022 0546     		mov	r5, r0
+ 1368 0024 FFF7FEFF 		bl	osal_sys_time
+ 1369              	.LVL168:
+ 1370 0028 CDE90148 		strd	r4, r8, [sp, #4]
+ 1371 002c 424B     		ldr	r3, .L119
+ 1372 002e 0093     		str	r3, [sp]
+ 1373 0030 0246     		mov	r2, r0
+ 1374 0032 4248     		ldr	r0, .L119+4
+ 1375 0034 2946     		mov	r1, r5
+ 1376              	.LVL169:
+ 1377              	.L117:
+ 1378              	.LBB89:
+ 1379              	.LBB88:
+ 220:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //
+ 1380              		.loc 1 220 0
+ 1381 0036 FFF7FEFF 		bl	printf
+ 1382              	.LVL170:
+ 1383 003a 16E0     		b	.L115
+ 1384              	.LVL171:
+ 1385              	.L88:
+ 199:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL == str)
+ 1386              		.loc 1 199 0
+ 1387 003c 3A21     		movs	r1, #58
+ 1388              	.LVL172:
+ 1389 003e 4046     		mov	r0, r8
+ 1390              	.LVL173:
+ 1391 0040 FFF7FEFF 		bl	strchr
+ 1392              	.LVL174:
+ 200:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1393              		.loc 1 200 0
+ 1394 0044 0546     		mov	r5, r0
+ 1395 0046 B0B9     		cbnz	r0, .L91
+ 202:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //format error
+ 1396              		.loc 1 202 0
+ 1397 0048 FFF7FEFF 		bl	link_log_level_get
+ 1398              	.LVL175:
+ 1399 004c 0128     		cmp	r0, #1
+ 1400 004e E1D8     		bhi	.L116
+ 1401 0050 0120     		movs	r0, #1
+ 1402 0052 FFF7FEFF 		bl	link_log_level_name
+ 1403              	.LVL176:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 40
+
+
+ 1404 0056 0446     		mov	r4, r0
+ 1405              	.LVL177:
+ 1406 0058 FFF7FEFF 		bl	osal_sys_time
+ 1407              	.LVL178:
+ 1408 005c 364B     		ldr	r3, .L119
+ 1409 005e 0093     		str	r3, [sp]
+ 1410 0060 0246     		mov	r2, r0
+ 1411 0062 3748     		ldr	r0, .L119+8
+ 1412 0064 2146     		mov	r1, r4
+ 1413              	.LVL179:
+ 1414              	.L118:
+ 215:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //
+ 1415              		.loc 1 215 0
+ 1416 0066 FFF7FEFF 		bl	printf
+ 1417              	.LVL180:
+ 1418              	.L115:
+ 220:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //
+ 1419              		.loc 1 220 0
+ 1420 006a 364B     		ldr	r3, .L119+12
+ 1421 006c 1B68     		ldr	r3, [r3]
+ 1422 006e 9868     		ldr	r0, [r3, #8]
+ 1423 0070 FFF7FEFF 		bl	fflush
+ 1424              	.LVL181:
+ 1425 0074 CEE7     		b	.L116
+ 1426              	.LVL182:
+ 1427              	.L91:
+ 205:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     datalen = 0;
+ 1428              		.loc 1 205 0
+ 1429 0076 0135     		adds	r5, r5, #1
+ 1430              	.LVL183:
+ 206:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     for (; *str <= '9' && *str >= '0' ;str++)
+ 1431              		.loc 1 206 0
+ 1432 0078 0026     		movs	r6, #0
+ 209:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1433              		.loc 1 209 0
+ 1434 007a 0A21     		movs	r1, #10
+ 1435              	.LVL184:
+ 1436              	.L93:
+ 207:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1437              		.loc 1 207 0
+ 1438 007c 15F8013B 		ldrb	r3, [r5], #1	@ zero_extendqisi2
+ 1439              	.LVL185:
+ 1440 0080 303B     		subs	r3, r3, #48
+ 1441 0082 DAB2     		uxtb	r2, r3
+ 1442 0084 092A     		cmp	r2, #9
+ 1443 0086 15D9     		bls	.L94
+ 1444              	.LVL186:
+ 213:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1445              		.loc 1 213 0
+ 1446 0088 7700     		lsls	r7, r6, #1
+ 1447 008a BB1C     		adds	r3, r7, #2
+ 1448 008c 2B44     		add	r3, r3, r5
+ 1449 008e A044     		add	r8, r8, r4
+ 1450              	.LVL187:
+ 1451 0090 4345     		cmp	r3, r8
+ 1452 0092 12D9     		bls	.L95
+ 215:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 41
+
+
+ 1453              		.loc 1 215 0
+ 1454 0094 FFF7FEFF 		bl	link_log_level_get
+ 1455              	.LVL188:
+ 1456 0098 0128     		cmp	r0, #1
+ 1457 009a BBD8     		bhi	.L116
+ 1458 009c 0120     		movs	r0, #1
+ 1459 009e FFF7FEFF 		bl	link_log_level_name
+ 1460              	.LVL189:
+ 1461 00a2 0446     		mov	r4, r0
+ 1462              	.LVL190:
+ 1463 00a4 FFF7FEFF 		bl	osal_sys_time
+ 1464              	.LVL191:
+ 1465 00a8 234B     		ldr	r3, .L119
+ 1466 00aa 0093     		str	r3, [sp]
+ 1467 00ac 0246     		mov	r2, r0
+ 1468 00ae 2146     		mov	r1, r4
+ 1469 00b0 2548     		ldr	r0, .L119+16
+ 1470 00b2 D8E7     		b	.L118
+ 1471              	.LVL192:
+ 1472              	.L94:
+ 209:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1473              		.loc 1 209 0
+ 1474 00b4 01FB0636 		mla	r6, r1, r6, r3
+ 1475              	.LVL193:
+ 1476 00b8 E0E7     		b	.L93
+ 1477              	.LVL194:
+ 1478              	.L95:
+ 218:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1479              		.loc 1 218 0
+ 1480 00ba 802E     		cmp	r6, #128
+ 1481 00bc 12DD     		ble	.L96
+ 220:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret; //
+ 1482              		.loc 1 220 0
+ 1483 00be FFF7FEFF 		bl	link_log_level_get
+ 1484              	.LVL195:
+ 1485 00c2 0128     		cmp	r0, #1
+ 1486 00c4 A6D8     		bhi	.L116
+ 1487 00c6 0120     		movs	r0, #1
+ 1488 00c8 FFF7FEFF 		bl	link_log_level_name
+ 1489              	.LVL196:
+ 1490 00cc 0446     		mov	r4, r0
+ 1491              	.LVL197:
+ 1492 00ce FFF7FEFF 		bl	osal_sys_time
+ 1493              	.LVL198:
+ 1494 00d2 8022     		movs	r2, #128
+ 1495 00d4 184B     		ldr	r3, .L119
+ 1496 00d6 0093     		str	r3, [sp]
+ 1497 00d8 CDE90162 		strd	r6, r2, [sp, #4]
+ 1498 00dc 2146     		mov	r1, r4
+ 1499 00de 0246     		mov	r2, r0
+ 1500 00e0 1A48     		ldr	r0, .L119+20
+ 1501 00e2 A8E7     		b	.L117
+ 1502              	.LVL199:
+ 1503              	.L96:
+ 223:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     hexstr_to_byte(str,datalen*2,(char *)s_boudica150_oc_cb.rcvbuf);
+ 1504              		.loc 1 223 0
+ 1505 00e4 8022     		movs	r2, #128
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 42
+
+
+ 1506 00e6 0021     		movs	r1, #0
+ 1507 00e8 1948     		ldr	r0, .L119+24
+ 1508 00ea FFF7FEFF 		bl	memset
+ 1509              	.LVL200:
+ 1510 00ee 1948     		ldr	r0, .L119+28
+ 1511              	.LBB86:
+ 1512              	.LBB87:
+ 170:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1513              		.loc 1 170 0
+ 1514 00f0 C5B1     		cbz	r5, .L97
+ 1515 00f2 BFB1     		cbz	r7, .L97
+ 174:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1516              		.loc 1 174 0
+ 1517 00f4 0021     		movs	r1, #0
+ 1518              	.LVL201:
+ 1519              	.L102:
+ 176:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         tmp2 =  tmp2 <= '9'?tmp2-0x30:tmp2-0x37;
+ 1520              		.loc 1 176 0
+ 1521 00f6 6A5C     		ldrb	r2, [r5, r1]	@ zero_extendqisi2
+ 1522              	.LVL202:
+ 177:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         tmp =  bufin[i+1];
+ 1523              		.loc 1 177 0
+ 1524 00f8 392A     		cmp	r2, #57
+ 1525 00fa 94BF     		ite	ls
+ 1526 00fc 303A     		subls	r2, r2, #48
+ 1527              	.LVL203:
+ 1528 00fe 373A     		subhi	r2, r2, #55
+ 1529 0100 D3B2     		uxtb	r3, r2
+ 1530              	.LVL204:
+ 178:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         tmp =  tmp <= '9'?tmp-0x30:tmp-0x37;
+ 1531              		.loc 1 178 0
+ 1532 0102 6A18     		adds	r2, r5, r1
+ 180:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1533              		.loc 1 180 0
+ 1534 0104 00EB610C 		add	ip, r0, r1, asr #1
+ 178:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         tmp =  tmp <= '9'?tmp-0x30:tmp-0x37;
+ 1535              		.loc 1 178 0
+ 1536 0108 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 1537              	.LVL205:
+ 179:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         bufout[i/2] =(tmp2<<4)|(tmp&0x0F);
+ 1538              		.loc 1 179 0
+ 1539 010a 392A     		cmp	r2, #57
+ 1540 010c 94BF     		ite	ls
+ 1541 010e 303A     		subls	r2, r2, #48
+ 1542              	.LVL206:
+ 1543 0110 373A     		subhi	r2, r2, #55
+ 1544              	.LVL207:
+ 180:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1545              		.loc 1 180 0
+ 1546 0112 02F00F02 		and	r2, r2, #15
+ 1547              	.LVL208:
+ 174:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1548              		.loc 1 174 0
+ 1549 0116 0231     		adds	r1, r1, #2
+ 1550              	.LVL209:
+ 180:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1551              		.loc 1 180 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 43
+
+
+ 1552 0118 42EA0312 		orr	r2, r2, r3, lsl #4
+ 174:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1553              		.loc 1 174 0
+ 1554 011c 8F42     		cmp	r7, r1
+ 1555              	.LVL210:
+ 180:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 1556              		.loc 1 180 0
+ 1557 011e 8CF8CC20 		strb	r2, [ip, #204]
+ 1558              	.LVL211:
+ 174:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1559              		.loc 1 174 0
+ 1560 0122 E8DC     		bgt	.L102
+ 1561              	.LVL212:
+ 1562              	.L97:
+ 1563              	.LBE87:
+ 1564              	.LBE86:
+ 226:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1565              		.loc 1 226 0
+ 1566 0124 056C     		ldr	r5, [r0, #64]
+ 1567              	.LVL213:
+ 1568 0126 25B1     		cbz	r5, .L103
+ 228:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****                                              (char *)s_boudica150_oc_cb.rcvbuf,datalen);
+ 1569              		.loc 1 228 0
+ 1570 0128 3346     		mov	r3, r6
+ 1571 012a 094A     		ldr	r2, .L119+24
+ 1572 012c 406C     		ldr	r0, [r0, #68]
+ 1573 012e 0021     		movs	r1, #0
+ 1574 0130 A847     		blx	r5
+ 1575              	.LVL214:
+ 1576              	.L103:
+ 232:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 1577              		.loc 1 232 0
+ 1578 0132 2046     		mov	r0, r4
+ 1579 0134 6FE7     		b	.L87
+ 1580              	.L120:
+ 1581 0136 00BF     		.align	2
+ 1582              	.L119:
+ 1583 0138 00000000 		.word	.LANCHOR5
+ 1584 013c 00000000 		.word	.LC38
+ 1585 0140 2D000000 		.word	.LC39
+ 1586 0144 00000000 		.word	_impure_ptr
+ 1587 0148 4E000000 		.word	.LC40
+ 1588 014c 72000000 		.word	.LC41
+ 1589 0150 CC000000 		.word	.LANCHOR2+204
+ 1590 0154 00000000 		.word	.LANCHOR2
+ 1591              	.LBE88:
+ 1592              	.LBE89:
+ 1593              		.cfi_endproc
+ 1594              	.LFE8:
+ 1596              		.section	.text.boudica150_get_csq,"ax",%progbits
+ 1597              		.align	1
+ 1598              		.global	boudica150_get_csq
+ 1599              		.syntax unified
+ 1600              		.thumb
+ 1601              		.thumb_func
+ 1602              		.fpu fpv4-sp-d16
+ 1604              	boudica150_get_csq:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 44
+
+
+ 1605              	.LFB27:
+ 658:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 659:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 660:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** //this function to get the csq
+ 661:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** int boudica150_get_csq(int *value)
+ 662:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 1606              		.loc 1 662 0
+ 1607              		.cfi_startproc
+ 1608              		@ args = 0, pretend = 0, frame = 128
+ 1609              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1610              	.LVL215:
+ 1611 0000 30B5     		push	{r4, r5, lr}
+ 1612              	.LCFI22:
+ 1613              		.cfi_def_cfa_offset 12
+ 1614              		.cfi_offset 4, -12
+ 1615              		.cfi_offset 5, -8
+ 1616              		.cfi_offset 14, -4
+ 663:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 664:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char resp[64];
+ 665:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     const char *index = "OK";
+ 666:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     const char *str;
+ 667:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int csq = 0;
+ 668:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = -1;
+ 669:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 670:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(NULL == value)
+ 1617              		.loc 1 670 0
+ 1618 0002 0446     		mov	r4, r0
+ 662:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 1619              		.loc 1 662 0
+ 1620 0004 A1B0     		sub	sp, sp, #132
+ 1621              	.LCFI23:
+ 1622              		.cfi_def_cfa_offset 144
+ 1623              		.loc 1 670 0
+ 1624 0006 18B9     		cbnz	r0, .L122
+ 1625              	.LVL216:
+ 1626              	.L124:
+ 671:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 672:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return ret;
+ 1627              		.loc 1 672 0
+ 1628 0008 4FF0FF30 		mov	r0, #-1
+ 1629              	.LVL217:
+ 1630              	.L121:
+ 673:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 674:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 675:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 676:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(resp,0,64);
+ 677:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CSQ\r");
+ 678:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(boudica150_atcmd_response(cmd,index,resp,64))
+ 679:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 680:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         str = strstr((char *)resp,"+CSQ:");
+ 681:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(NULL != str)
+ 682:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 683:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             str += strlen("+CSQ:");
+ 684:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             for (; *str <= '9' && *str >= '0' ;str++)
+ 685:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             {
+ 686:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****                 csq = (csq * 10 + (*str - '0'));
+ 687:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 45
+
+
+ 688:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             if(csq != 99) //99 is invalid
+ 689:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             {
+ 690:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****                 *value = csq;
+ 691:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****                 ret = 0;
+ 692:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             }
+ 693:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         }
+ 694:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 695:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 696:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 1631              		.loc 1 696 0
+ 1632 000c 21B0     		add	sp, sp, #132
+ 1633              	.LCFI24:
+ 1634              		.cfi_remember_state
+ 1635              		.cfi_def_cfa_offset 12
+ 1636              		@ sp needed
+ 1637 000e 30BD     		pop	{r4, r5, pc}
+ 1638              	.LVL218:
+ 1639              	.L122:
+ 1640              	.LCFI25:
+ 1641              		.cfi_restore_state
+ 675:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(resp,0,64);
+ 1642              		.loc 1 675 0
+ 1643 0010 4022     		movs	r2, #64
+ 1644 0012 0021     		movs	r1, #0
+ 1645 0014 6846     		mov	r0, sp
+ 1646              	.LVL219:
+ 1647 0016 FFF7FEFF 		bl	memset
+ 1648              	.LVL220:
+ 676:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+CSQ\r");
+ 1649              		.loc 1 676 0
+ 1650 001a 4022     		movs	r2, #64
+ 1651 001c 0DEB0200 		add	r0, sp, r2
+ 1652 0020 0021     		movs	r1, #0
+ 1653 0022 FFF7FEFF 		bl	memset
+ 1654              	.LVL221:
+ 677:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if(boudica150_atcmd_response(cmd,index,resp,64))
+ 1655              		.loc 1 677 0
+ 1656 0026 1249     		ldr	r1, .L136
+ 1657 0028 6846     		mov	r0, sp
+ 1658 002a FFF7FEFF 		bl	strcpy
+ 1659              	.LVL222:
+ 678:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1660              		.loc 1 678 0
+ 1661 002e 4023     		movs	r3, #64
+ 1662 0030 0DEB0302 		add	r2, sp, r3
+ 1663 0034 0F49     		ldr	r1, .L136+4
+ 1664 0036 6846     		mov	r0, sp
+ 1665 0038 FFF7FEFF 		bl	boudica150_atcmd_response
+ 1666              	.LVL223:
+ 1667 003c 0028     		cmp	r0, #0
+ 1668 003e E3D0     		beq	.L124
+ 680:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         if(NULL != str)
+ 1669              		.loc 1 680 0
+ 1670 0040 0D49     		ldr	r1, .L136+8
+ 1671 0042 10A8     		add	r0, sp, #64
+ 1672 0044 FFF7FEFF 		bl	strstr
+ 1673              	.LVL224:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 46
+
+
+ 681:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         {
+ 1674              		.loc 1 681 0
+ 1675 0048 0028     		cmp	r0, #0
+ 1676 004a DDD0     		beq	.L124
+ 1677              	.LVL225:
+ 1678 004c 0430     		adds	r0, r0, #4
+ 1679              	.LVL226:
+ 667:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = -1;
+ 1680              		.loc 1 667 0
+ 1681 004e 0023     		movs	r3, #0
+ 686:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             }
+ 1682              		.loc 1 686 0
+ 1683 0050 0A25     		movs	r5, #10
+ 1684              	.LVL227:
+ 1685              	.L125:
+ 684:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             {
+ 1686              		.loc 1 684 0 discriminator 1
+ 1687 0052 10F8012F 		ldrb	r2, [r0, #1]!	@ zero_extendqisi2
+ 1688              	.LVL228:
+ 1689 0056 303A     		subs	r2, r2, #48
+ 1690 0058 D1B2     		uxtb	r1, r2
+ 1691 005a 0929     		cmp	r1, #9
+ 1692 005c 04D9     		bls	.L126
+ 688:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             {
+ 1693              		.loc 1 688 0
+ 1694 005e 632B     		cmp	r3, #99
+ 1695 0060 D2D0     		beq	.L124
+ 690:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****                 ret = 0;
+ 1696              		.loc 1 690 0
+ 1697 0062 2360     		str	r3, [r4]
+ 1698              	.LVL229:
+ 691:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             }
+ 1699              		.loc 1 691 0
+ 1700 0064 0020     		movs	r0, #0
+ 1701              	.LVL230:
+ 1702 0066 D1E7     		b	.L121
+ 1703              	.LVL231:
+ 1704              	.L126:
+ 686:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****             }
+ 1705              		.loc 1 686 0 discriminator 2
+ 1706 0068 05FB0323 		mla	r3, r5, r3, r2
+ 1707              	.LVL232:
+ 1708 006c F1E7     		b	.L125
+ 1709              	.L137:
+ 1710 006e 00BF     		.align	2
+ 1711              	.L136:
+ 1712 0070 00000000 		.word	.LC42
+ 1713 0074 0C000000 		.word	.LC2
+ 1714 0078 08000000 		.word	.LC43
+ 1715              		.cfi_endproc
+ 1716              	.LFE27:
+ 1718              		.section	.text.boudica150_check_nuestats,"ax",%progbits
+ 1719              		.align	1
+ 1720              		.global	boudica150_check_nuestats
+ 1721              		.syntax unified
+ 1722              		.thumb
+ 1723              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 47
+
+
+ 1724              		.fpu fpv4-sp-d16
+ 1726              	boudica150_check_nuestats:
+ 1727              	.LFB28:
+ 697:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 698:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** int* boudica150_check_nuestats(void)
+ 699:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 1728              		.loc 1 699 0
+ 1729              		.cfi_startproc
+ 1730              		@ args = 0, pretend = 0, frame = 352
+ 1731              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1732 0000 30B5     		push	{r4, r5, lr}
+ 1733              	.LCFI26:
+ 1734              		.cfi_def_cfa_offset 12
+ 1735              		.cfi_offset 4, -12
+ 1736              		.cfi_offset 5, -8
+ 1737              		.cfi_offset 14, -4
+ 1738 0002 DFB0     		sub	sp, sp, #380
+ 1739              	.LCFI27:
+ 1740              		.cfi_def_cfa_offset 392
+ 700:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char cmd[64];
+ 701:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char resp[256];
+ 702:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     char *str;
+ 703:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 704:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 1741              		.loc 1 704 0
+ 1742 0004 4022     		movs	r2, #64
+ 1743 0006 0021     		movs	r1, #0
+ 1744 0008 0EA8     		add	r0, sp, #56
+ 1745 000a FFF7FEFF 		bl	memset
+ 1746              	.LVL233:
+ 705:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(resp,0,64);
+ 1747              		.loc 1 705 0
+ 1748 000e 4022     		movs	r2, #64
+ 1749 0010 0021     		movs	r1, #0
+ 1750 0012 1EA8     		add	r0, sp, #120
+ 1751 0014 FFF7FEFF 		bl	memset
+ 1752              	.LVL234:
+ 706:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+NUESTATS=CELL\r");
+ 1753              		.loc 1 706 0
+ 1754 0018 2D49     		ldr	r1, .L154
+ 1755 001a 0EA8     		add	r0, sp, #56
+ 1756 001c FFF7FEFF 		bl	strcpy
+ 1757              	.LVL235:
+ 707:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 708:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (boudica150_atcmd_response(cmd,"NUESTATS:",resp,256) < 0)
+ 1758              		.loc 1 708 0
+ 1759 0020 4FF48073 		mov	r3, #256
+ 1760 0024 1EAA     		add	r2, sp, #120
+ 1761 0026 2B49     		ldr	r1, .L154+4
+ 1762 0028 0EA8     		add	r0, sp, #56
+ 1763 002a FFF7FEFF 		bl	boudica150_atcmd_response
+ 1764              	.LVL236:
+ 1765 002e 0028     		cmp	r0, #0
+ 1766 0030 02DA     		bge	.L139
+ 1767              	.L141:
+ 709:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 710:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     	return NULL;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 48
+
+
+ 1768              		.loc 1 710 0
+ 1769 0032 0020     		movs	r0, #0
+ 1770              	.L138:
+ 711:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 712:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     str = strstr(resp,"NUESTATS:");
+ 713:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (str == NULL)
+ 714:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 715:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     	return NULL;
+ 716:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 717:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int earfcn, physical_cellid, primary_cell, rsrp, rsrq, rssi, snr;  //for now only rsrp is neede
+ 718:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     sscanf(str,"NUESTATS:CELL,%d,%d,%d,%d,%d,%d,%d",&earfcn, &physical_cellid, &primary_cell, &rsrp
+ 719:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     wireless_stats[0] = rsrp;
+ 720:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 721:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) memset(cmd,0,64);
+ 722:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+NUESTATS\r");
+ 723:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (boudica150_atcmd_response(cmd,"OK",resp,256) < 0)
+ 724:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 725:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return NULL;
+ 726:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 727:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     str = strstr(resp,"ECL:");
+ 728:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (str == NULL)
+ 729:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 730:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     	return NULL;
+ 731:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 732:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     sscanf(str,"ECL:%d",&wireless_stats[1]);
+ 733:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 734:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     str = strstr(resp,"SNR:");
+ 735:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (str == NULL)
+ 736:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 737:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return NULL;
+ 738:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 739:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     sscanf(str,"SNR:%d",&wireless_stats[2]);
+ 740:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 741:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     str = strstr(resp,"Cell ID:");
+ 742:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (str == NULL)
+ 743:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 744:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****         return NULL;
+ 745:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     }
+ 746:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     sscanf(str,"Cell ID:%d",&wireless_stats[3]);
+ 747:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 748:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return wireless_stats;
+ 749:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 1771              		.loc 1 749 0
+ 1772 0034 5FB0     		add	sp, sp, #380
+ 1773              	.LCFI28:
+ 1774              		.cfi_remember_state
+ 1775              		.cfi_def_cfa_offset 12
+ 1776              		@ sp needed
+ 1777 0036 30BD     		pop	{r4, r5, pc}
+ 1778              	.L139:
+ 1779              	.LCFI29:
+ 1780              		.cfi_restore_state
+ 712:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (str == NULL)
+ 1781              		.loc 1 712 0
+ 1782 0038 2649     		ldr	r1, .L154+4
+ 1783 003a 1EA8     		add	r0, sp, #120
+ 1784 003c FFF7FEFF 		bl	strstr
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 49
+
+
+ 1785              	.LVL237:
+ 713:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1786              		.loc 1 713 0
+ 1787 0040 0028     		cmp	r0, #0
+ 1788 0042 F6D0     		beq	.L141
+ 718:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     wireless_stats[0] = rsrp;
+ 1789              		.loc 1 718 0
+ 1790 0044 0DAB     		add	r3, sp, #52
+ 1791 0046 0493     		str	r3, [sp, #16]
+ 1792 0048 0CAB     		add	r3, sp, #48
+ 1793 004a 0393     		str	r3, [sp, #12]
+ 1794 004c 0BAB     		add	r3, sp, #44
+ 1795 004e 0293     		str	r3, [sp, #8]
+ 1796 0050 0AAD     		add	r5, sp, #40
+ 1797 0052 09AB     		add	r3, sp, #36
+ 1798 0054 0093     		str	r3, [sp]
+ 1799 0056 07AA     		add	r2, sp, #28
+ 1800 0058 08AB     		add	r3, sp, #32
+ 1801 005a 1F49     		ldr	r1, .L154+8
+ 1802 005c 0195     		str	r5, [sp, #4]
+ 719:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1803              		.loc 1 719 0
+ 1804 005e 1F4C     		ldr	r4, .L154+12
+ 718:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     wireless_stats[0] = rsrp;
+ 1805              		.loc 1 718 0
+ 1806 0060 FFF7FEFF 		bl	sscanf
+ 1807              	.LVL238:
+ 719:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1808              		.loc 1 719 0
+ 1809 0064 2B68     		ldr	r3, [r5]
+ 1810 0066 2360     		str	r3, [r4]
+ 721:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     (void) snprintf(cmd,64,"AT+NUESTATS\r");
+ 1811              		.loc 1 721 0
+ 1812 0068 4022     		movs	r2, #64
+ 1813 006a 0021     		movs	r1, #0
+ 1814 006c 0EA8     		add	r0, sp, #56
+ 1815 006e FFF7FEFF 		bl	memset
+ 1816              	.LVL239:
+ 722:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (boudica150_atcmd_response(cmd,"OK",resp,256) < 0)
+ 1817              		.loc 1 722 0
+ 1818 0072 1B49     		ldr	r1, .L154+16
+ 1819 0074 0EA8     		add	r0, sp, #56
+ 1820 0076 FFF7FEFF 		bl	strcpy
+ 1821              	.LVL240:
+ 723:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1822              		.loc 1 723 0
+ 1823 007a 4FF48073 		mov	r3, #256
+ 1824 007e 1EAA     		add	r2, sp, #120
+ 1825 0080 1849     		ldr	r1, .L154+20
+ 1826 0082 0EA8     		add	r0, sp, #56
+ 1827 0084 FFF7FEFF 		bl	boudica150_atcmd_response
+ 1828              	.LVL241:
+ 1829 0088 0028     		cmp	r0, #0
+ 1830 008a D2DB     		blt	.L141
+ 727:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (str == NULL)
+ 1831              		.loc 1 727 0
+ 1832 008c 1649     		ldr	r1, .L154+24
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 50
+
+
+ 1833 008e 1EA8     		add	r0, sp, #120
+ 1834 0090 FFF7FEFF 		bl	strstr
+ 1835              	.LVL242:
+ 728:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1836              		.loc 1 728 0
+ 1837 0094 0028     		cmp	r0, #0
+ 1838 0096 CCD0     		beq	.L141
+ 732:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1839              		.loc 1 732 0
+ 1840 0098 1449     		ldr	r1, .L154+28
+ 1841 009a 221D     		adds	r2, r4, #4
+ 1842 009c FFF7FEFF 		bl	sscanf
+ 1843              	.LVL243:
+ 734:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (str == NULL)
+ 1844              		.loc 1 734 0
+ 1845 00a0 1349     		ldr	r1, .L154+32
+ 1846 00a2 1EA8     		add	r0, sp, #120
+ 1847 00a4 FFF7FEFF 		bl	strstr
+ 1848              	.LVL244:
+ 735:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1849              		.loc 1 735 0
+ 1850 00a8 0028     		cmp	r0, #0
+ 1851 00aa C2D0     		beq	.L141
+ 739:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1852              		.loc 1 739 0
+ 1853 00ac 1149     		ldr	r1, .L154+36
+ 1854 00ae 04F10802 		add	r2, r4, #8
+ 1855 00b2 FFF7FEFF 		bl	sscanf
+ 1856              	.LVL245:
+ 741:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     if (str == NULL)
+ 1857              		.loc 1 741 0
+ 1858 00b6 1049     		ldr	r1, .L154+40
+ 1859 00b8 1EA8     		add	r0, sp, #120
+ 1860 00ba FFF7FEFF 		bl	strstr
+ 1861              	.LVL246:
+ 742:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     {
+ 1862              		.loc 1 742 0
+ 1863 00be 0028     		cmp	r0, #0
+ 1864 00c0 B7D0     		beq	.L141
+ 746:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1865              		.loc 1 746 0
+ 1866 00c2 04F10C02 		add	r2, r4, #12
+ 1867 00c6 0D49     		ldr	r1, .L154+44
+ 1868 00c8 FFF7FEFF 		bl	sscanf
+ 1869              	.LVL247:
+ 748:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 1870              		.loc 1 748 0
+ 1871 00cc 2046     		mov	r0, r4
+ 1872 00ce B1E7     		b	.L138
+ 1873              	.L155:
+ 1874              		.align	2
+ 1875              	.L154:
+ 1876 00d0 00000000 		.word	.LC44
+ 1877 00d4 12000000 		.word	.LC45
+ 1878 00d8 1C000000 		.word	.LC46
+ 1879 00dc 00000000 		.word	.LANCHOR6
+ 1880 00e0 3F000000 		.word	.LC47
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 51
+
+
+ 1881 00e4 0C000000 		.word	.LC2
+ 1882 00e8 4C000000 		.word	.LC48
+ 1883 00ec 51000000 		.word	.LC49
+ 1884 00f0 58000000 		.word	.LC50
+ 1885 00f4 5D000000 		.word	.LC51
+ 1886 00f8 64000000 		.word	.LC52
+ 1887 00fc 6D000000 		.word	.LC53
+ 1888              		.cfi_endproc
+ 1889              	.LFE28:
+ 1891              		.section	.text.oc_lwm2m_imp_init,"ax",%progbits
+ 1892              		.align	1
+ 1893              		.global	oc_lwm2m_imp_init
+ 1894              		.syntax unified
+ 1895              		.thumb
+ 1896              		.thumb_func
+ 1897              		.fpu fpv4-sp-d16
+ 1899              	oc_lwm2m_imp_init:
+ 1900              	.LFB29:
+ 750:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 751:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** const oc_lwm2m_opt_t  g_boudica150_oc_opt = \
+ 752:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 753:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     .config = boudica150_oc_config,
+ 754:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     .deconfig = boudica150_oc_deconfig,
+ 755:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     .report = (fn_oc_lwm2m_report)boudica150_oc_report,
+ 756:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** };
+ 757:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 758:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 759:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #ifndef CONFIG_BOUDICA150_PLMN
+ 760:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #define CONFIG_BOUDICA150_PLMN  "460001"
+ 761:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #endif
+ 762:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 763:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 764:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #ifndef CONFIG_BOUDICA150_APN
+ 765:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #define CONFIG_BOUDICA150_APN   "cmnet"
+ 766:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #endif
+ 767:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 768:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 769:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #ifndef CONFIG_BOUDICA150_BANDS
+ 770:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #define CONFIG_BOUDICA150_BANDS  "5,8,3"
+ 771:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** #endif
+ 772:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 773:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** int oc_lwm2m_imp_init(void)
+ 774:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** {
+ 1901              		.loc 1 774 0
+ 1902              		.cfi_startproc
+ 1903              		@ args = 0, pretend = 0, frame = 0
+ 1904              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1905              	.LVL248:
+ 1906 0000 08B5     		push	{r3, lr}
+ 1907              	.LCFI30:
+ 1908              		.cfi_def_cfa_offset 8
+ 1909              		.cfi_offset 3, -8
+ 1910              		.cfi_offset 14, -4
+ 775:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     int ret = -1;
+ 776:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 777:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.plmn = NULL;
+ 1911              		.loc 1 777 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 52
+
+
+ 1912 0002 074B     		ldr	r3, .L157
+ 778:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.apn = NULL;
+ 779:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.bands = CONFIG_BOUDICA150_BANDS;
+ 780:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 781:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     osal_mutex_create(&s_report_mutex);
+ 1913              		.loc 1 781 0
+ 1914 0004 0748     		ldr	r0, .L157+4
+ 777:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.apn = NULL;
+ 1915              		.loc 1 777 0
+ 1916 0006 0022     		movs	r2, #0
+ 778:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     s_boudica150_oc_cb.apn = NULL;
+ 1917              		.loc 1 778 0
+ 1918 0008 C3E90022 		strd	r2, r2, [r3]
+ 779:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1919              		.loc 1 779 0
+ 1920 000c 064A     		ldr	r2, .L157+8
+ 1921 000e 9A60     		str	r2, [r3, #8]
+ 1922              		.loc 1 781 0
+ 1923 0010 FFF7FEFF 		bl	osal_mutex_create
+ 1924              	.LVL249:
+ 782:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 783:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     ret = oc_lwm2m_register("boudica150",&g_boudica150_oc_opt);
+ 1925              		.loc 1 783 0
+ 1926 0014 0549     		ldr	r1, .L157+12
+ 1927 0016 0648     		ldr	r0, .L157+16
+ 784:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 785:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c ****     return ret;
+ 786:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** }
+ 1928              		.loc 1 786 0
+ 1929 0018 BDE80840 		pop	{r3, lr}
+ 1930              	.LCFI31:
+ 1931              		.cfi_restore 14
+ 1932              		.cfi_restore 3
+ 1933              		.cfi_def_cfa_offset 0
+ 783:../../iot_link/oc/oc_lwm2m/boudica150_oc/boudica150_oc.c **** 
+ 1934              		.loc 1 783 0
+ 1935 001c FFF7FEBF 		b	oc_lwm2m_register
+ 1936              	.LVL250:
+ 1937              	.L158:
+ 1938              		.align	2
+ 1939              	.L157:
+ 1940 0020 00000000 		.word	.LANCHOR2
+ 1941 0024 00000000 		.word	.LANCHOR3
+ 1942 0028 00000000 		.word	.LC54
+ 1943 002c 00000000 		.word	.LANCHOR7
+ 1944 0030 06000000 		.word	.LC55
+ 1945              		.cfi_endproc
+ 1946              	.LFE29:
+ 1948              		.global	g_boudica150_oc_opt
+ 1949              		.global	wireless_stats
+ 1950              		.section	.bss.s_boudica150_oc_cb,"aw",%nobits
+ 1951              		.align	2
+ 1952              		.set	.LANCHOR2,. + 0
+ 1955              	s_boudica150_oc_cb:
+ 1956 0000 00000000 		.space	344
+ 1956      00000000 
+ 1956      00000000 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 53
+
+
+ 1956      00000000 
+ 1956      00000000 
+ 1957              		.section	.bss.s_oc_handle,"aw",%nobits
+ 1958              		.align	2
+ 1959              		.set	.LANCHOR0,. + 0
+ 1962              	s_oc_handle:
+ 1963 0000 00000000 		.space	4
+ 1964              		.section	.bss.s_report_mutex,"aw",%nobits
+ 1965              		.align	2
+ 1966              		.set	.LANCHOR3,. + 0
+ 1969              	s_report_mutex:
+ 1970 0000 00000000 		.space	4
+ 1971              		.section	.bss.wireless_stats,"aw",%nobits
+ 1972              		.align	2
+ 1973              		.set	.LANCHOR6,. + 0
+ 1976              	wireless_stats:
+ 1977 0000 00000000 		.space	16
+ 1977      00000000 
+ 1977      00000000 
+ 1977      00000000 
+ 1978              		.section	.rodata.__FUNCTION__.6975,"a",%progbits
+ 1979              		.set	.LANCHOR5,. + 0
+ 1982              	__FUNCTION__.6975:
+ 1983 0000 626F7564 		.ascii	"boudica150_rcvdeal\000"
+ 1983      69636131 
+ 1983      35305F72 
+ 1983      63766465 
+ 1983      616C00
+ 1984              		.section	.rodata.__FUNCTION__.7046,"a",%progbits
+ 1985              		.set	.LANCHOR1,. + 0
+ 1988              	__FUNCTION__.7046:
+ 1989 0000 7572635F 		.ascii	"urc_qlwevtind\000"
+ 1989      716C7765 
+ 1989      7674696E 
+ 1989      6400
+ 1990              		.section	.rodata.__FUNCTION__.7080,"a",%progbits
+ 1991              		.set	.LANCHOR4,. + 0
+ 1994              	__FUNCTION__.7080:
+ 1995 0000 626F7564 		.ascii	"boudica150_boot\000"
+ 1995      69636131 
+ 1995      35305F62 
+ 1995      6F6F7400 
+ 1996              		.section	.rodata.boudica150_check_nuestats.str1.1,"aMS",%progbits,1
+ 1997              	.LC44:
+ 1998 0000 41542B4E 		.ascii	"AT+NUESTATS=CELL\015\000"
+ 1998      55455354 
+ 1998      4154533D 
+ 1998      43454C4C 
+ 1998      0D00
+ 1999              	.LC45:
+ 2000 0012 4E554553 		.ascii	"NUESTATS:\000"
+ 2000      54415453 
+ 2000      3A00
+ 2001              	.LC46:
+ 2002 001c 4E554553 		.ascii	"NUESTATS:CELL,%d,%d,%d,%d,%d,%d,%d\000"
+ 2002      54415453 
+ 2002      3A43454C 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 54
+
+
+ 2002      4C2C2564 
+ 2002      2C25642C 
+ 2003              	.LC47:
+ 2004 003f 41542B4E 		.ascii	"AT+NUESTATS\015\000"
+ 2004      55455354 
+ 2004      4154530D 
+ 2004      00
+ 2005              	.LC48:
+ 2006 004c 45434C3A 		.ascii	"ECL:\000"
+ 2006      00
+ 2007              	.LC49:
+ 2008 0051 45434C3A 		.ascii	"ECL:%d\000"
+ 2008      256400
+ 2009              	.LC50:
+ 2010 0058 534E523A 		.ascii	"SNR:\000"
+ 2010      00
+ 2011              	.LC51:
+ 2012 005d 534E523A 		.ascii	"SNR:%d\000"
+ 2012      256400
+ 2013              	.LC52:
+ 2014 0064 43656C6C 		.ascii	"Cell ID:\000"
+ 2014      2049443A 
+ 2014      00
+ 2015              	.LC53:
+ 2016 006d 43656C6C 		.ascii	"Cell ID:%d\000"
+ 2016      2049443A 
+ 2016      256400
+ 2017              		.section	.rodata.boudica150_get_csq.str1.1,"aMS",%progbits,1
+ 2018              	.LC42:
+ 2019 0000 41542B43 		.ascii	"AT+CSQ\015\000"
+ 2019      53510D00 
+ 2020              	.LC43:
+ 2021 0008 2B435351 		.ascii	"+CSQ:\000"
+ 2021      3A00
+ 2022              		.section	.rodata.boudica150_oc_config.str1.1,"aMS",%progbits,1
+ 2023              	.LC9:
+ 2024 0000 0D0A2B51 		.ascii	"\015\012+QLWEVTIND:\000"
+ 2024      4C574556 
+ 2024      54494E44 
+ 2024      3A00
+ 2025              	.LC10:
+ 2026 000e 716C7765 		.ascii	"qlwevind\000"
+ 2026      76696E64 
+ 2026      00
+ 2027              	.LC11:
+ 2028 0017 0D0A2B4E 		.ascii	"\015\012+NNMI:\000"
+ 2028      4E4D493A 
+ 2028      00
+ 2029              	.LC12:
+ 2030 0020 626F7564 		.ascii	"boudica150rcv\000"
+ 2030      69636131 
+ 2030      35307263 
+ 2030      7600
+ 2031              	.LC13:
+ 2032 002e 41542B51 		.ascii	"AT+QREGSWT=%d\015\000"
+ 2032      52454753 
+ 2032      57543D25 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 55
+
+
+ 2032      640D00
+ 2033              	.LC14:
+ 2034 003d 41542B43 		.ascii	"AT+CMEE=%d\015\000"
+ 2034      4D45453D 
+ 2034      25640D00 
+ 2035              	.LC15:
+ 2036 0049 2B4E434F 		.ascii	"+NCONFIG\000"
+ 2036      4E464947 
+ 2036      00
+ 2037              	.LC16:
+ 2038 0052 41542B4E 		.ascii	"AT+NCONFIG?\015\000"
+ 2038      434F4E46 
+ 2038      49473F0D 
+ 2038      00
+ 2039              	.LC17:
+ 2040 005f 4155544F 		.ascii	"AUTOCONNECT,TRUE\000"
+ 2040      434F4E4E 
+ 2040      4543542C 
+ 2040      54525545 
+ 2040      00
+ 2041              	.LC18:
+ 2042 0070 41542B4E 		.ascii	"AT+NCONFIG=%s\015\000"
+ 2042      434F4E46 
+ 2042      49473D25 
+ 2042      730D00
+ 2043              	.LC19:
+ 2044 007f 41542B4E 		.ascii	"AT+NBAND?\015\000"
+ 2044      42414E44 
+ 2044      3F0D00
+ 2045              	.LC20:
+ 2046 008a 2B4E4241 		.ascii	"+NBAND:%s\015\000"
+ 2046      4E443A25 
+ 2046      730D00
+ 2047              	.LC21:
+ 2048 0095 41542B4E 		.ascii	"AT+NBAND=%s\015\000"
+ 2048      42414E44 
+ 2048      3D25730D 
+ 2048      00
+ 2049              	.LC22:
+ 2050 00a2 2B434F50 		.ascii	"+COPS\000"
+ 2050      5300
+ 2051              	.LC23:
+ 2052 00a8 41542B43 		.ascii	"AT+COPS?\015\000"
+ 2052      4F50533F 
+ 2052      0D00
+ 2053              	.LC24:
+ 2054 00b2 2B434F50 		.ascii	"+COPS:1,2,\"%s\"\015\000"
+ 2054      533A312C 
+ 2054      322C2225 
+ 2054      73220D00 
+ 2055              	.LC25:
+ 2056 00c2 41542B43 		.ascii	"AT+COPS=1,2,\"%s\"\015\000"
+ 2056      4F50533D 
+ 2056      312C322C 
+ 2056      22257322 
+ 2056      0D00
+ 2057              	.LC26:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 56
+
+
+ 2058 00d4 41542B43 		.ascii	"AT+COPS=0\015\000"
+ 2058      4F50533D 
+ 2058      300D00
+ 2059              	.LC27:
+ 2060 00df 41542B43 		.ascii	"AT+CGDCONT?\015\000"
+ 2060      4744434F 
+ 2060      4E543F0D 
+ 2060      00
+ 2061              	.LC28:
+ 2062 00ec 2B434744 		.ascii	"+CGDCONT:\"%s\"\015\000"
+ 2062      434F4E54 
+ 2062      3A222573 
+ 2062      220D00
+ 2063              	.LC29:
+ 2064 00fb 41542B43 		.ascii	"AT+CGDCONT=%s\015\000"
+ 2064      4744434F 
+ 2064      4E543D25 
+ 2064      730D00
+ 2065              	.LC30:
+ 2066 010a 41542B4E 		.ascii	"AT+NCDP?\015\000"
+ 2066      4344503F 
+ 2066      0D00
+ 2067              	.LC31:
+ 2068 0114 2B4E4344 		.ascii	"+NCDP:%s,%s\015\000"
+ 2068      503A2573 
+ 2068      2C25730D 
+ 2068      00
+ 2069              	.LC32:
+ 2070 0121 41542B4E 		.ascii	"AT+NCDP=%s,%s\015\000"
+ 2070      4344503D 
+ 2070      25732C25 
+ 2070      730D00
+ 2071              	.LC33:
+ 2072 0130 41542B43 		.ascii	"AT+CGATT=%d\015\000"
+ 2072      47415454 
+ 2072      3D25640D 
+ 2072      00
+ 2073              	.LC34:
+ 2074 013d 41542B4E 		.ascii	"AT+NNMI=%d\015\000"
+ 2074      4E4D493D 
+ 2074      25640D00 
+ 2075              	.LC35:
+ 2076 0149 43474154 		.ascii	"CGATT:1\000"
+ 2076      543A3100 
+ 2077              	.LC36:
+ 2078 0151 41542B43 		.ascii	"AT+CGATT?\015\000"
+ 2078      47415454 
+ 2078      3F0D00
+ 2079              	.LC37:
+ 2080 015c 5B25735D 		.ascii	"[%s][%u][%s] NB MODULE RXTX READY NOW\012\015\015\012"
+ 2080      5B25755D 
+ 2080      5B25735D 
+ 2080      204E4220 
+ 2080      4D4F4455 
+ 2081 0185 00       		.ascii	"\000"
+ 2082              		.section	.rodata.boudica150_oc_report.str1.1,"aMS",%progbits,1
+ 2083              	.LC3:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 57
+
+
+ 2084 0000 41542B4E 		.ascii	"AT+NMGS=\000"
+ 2084      4D47533D 
+ 2084      00
+ 2085              	.LC4:
+ 2086 0009 25732564 		.ascii	"%s%d,\000"
+ 2086      2C00
+ 2087              	.LC5:
+ 2088 000f 25303258 		.ascii	"%02X\000"
+ 2088      00
+ 2089              		.section	.rodata.boudica150_rcvdeal.str1.1,"aMS",%progbits,1
+ 2090              	.LC38:
+ 2091 0000 5B25735D 		.ascii	"[%s][%u][%s] %s:invalid frame:%d byte:%s\012\015\015"
+ 2091      5B25755D 
+ 2091      5B25735D 
+ 2091      2025733A 
+ 2091      696E7661 
+ 2092 002b 0A00     		.ascii	"\012\000"
+ 2093              	.LC39:
+ 2094 002d 5B25735D 		.ascii	"[%s][%u][%s] %s:format error\012\015\015\012\000"
+ 2094      5B25755D 
+ 2094      5B25735D 
+ 2094      2025733A 
+ 2094      666F726D 
+ 2095              	.LC40:
+ 2096 004e 5B25735D 		.ascii	"[%s][%u][%s] %s:implement error\012\015\015\012\000"
+ 2096      5B25755D 
+ 2096      5B25735D 
+ 2096      2025733A 
+ 2096      696D706C 
+ 2097              	.LC41:
+ 2098 0072 5B25735D 		.ascii	"[%s][%u][%s] %s:frame over: frame:%d  cachelen:%d \012"
+ 2098      5B25755D 
+ 2098      5B25735D 
+ 2098      2025733A 
+ 2098      6672616D 
+ 2099 00a5 0D0D0A00 		.ascii	"\015\015\012\000"
+ 2100              		.section	.rodata.boudica150_reboot.str1.1,"aMS",%progbits,1
+ 2101              	.LC7:
+ 2102 0000 5245424F 		.ascii	"REBOOTING\000"
+ 2102      4F54494E 
+ 2102      4700
+ 2103              	.LC8:
+ 2104 000a 41542B4E 		.ascii	"AT+NRB\015\000"
+ 2104      52420D00 
+ 2105              		.section	.rodata.boudica150_set_echo.constprop.6.str1.1,"aMS",%progbits,1
+ 2106              	.LC6:
+ 2107 0000 41544525 		.ascii	"ATE%d\015\000"
+ 2107      640D00
+ 2108              		.section	.rodata.boudica150_set_fun.str1.1,"aMS",%progbits,1
+ 2109              	.LC1:
+ 2110 0000 41542B43 		.ascii	"AT+CFUN=%d\015\000"
+ 2110      46554E3D 
+ 2110      25640D00 
+ 2111              	.LC2:
+ 2112 000c 4F4B00   		.ascii	"OK\000"
+ 2113              		.section	.rodata.g_boudica150_oc_opt,"a",%progbits
+ 2114              		.align	2
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 58
+
+
+ 2115              		.set	.LANCHOR7,. + 0
+ 2118              	g_boudica150_oc_opt:
+ 2119 0000 00000000 		.word	boudica150_oc_config
+ 2120 0004 00000000 		.word	boudica150_oc_report
+ 2121 0008 00000000 		.word	boudica150_oc_deconfig
+ 2122              		.section	.rodata.oc_lwm2m_imp_init.str1.1,"aMS",%progbits,1
+ 2123              	.LC54:
+ 2124 0000 352C382C 		.ascii	"5,8,3\000"
+ 2124      3300
+ 2125              	.LC55:
+ 2126 0006 626F7564 		.ascii	"boudica150\000"
+ 2126      69636131 
+ 2126      353000
+ 2127              		.section	.rodata.urc_qlwevtind.str1.1,"aMS",%progbits,1
+ 2128              	.LC0:
+ 2129 0000 5B25735D 		.ascii	"[%s][%u][%s] GET THE LWM2M:ind:%d\012\015\015\012\000"
+ 2129      5B25755D 
+ 2129      5B25735D 
+ 2129      20474554 
+ 2129      20544845 
+ 2130              		.text
+ 2131              	.Letext0:
+ 2132              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 2133              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 2134              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 2135              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 2136              		.file 6 "../../iot_link/os/osal/osal_types.h"
+ 2137              		.file 7 "../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.h"
+ 2138              		.file 8 "../../iot_link/inc/link_log.h"
+ 2139              		.file 9 "../../iot_link/os/osal/osal.h"
+ 2140              		.file 10 "<built-in>"
+ 2141              		.file 11 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 2142              		.file 12 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 2143              		.file 13 "../../iot_link/at/at.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 59
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 boudica150_oc.c
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:18     .text.boudica150_oc_deconfig:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:24     .text.boudica150_oc_deconfig:00000000 boudica150_oc_deconfig
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:51     .text.boudica150_oc_deconfig:00000010 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:56     .text.boudica150_atcmd_response:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:62     .text.boudica150_atcmd_response:00000000 boudica150_atcmd_response
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:107    .text.boudica150_atcmd:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:113    .text.boudica150_atcmd:00000000 boudica150_atcmd
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:154    .text.urc_qlwevtind:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:160    .text.urc_qlwevtind:00000000 urc_qlwevtind
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:232    .text.urc_qlwevtind:0000004c $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:240    .text.boudica150_set_fun:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:246    .text.boudica150_set_fun:00000000 boudica150_set_fun
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:304    .text.boudica150_set_fun:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:310    .text.boudica150_oc_report:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:316    .text.boudica150_oc_report:00000000 boudica150_oc_report
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:477    .text.boudica150_oc_report:000000c0 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:489    .text.boudica150_set_echo.constprop.6:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:495    .text.boudica150_set_echo.constprop.6:00000000 boudica150_set_echo.constprop.6
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:540    .text.boudica150_set_echo.constprop.6:00000028 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:546    .text.boudica150_reboot:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:552    .text.boudica150_reboot:00000000 boudica150_reboot
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:590    .text.boudica150_reboot:00000028 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:596    .text.boudica150_oc_config:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:602    .text.boudica150_oc_config:00000000 boudica150_oc_config
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1155   .text.boudica150_oc_config:000002fc $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1313   .text.boudica150_rcvdeal:00000000 boudica150_rcvdeal
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1194   .text.boudica150_oc_config:0000037c $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1299   .text.boudica150_oc_config:000003ec $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1307   .text.boudica150_rcvdeal:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1583   .text.boudica150_rcvdeal:00000138 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1597   .text.boudica150_get_csq:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1604   .text.boudica150_get_csq:00000000 boudica150_get_csq
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1712   .text.boudica150_get_csq:00000070 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1719   .text.boudica150_check_nuestats:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1726   .text.boudica150_check_nuestats:00000000 boudica150_check_nuestats
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1876   .text.boudica150_check_nuestats:000000d0 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1892   .text.oc_lwm2m_imp_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1899   .text.oc_lwm2m_imp_init:00000000 oc_lwm2m_imp_init
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1940   .text.oc_lwm2m_imp_init:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:2118   .rodata.g_boudica150_oc_opt:00000000 g_boudica150_oc_opt
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1976   .bss.wireless_stats:00000000 wireless_stats
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1951   .bss.s_boudica150_oc_cb:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1955   .bss.s_boudica150_oc_cb:00000000 s_boudica150_oc_cb
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1958   .bss.s_oc_handle:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1962   .bss.s_oc_handle:00000000 s_oc_handle
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1965   .bss.s_report_mutex:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1969   .bss.s_report_mutex:00000000 s_report_mutex
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1972   .bss.wireless_stats:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1982   .rodata.__FUNCTION__.6975:00000000 __FUNCTION__.6975
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1988   .rodata.__FUNCTION__.7046:00000000 __FUNCTION__.7046
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:1994   .rodata.__FUNCTION__.7080:00000000 __FUNCTION__.7080
+C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s:2114   .rodata.g_boudica150_oc_opt:00000000 $d
+
+UNDEFINED SYMBOLS
+strlen
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cctfncFh.s 			page 60
+
+
+at_command
+link_log_level_get
+link_log_level_name
+osal_sys_time
+printf
+fflush
+_impure_ptr
+memset
+snprintf
+osal_task_sleep
+osal_mutex_lock
+sprintf
+osal_mutex_unlock
+at_oobregister
+strstr
+strcpy
+strchr
+sscanf
+osal_mutex_create
+oc_lwm2m_register

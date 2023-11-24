@@ -1,0 +1,250 @@
+#
+# Copyright (c) [2020] Huawei Technologies Co.,Ltd.All rights reserved.
+#
+# LiteOS NOVA is licensed under the Mulan PSL v1.
+# You can use this software according to the terms and conditions of the Mulan PSL v1.
+# You may obtain a copy of Mulan PSL v1 at:
+#
+#   http://license.coscl.org.cn/MulanPSL
+#
+# THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR
+# FIT FOR A PARTICULAR PURPOSE.
+# See the Mulan PSL v1 for more details.
+#
+
+menu "LiteOS for STM32L431_BearPi Project configuration For IoT Link"
+
+comment "This is a demo project and hope you enjoy it"
+
+config ARCH_CPU_TYPE
+   string "Select the cpu arch:armv7-m armv6-m riscv32 x86-64"
+   default "armv7-m"
+   
+config UARTAT_RCVMAX
+    int  "Config the at uart receive buffer size"
+    default 2048
+
+config UARTAT_BAUDRATE
+    int  "Config the at uart baud rate"
+    default 9600
+    
+config UARTAT_DEVNAME
+    string "Config the at uart device name"
+    default "atdev"
+          
+rsource "../../iot_link/Kconfig"
+
+
+choice Demo
+    optional
+    prompt "User Defined Demo"
+    config Demo_None
+        bool "none"
+    config Demo_Helloworld
+        bool "Hello World"
+        select SHELL_ENABLE
+    config Demo_OC_NB_LWM2M_Light
+        bool "OC NB LWM2M Light"
+        select OC_LWM2M
+        select SHELL_ENABLE
+        select AT_ENABLE
+        select BOUDICA150
+        select STIMER_ENABLE
+    config Demo_OC_NB_LWM2M_Agriculture
+        bool "OC NB LWM2M Agriculture"
+        select OC_LWM2M
+        select SHELL_ENABLE
+        select AT_ENABLE
+        select BOUDICA150
+        select STIMER_ENABLE
+    config Demo_OC_NB_LWM2M_GPS
+        bool "OC NB LWM2M GPS"
+        select OC_LWM2M
+        select SHELL_ENABLE
+        select AT_ENABLE
+        select BOUDICA150
+        select STIMER_ENABLE
+    config Demo_OC_NB_LWM2M_Smoke
+        bool "OC NB LWM2M Smoke"
+        select OC_LWM2M
+        select SHELL_ENABLE
+        select AT_ENABLE
+        select BOUDICA150
+        select STIMER_ENABLE
+    config Demo_OC_NB_LWM2M_Manhole_Cover
+		bool "OC NB LWM2M Manhole_Cover"
+		select OC_LWM2M
+		select SHELL_ENABLE
+		select AT_ENABLE
+		select BOUDICA150
+		select STIMER_ENABLE
+	config Demo_OC_NB_LWM2M_Infrared
+		bool "OC NB LWM2M Infrared"
+		select OC_LWM2M
+		select SHELL_ENABLE
+		select AT_ENABLE
+		select BOUDICA150
+		select STIMER_ENABLE
+
+    config Demo_OC_WIFI_LWM2M_Light
+        bool "OC WIFI LWM2M Light"
+    config Demo_OC_WIFI_LWM2M_Agriculture
+        bool "OC WIFI LWM2M Agriculture"
+    config Demo_OC_WIFI_LWM2M_Smoke
+        bool "OC WIFI LWM2M Smoke"
+    config Demo_OC_WIFI_LWM2M_Infrared
+        bool "OC WIFI LWM2M Infrared"
+    config Demo_OC_WIFI_LWM2M_Manhole_Cover
+        bool "OC WIFI LWM2M Manhole_Cover"
+    config Demo_OC_WIFI_LWM2M_GPS
+        bool "OC WIFI LWM2M GPS"
+
+    config Demo_OC_WIFI_MQTT_Light
+        bool "OC WIFI MQTT Light"
+    config Demo_OC_WIFI_MQTT_Agriculture
+        bool "OC WIFI MQTT Agriculture"
+    config Demo_OC_WIFI_MQTT_Smoke
+        bool "OC WIFI MQTT Smoke"
+    config Demo_OC_WIFI_MQTT_Infrared
+        bool "OC WIFI MQTT Infrared"
+    config Demo_OC_WIFI_MQTT_Manhole_Cover
+        bool "OC WIFI MQTT Manhole_Cover"
+    config Demo_OC_WIFI_MQTT_GPS
+        bool "OC WIFI MQTT GPS"
+
+    config Demo_OC_2G_MQTT_Light
+        bool "OC 2G MQTT Light"
+    config Demo_OC_2G_MQTT_Agriculture
+        bool "OC 2G MQTT Agriculture"
+    config Demo_OC_2G_MQTT_Smoke
+        bool "OC 2G MQTT Smoke"
+    config Demo_OC_2G_MQTT_Infrared
+        bool "OC 2G MQTT Infrared"
+    config Demo_OC_2G_MQTT_Manhole_Cover
+        bool "OC 2G MQTT Manhole_Cover"
+    config Demo_OC_2G_MQTT_GPS
+        bool "OC 2G MQTT GPS"
+
+    config Demo_OC_CAT1_MQTT_Light
+        bool "OC CAT1 MQTT Light"
+    config Demo_OC_CAT1_MQTT_Agriculture
+        bool "OC CAT1 MQTT Agriculture"
+    config Demo_OC_CAT1_MQTT_Smoke
+        bool "OC CAT1 MQTT Smoke"
+    config Demo_OC_CAT1_MQTT_Infrared
+        bool "OC CAT1 MQTT Infrared"
+    config Demo_OC_CAT1_MQTT_Manhole_Cover
+        bool "OC CAT1 MQTT Manhole_Cover"
+    config Demo_OC_CAT1_MQTT_GPS
+        bool "OC CAT1 MQTT GPS"
+endchoice
+
+if Demo_OC_WIFI_LWM2M_Light || Demo_OC_WIFI_LWM2M_Agriculture || Demo_OC_WIFI_LWM2M_Smoke \
+   || Demo_OC_WIFI_LWM2M_Infrared || Demo_OC_WIFI_LWM2M_Manhole_Cover || Demo_OC_WIFI_LWM2M_GPS
+     config APP_SERVERIP
+        string "IoT Platform Server Address"
+        default "119.3.250.80"
+     config APP_SERVERPORT
+        string "IoT Platform Server Port"
+        default "5683"
+     config APP_ENDPOIINT_ID
+        string "Device Endpoint_ID"
+        default "xxxxx" 
+endif
+
+if Demo_OC_WIFI_MQTT_Light || Demo_OC_WIFI_MQTT_Agriculture || Demo_OC_WIFI_MQTT_Smoke \
+   || Demo_OC_WIFI_MQTT_Infrared || Demo_OC_WIFI_MQTT_Manhole_Cover || Demo_OC_WIFI_MQTT_GPS
+     config APP_SERVERIP
+        string "IoT Platform Server Address"
+        default "121.36.42.100"
+     config APP_SERVERPORT
+        string "IoT Platform Server Port"
+        default "1883"
+     config APP_DEVICEID
+        string "Device ID"
+        default "xxxxx"
+     config APP_DEVICEPWD
+        string "Device PWD"
+        default "xxxxx" 
+    config APP_LIFETIME
+        int "MQTT Keepalive Time"
+        default 100    
+endif
+
+if Demo_OC_2G_MQTT_Light || Demo_OC_2G_MQTT_Agriculture || Demo_OC_2G_MQTT_Smoke \
+   || Demo_OC_2G_MQTT_Infrared || Demo_OC_2G_MQTT_Manhole_Cover || Demo_OC_2G_MQTT_GPS
+     config APP_SERVERIP
+        string "IoT Platform Server Address"
+        default "121.36.42.100"
+     config APP_SERVERPORT
+        string "IoT Platform Server Port"
+        default "1883"
+     config APP_DEVICEID
+        string "Device ID"
+        default "xxxxx"
+     config APP_DEVICEPWD
+        string "Device PWD"
+        default "xxxxx" 
+    config APP_LIFETIME
+        int "MQTT Keepalive Time"
+        default 100    
+endif
+
+if Demo_OC_CAT1_MQTT_Light || Demo_OC_CAT1_MQTT_Agriculture || Demo_OC_CAT1_MQTT_Smoke \
+   || Demo_OC_CAT1_MQTT_Infrared || Demo_OC_CAT1_MQTT_Manhole_Cover || Demo_OC_CAT1_MQTT_GPS
+     config APP_SERVERIP
+        string "IoT Platform Server Address"
+        default "121.36.42.100"
+     config APP_SERVERPORT
+        string "IoT Platform Server Port"
+        default "1883"
+     config APP_DEVICEID
+        string "Device ID"
+        default "xxxxx"
+     config APP_DEVICEPWD
+        string "Device PWD"
+        default "xxxxx" 
+    config APP_LIFETIME
+        int "MQTT Keepalive Time"
+        default 100    
+endif
+
+
+config USER_DEMO
+    string
+    default "hello_world_demo" if Demo_Helloworld
+    default "oc_nb_lwm2m_light" if Demo_OC_NB_LWM2M_Light
+    default "oc_nb_lwm2m_agriculture" if Demo_OC_NB_LWM2M_Agriculture
+    default "oc_nb_lwm2m_gps" if Demo_OC_NB_LWM2M_GPS
+    default "oc_nb_lwm2m_smoke" if Demo_OC_NB_LWM2M_Smoke
+    default "oc_nb_lwm2m_manhole_cover" if Demo_OC_NB_LWM2M_Manhole_Cover
+	default "oc_nb_lwm2m_infrared" if Demo_OC_NB_LWM2M_Infrared
+    default "oc_wifi_lwm2m_light" if Demo_OC_WIFI_LWM2M_Light
+    default "oc_wifi_lwm2m_agriculture" if Demo_OC_WIFI_LWM2M_Agriculture
+    default "oc_wifi_lwm2m_smoke" if Demo_OC_WIFI_LWM2M_Smoke
+    default "oc_wifi_lwm2m_infrared" if Demo_OC_WIFI_LWM2M_Infrared
+    default "oc_wifi_lwm2m_manhole_cover" if Demo_OC_WIFI_LWM2M_Manhole_Cover
+    default "oc_wifi_lwm2m_gps" if Demo_OC_WIFI_LWM2M_GPS
+    default "oc_wifi_mqtt_light" if Demo_OC_WIFI_MQTT_Light
+    default "oc_wifi_mqtt_agriculture" if Demo_OC_WIFI_MQTT_Agriculture
+    default "oc_wifi_mqtt_smoke" if Demo_OC_WIFI_MQTT_Smoke
+    default "oc_wifi_mqtt_infrared" if Demo_OC_WIFI_MQTT_Infrared
+    default "oc_wifi_mqtt_manhole_cover" if Demo_OC_WIFI_MQTT_Manhole_Cover
+    default "oc_wifi_mqtt_gps" if Demo_OC_WIFI_MQTT_GPS
+    default "oc_2g_mqtt_light" if Demo_OC_2G_MQTT_Light
+    default "oc_2g_mqtt_agriculture" if Demo_OC_2G_MQTT_Agriculture
+    default "oc_2g_mqtt_smoke" if Demo_OC_2G_MQTT_Smoke
+    default "oc_2g_mqtt_infrared" if Demo_OC_2G_MQTT_Infrared
+    default "oc_2g_mqtt_manhole_cover" if Demo_OC_2G_MQTT_Manhole_Cover
+    default "oc_2g_mqtt_gps" if Demo_OC_2G_MQTT_GPS
+    default "oc_cat1_mqtt_light" if Demo_OC_CAT1_MQTT_Light
+    default "oc_cat1_mqtt_agriculture" if Demo_OC_CAT1_MQTT_Agriculture
+    default "oc_cat1_mqtt_smoke" if Demo_OC_CAT1_MQTT_Smoke
+    default "oc_cat1_mqtt_infrared" if Demo_OC_CAT1_MQTT_Infrared
+    default "oc_cat1_mqtt_manhole_cover" if Demo_OC_CAT1_MQTT_Manhole_Cover
+    default "oc_cat1_mqtt_gps" if Demo_OC_CAT1_MQTT_GPS
+    default "none"
+
+        
+endmenu

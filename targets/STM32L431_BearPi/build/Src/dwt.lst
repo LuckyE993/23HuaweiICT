@@ -1,0 +1,306 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"dwt.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.dwt_delay_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	dwt_delay_init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	dwt_delay_init:
+  26              	.LFB287:
+  27              		.file 1 "Src/dwt.c"
+   1:Src/dwt.c     **** /*----------------------------------------------------------------------------
+   2:Src/dwt.c     ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:Src/dwt.c     ****  * All rights reserved.
+   4:Src/dwt.c     ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:Src/dwt.c     ****  * are permitted provided that the following conditions are met:
+   6:Src/dwt.c     ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:Src/dwt.c     ****  * conditions and the following disclaimer.
+   8:Src/dwt.c     ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:Src/dwt.c     ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:Src/dwt.c     ****  * provided with the distribution.
+  11:Src/dwt.c     ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:Src/dwt.c     ****  * to endorse or promote products derived from this software without specific prior written
+  13:Src/dwt.c     ****  * permission.
+  14:Src/dwt.c     ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:Src/dwt.c     ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:Src/dwt.c     ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:Src/dwt.c     ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:Src/dwt.c     ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:Src/dwt.c     ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:Src/dwt.c     ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:Src/dwt.c     ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:Src/dwt.c     ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:Src/dwt.c     ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:Src/dwt.c     ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:Src/dwt.c     ****  *---------------------------------------------------------------------------*/
+  26:Src/dwt.c     **** /*----------------------------------------------------------------------------
+  27:Src/dwt.c     ****  * Notice of Export Control Law
+  28:Src/dwt.c     ****  * ===============================================
+  29:Src/dwt.c     ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:Src/dwt.c     ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:Src/dwt.c     ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s 			page 2
+
+
+  32:Src/dwt.c     ****  * applicable export control laws and regulations.
+  33:Src/dwt.c     ****  *---------------------------------------------------------------------------*/
+  34:Src/dwt.c     **** 
+  35:Src/dwt.c     **** #include "dwt.h"
+  36:Src/dwt.c     **** 
+  37:Src/dwt.c     **** static uint32_t cpuclkfeq;
+  38:Src/dwt.c     **** 
+  39:Src/dwt.c     **** void dwt_delay_init(uint32_t clk)
+  40:Src/dwt.c     **** {
+  28              		.loc 1 40 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  41:Src/dwt.c     ****     cpuclkfeq = clk;
+  34              		.loc 1 41 0
+  35 0000 064B     		ldr	r3, .L2
+  42:Src/dwt.c     ****     DEM_CR         |=  DEM_CR_TRCENA;
+  36              		.loc 1 42 0
+  37 0002 074A     		ldr	r2, .L2+4
+  41:Src/dwt.c     ****     cpuclkfeq = clk;
+  38              		.loc 1 41 0
+  39 0004 1860     		str	r0, [r3]
+  40              		.loc 1 42 0
+  41 0006 1368     		ldr	r3, [r2]
+  42 0008 43F08073 		orr	r3, r3, #16777216
+  43 000c 1360     		str	r3, [r2]
+  43:Src/dwt.c     ****     //DWT_CYCCNT      = 0u;
+  44:Src/dwt.c     ****     DWT_CR         |= DWT_CR_CYCCNTENA;
+  44              		.loc 1 44 0
+  45 000e 054A     		ldr	r2, .L2+8
+  46 0010 1368     		ldr	r3, [r2]
+  47 0012 43F00103 		orr	r3, r3, #1
+  48 0016 1360     		str	r3, [r2]
+  45:Src/dwt.c     **** }
+  49              		.loc 1 45 0
+  50 0018 7047     		bx	lr
+  51              	.L3:
+  52 001a 00BF     		.align	2
+  53              	.L2:
+  54 001c 00000000 		.word	.LANCHOR0
+  55 0020 FCED00E0 		.word	-536809988
+  56 0024 001000E0 		.word	-536866816
+  57              		.cfi_endproc
+  58              	.LFE287:
+  60              		.section	.text.delayus,"ax",%progbits
+  61              		.align	1
+  62              		.global	delayus
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  66              		.fpu fpv4-sp-d16
+  68              	delayus:
+  69              	.LFB288:
+  46:Src/dwt.c     **** 
+  47:Src/dwt.c     **** void delayus(uint32_t usec)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s 			page 3
+
+
+  48:Src/dwt.c     **** 
+  49:Src/dwt.c     **** {
+  70              		.loc 1 49 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              	.LVL1:
+  75 0000 70B5     		push	{r4, r5, r6, lr}
+  76              	.LCFI0:
+  77              		.cfi_def_cfa_offset 16
+  78              		.cfi_offset 4, -16
+  79              		.cfi_offset 5, -12
+  80              		.cfi_offset 6, -8
+  81              		.cfi_offset 14, -4
+  50:Src/dwt.c     ****     uint32_t startts, endts, ts;
+  51:Src/dwt.c     ****     UINT32 uwIntSave;
+  52:Src/dwt.c     ****     startts = DWT_CYCCNT;
+  82              		.loc 1 52 0
+  83 0002 0E4D     		ldr	r5, .L13
+  53:Src/dwt.c     **** 
+  54:Src/dwt.c     ****     ts =  usec * (cpuclkfeq / (1000 * 1000));
+  84              		.loc 1 54 0
+  85 0004 0E4B     		ldr	r3, .L13+4
+  52:Src/dwt.c     **** 
+  86              		.loc 1 52 0
+  87 0006 2E68     		ldr	r6, [r5]
+  88              	.LVL2:
+  89              		.loc 1 54 0
+  90 0008 1C68     		ldr	r4, [r3]
+  91 000a 0E4B     		ldr	r3, .L13+8
+  92 000c B4FBF3F4 		udiv	r4, r4, r3
+  55:Src/dwt.c     ****     endts = startts + ts;
+  93              		.loc 1 55 0
+  94 0010 00FB0464 		mla	r4, r0, r4, r6
+  95              	.LVL3:
+  56:Src/dwt.c     ****     uwIntSave = LOS_IntLock();
+  96              		.loc 1 56 0
+  97 0014 FFF7FEFF 		bl	LOS_IntLock
+  98              	.LVL4:
+  57:Src/dwt.c     ****     if(endts > startts)
+  99              		.loc 1 57 0
+ 100 0018 A642     		cmp	r6, r4
+ 101 001a 2B46     		mov	r3, r5
+ 102 001c 06D2     		bcs	.L5
+ 103              	.L6:
+  58:Src/dwt.c     ****     {
+  59:Src/dwt.c     ****         while(DWT_CYCCNT < endts);
+ 104              		.loc 1 59 0 discriminator 1
+ 105 001e 1A68     		ldr	r2, [r3]
+ 106 0020 A242     		cmp	r2, r4
+ 107 0022 FCD3     		bcc	.L6
+ 108              	.L7:
+  60:Src/dwt.c     ****     }
+  61:Src/dwt.c     ****     else
+  62:Src/dwt.c     ****     {
+  63:Src/dwt.c     ****         while(DWT_CYCCNT > endts);
+  64:Src/dwt.c     ****         while(DWT_CYCCNT < endts);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s 			page 4
+
+
+  65:Src/dwt.c     ****     }
+  66:Src/dwt.c     ****     (VOID)LOS_IntRestore(uwIntSave);
+  67:Src/dwt.c     **** }
+ 109              		.loc 1 67 0
+ 110 0024 BDE87040 		pop	{r4, r5, r6, lr}
+ 111              	.LCFI1:
+ 112              		.cfi_remember_state
+ 113              		.cfi_restore 14
+ 114              		.cfi_restore 6
+ 115              		.cfi_restore 5
+ 116              		.cfi_restore 4
+ 117              		.cfi_def_cfa_offset 0
+ 118              	.LVL5:
+  66:Src/dwt.c     **** }
+ 119              		.loc 1 66 0
+ 120 0028 FFF7FEBF 		b	LOS_IntRestore
+ 121              	.LVL6:
+ 122              	.L5:
+ 123              	.LCFI2:
+ 124              		.cfi_restore_state
+  63:Src/dwt.c     ****         while(DWT_CYCCNT < endts);
+ 125              		.loc 1 63 0 discriminator 1
+ 126 002c 1A68     		ldr	r2, [r3]
+ 127 002e A242     		cmp	r2, r4
+ 128 0030 FCD8     		bhi	.L5
+ 129              	.L8:
+  64:Src/dwt.c     ****     }
+ 130              		.loc 1 64 0 discriminator 1
+ 131 0032 1A68     		ldr	r2, [r3]
+ 132 0034 A242     		cmp	r2, r4
+ 133 0036 FCD3     		bcc	.L8
+ 134 0038 F4E7     		b	.L7
+ 135              	.L14:
+ 136 003a 00BF     		.align	2
+ 137              	.L13:
+ 138 003c 041000E0 		.word	-536866812
+ 139 0040 00000000 		.word	.LANCHOR0
+ 140 0044 40420F00 		.word	1000000
+ 141              		.cfi_endproc
+ 142              	.LFE288:
+ 144              		.section	.text.delay10ms,"ax",%progbits
+ 145              		.align	1
+ 146              		.global	delay10ms
+ 147              		.syntax unified
+ 148              		.thumb
+ 149              		.thumb_func
+ 150              		.fpu fpv4-sp-d16
+ 152              	delay10ms:
+ 153              	.LFB289:
+  68:Src/dwt.c     **** 
+  69:Src/dwt.c     **** void delay10ms(__IO uint32_t nTime)
+  70:Src/dwt.c     **** {
+ 154              		.loc 1 70 0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 8
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158              		@ link register save eliminated.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s 			page 5
+
+
+ 159              	.LVL7:
+ 160 0000 82B0     		sub	sp, sp, #8
+ 161              	.LCFI3:
+ 162              		.cfi_def_cfa_offset 8
+ 163              		.loc 1 70 0
+ 164 0002 0190     		str	r0, [sp, #4]
+  71:Src/dwt.c     ****     delayus(1000 * nTime);
+ 165              		.loc 1 71 0
+ 166 0004 019B     		ldr	r3, [sp, #4]
+ 167 0006 4FF47A70 		mov	r0, #1000
+ 168              	.LVL8:
+ 169 000a 5843     		muls	r0, r3, r0
+  72:Src/dwt.c     **** }
+ 170              		.loc 1 72 0
+ 171 000c 02B0     		add	sp, sp, #8
+ 172              	.LCFI4:
+ 173              		.cfi_def_cfa_offset 0
+ 174              	.LVL9:
+ 175              		@ sp needed
+  71:Src/dwt.c     ****     delayus(1000 * nTime);
+ 176              		.loc 1 71 0
+ 177 000e FFF7FEBF 		b	delayus
+ 178              	.LVL10:
+ 179              		.cfi_endproc
+ 180              	.LFE289:
+ 182              		.section	.bss.cpuclkfeq,"aw",%nobits
+ 183              		.align	2
+ 184              		.set	.LANCHOR0,. + 0
+ 187              	cpuclkfeq:
+ 188 0000 00000000 		.space	4
+ 189              		.text
+ 190              	.Letext0:
+ 191              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 192              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 193              		.file 4 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 194              		.file 5 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_st
+ 195              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 196              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 197              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 198              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 199              		.file 10 "../../iot_link/os/liteos/include/los_typedef.h"
+ 200              		.file 11 "../../iot_link/os/liteos/include/los_config.h"
+ 201              		.file 12 "../../iot_link/os/liteos/include/los_err.h"
+ 202              		.file 13 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dwt.c
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:18     .text.dwt_delay_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:25     .text.dwt_delay_init:00000000 dwt_delay_init
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:54     .text.dwt_delay_init:0000001c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:61     .text.delayus:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:68     .text.delayus:00000000 delayus
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:138    .text.delayus:0000003c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:145    .text.delay10ms:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:152    .text.delay10ms:00000000 delay10ms
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:183    .bss.cpuclkfeq:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccmoJSu0.s:187    .bss.cpuclkfeq:00000000 cpuclkfeq
+
+UNDEFINED SYMBOLS
+LOS_IntLock
+LOS_IntRestore

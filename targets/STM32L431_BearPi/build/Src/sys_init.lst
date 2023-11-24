@@ -1,0 +1,705 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"sys_init.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.HAL_GetTick,"ax",%progbits
+  18              		.align	1
+  19              		.global	HAL_GetTick
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	HAL_GetTick:
+  26              	.LFB287:
+  27              		.file 1 "Src/sys_init.c"
+   1:Src/sys_init.c **** /*----------------------------------------------------------------------------
+   2:Src/sys_init.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:Src/sys_init.c ****  * All rights reserved.
+   4:Src/sys_init.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:Src/sys_init.c ****  * are permitted provided that the following conditions are met:
+   6:Src/sys_init.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:Src/sys_init.c ****  * conditions and the following disclaimer.
+   8:Src/sys_init.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:Src/sys_init.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:Src/sys_init.c ****  * provided with the distribution.
+  11:Src/sys_init.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:Src/sys_init.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:Src/sys_init.c ****  * permission.
+  14:Src/sys_init.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:Src/sys_init.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:Src/sys_init.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:Src/sys_init.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:Src/sys_init.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:Src/sys_init.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:Src/sys_init.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:Src/sys_init.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:Src/sys_init.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:Src/sys_init.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:Src/sys_init.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:Src/sys_init.c ****  *---------------------------------------------------------------------------*/
+  26:Src/sys_init.c **** /*----------------------------------------------------------------------------
+  27:Src/sys_init.c ****  * Notice of Export Control Law
+  28:Src/sys_init.c ****  * ===============================================
+  29:Src/sys_init.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:Src/sys_init.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:Src/sys_init.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 2
+
+
+  32:Src/sys_init.c ****  * applicable export control laws and regulations.
+  33:Src/sys_init.c ****  *---------------------------------------------------------------------------*/
+  34:Src/sys_init.c **** 
+  35:Src/sys_init.c **** #include "sys_init.h"
+  36:Src/sys_init.c **** 
+  37:Src/sys_init.c **** 
+  38:Src/sys_init.c **** uint32_t HAL_GetTick(void)
+  39:Src/sys_init.c **** {
+  28              		.loc 1 39 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  40:Src/sys_init.c ****     return (uint32_t)LOS_TickCountGet();
+  37              		.loc 1 40 0
+  38 0002 FFF7FEFF 		bl	LOS_TickCountGet
+  39              	.LVL0:
+  41:Src/sys_init.c **** }
+  40              		.loc 1 41 0
+  41 0006 08BD     		pop	{r3, pc}
+  42              		.cfi_endproc
+  43              	.LFE287:
+  45              		.section	.text._Error_Handler,"ax",%progbits
+  46              		.align	1
+  47              		.global	_Error_Handler
+  48              		.syntax unified
+  49              		.thumb
+  50              		.thumb_func
+  51              		.fpu fpv4-sp-d16
+  53              	_Error_Handler:
+  54              	.LFB288:
+  42:Src/sys_init.c **** 
+  43:Src/sys_init.c **** /**
+  44:Src/sys_init.c ****   * @brief  This function is executed in case of error occurrence.
+  45:Src/sys_init.c ****   * @param  file: The file name as string.
+  46:Src/sys_init.c ****   * @param  line: The line in file as a number.
+  47:Src/sys_init.c ****   * @retval None
+  48:Src/sys_init.c ****   */
+  49:Src/sys_init.c **** void _Error_Handler(char *file, int line)
+  50:Src/sys_init.c **** {
+  55              		.loc 1 50 0
+  56              		.cfi_startproc
+  57              		@ Volatile: function does not return.
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60              		@ link register save eliminated.
+  61              	.LVL1:
+  62              	.L3:
+  63 0000 FEE7     		b	.L3
+  64              		.cfi_endproc
+  65              	.LFE288:
+  67              		.section	.text.SystemClock_Config,"ax",%progbits
+  68              		.align	1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 3
+
+
+  69              		.global	SystemClock_Config
+  70              		.syntax unified
+  71              		.thumb
+  72              		.thumb_func
+  73              		.fpu fpv4-sp-d16
+  75              	SystemClock_Config:
+  76              	.LFB289:
+  51:Src/sys_init.c ****   /* USER CODE BEGIN Error_Handler_Debug */
+  52:Src/sys_init.c ****   /* User can add his own implementation to report the HAL error return state */
+  53:Src/sys_init.c ****   while(1)
+  54:Src/sys_init.c ****   {
+  55:Src/sys_init.c ****   }
+  56:Src/sys_init.c ****   /* USER CODE END Error_Handler_Debug */
+  57:Src/sys_init.c **** }
+  58:Src/sys_init.c **** 
+  59:Src/sys_init.c **** 
+  60:Src/sys_init.c **** // /**
+  61:Src/sys_init.c **** //   * @brief System Clock Configuration
+  62:Src/sys_init.c **** //   * @retval None
+  63:Src/sys_init.c **** //   */
+  64:Src/sys_init.c **** // void SystemClock_Config(void)
+  65:Src/sys_init.c **** // {
+  66:Src/sys_init.c **** //   RCC_OscInitTypeDef RCC_OscInitStruct;
+  67:Src/sys_init.c **** //   RCC_ClkInitTypeDef RCC_ClkInitStruct;
+  68:Src/sys_init.c **** //   RCC_PeriphCLKInitTypeDef PeriphClkInit;
+  69:Src/sys_init.c ****   
+  70:Src/sys_init.c **** //   /** Configure the main internal regulator output voltage
+  71:Src/sys_init.c **** //   */
+  72:Src/sys_init.c **** //   if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
+  73:Src/sys_init.c **** //   {
+  74:Src/sys_init.c **** //     Error_Handler();
+  75:Src/sys_init.c **** //   }
+  76:Src/sys_init.c **** //     /**Configure LSE Drive Capability 
+  77:Src/sys_init.c **** //     */
+  78:Src/sys_init.c **** //   HAL_PWR_EnableBkUpAccess();
+  79:Src/sys_init.c **** 
+  80:Src/sys_init.c **** //   __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);
+  81:Src/sys_init.c **** 
+  82:Src/sys_init.c **** //     /**Initializes the CPU, AHB and APB busses clocks 
+  83:Src/sys_init.c **** //     */
+  84:Src/sys_init.c **** //   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE
+  85:Src/sys_init.c **** //                               |RCC_OSCILLATORTYPE_MSI;
+  86:Src/sys_init.c **** //   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+  87:Src/sys_init.c **** //   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  88:Src/sys_init.c **** //   RCC_OscInitStruct.HSICalibrationValue = 16;
+  89:Src/sys_init.c **** //   RCC_OscInitStruct.MSIState = RCC_MSI_ON;
+  90:Src/sys_init.c **** //   RCC_OscInitStruct.MSICalibrationValue = 0;
+  91:Src/sys_init.c **** //   RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_6;
+  92:Src/sys_init.c **** //   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  93:Src/sys_init.c **** //   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_MSI;
+  94:Src/sys_init.c **** //   RCC_OscInitStruct.PLL.PLLM = 1;
+  95:Src/sys_init.c **** //   RCC_OscInitStruct.PLL.PLLN = 40;
+  96:Src/sys_init.c **** //   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
+  97:Src/sys_init.c **** //   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
+  98:Src/sys_init.c **** //   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
+  99:Src/sys_init.c **** //   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 100:Src/sys_init.c **** //   {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 4
+
+
+ 101:Src/sys_init.c **** //     _Error_Handler(__FILE__, __LINE__);
+ 102:Src/sys_init.c **** //   }
+ 103:Src/sys_init.c **** 
+ 104:Src/sys_init.c **** //     /**Initializes the CPU, AHB and APB busses clocks 
+ 105:Src/sys_init.c **** //     */
+ 106:Src/sys_init.c **** //   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+ 107:Src/sys_init.c **** //                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+ 108:Src/sys_init.c **** //   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+ 109:Src/sys_init.c **** //   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 110:Src/sys_init.c **** //   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+ 111:Src/sys_init.c **** //   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+ 112:Src/sys_init.c **** 
+ 113:Src/sys_init.c **** //   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+ 114:Src/sys_init.c **** //   {
+ 115:Src/sys_init.c **** //     _Error_Handler(__FILE__, __LINE__);
+ 116:Src/sys_init.c **** //   }
+ 117:Src/sys_init.c **** 
+ 118:Src/sys_init.c **** 
+ 119:Src/sys_init.c **** 
+ 120:Src/sys_init.c **** //     /**Configure the main internal regulator output voltage 
+ 121:Src/sys_init.c **** //     */
+ 122:Src/sys_init.c **** //   if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
+ 123:Src/sys_init.c **** //   {
+ 124:Src/sys_init.c **** //     _Error_Handler(__FILE__, __LINE__);
+ 125:Src/sys_init.c **** //   }
+ 126:Src/sys_init.c **** 
+ 127:Src/sys_init.c **** //     /**Configure the Systick interrupt time 
+ 128:Src/sys_init.c **** //     */
+ 129:Src/sys_init.c **** //   //HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+ 130:Src/sys_init.c **** 
+ 131:Src/sys_init.c **** //     /**Configure the Systick 
+ 132:Src/sys_init.c **** //     */
+ 133:Src/sys_init.c **** //   //HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+ 134:Src/sys_init.c **** 
+ 135:Src/sys_init.c **** //     /**Enable MSI Auto calibration 
+ 136:Src/sys_init.c **** //     */
+ 137:Src/sys_init.c **** //   //HAL_RCCEx_EnableMSIPLLMode();
+ 138:Src/sys_init.c **** 
+ 139:Src/sys_init.c **** //   /* SysTick_IRQn interrupt configuration */
+ 140:Src/sys_init.c **** //   //HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
+ 141:Src/sys_init.c **** // }
+ 142:Src/sys_init.c **** /**
+ 143:Src/sys_init.c ****   * @brief System Clock Configuration
+ 144:Src/sys_init.c ****   * @retval None
+ 145:Src/sys_init.c ****   */
+ 146:Src/sys_init.c **** void SystemClock_Config(void)
+ 147:Src/sys_init.c **** {
+  77              		.loc 1 147 0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 88
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81              		.loc 1 147 0
+  82 0000 10B5     		push	{r4, lr}
+  83              	.LCFI1:
+  84              		.cfi_def_cfa_offset 8
+  85              		.cfi_offset 4, -8
+  86              		.cfi_offset 14, -4
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 5
+
+
+  87 0002 96B0     		sub	sp, sp, #88
+  88              	.LCFI2:
+  89              		.cfi_def_cfa_offset 96
+ 148:Src/sys_init.c ****   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  90              		.loc 1 148 0
+  91 0004 4422     		movs	r2, #68
+  92 0006 0021     		movs	r1, #0
+  93 0008 05A8     		add	r0, sp, #20
+  94 000a FFF7FEFF 		bl	memset
+  95              	.LVL2:
+ 149:Src/sys_init.c ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  96              		.loc 1 149 0
+  97 000e 1422     		movs	r2, #20
+  98 0010 0021     		movs	r1, #0
+  99 0012 6846     		mov	r0, sp
+ 100 0014 FFF7FEFF 		bl	memset
+ 101              	.LVL3:
+ 150:Src/sys_init.c **** 
+ 151:Src/sys_init.c ****   /** Configure the main internal regulator output voltage
+ 152:Src/sys_init.c ****   */
+ 153:Src/sys_init.c ****   if (HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1) != HAL_OK)
+ 102              		.loc 1 153 0
+ 103 0018 4FF40070 		mov	r0, #512
+ 104 001c FFF7FEFF 		bl	HAL_PWREx_ControlVoltageScaling
+ 105              	.LVL4:
+ 106 0020 0446     		mov	r4, r0
+ 107 0022 00B1     		cbz	r0, .L5
+ 108              	.L6:
+ 109 0024 FEE7     		b	.L6
+ 110              	.L5:
+ 154:Src/sys_init.c ****   {
+ 155:Src/sys_init.c ****     Error_Handler();
+ 156:Src/sys_init.c ****   }
+ 157:Src/sys_init.c ****   /** Configure LSE Drive Capability
+ 158:Src/sys_init.c ****   */
+ 159:Src/sys_init.c ****   HAL_PWR_EnableBkUpAccess();
+ 111              		.loc 1 159 0
+ 112 0026 FFF7FEFF 		bl	HAL_PWR_EnableBkUpAccess
+ 113              	.LVL5:
+ 160:Src/sys_init.c ****   __HAL_RCC_LSEDRIVE_CONFIG(RCC_LSEDRIVE_LOW);
+ 114              		.loc 1 160 0
+ 115 002a 1A4A     		ldr	r2, .L11
+ 116 002c D2F89030 		ldr	r3, [r2, #144]
+ 117 0030 23F01803 		bic	r3, r3, #24
+ 118 0034 C2F89030 		str	r3, [r2, #144]
+ 161:Src/sys_init.c ****   /** Initializes the RCC Oscillators according to the specified parameters
+ 162:Src/sys_init.c ****   * in the RCC_OscInitTypeDef structure.
+ 163:Src/sys_init.c ****   */
+ 164:Src/sys_init.c ****   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSE
+ 119              		.loc 1 164 0
+ 120 0038 1623     		movs	r3, #22
+ 165:Src/sys_init.c ****                               |RCC_OSCILLATORTYPE_MSI;
+ 166:Src/sys_init.c ****   RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+ 167:Src/sys_init.c ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+ 121              		.loc 1 167 0
+ 122 003a 4FF48072 		mov	r2, #256
+ 164:Src/sys_init.c ****                               |RCC_OSCILLATORTYPE_MSI;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 6
+
+
+ 123              		.loc 1 164 0
+ 124 003e 0593     		str	r3, [sp, #20]
+ 125              		.loc 1 167 0
+ 126 0040 0123     		movs	r3, #1
+ 127 0042 CDE90732 		strd	r3, r2, [sp, #28]
+ 168:Src/sys_init.c ****   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+ 128              		.loc 1 168 0
+ 129 0046 1022     		movs	r2, #16
+ 130 0048 0992     		str	r2, [sp, #36]
+ 169:Src/sys_init.c ****   RCC_OscInitStruct.MSIState = RCC_MSI_ON;
+ 170:Src/sys_init.c ****   RCC_OscInitStruct.MSICalibrationValue = 0;
+ 171:Src/sys_init.c ****   RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_6;
+ 131              		.loc 1 171 0
+ 132 004a 6022     		movs	r2, #96
+ 133 004c 0D92     		str	r2, [sp, #52]
+ 172:Src/sys_init.c ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+ 134              		.loc 1 172 0
+ 135 004e 0222     		movs	r2, #2
+ 170:Src/sys_init.c ****   RCC_OscInitStruct.MSIClockRange = RCC_MSIRANGE_6;
+ 136              		.loc 1 170 0
+ 137 0050 CDE90B34 		strd	r3, r4, [sp, #44]
+ 173:Src/sys_init.c ****   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_MSI;
+ 138              		.loc 1 173 0
+ 139 0054 CDE90F23 		strd	r2, r3, [sp, #60]
+ 174:Src/sys_init.c ****   RCC_OscInitStruct.PLL.PLLM = 1;
+ 140              		.loc 1 174 0
+ 141 0058 1193     		str	r3, [sp, #68]
+ 175:Src/sys_init.c ****   RCC_OscInitStruct.PLL.PLLN = 40;
+ 176:Src/sys_init.c ****   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV7;
+ 142              		.loc 1 176 0
+ 143 005a 2824     		movs	r4, #40
+ 144 005c 0723     		movs	r3, #7
+ 177:Src/sys_init.c ****   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
+ 178:Src/sys_init.c ****   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
+ 179:Src/sys_init.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 145              		.loc 1 179 0
+ 146 005e 05A8     		add	r0, sp, #20
+ 176:Src/sys_init.c ****   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
+ 147              		.loc 1 176 0
+ 148 0060 CDE91243 		strd	r4, r3, [sp, #72]
+ 178:Src/sys_init.c ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 149              		.loc 1 178 0
+ 150 0064 CDE91422 		strd	r2, r2, [sp, #80]
+ 151              		.loc 1 179 0
+ 152 0068 FFF7FEFF 		bl	HAL_RCC_OscConfig
+ 153              	.LVL6:
+ 154 006c 00B1     		cbz	r0, .L7
+ 155              	.L8:
+ 156 006e FEE7     		b	.L8
+ 157              	.L7:
+ 180:Src/sys_init.c ****   {
+ 181:Src/sys_init.c ****     Error_Handler();
+ 182:Src/sys_init.c ****   }
+ 183:Src/sys_init.c ****   /** Initializes the CPU, AHB and APB buses clocks
+ 184:Src/sys_init.c ****   */
+ 185:Src/sys_init.c ****   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+ 186:Src/sys_init.c ****                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 7
+
+
+ 187:Src/sys_init.c ****   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+ 158              		.loc 1 187 0
+ 159 0070 0F22     		movs	r2, #15
+ 160 0072 0323     		movs	r3, #3
+ 188:Src/sys_init.c ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 189:Src/sys_init.c ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+ 161              		.loc 1 189 0
+ 162 0074 CDE90200 		strd	r0, r0, [sp, #8]
+ 190:Src/sys_init.c ****   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+ 163              		.loc 1 190 0
+ 164 0078 0490     		str	r0, [sp, #16]
+ 191:Src/sys_init.c **** 
+ 192:Src/sys_init.c ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+ 165              		.loc 1 192 0
+ 166 007a 0421     		movs	r1, #4
+ 167 007c 6846     		mov	r0, sp
+ 187:Src/sys_init.c ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 168              		.loc 1 187 0
+ 169 007e CDE90023 		strd	r2, r3, [sp]
+ 170              		.loc 1 192 0
+ 171 0082 FFF7FEFF 		bl	HAL_RCC_ClockConfig
+ 172              	.LVL7:
+ 173 0086 00B1     		cbz	r0, .L9
+ 174              	.L10:
+ 175 0088 FEE7     		b	.L10
+ 176              	.L9:
+ 193:Src/sys_init.c ****   {
+ 194:Src/sys_init.c ****     Error_Handler();
+ 195:Src/sys_init.c ****   }
+ 196:Src/sys_init.c ****   /** Enable MSI Auto calibration
+ 197:Src/sys_init.c ****   */
+ 198:Src/sys_init.c ****   HAL_RCCEx_EnableMSIPLLMode();
+ 177              		.loc 1 198 0
+ 178 008a FFF7FEFF 		bl	HAL_RCCEx_EnableMSIPLLMode
+ 179              	.LVL8:
+ 199:Src/sys_init.c **** }
+ 180              		.loc 1 199 0
+ 181 008e 16B0     		add	sp, sp, #88
+ 182              	.LCFI3:
+ 183              		.cfi_def_cfa_offset 8
+ 184              		@ sp needed
+ 185 0090 10BD     		pop	{r4, pc}
+ 186              	.L12:
+ 187 0092 00BF     		.align	2
+ 188              	.L11:
+ 189 0094 00100240 		.word	1073876992
+ 190              		.cfi_endproc
+ 191              	.LFE289:
+ 193              		.section	.text.PeriphCommonClock_Config,"ax",%progbits
+ 194              		.align	1
+ 195              		.global	PeriphCommonClock_Config
+ 196              		.syntax unified
+ 197              		.thumb
+ 198              		.thumb_func
+ 199              		.fpu fpv4-sp-d16
+ 201              	PeriphCommonClock_Config:
+ 202              	.LFB290:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 8
+
+
+ 200:Src/sys_init.c **** 
+ 201:Src/sys_init.c **** /**
+ 202:Src/sys_init.c ****   * @brief Peripherals Common Clock Configuration
+ 203:Src/sys_init.c ****   * @retval None
+ 204:Src/sys_init.c ****   */
+ 205:Src/sys_init.c **** void PeriphCommonClock_Config(void)
+ 206:Src/sys_init.c **** {
+ 203              		.loc 1 206 0
+ 204              		.cfi_startproc
+ 205              		@ args = 0, pretend = 0, frame = 96
+ 206              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207 0000 00B5     		push	{lr}
+ 208              	.LCFI4:
+ 209              		.cfi_def_cfa_offset 4
+ 210              		.cfi_offset 14, -4
+ 211 0002 99B0     		sub	sp, sp, #100
+ 212              	.LCFI5:
+ 213              		.cfi_def_cfa_offset 104
+ 207:Src/sys_init.c ****   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+ 214              		.loc 1 207 0
+ 215 0004 3C22     		movs	r2, #60
+ 216 0006 0021     		movs	r1, #0
+ 217 0008 09A8     		add	r0, sp, #36
+ 218 000a FFF7FEFF 		bl	memset
+ 219              	.LVL9:
+ 208:Src/sys_init.c **** 
+ 209:Src/sys_init.c ****   /** Initializes the peripherals clock
+ 210:Src/sys_init.c ****   */
+ 211:Src/sys_init.c ****   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_SDMMC1|RCC_PERIPHCLK_ADC;
+ 220              		.loc 1 211 0
+ 221 000e 4FF40423 		mov	r3, #540672
+ 222 0012 0193     		str	r3, [sp, #4]
+ 212:Src/sys_init.c ****   PeriphClkInit.AdcClockSelection = RCC_ADCCLKSOURCE_PLLSAI1;
+ 223              		.loc 1 212 0
+ 224 0014 4FF08053 		mov	r3, #268435456
+ 225 0018 1593     		str	r3, [sp, #84]
+ 213:Src/sys_init.c ****   PeriphClkInit.Sdmmc1ClockSelection = RCC_SDMMC1CLKSOURCE_PLLSAI1;
+ 226              		.loc 1 213 0
+ 227 001a 4FF08063 		mov	r3, #67108864
+ 228 001e 1393     		str	r3, [sp, #76]
+ 214:Src/sys_init.c ****   PeriphClkInit.PLLSAI1.PLLSAI1Source = RCC_PLLSOURCE_MSI;
+ 229              		.loc 1 214 0
+ 230 0020 0123     		movs	r3, #1
+ 215:Src/sys_init.c ****   PeriphClkInit.PLLSAI1.PLLSAI1M = 1;
+ 231              		.loc 1 215 0
+ 232 0022 CDE90233 		strd	r3, r3, [sp, #8]
+ 216:Src/sys_init.c ****   PeriphClkInit.PLLSAI1.PLLSAI1N = 16;
+ 217:Src/sys_init.c ****   PeriphClkInit.PLLSAI1.PLLSAI1P = RCC_PLLP_DIV7;
+ 233              		.loc 1 217 0
+ 234 0026 4FF0100C 		mov	ip, #16
+ 235 002a 0723     		movs	r3, #7
+ 236 002c CDE904C3 		strd	ip, r3, [sp, #16]
+ 218:Src/sys_init.c ****   PeriphClkInit.PLLSAI1.PLLSAI1Q = RCC_PLLQ_DIV2;
+ 237              		.loc 1 218 0
+ 238 0030 0223     		movs	r3, #2
+ 219:Src/sys_init.c ****   PeriphClkInit.PLLSAI1.PLLSAI1R = RCC_PLLR_DIV2;
+ 239              		.loc 1 219 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 9
+
+
+ 240 0032 CDE90633 		strd	r3, r3, [sp, #24]
+ 220:Src/sys_init.c ****   PeriphClkInit.PLLSAI1.PLLSAI1ClockOut = RCC_PLLSAI1_48M2CLK|RCC_PLLSAI1_ADC1CLK;
+ 221:Src/sys_init.c ****   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+ 241              		.loc 1 221 0
+ 242 0036 01A8     		add	r0, sp, #4
+ 220:Src/sys_init.c ****   PeriphClkInit.PLLSAI1.PLLSAI1ClockOut = RCC_PLLSAI1_48M2CLK|RCC_PLLSAI1_ADC1CLK;
+ 243              		.loc 1 220 0
+ 244 0038 4FF08873 		mov	r3, #17825792
+ 245 003c 0893     		str	r3, [sp, #32]
+ 246              		.loc 1 221 0
+ 247 003e FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
+ 248              	.LVL10:
+ 249 0042 00B1     		cbz	r0, .L13
+ 250              	.L15:
+ 251 0044 FEE7     		b	.L15
+ 252              	.L13:
+ 222:Src/sys_init.c ****   {
+ 223:Src/sys_init.c ****     Error_Handler();
+ 224:Src/sys_init.c ****   }
+ 225:Src/sys_init.c **** }
+ 253              		.loc 1 225 0
+ 254 0046 19B0     		add	sp, sp, #100
+ 255              	.LCFI6:
+ 256              		.cfi_def_cfa_offset 4
+ 257              		@ sp needed
+ 258 0048 5DF804FB 		ldr	pc, [sp], #4
+ 259              		.cfi_endproc
+ 260              	.LFE290:
+ 262              		.section	.text.atiny_usleep,"ax",%progbits
+ 263              		.align	1
+ 264              		.global	atiny_usleep
+ 265              		.syntax unified
+ 266              		.thumb
+ 267              		.thumb_func
+ 268              		.fpu fpv4-sp-d16
+ 270              	atiny_usleep:
+ 271              	.LFB291:
+ 226:Src/sys_init.c **** 
+ 227:Src/sys_init.c **** /* USER CODE BEGIN 4 */
+ 228:Src/sys_init.c **** 
+ 229:Src/sys_init.c **** /* USER CODE END 4 */
+ 230:Src/sys_init.c **** 
+ 231:Src/sys_init.c **** 
+ 232:Src/sys_init.c **** #ifdef  USE_FULL_ASSERT
+ 233:Src/sys_init.c **** /**
+ 234:Src/sys_init.c ****   * @brief  Reports the name of the source file and the source line number
+ 235:Src/sys_init.c ****   *         where the assert_param error has occurred.
+ 236:Src/sys_init.c ****   * @param  file: pointer to the source file name
+ 237:Src/sys_init.c ****   * @param  line: assert_param error line source number
+ 238:Src/sys_init.c ****   * @retval None
+ 239:Src/sys_init.c ****   */
+ 240:Src/sys_init.c **** void assert_failed(uint8_t* file, uint32_t line)
+ 241:Src/sys_init.c **** { 
+ 242:Src/sys_init.c ****   /* USER CODE BEGIN 6 */
+ 243:Src/sys_init.c ****   /* User can add his own implementation to report the file name and line number,
+ 244:Src/sys_init.c ****      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
+ 245:Src/sys_init.c ****   /* USER CODE END 6 */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 10
+
+
+ 246:Src/sys_init.c **** }
+ 247:Src/sys_init.c **** #endif /* USE_FULL_ASSERT */
+ 248:Src/sys_init.c **** 
+ 249:Src/sys_init.c **** 
+ 250:Src/sys_init.c **** /*
+ 251:Src/sys_init.c ****  * atiny_adapter user interface
+ 252:Src/sys_init.c ****  */
+ 253:Src/sys_init.c **** void atiny_usleep(unsigned long usec)
+ 254:Src/sys_init.c **** {
+ 272              		.loc 1 254 0
+ 273              		.cfi_startproc
+ 274              		@ args = 0, pretend = 0, frame = 0
+ 275              		@ frame_needed = 0, uses_anonymous_args = 0
+ 276              		@ link register save eliminated.
+ 277              	.LVL11:
+ 255:Src/sys_init.c ****     delayus((uint32_t)usec);
+ 278              		.loc 1 255 0
+ 279 0000 FFF7FEBF 		b	delayus
+ 280              	.LVL12:
+ 281              		.cfi_endproc
+ 282              	.LFE291:
+ 284              		.section	.text.atiny_random,"ax",%progbits
+ 285              		.align	1
+ 286              		.global	atiny_random
+ 287              		.syntax unified
+ 288              		.thumb
+ 289              		.thumb_func
+ 290              		.fpu fpv4-sp-d16
+ 292              	atiny_random:
+ 293              	.LFB292:
+ 256:Src/sys_init.c **** }
+ 257:Src/sys_init.c **** 
+ 258:Src/sys_init.c **** int atiny_random(void *output, size_t len)
+ 259:Src/sys_init.c **** {
+ 294              		.loc 1 259 0
+ 295              		.cfi_startproc
+ 296              		@ args = 0, pretend = 0, frame = 0
+ 297              		@ frame_needed = 0, uses_anonymous_args = 0
+ 298              		@ link register save eliminated.
+ 299              	.LVL13:
+ 260:Src/sys_init.c ****     return hal_rng_generate_buffer(output, len);
+ 300              		.loc 1 260 0
+ 301 0000 FFF7FEBF 		b	hal_rng_generate_buffer
+ 302              	.LVL14:
+ 303              		.cfi_endproc
+ 304              	.LFE292:
+ 306              		.section	.text.atiny_reboot,"ax",%progbits
+ 307              		.align	1
+ 308              		.global	atiny_reboot
+ 309              		.syntax unified
+ 310              		.thumb
+ 311              		.thumb_func
+ 312              		.fpu fpv4-sp-d16
+ 314              	atiny_reboot:
+ 315              	.LFB293:
+ 261:Src/sys_init.c **** }
+ 262:Src/sys_init.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 11
+
+
+ 263:Src/sys_init.c **** void atiny_reboot(void)
+ 264:Src/sys_init.c **** {
+ 316              		.loc 1 264 0
+ 317              		.cfi_startproc
+ 318              		@ args = 0, pretend = 0, frame = 0
+ 319              		@ frame_needed = 0, uses_anonymous_args = 0
+ 320              		@ link register save eliminated.
+ 265:Src/sys_init.c ****     HAL_NVIC_SystemReset();
+ 321              		.loc 1 265 0
+ 322 0000 FFF7FEBF 		b	HAL_NVIC_SystemReset
+ 323              	.LVL15:
+ 324              		.cfi_endproc
+ 325              	.LFE293:
+ 327              		.text
+ 328              	.Letext0:
+ 329              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 330              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 331              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 332              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 333              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 334              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 335              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 336              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 337              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 338              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l43
+ 339              		.file 12 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4x
+ 340              		.file 13 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 341              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h"
+ 342              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc_ex.h"
+ 343              		.file 16 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 344              		.file 17 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h"
+ 345              		.file 18 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dac.h"
+ 346              		.file 19 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c.h"
+ 347              		.file 20 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_qspi.h"
+ 348              		.file 21 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_sdmmc.h"
+ 349              		.file 22 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_sd.h"
+ 350              		.file 23 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h"
+ 351              		.file 24 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h"
+ 352              		.file 25 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h"
+ 353              		.file 26 "../../iot_link/os/liteos/include/los_config.h"
+ 354              		.file 27 "../../iot_link/os/liteos/include/los_list.h"
+ 355              		.file 28 "../../iot_link/os/liteos/include/los_err.h"
+ 356              		.file 29 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 357              		.file 30 "../../iot_link/os/liteos/include/los_tick.h"
+ 358              		.file 31 "../../iot_link/os/liteos/include/los_event.h"
+ 359              		.file 32 "../../iot_link/os/liteos/include/los_task.h"
+ 360              		.file 33 "../../iot_link/os/liteos/base/include/los_task.ph"
+ 361              		.file 34 "../../iot_link/os/liteos/include/los_memory.h"
+ 362              		.file 35 "../../iot_link/os/liteos/base/include/los_queue.ph"
+ 363              		.file 36 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 364              		.file 37 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/usart.h"
+ 365              		.file 38 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/adc.h"
+ 366              		.file 39 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/dac.h"
+ 367              		.file 40 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/i2c.h"
+ 368              		.file 41 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/quadspi.
+ 369              		.file 42 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/sdmmc.h"
+ 370              		.file 43 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/spi.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 12
+
+
+ 371              		.file 44 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/tim.h"
+ 372              		.file 45 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/LCD
+ 373              		.file 46 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_cortex.h"
+ 374              		.file 47 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/Inc
+ 375              		.file 48 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/dwt.h"
+ 376              		.file 49 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h"
+ 377              		.file 50 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h"
+ 378              		.file 51 "../../iot_link/os/liteos/include/los_sys.h"
+ 379              		.file 52 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sys_init.c
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:18     .text.HAL_GetTick:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:25     .text.HAL_GetTick:00000000 HAL_GetTick
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:46     .text._Error_Handler:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:53     .text._Error_Handler:00000000 _Error_Handler
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:68     .text.SystemClock_Config:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:75     .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:189    .text.SystemClock_Config:00000094 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:194    .text.PeriphCommonClock_Config:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:201    .text.PeriphCommonClock_Config:00000000 PeriphCommonClock_Config
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:263    .text.atiny_usleep:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:270    .text.atiny_usleep:00000000 atiny_usleep
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:285    .text.atiny_random:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:292    .text.atiny_random:00000000 atiny_random
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:307    .text.atiny_reboot:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc0Mzgfx.s:314    .text.atiny_reboot:00000000 atiny_reboot
+
+UNDEFINED SYMBOLS
+LOS_TickCountGet
+memset
+HAL_PWREx_ControlVoltageScaling
+HAL_PWR_EnableBkUpAccess
+HAL_RCC_OscConfig
+HAL_RCC_ClockConfig
+HAL_RCCEx_EnableMSIPLLMode
+HAL_RCCEx_PeriphCLKConfig
+delayus
+hal_rng_generate_buffer
+HAL_NVIC_SystemReset

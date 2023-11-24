@@ -1,0 +1,411 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"newlib_stub.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text._execve_r,"ax",%progbits
+  18              		.align	1
+  19              		.global	_execve_r
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	_execve_r:
+  26              	.LFB3:
+  27              		.file 1 "../../iot_link/os/liteos/newlib_stub.c"
+   1:../../iot_link/os/liteos/newlib_stub.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/newlib_stub.c ****  * Copyright (c) <2013-2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/newlib_stub.c ****  * All rights reserved.
+   4:../../iot_link/os/liteos/newlib_stub.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/newlib_stub.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/newlib_stub.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/newlib_stub.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/newlib_stub.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/newlib_stub.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/newlib_stub.c ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/newlib_stub.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/newlib_stub.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/newlib_stub.c ****  * permission.
+  14:../../iot_link/os/liteos/newlib_stub.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/newlib_stub.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/newlib_stub.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/newlib_stub.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/newlib_stub.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/newlib_stub.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/newlib_stub.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/newlib_stub.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/newlib_stub.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/newlib_stub.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/newlib_stub.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/newlib_stub.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/newlib_stub.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/newlib_stub.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/newlib_stub.c ****  * ===============================================
+  29:../../iot_link/os/liteos/newlib_stub.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/newlib_stub.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/newlib_stub.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s 			page 2
+
+
+  32:../../iot_link/os/liteos/newlib_stub.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/newlib_stub.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/newlib_stub.c **** 
+  35:../../iot_link/os/liteos/newlib_stub.c **** #include <reent.h>
+  36:../../iot_link/os/liteos/newlib_stub.c **** #include <stdlib.h>
+  37:../../iot_link/os/liteos/newlib_stub.c **** #include <errno.h>
+  38:../../iot_link/os/liteos/newlib_stub.c **** #include <stdio.h>
+  39:../../iot_link/os/liteos/newlib_stub.c **** 
+  40:../../iot_link/os/liteos/newlib_stub.c **** int _execve_r(struct _reent *ptr, const char *name, char *const *argv, char *const *env)
+  41:../../iot_link/os/liteos/newlib_stub.c **** {
+  28              		.loc 1 41 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  42:../../iot_link/os/liteos/newlib_stub.c ****     /* not support */
+  43:../../iot_link/os/liteos/newlib_stub.c ****     ptr->_errno = ENOTSUP;
+  34              		.loc 1 43 0
+  35 0000 8623     		movs	r3, #134
+  36              	.LVL1:
+  37 0002 0360     		str	r3, [r0]
+  44:../../iot_link/os/liteos/newlib_stub.c ****     return -1;
+  45:../../iot_link/os/liteos/newlib_stub.c **** }
+  38              		.loc 1 45 0
+  39 0004 4FF0FF30 		mov	r0, #-1
+  40              	.LVL2:
+  41 0008 7047     		bx	lr
+  42              		.cfi_endproc
+  43              	.LFE3:
+  45              		.section	.text._times_r,"ax",%progbits
+  46              		.align	1
+  47              		.global	_times_r
+  48              		.syntax unified
+  49              		.thumb
+  50              		.thumb_func
+  51              		.fpu fpv4-sp-d16
+  53              	_times_r:
+  54              	.LFB4:
+  46:../../iot_link/os/liteos/newlib_stub.c **** 
+  47:../../iot_link/os/liteos/newlib_stub.c **** _CLOCK_T_ _times_r(struct _reent *ptr, struct tms *ptms)
+  48:../../iot_link/os/liteos/newlib_stub.c **** {
+  55              		.loc 1 48 0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  60              	.LVL3:
+  49:../../iot_link/os/liteos/newlib_stub.c ****     /* not support */
+  50:../../iot_link/os/liteos/newlib_stub.c ****     ptr->_errno = ENOTSUP;
+  61              		.loc 1 50 0
+  62 0000 8623     		movs	r3, #134
+  63 0002 0360     		str	r3, [r0]
+  51:../../iot_link/os/liteos/newlib_stub.c ****     return (_CLOCK_T_)-1;
+  52:../../iot_link/os/liteos/newlib_stub.c **** }
+  64              		.loc 1 52 0
+  65 0004 4FF0FF30 		mov	r0, #-1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s 			page 3
+
+
+  66              	.LVL4:
+  67 0008 7047     		bx	lr
+  68              		.cfi_endproc
+  69              	.LFE4:
+  71              		.section	.text._unlink_r,"ax",%progbits
+  72              		.align	1
+  73              		.global	_unlink_r
+  74              		.syntax unified
+  75              		.thumb
+  76              		.thumb_func
+  77              		.fpu fpv4-sp-d16
+  79              	_unlink_r:
+  80              	.LFB5:
+  53:../../iot_link/os/liteos/newlib_stub.c **** 
+  54:../../iot_link/os/liteos/newlib_stub.c **** int _unlink_r(struct _reent *ptr, const char *file)
+  55:../../iot_link/os/liteos/newlib_stub.c **** {
+  81              		.loc 1 55 0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              		@ link register save eliminated.
+  86              	.LVL5:
+  56:../../iot_link/os/liteos/newlib_stub.c **** //    return los_unlink (file);
+  57:../../iot_link/os/liteos/newlib_stub.c ****     return -1;
+  58:../../iot_link/os/liteos/newlib_stub.c **** }
+  87              		.loc 1 58 0
+  88 0000 4FF0FF30 		mov	r0, #-1
+  89              	.LVL6:
+  90 0004 7047     		bx	lr
+  91              		.cfi_endproc
+  92              	.LFE5:
+  94              		.section	.text._wait_r,"ax",%progbits
+  95              		.align	1
+  96              		.global	_wait_r
+  97              		.syntax unified
+  98              		.thumb
+  99              		.thumb_func
+ 100              		.fpu fpv4-sp-d16
+ 102              	_wait_r:
+ 103              	.LFB6:
+  59:../../iot_link/os/liteos/newlib_stub.c **** 
+  60:../../iot_link/os/liteos/newlib_stub.c **** int _wait_r(struct _reent *ptr, int *status)
+  61:../../iot_link/os/liteos/newlib_stub.c **** {
+ 104              		.loc 1 61 0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		@ link register save eliminated.
+ 109              	.LVL7:
+  62:../../iot_link/os/liteos/newlib_stub.c ****     /* not support */
+  63:../../iot_link/os/liteos/newlib_stub.c ****     ptr->_errno = ENOTSUP;
+ 110              		.loc 1 63 0
+ 111 0000 8623     		movs	r3, #134
+ 112 0002 0360     		str	r3, [r0]
+  64:../../iot_link/os/liteos/newlib_stub.c ****     return -1;
+  65:../../iot_link/os/liteos/newlib_stub.c **** }
+ 113              		.loc 1 65 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s 			page 4
+
+
+ 114 0004 4FF0FF30 		mov	r0, #-1
+ 115              	.LVL8:
+ 116 0008 7047     		bx	lr
+ 117              		.cfi_endproc
+ 118              	.LFE6:
+ 120              		.section	.text._gettimeofday_r,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	_gettimeofday_r
+ 123              		.syntax unified
+ 124              		.thumb
+ 125              		.thumb_func
+ 126              		.fpu fpv4-sp-d16
+ 128              	_gettimeofday_r:
+ 129              	.LFB7:
+  66:../../iot_link/os/liteos/newlib_stub.c **** 
+  67:../../iot_link/os/liteos/newlib_stub.c **** int _gettimeofday_r(struct _reent *ptr, struct timeval *tv, void *__tzp)
+  68:../../iot_link/os/liteos/newlib_stub.c **** {
+ 130              		.loc 1 68 0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 0, uses_anonymous_args = 0
+ 134              		@ link register save eliminated.
+ 135              	.LVL9:
+  69:../../iot_link/os/liteos/newlib_stub.c ****     /* not support */
+  70:../../iot_link/os/liteos/newlib_stub.c ****     ptr->_errno = ENOTSUP;
+ 136              		.loc 1 70 0
+ 137 0000 8623     		movs	r3, #134
+ 138 0002 0360     		str	r3, [r0]
+  71:../../iot_link/os/liteos/newlib_stub.c ****     return -1;
+  72:../../iot_link/os/liteos/newlib_stub.c **** }
+ 139              		.loc 1 72 0
+ 140 0004 4FF0FF30 		mov	r0, #-1
+ 141              	.LVL10:
+ 142 0008 7047     		bx	lr
+ 143              		.cfi_endproc
+ 144              	.LFE7:
+ 146              		.section	.text._malloc_r,"ax",%progbits
+ 147              		.align	1
+ 148              		.global	_malloc_r
+ 149              		.syntax unified
+ 150              		.thumb
+ 151              		.thumb_func
+ 152              		.fpu fpv4-sp-d16
+ 154              	_malloc_r:
+ 155              	.LFB8:
+  73:../../iot_link/os/liteos/newlib_stub.c **** 
+  74:../../iot_link/os/liteos/newlib_stub.c **** void *_malloc_r(struct _reent *ptr, size_t size)
+  75:../../iot_link/os/liteos/newlib_stub.c **** {
+ 156              		.loc 1 75 0
+ 157              		.cfi_startproc
+ 158              		@ args = 0, pretend = 0, frame = 0
+ 159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 160              		@ link register save eliminated.
+ 161              	.LVL11:
+  76:../../iot_link/os/liteos/newlib_stub.c ****     return malloc(size);
+ 162              		.loc 1 76 0
+ 163 0000 0846     		mov	r0, r1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s 			page 5
+
+
+ 164              	.LVL12:
+ 165 0002 FFF7FEBF 		b	malloc
+ 166              	.LVL13:
+ 167              		.cfi_endproc
+ 168              	.LFE8:
+ 170              		.section	.text._realloc_r,"ax",%progbits
+ 171              		.align	1
+ 172              		.global	_realloc_r
+ 173              		.syntax unified
+ 174              		.thumb
+ 175              		.thumb_func
+ 176              		.fpu fpv4-sp-d16
+ 178              	_realloc_r:
+ 179              	.LFB9:
+  77:../../iot_link/os/liteos/newlib_stub.c **** }
+  78:../../iot_link/os/liteos/newlib_stub.c **** 
+  79:../../iot_link/os/liteos/newlib_stub.c **** extern void *los_mem_realloc(void *old, int newlen);
+  80:../../iot_link/os/liteos/newlib_stub.c **** 
+  81:../../iot_link/os/liteos/newlib_stub.c **** void *_realloc_r(struct _reent *ptr, void *old, size_t newlen)
+  82:../../iot_link/os/liteos/newlib_stub.c **** {
+ 180              		.loc 1 82 0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+ 184              		@ link register save eliminated.
+ 185              	.LVL14:
+ 186              		.loc 1 82 0
+ 187 0000 0846     		mov	r0, r1
+ 188              	.LVL15:
+  83:../../iot_link/os/liteos/newlib_stub.c ****     return los_mem_realloc (old, newlen);
+ 189              		.loc 1 83 0
+ 190 0002 1146     		mov	r1, r2
+ 191              	.LVL16:
+ 192 0004 FFF7FEBF 		b	los_mem_realloc
+ 193              	.LVL17:
+ 194              		.cfi_endproc
+ 195              	.LFE9:
+ 197              		.section	.text._calloc_r,"ax",%progbits
+ 198              		.align	1
+ 199              		.global	_calloc_r
+ 200              		.syntax unified
+ 201              		.thumb
+ 202              		.thumb_func
+ 203              		.fpu fpv4-sp-d16
+ 205              	_calloc_r:
+ 206              	.LFB10:
+  84:../../iot_link/os/liteos/newlib_stub.c **** }
+  85:../../iot_link/os/liteos/newlib_stub.c **** 
+  86:../../iot_link/os/liteos/newlib_stub.c **** void *_calloc_r(struct _reent *ptr, size_t size, size_t len)
+  87:../../iot_link/os/liteos/newlib_stub.c **** {
+ 207              		.loc 1 87 0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211              		@ link register save eliminated.
+ 212              	.LVL18:
+ 213              		.loc 1 87 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s 			page 6
+
+
+ 214 0000 0846     		mov	r0, r1
+ 215              	.LVL19:
+  88:../../iot_link/os/liteos/newlib_stub.c ****     return calloc(size, len);
+ 216              		.loc 1 88 0
+ 217 0002 1146     		mov	r1, r2
+ 218              	.LVL20:
+ 219 0004 FFF7FEBF 		b	calloc
+ 220              	.LVL21:
+ 221              		.cfi_endproc
+ 222              	.LFE10:
+ 224              		.section	.text._free_r,"ax",%progbits
+ 225              		.align	1
+ 226              		.global	_free_r
+ 227              		.syntax unified
+ 228              		.thumb
+ 229              		.thumb_func
+ 230              		.fpu fpv4-sp-d16
+ 232              	_free_r:
+ 233              	.LFB11:
+  89:../../iot_link/os/liteos/newlib_stub.c **** }
+  90:../../iot_link/os/liteos/newlib_stub.c **** 
+  91:../../iot_link/os/liteos/newlib_stub.c **** void _free_r(struct _reent *ptr, void *addr)
+  92:../../iot_link/os/liteos/newlib_stub.c **** {
+ 234              		.loc 1 92 0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238              		@ link register save eliminated.
+ 239              	.LVL22:
+  93:../../iot_link/os/liteos/newlib_stub.c ****     free(addr);
+ 240              		.loc 1 93 0
+ 241 0000 0846     		mov	r0, r1
+ 242              	.LVL23:
+ 243 0002 FFF7FEBF 		b	free
+ 244              	.LVL24:
+ 245              		.cfi_endproc
+ 246              	.LFE11:
+ 248              		.section	.text._system,"ax",%progbits
+ 249              		.align	1
+ 250              		.global	_system
+ 251              		.syntax unified
+ 252              		.thumb
+ 253              		.thumb_func
+ 254              		.fpu fpv4-sp-d16
+ 256              	_system:
+ 257              	.LFB12:
+  94:../../iot_link/os/liteos/newlib_stub.c **** }
+  95:../../iot_link/os/liteos/newlib_stub.c **** 
+  96:../../iot_link/os/liteos/newlib_stub.c **** 
+  97:../../iot_link/os/liteos/newlib_stub.c **** 
+  98:../../iot_link/os/liteos/newlib_stub.c **** void _system(const char *s)
+  99:../../iot_link/os/liteos/newlib_stub.c **** {
+ 258              		.loc 1 99 0
+ 259              		.cfi_startproc
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 0, uses_anonymous_args = 0
+ 262              		@ link register save eliminated.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s 			page 7
+
+
+ 263              	.LVL25:
+ 100:../../iot_link/os/liteos/newlib_stub.c **** }
+ 264              		.loc 1 100 0
+ 265 0000 7047     		bx	lr
+ 266              		.cfi_endproc
+ 267              	.LFE12:
+ 269              		.text
+ 270              	.Letext0:
+ 271              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 272              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 273              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 274              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 275              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 276              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 277              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 278              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 279              		.file 10 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 newlib_stub.c
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:18     .text._execve_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:25     .text._execve_r:00000000 _execve_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:46     .text._times_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:53     .text._times_r:00000000 _times_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:72     .text._unlink_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:79     .text._unlink_r:00000000 _unlink_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:95     .text._wait_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:102    .text._wait_r:00000000 _wait_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:121    .text._gettimeofday_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:128    .text._gettimeofday_r:00000000 _gettimeofday_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:147    .text._malloc_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:154    .text._malloc_r:00000000 _malloc_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:171    .text._realloc_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:178    .text._realloc_r:00000000 _realloc_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:198    .text._calloc_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:205    .text._calloc_r:00000000 _calloc_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:225    .text._free_r:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:232    .text._free_r:00000000 _free_r
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:249    .text._system:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccZ0yKyJ.s:256    .text._system:00000000 _system
+
+UNDEFINED SYMBOLS
+malloc
+los_mem_realloc
+calloc
+free

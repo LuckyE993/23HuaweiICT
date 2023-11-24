@@ -1,0 +1,411 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"dac.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MX_DAC1_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	MX_DAC1_Init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	MX_DAC1_Init:
+  26              	.LFB287:
+  27              		.file 1 "Src/dac.c"
+   1:Src/dac.c     **** /**
+   2:Src/dac.c     ****   ******************************************************************************
+   3:Src/dac.c     ****   * @file    dac.c
+   4:Src/dac.c     ****   * @brief   This file provides code for the configuration
+   5:Src/dac.c     ****   *          of the DAC instances.
+   6:Src/dac.c     ****   ******************************************************************************
+   7:Src/dac.c     ****   * @attention
+   8:Src/dac.c     ****   *
+   9:Src/dac.c     ****   * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  10:Src/dac.c     ****   * All rights reserved.</center></h2>
+  11:Src/dac.c     ****   *
+  12:Src/dac.c     ****   * This software component is licensed by ST under BSD 3-Clause license,
+  13:Src/dac.c     ****   * the "License"; You may not use this file except in compliance with the
+  14:Src/dac.c     ****   * License. You may obtain a copy of the License at:
+  15:Src/dac.c     ****   *                        opensource.org/licenses/BSD-3-Clause
+  16:Src/dac.c     ****   *
+  17:Src/dac.c     ****   ******************************************************************************
+  18:Src/dac.c     ****   */
+  19:Src/dac.c     **** 
+  20:Src/dac.c     **** /* Includes ------------------------------------------------------------------*/
+  21:Src/dac.c     **** #include "dac.h"
+  22:Src/dac.c     **** 
+  23:Src/dac.c     **** /* USER CODE BEGIN 0 */
+  24:Src/dac.c     **** 
+  25:Src/dac.c     **** /* USER CODE END 0 */
+  26:Src/dac.c     **** 
+  27:Src/dac.c     **** DAC_HandleTypeDef hdac1;
+  28:Src/dac.c     **** 
+  29:Src/dac.c     **** /* DAC1 init function */
+  30:Src/dac.c     **** void MX_DAC1_Init(void)
+  31:Src/dac.c     **** {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s 			page 2
+
+
+  28              		.loc 1 31 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 40
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 00B5     		push	{lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 14, -4
+  36 0002 8BB0     		sub	sp, sp, #44
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 48
+  32:Src/dac.c     **** 
+  33:Src/dac.c     ****   /* USER CODE BEGIN DAC1_Init 0 */
+  34:Src/dac.c     **** 
+  35:Src/dac.c     ****   /* USER CODE END DAC1_Init 0 */
+  36:Src/dac.c     **** 
+  37:Src/dac.c     ****   DAC_ChannelConfTypeDef sConfig = {0};
+  39              		.loc 1 37 0
+  40 0004 2422     		movs	r2, #36
+  41 0006 0021     		movs	r1, #0
+  42 0008 01A8     		add	r0, sp, #4
+  43 000a FFF7FEFF 		bl	memset
+  44              	.LVL0:
+  38:Src/dac.c     **** 
+  39:Src/dac.c     ****   /* USER CODE BEGIN DAC1_Init 1 */
+  40:Src/dac.c     **** 
+  41:Src/dac.c     ****   /* USER CODE END DAC1_Init 1 */
+  42:Src/dac.c     ****   /** DAC Initialization
+  43:Src/dac.c     ****   */
+  44:Src/dac.c     ****   hdac1.Instance = DAC1;
+  45              		.loc 1 44 0
+  46 000e 0E48     		ldr	r0, .L10
+  47 0010 0E4B     		ldr	r3, .L10+4
+  48 0012 0360     		str	r3, [r0]
+  45:Src/dac.c     ****   if (HAL_DAC_Init(&hdac1) != HAL_OK)
+  49              		.loc 1 45 0
+  50 0014 FFF7FEFF 		bl	HAL_DAC_Init
+  51              	.LVL1:
+  52 0018 18B1     		cbz	r0, .L2
+  46:Src/dac.c     ****   {
+  47:Src/dac.c     ****     Error_Handler();
+  53              		.loc 1 47 0
+  54 001a 2F21     		movs	r1, #47
+  55 001c 0C48     		ldr	r0, .L10+8
+  56 001e FFF7FEFF 		bl	_Error_Handler
+  57              	.LVL2:
+  58              	.L2:
+  48:Src/dac.c     ****   }
+  49:Src/dac.c     ****   /** DAC channel OUT2 config
+  50:Src/dac.c     ****   */
+  51:Src/dac.c     ****   sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
+  59              		.loc 1 51 0
+  60 0022 0023     		movs	r3, #0
+  52:Src/dac.c     ****   sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+  53:Src/dac.c     ****   sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
+  54:Src/dac.c     ****   sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
+  55:Src/dac.c     ****   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s 			page 3
+
+
+  56:Src/dac.c     ****   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_2) != HAL_OK)
+  61              		.loc 1 56 0
+  62 0024 1022     		movs	r2, #16
+  63 0026 01A9     		add	r1, sp, #4
+  64 0028 0748     		ldr	r0, .L10
+  55:Src/dac.c     ****   if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_2) != HAL_OK)
+  65              		.loc 1 55 0
+  66 002a 0593     		str	r3, [sp, #20]
+  52:Src/dac.c     ****   sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+  67              		.loc 1 52 0
+  68 002c CDE90133 		strd	r3, r3, [sp, #4]
+  54:Src/dac.c     ****   sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
+  69              		.loc 1 54 0
+  70 0030 CDE90333 		strd	r3, r3, [sp, #12]
+  71              		.loc 1 56 0
+  72 0034 FFF7FEFF 		bl	HAL_DAC_ConfigChannel
+  73              	.LVL3:
+  74 0038 18B1     		cbz	r0, .L1
+  57:Src/dac.c     ****   {
+  58:Src/dac.c     ****     Error_Handler();
+  75              		.loc 1 58 0
+  76 003a 3A21     		movs	r1, #58
+  77 003c 0448     		ldr	r0, .L10+8
+  78 003e FFF7FEFF 		bl	_Error_Handler
+  79              	.LVL4:
+  80              	.L1:
+  59:Src/dac.c     ****   }
+  60:Src/dac.c     ****   /* USER CODE BEGIN DAC1_Init 2 */
+  61:Src/dac.c     **** 
+  62:Src/dac.c     ****   /* USER CODE END DAC1_Init 2 */
+  63:Src/dac.c     **** 
+  64:Src/dac.c     **** }
+  81              		.loc 1 64 0
+  82 0042 0BB0     		add	sp, sp, #44
+  83              	.LCFI2:
+  84              		.cfi_def_cfa_offset 4
+  85              		@ sp needed
+  86 0044 5DF804FB 		ldr	pc, [sp], #4
+  87              	.L11:
+  88              		.align	2
+  89              	.L10:
+  90 0048 00000000 		.word	hdac1
+  91 004c 00740040 		.word	1073771520
+  92 0050 00000000 		.word	.LC0
+  93              		.cfi_endproc
+  94              	.LFE287:
+  96              		.section	.text.HAL_DAC_MspInit,"ax",%progbits
+  97              		.align	1
+  98              		.global	HAL_DAC_MspInit
+  99              		.syntax unified
+ 100              		.thumb
+ 101              		.thumb_func
+ 102              		.fpu fpv4-sp-d16
+ 104              	HAL_DAC_MspInit:
+ 105              	.LFB288:
+  65:Src/dac.c     **** 
+  66:Src/dac.c     **** void HAL_DAC_MspInit(DAC_HandleTypeDef* dacHandle)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s 			page 4
+
+
+  67:Src/dac.c     **** {
+ 106              		.loc 1 67 0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 32
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110              	.LVL5:
+ 111 0000 10B5     		push	{r4, lr}
+ 112              	.LCFI3:
+ 113              		.cfi_def_cfa_offset 8
+ 114              		.cfi_offset 4, -8
+ 115              		.cfi_offset 14, -4
+ 116 0002 0446     		mov	r4, r0
+ 117 0004 88B0     		sub	sp, sp, #32
+ 118              	.LCFI4:
+ 119              		.cfi_def_cfa_offset 40
+  68:Src/dac.c     **** 
+  69:Src/dac.c     ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
+ 120              		.loc 1 69 0
+ 121 0006 1422     		movs	r2, #20
+ 122 0008 0021     		movs	r1, #0
+ 123 000a 03A8     		add	r0, sp, #12
+ 124              	.LVL6:
+ 125 000c FFF7FEFF 		bl	memset
+ 126              	.LVL7:
+  70:Src/dac.c     ****   if(dacHandle->Instance==DAC1)
+ 127              		.loc 1 70 0
+ 128 0010 2268     		ldr	r2, [r4]
+ 129 0012 114B     		ldr	r3, .L14
+ 130 0014 9A42     		cmp	r2, r3
+ 131 0016 1CD1     		bne	.L12
+ 132              	.LBB2:
+  71:Src/dac.c     ****   {
+  72:Src/dac.c     ****   /* USER CODE BEGIN DAC1_MspInit 0 */
+  73:Src/dac.c     **** 
+  74:Src/dac.c     ****   /* USER CODE END DAC1_MspInit 0 */
+  75:Src/dac.c     ****     /* DAC1 clock enable */
+  76:Src/dac.c     ****     __HAL_RCC_DAC1_CLK_ENABLE();
+ 133              		.loc 1 76 0
+ 134 0018 03F5CE33 		add	r3, r3, #105472
+ 135              	.LBE2:
+  77:Src/dac.c     **** 
+  78:Src/dac.c     ****     __HAL_RCC_GPIOA_CLK_ENABLE();
+  79:Src/dac.c     ****     /**DAC1 GPIO Configuration
+  80:Src/dac.c     ****     PA5     ------> DAC1_OUT2
+  81:Src/dac.c     ****     */
+  82:Src/dac.c     ****     GPIO_InitStruct.Pin = GPIO_PIN_5;
+  83:Src/dac.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  84:Src/dac.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+  85:Src/dac.c     ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 136              		.loc 1 85 0
+ 137 001c 03A9     		add	r1, sp, #12
+ 138              	.LBB3:
+  76:Src/dac.c     **** 
+ 139              		.loc 1 76 0
+ 140 001e 9A6D     		ldr	r2, [r3, #88]
+ 141 0020 42F00052 		orr	r2, r2, #536870912
+ 142 0024 9A65     		str	r2, [r3, #88]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s 			page 5
+
+
+ 143 0026 9A6D     		ldr	r2, [r3, #88]
+ 144 0028 02F00052 		and	r2, r2, #536870912
+ 145 002c 0192     		str	r2, [sp, #4]
+ 146 002e 019A     		ldr	r2, [sp, #4]
+ 147              	.LBE3:
+ 148              	.LBB4:
+  78:Src/dac.c     ****     /**DAC1 GPIO Configuration
+ 149              		.loc 1 78 0
+ 150 0030 DA6C     		ldr	r2, [r3, #76]
+ 151 0032 42F00102 		orr	r2, r2, #1
+ 152 0036 DA64     		str	r2, [r3, #76]
+ 153 0038 DB6C     		ldr	r3, [r3, #76]
+ 154 003a 03F00103 		and	r3, r3, #1
+ 155 003e 0293     		str	r3, [sp, #8]
+ 156 0040 029B     		ldr	r3, [sp, #8]
+ 157              	.LBE4:
+  83:Src/dac.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 158              		.loc 1 83 0
+ 159 0042 2022     		movs	r2, #32
+ 160 0044 0323     		movs	r3, #3
+ 161              		.loc 1 85 0
+ 162 0046 4FF09040 		mov	r0, #1207959552
+  83:Src/dac.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 163              		.loc 1 83 0
+ 164 004a CDE90323 		strd	r2, r3, [sp, #12]
+ 165              		.loc 1 85 0
+ 166 004e FFF7FEFF 		bl	HAL_GPIO_Init
+ 167              	.LVL8:
+ 168              	.L12:
+  86:Src/dac.c     **** 
+  87:Src/dac.c     ****   /* USER CODE BEGIN DAC1_MspInit 1 */
+  88:Src/dac.c     **** 
+  89:Src/dac.c     ****   /* USER CODE END DAC1_MspInit 1 */
+  90:Src/dac.c     ****   }
+  91:Src/dac.c     **** }
+ 169              		.loc 1 91 0
+ 170 0052 08B0     		add	sp, sp, #32
+ 171              	.LCFI5:
+ 172              		.cfi_def_cfa_offset 8
+ 173              		@ sp needed
+ 174 0054 10BD     		pop	{r4, pc}
+ 175              	.LVL9:
+ 176              	.L15:
+ 177 0056 00BF     		.align	2
+ 178              	.L14:
+ 179 0058 00740040 		.word	1073771520
+ 180              		.cfi_endproc
+ 181              	.LFE288:
+ 183              		.section	.text.HAL_DAC_MspDeInit,"ax",%progbits
+ 184              		.align	1
+ 185              		.global	HAL_DAC_MspDeInit
+ 186              		.syntax unified
+ 187              		.thumb
+ 188              		.thumb_func
+ 189              		.fpu fpv4-sp-d16
+ 191              	HAL_DAC_MspDeInit:
+ 192              	.LFB289:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s 			page 6
+
+
+  92:Src/dac.c     **** 
+  93:Src/dac.c     **** void HAL_DAC_MspDeInit(DAC_HandleTypeDef* dacHandle)
+  94:Src/dac.c     **** {
+ 193              		.loc 1 94 0
+ 194              		.cfi_startproc
+ 195              		@ args = 0, pretend = 0, frame = 0
+ 196              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197              		@ link register save eliminated.
+ 198              	.LVL10:
+  95:Src/dac.c     **** 
+  96:Src/dac.c     ****   if(dacHandle->Instance==DAC1)
+ 199              		.loc 1 96 0
+ 200 0000 0268     		ldr	r2, [r0]
+ 201 0002 074B     		ldr	r3, .L18
+ 202 0004 9A42     		cmp	r2, r3
+ 203 0006 09D1     		bne	.L16
+  97:Src/dac.c     ****   {
+  98:Src/dac.c     ****   /* USER CODE BEGIN DAC1_MspDeInit 0 */
+  99:Src/dac.c     **** 
+ 100:Src/dac.c     ****   /* USER CODE END DAC1_MspDeInit 0 */
+ 101:Src/dac.c     ****     /* Peripheral clock disable */
+ 102:Src/dac.c     ****     __HAL_RCC_DAC1_CLK_DISABLE();
+ 204              		.loc 1 102 0
+ 205 0008 064A     		ldr	r2, .L18+4
+ 206 000a 936D     		ldr	r3, [r2, #88]
+ 207 000c 23F00053 		bic	r3, r3, #536870912
+ 208 0010 9365     		str	r3, [r2, #88]
+ 103:Src/dac.c     **** 
+ 104:Src/dac.c     ****     /**DAC1 GPIO Configuration
+ 105:Src/dac.c     ****     PA5     ------> DAC1_OUT2
+ 106:Src/dac.c     ****     */
+ 107:Src/dac.c     ****     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5);
+ 209              		.loc 1 107 0
+ 210 0012 2021     		movs	r1, #32
+ 211 0014 4FF09040 		mov	r0, #1207959552
+ 212              	.LVL11:
+ 213 0018 FFF7FEBF 		b	HAL_GPIO_DeInit
+ 214              	.LVL12:
+ 215              	.L16:
+ 108:Src/dac.c     **** 
+ 109:Src/dac.c     ****   /* USER CODE BEGIN DAC1_MspDeInit 1 */
+ 110:Src/dac.c     **** 
+ 111:Src/dac.c     ****   /* USER CODE END DAC1_MspDeInit 1 */
+ 112:Src/dac.c     ****   }
+ 113:Src/dac.c     **** }
+ 216              		.loc 1 113 0
+ 217 001c 7047     		bx	lr
+ 218              	.L19:
+ 219 001e 00BF     		.align	2
+ 220              	.L18:
+ 221 0020 00740040 		.word	1073771520
+ 222 0024 00100240 		.word	1073876992
+ 223              		.cfi_endproc
+ 224              	.LFE289:
+ 226              		.comm	hdac1,20,4
+ 227              		.section	.rodata.MX_DAC1_Init.str1.1,"aMS",%progbits,1
+ 228              	.LC0:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s 			page 7
+
+
+ 229 0000 5372632F 		.ascii	"Src/dac.c\000"
+ 229      6461632E 
+ 229      6300
+ 230              		.text
+ 231              	.Letext0:
+ 232              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 233              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 234              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 235              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 236              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 237              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 238              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 239              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 240              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 241              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l43
+ 242              		.file 12 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 243              		.file 13 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 244              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 245              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dac.h"
+ 246              		.file 16 "../../iot_link/os/liteos/include/los_config.h"
+ 247              		.file 17 "../../iot_link/os/liteos/include/los_err.h"
+ 248              		.file 18 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 249              		.file 19 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/dac.h"
+ 250              		.file 20 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/main.h"
+ 251              		.file 21 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dac.c
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:18     .text.MX_DAC1_Init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:25     .text.MX_DAC1_Init:00000000 MX_DAC1_Init
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:90     .text.MX_DAC1_Init:00000048 $d
+                            *COM*:00000014 hdac1
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:97     .text.HAL_DAC_MspInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:104    .text.HAL_DAC_MspInit:00000000 HAL_DAC_MspInit
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:179    .text.HAL_DAC_MspInit:00000058 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:184    .text.HAL_DAC_MspDeInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:191    .text.HAL_DAC_MspDeInit:00000000 HAL_DAC_MspDeInit
+C:\Users\LuckyE\AppData\Local\Temp\ccRJHVT4.s:221    .text.HAL_DAC_MspDeInit:00000020 $d
+
+UNDEFINED SYMBOLS
+memset
+HAL_DAC_Init
+_Error_Handler
+HAL_DAC_ConfigChannel
+HAL_GPIO_Init
+HAL_GPIO_DeInit

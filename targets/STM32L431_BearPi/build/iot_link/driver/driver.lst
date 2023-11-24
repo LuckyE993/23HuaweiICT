@@ -1,0 +1,2112 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"driver.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.__driv_match,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	__driv_match:
+  25              	.LFB3:
+  26              		.file 1 "../../iot_link/driver/driver.c"
+   1:../../iot_link/driver/driver.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/driver/driver.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/driver/driver.c ****  * All rights reserved.
+   4:../../iot_link/driver/driver.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/driver/driver.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/driver/driver.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/driver/driver.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/driver/driver.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/driver/driver.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/driver/driver.c ****  * provided with the distribution.
+  11:../../iot_link/driver/driver.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/driver/driver.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/driver/driver.c ****  * permission.
+  14:../../iot_link/driver/driver.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/driver/driver.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/driver/driver.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/driver/driver.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/driver/driver.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/driver/driver.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/driver/driver.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/driver/driver.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/driver/driver.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/driver/driver.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/driver/driver.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/driver/driver.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/driver/driver.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/driver/driver.c ****  * Notice of Export Control Law
+  28:../../iot_link/driver/driver.c ****  * ===============================================
+  29:../../iot_link/driver/driver.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/driver/driver.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/driver/driver.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:../../iot_link/driver/driver.c ****  * applicable export control laws and regulations.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 2
+
+
+  33:../../iot_link/driver/driver.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/driver/driver.c **** /**
+  35:../../iot_link/driver/driver.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/driver/driver.c ****  *  2019-05-14 09:36  zhangqianfu  The first version  
+  37:../../iot_link/driver/driver.c ****  *
+  38:../../iot_link/driver/driver.c ****  */
+  39:../../iot_link/driver/driver.c **** #include <string.h>
+  40:../../iot_link/driver/driver.c **** #include <stdio.h>
+  41:../../iot_link/driver/driver.c **** #include <stdlib.h>
+  42:../../iot_link/driver/driver.c **** #include <driver.h>
+  43:../../iot_link/driver/driver.c **** #include <sys/fcntl.h>
+  44:../../iot_link/driver/driver.c **** 
+  45:../../iot_link/driver/driver.c **** 
+  46:../../iot_link/driver/driver.c **** #define cn_driv_status_initialized     (1<<0)
+  47:../../iot_link/driver/driver.c **** #define cn_driv_status_opend           (1<<1)
+  48:../../iot_link/driver/driver.c **** 
+  49:../../iot_link/driver/driver.c **** 
+  50:../../iot_link/driver/driver.c **** //define the error type has happened in the driver
+  51:../../iot_link/driver/driver.c **** typedef enum
+  52:../../iot_link/driver/driver.c **** {
+  53:../../iot_link/driver/driver.c ****     en_dev_err_none = 0,   //no err happened
+  54:../../iot_link/driver/driver.c ****     en_dev_err_init,       //call bsp open function failed
+  55:../../iot_link/driver/driver.c ****     en_dev_err_open,       //call bsp init function failed
+  56:../../iot_link/driver/driver.c **** 
+  57:../../iot_link/driver/driver.c **** }en_dev_error_type;
+  58:../../iot_link/driver/driver.c **** 
+  59:../../iot_link/driver/driver.c **** 
+  60:../../iot_link/driver/driver.c **** struct driv_cb
+  61:../../iot_link/driver/driver.c **** {
+  62:../../iot_link/driver/driver.c ****     void                  *nxt;              //add the deice to device list
+  63:../../iot_link/driver/driver.c ****     void                  *pri;              //bsp developed para
+  64:../../iot_link/driver/driver.c ****     const char            *name;             //the device name
+  65:../../iot_link/driver/driver.c ****     int                    flagmask;         //copy from the register
+  66:../../iot_link/driver/driver.c ****     const los_driv_op_t   *op;               //operation method
+  67:../../iot_link/driver/driver.c ****     unsigned int           drivstatus;       //show the state here like init or something like this
+  68:../../iot_link/driver/driver.c ****     los_dev_t              devlst;           //the open list,support the multi open
+  69:../../iot_link/driver/driver.c ****     //following member used for the debug
+  70:../../iot_link/driver/driver.c ****     size_t            total_write;            //how many data has been sent
+  71:../../iot_link/driver/driver.c ****     size_t            total_read;             //how many data has received
+  72:../../iot_link/driver/driver.c ****     size_t            opencounter;            //reference counter
+  73:../../iot_link/driver/driver.c ****     unsigned int      errno;                  //the last errno has happend
+  74:../../iot_link/driver/driver.c **** };
+  75:../../iot_link/driver/driver.c **** typedef struct
+  76:../../iot_link/driver/driver.c **** {
+  77:../../iot_link/driver/driver.c ****     osal_mutex_t                    lock;      //used to lock the devlst
+  78:../../iot_link/driver/driver.c ****     struct driv_cb                 *drivlst;   //all the dev will be added to the list
+  79:../../iot_link/driver/driver.c ****     unsigned int                    drivnum;
+  80:../../iot_link/driver/driver.c **** }los_driv_module;
+  81:../../iot_link/driver/driver.c **** static  los_driv_module   s_los_driv_module ;  //manage all the driver here
+  82:../../iot_link/driver/driver.c **** 
+  83:../../iot_link/driver/driver.c **** //used this function to find a dev
+  84:../../iot_link/driver/driver.c **** static struct driv_cb *__driv_match(const char *name)
+  85:../../iot_link/driver/driver.c **** {
+  27              		.loc 1 85 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 3
+
+
+  31              	.LVL0:
+  32 0000 38B5     		push	{r3, r4, r5, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 16
+  35              		.cfi_offset 3, -16
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+  86:../../iot_link/driver/driver.c ****     struct driv_cb *ret = NULL;
+  87:../../iot_link/driver/driver.c **** 
+  88:../../iot_link/driver/driver.c ****     ret = s_los_driv_module.drivlst;
+  39              		.loc 1 88 0
+  40 0002 074B     		ldr	r3, .L8
+  41 0004 5C68     		ldr	r4, [r3, #4]
+  42              	.LVL1:
+  85:../../iot_link/driver/driver.c ****     struct driv_cb *ret = NULL;
+  43              		.loc 1 85 0
+  44 0006 0546     		mov	r5, r0
+  45              	.LVL2:
+  46              	.L2:
+  89:../../iot_link/driver/driver.c ****     while(NULL != ret)
+  47              		.loc 1 89 0
+  48 0008 0CB9     		cbnz	r4, .L4
+  49              	.L1:
+  90:../../iot_link/driver/driver.c ****     {
+  91:../../iot_link/driver/driver.c ****         if(0 == strcmp(name,ret->name))
+  92:../../iot_link/driver/driver.c ****         {
+  93:../../iot_link/driver/driver.c ****             break;
+  94:../../iot_link/driver/driver.c ****         }
+  95:../../iot_link/driver/driver.c ****         ret = ret->nxt;
+  96:../../iot_link/driver/driver.c ****     }
+  97:../../iot_link/driver/driver.c **** 
+  98:../../iot_link/driver/driver.c ****     return ret;
+  99:../../iot_link/driver/driver.c **** }
+  50              		.loc 1 99 0
+  51 000a 2046     		mov	r0, r4
+  52 000c 38BD     		pop	{r3, r4, r5, pc}
+  53              	.LVL3:
+  54              	.L4:
+  91:../../iot_link/driver/driver.c ****         {
+  55              		.loc 1 91 0
+  56 000e A168     		ldr	r1, [r4, #8]
+  57 0010 2846     		mov	r0, r5
+  58 0012 FFF7FEFF 		bl	strcmp
+  59              	.LVL4:
+  60 0016 0028     		cmp	r0, #0
+  61 0018 F7D0     		beq	.L1
+  95:../../iot_link/driver/driver.c ****     }
+  62              		.loc 1 95 0
+  63 001a 2468     		ldr	r4, [r4]
+  64              	.LVL5:
+  65 001c F4E7     		b	.L2
+  66              	.L9:
+  67 001e 00BF     		.align	2
+  68              	.L8:
+  69 0020 00000000 		.word	.LANCHOR0
+  70              		.cfi_endproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 4
+
+
+  71              	.LFE3:
+  73              		.section	.text.__driv_show_shell,"ax",%progbits
+  74              		.align	1
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  78              		.fpu fpv4-sp-d16
+  80              	__driv_show_shell:
+  81              	.LFB15:
+ 100:../../iot_link/driver/driver.c **** 
+ 101:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 102:../../iot_link/driver/driver.c **** function     :bsp developer use this function to add a device to the system
+ 103:../../iot_link/driver/driver.c **** parameters   :
+ 104:../../iot_link/driver/driver.c **** instruction  :NULL if failed else return the device handle
+ 105:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 106:../../iot_link/driver/driver.c **** 
+ 107:../../iot_link/driver/driver.c **** los_driv_t los_driv_register(os_driv_para_t *para)
+ 108:../../iot_link/driver/driver.c **** {
+ 109:../../iot_link/driver/driver.c ****     struct driv_cb  *driv = NULL;
+ 110:../../iot_link/driver/driver.c **** 
+ 111:../../iot_link/driver/driver.c ****     if((NULL == para->name)||(NULL == para->op))
+ 112:../../iot_link/driver/driver.c ****     {
+ 113:../../iot_link/driver/driver.c ****         goto EXIT_PARAS;
+ 114:../../iot_link/driver/driver.c ****     }
+ 115:../../iot_link/driver/driver.c **** 
+ 116:../../iot_link/driver/driver.c ****     driv = osal_malloc(sizeof(struct driv_cb));
+ 117:../../iot_link/driver/driver.c ****     if(NULL == driv)
+ 118:../../iot_link/driver/driver.c ****     {
+ 119:../../iot_link/driver/driver.c ****         goto EXIT_MALLOC;
+ 120:../../iot_link/driver/driver.c ****     }
+ 121:../../iot_link/driver/driver.c ****     (void) memset(driv,0,sizeof(struct driv_cb));
+ 122:../../iot_link/driver/driver.c **** 
+ 123:../../iot_link/driver/driver.c ****     //do the member initialize
+ 124:../../iot_link/driver/driver.c ****     driv->name = para->name;
+ 125:../../iot_link/driver/driver.c ****     driv->op = para->op;
+ 126:../../iot_link/driver/driver.c ****     driv->pri = para->pri;
+ 127:../../iot_link/driver/driver.c ****     driv->flagmask = para->flag;
+ 128:../../iot_link/driver/driver.c **** 
+ 129:../../iot_link/driver/driver.c ****     //add it to the device list if no device with the same name exsit
+ 130:../../iot_link/driver/driver.c ****     if(false == osal_mutex_lock(s_los_driv_module.lock))
+ 131:../../iot_link/driver/driver.c ****     {
+ 132:../../iot_link/driver/driver.c ****         goto EXIT_MUTEX;
+ 133:../../iot_link/driver/driver.c ****     }
+ 134:../../iot_link/driver/driver.c **** 
+ 135:../../iot_link/driver/driver.c ****     if(NULL != __driv_match(para->name))
+ 136:../../iot_link/driver/driver.c ****     {
+ 137:../../iot_link/driver/driver.c ****         goto EXIT_EXISTED;
+ 138:../../iot_link/driver/driver.c ****     }
+ 139:../../iot_link/driver/driver.c **** 
+ 140:../../iot_link/driver/driver.c ****     driv->nxt = s_los_driv_module.drivlst;
+ 141:../../iot_link/driver/driver.c ****     s_los_driv_module.drivlst = driv;
+ 142:../../iot_link/driver/driver.c ****     (void) osal_mutex_unlock(s_los_driv_module.lock);
+ 143:../../iot_link/driver/driver.c **** 
+ 144:../../iot_link/driver/driver.c ****     s_los_driv_module.drivnum++;
+ 145:../../iot_link/driver/driver.c **** 
+ 146:../../iot_link/driver/driver.c ****     return driv;
+ 147:../../iot_link/driver/driver.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 5
+
+
+ 148:../../iot_link/driver/driver.c **** 
+ 149:../../iot_link/driver/driver.c **** EXIT_EXISTED:
+ 150:../../iot_link/driver/driver.c ****     (void) osal_mutex_unlock(s_los_driv_module.lock);
+ 151:../../iot_link/driver/driver.c **** EXIT_MUTEX:
+ 152:../../iot_link/driver/driver.c ****     osal_free(driv);
+ 153:../../iot_link/driver/driver.c ****     driv = NULL;
+ 154:../../iot_link/driver/driver.c **** EXIT_MALLOC:
+ 155:../../iot_link/driver/driver.c **** EXIT_PARAS:
+ 156:../../iot_link/driver/driver.c ****     return driv;
+ 157:../../iot_link/driver/driver.c **** }
+ 158:../../iot_link/driver/driver.c **** 
+ 159:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 160:../../iot_link/driver/driver.c **** function     :bsp developer use this function to remove a device from the system
+ 161:../../iot_link/driver/driver.c **** parameters   :
+ 162:../../iot_link/driver/driver.c **** instruction  :if the device has been refered,then will fail here
+ 163:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 164:../../iot_link/driver/driver.c **** bool_t los_driv_unregister(const char *name)
+ 165:../../iot_link/driver/driver.c **** {
+ 166:../../iot_link/driver/driver.c ****     struct driv_cb *tmp = NULL;
+ 167:../../iot_link/driver/driver.c ****     struct driv_cb *pre = NULL;
+ 168:../../iot_link/driver/driver.c ****     bool_t         ret = false;
+ 169:../../iot_link/driver/driver.c ****     if(NULL == name)
+ 170:../../iot_link/driver/driver.c ****     {
+ 171:../../iot_link/driver/driver.c ****         return ret;
+ 172:../../iot_link/driver/driver.c ****     }
+ 173:../../iot_link/driver/driver.c **** 
+ 174:../../iot_link/driver/driver.c ****     if(osal_mutex_lock(s_los_driv_module.lock))
+ 175:../../iot_link/driver/driver.c ****     {
+ 176:../../iot_link/driver/driver.c ****         tmp = s_los_driv_module.drivlst;
+ 177:../../iot_link/driver/driver.c ****         pre = NULL;
+ 178:../../iot_link/driver/driver.c ****         while(NULL != tmp)
+ 179:../../iot_link/driver/driver.c ****         {
+ 180:../../iot_link/driver/driver.c ****             if( 0 == strcmp(name,tmp->name))
+ 181:../../iot_link/driver/driver.c ****             {
+ 182:../../iot_link/driver/driver.c ****                 break;
+ 183:../../iot_link/driver/driver.c ****             }
+ 184:../../iot_link/driver/driver.c ****             pre = tmp;
+ 185:../../iot_link/driver/driver.c ****             tmp = tmp->nxt;
+ 186:../../iot_link/driver/driver.c ****         }
+ 187:../../iot_link/driver/driver.c ****         if(NULL != tmp)  //find the device here
+ 188:../../iot_link/driver/driver.c ****         {
+ 189:../../iot_link/driver/driver.c ****             if(pre == NULL)
+ 190:../../iot_link/driver/driver.c ****             {
+ 191:../../iot_link/driver/driver.c ****                 s_los_driv_module.drivlst = tmp->nxt;
+ 192:../../iot_link/driver/driver.c ****             }
+ 193:../../iot_link/driver/driver.c ****             else
+ 194:../../iot_link/driver/driver.c ****             {
+ 195:../../iot_link/driver/driver.c ****                 pre->nxt = tmp->nxt;
+ 196:../../iot_link/driver/driver.c ****             }
+ 197:../../iot_link/driver/driver.c **** 
+ 198:../../iot_link/driver/driver.c ****             osal_free(tmp);
+ 199:../../iot_link/driver/driver.c ****             ret = true;
+ 200:../../iot_link/driver/driver.c **** 
+ 201:../../iot_link/driver/driver.c ****             s_los_driv_module.drivnum--;
+ 202:../../iot_link/driver/driver.c ****         }
+ 203:../../iot_link/driver/driver.c **** 
+ 204:../../iot_link/driver/driver.c ****         (void) osal_mutex_unlock(s_los_driv_module.lock);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 6
+
+
+ 205:../../iot_link/driver/driver.c ****     }
+ 206:../../iot_link/driver/driver.c **** 
+ 207:../../iot_link/driver/driver.c ****     return ret;
+ 208:../../iot_link/driver/driver.c **** }
+ 209:../../iot_link/driver/driver.c **** 
+ 210:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 211:../../iot_link/driver/driver.c **** function     :bsp developer use this function to notify the application any event has happened
+ 212:../../iot_link/driver/driver.c **** parameters   :
+ 213:../../iot_link/driver/driver.c **** instruction  :not implement yet,we will do it as the asynchronize call
+ 214:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 215:../../iot_link/driver/driver.c **** bool_t los_driv_event(los_driv_t driv,unsigned int event,void *para)
+ 216:../../iot_link/driver/driver.c **** {
+ 217:../../iot_link/driver/driver.c ****     return false;
+ 218:../../iot_link/driver/driver.c **** }
+ 219:../../iot_link/driver/driver.c **** 
+ 220:../../iot_link/driver/driver.c **** 
+ 221:../../iot_link/driver/driver.c **** #ifdef __CC_ARM /* ARM C Compiler ,like keil,options for linker:--keep *.o(osdriv)*/
+ 222:../../iot_link/driver/driver.c ****     extern unsigned int osdriv$$Base;
+ 223:../../iot_link/driver/driver.c ****     extern unsigned int osdriv$$Limit;
+ 224:../../iot_link/driver/driver.c **** 
+ 225:../../iot_link/driver/driver.c **** #elif defined(__GNUC__)
+ 226:../../iot_link/driver/driver.c ****     extern unsigned int __osdriv_start;
+ 227:../../iot_link/driver/driver.c ****     extern unsigned int __osdriv_end;
+ 228:../../iot_link/driver/driver.c **** #else
+ 229:../../iot_link/driver/driver.c ****     #error("unknown compiler here");
+ 230:../../iot_link/driver/driver.c **** #endif
+ 231:../../iot_link/driver/driver.c **** 
+ 232:../../iot_link/driver/driver.c **** 
+ 233:../../iot_link/driver/driver.c **** static void osdriv_load_static(void){
+ 234:../../iot_link/driver/driver.c **** 
+ 235:../../iot_link/driver/driver.c ****     os_driv_para_t *para;
+ 236:../../iot_link/driver/driver.c ****     unsigned int num = 0;
+ 237:../../iot_link/driver/driver.c ****     unsigned int i = 0;
+ 238:../../iot_link/driver/driver.c **** #if defined (__CC_ARM)    //you could add other compiler like this
+ 239:../../iot_link/driver/driver.c ****     num = ((unsigned int)&osdriv$$Limit-(unsigned int)&osdriv$$Base)/sizeof(os_driv_para_t);
+ 240:../../iot_link/driver/driver.c ****     para = (os_driv_para_t *) &osdriv$$Base;
+ 241:../../iot_link/driver/driver.c **** #elif defined(__GNUC__)
+ 242:../../iot_link/driver/driver.c **** 
+ 243:../../iot_link/driver/driver.c ****     para = (os_driv_para_t *)&__osdriv_start;
+ 244:../../iot_link/driver/driver.c ****     num = ((unsigned int )(uintptr_t)&__osdriv_end - (unsigned int)(uintptr_t)&__osdriv_start)/size
+ 245:../../iot_link/driver/driver.c **** #endif
+ 246:../../iot_link/driver/driver.c ****     for(i =0;i<num;i++)
+ 247:../../iot_link/driver/driver.c ****     {
+ 248:../../iot_link/driver/driver.c ****         (void) los_driv_register(para);
+ 249:../../iot_link/driver/driver.c ****         para++;
+ 250:../../iot_link/driver/driver.c ****     }
+ 251:../../iot_link/driver/driver.c **** 
+ 252:../../iot_link/driver/driver.c ****     return;
+ 253:../../iot_link/driver/driver.c **** }
+ 254:../../iot_link/driver/driver.c **** 
+ 255:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 256:../../iot_link/driver/driver.c **** function     :the device module entry
+ 257:../../iot_link/driver/driver.c **** parameters   :
+ 258:../../iot_link/driver/driver.c **** instruction  :call this function to initialize the device module here
+ 259:../../iot_link/driver/driver.c ****               load the static init from section os_device
+ 260:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 261:../../iot_link/driver/driver.c **** bool_t  los_driv_init()
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 7
+
+
+ 262:../../iot_link/driver/driver.c **** {
+ 263:../../iot_link/driver/driver.c ****     bool_t ret = false;
+ 264:../../iot_link/driver/driver.c **** 
+ 265:../../iot_link/driver/driver.c ****     ret = osal_mutex_create(&s_los_driv_module.lock);
+ 266:../../iot_link/driver/driver.c ****     if(false == ret)
+ 267:../../iot_link/driver/driver.c ****     {
+ 268:../../iot_link/driver/driver.c ****         goto EXIT_MUTEX;
+ 269:../../iot_link/driver/driver.c ****     }
+ 270:../../iot_link/driver/driver.c **** 
+ 271:../../iot_link/driver/driver.c ****     //load all the static device init
+ 272:../../iot_link/driver/driver.c ****     osdriv_load_static();
+ 273:../../iot_link/driver/driver.c **** 
+ 274:../../iot_link/driver/driver.c **** EXIT_MUTEX:
+ 275:../../iot_link/driver/driver.c ****     return ret;
+ 276:../../iot_link/driver/driver.c **** }
+ 277:../../iot_link/driver/driver.c **** 
+ 278:../../iot_link/driver/driver.c **** //here we define the data structure which used by the driv application apis
+ 279:../../iot_link/driver/driver.c **** struct dev_cb
+ 280:../../iot_link/driver/driver.c **** {
+ 281:../../iot_link/driver/driver.c ****     void *nxt;            //used by the open lst
+ 282:../../iot_link/driver/driver.c ****     void *driv;           //which attached dri here
+ 283:../../iot_link/driver/driver.c ****     int openflag;       //here means the open state here
+ 284:../../iot_link/driver/driver.c ****     unsigned int offset;
+ 285:../../iot_link/driver/driver.c ****     //the following for the debug
+ 286:../../iot_link/driver/driver.c ****     unsigned int readbytes;
+ 287:../../iot_link/driver/driver.c ****     unsigned int writebytes;
+ 288:../../iot_link/driver/driver.c **** };
+ 289:../../iot_link/driver/driver.c **** 
+ 290:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 291:../../iot_link/driver/driver.c **** function     :open the device with the specified name
+ 292:../../iot_link/driver/driver.c **** parameters   :
+ 293:../../iot_link/driver/driver.c **** instruction  :if first open the device,then will call the init function if exsited
+ 294:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 295:../../iot_link/driver/driver.c **** los_dev_t  los_dev_open  (const char *name,unsigned int flag)
+ 296:../../iot_link/driver/driver.c **** {
+ 297:../../iot_link/driver/driver.c ****     bool_t opret = true;           //operate result
+ 298:../../iot_link/driver/driver.c ****     struct driv_cb *driv = NULL;   //the driver attached
+ 299:../../iot_link/driver/driver.c ****     struct dev_cb  *dev = NULL;    //the device opened
+ 300:../../iot_link/driver/driver.c ****     if ( NULL == name )
+ 301:../../iot_link/driver/driver.c ****     {
+ 302:../../iot_link/driver/driver.c ****         goto EXIT_PARAERR;
+ 303:../../iot_link/driver/driver.c ****     }
+ 304:../../iot_link/driver/driver.c **** 
+ 305:../../iot_link/driver/driver.c ****     dev = osal_malloc(sizeof(struct dev_cb));
+ 306:../../iot_link/driver/driver.c ****     if (NULL == dev)
+ 307:../../iot_link/driver/driver.c ****     {
+ 308:../../iot_link/driver/driver.c ****         goto EXIT_MEMERR;
+ 309:../../iot_link/driver/driver.c ****     }
+ 310:../../iot_link/driver/driver.c ****     (void) memset(dev,0,sizeof(struct dev_cb));
+ 311:../../iot_link/driver/driver.c **** 
+ 312:../../iot_link/driver/driver.c ****     opret = osal_mutex_lock(s_los_driv_module.lock);
+ 313:../../iot_link/driver/driver.c ****     if(false == opret)
+ 314:../../iot_link/driver/driver.c ****     {
+ 315:../../iot_link/driver/driver.c ****         goto EXIT_MUTEXERR;
+ 316:../../iot_link/driver/driver.c ****     }
+ 317:../../iot_link/driver/driver.c **** 
+ 318:../../iot_link/driver/driver.c ****     driv = __driv_match(name);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 8
+
+
+ 319:../../iot_link/driver/driver.c ****     if(NULL == driv)
+ 320:../../iot_link/driver/driver.c ****     {
+ 321:../../iot_link/driver/driver.c ****         goto EXIT_DRIVERR;
+ 322:../../iot_link/driver/driver.c ****     }
+ 323:../../iot_link/driver/driver.c ****     //WE DON'T CARE TOO MUCH ABOUT THE RD AND WR FLAG,MAY BE TODO IT IN THE NEXT VERSION HERE
+ 324:../../iot_link/driver/driver.c ****     if((O_EXCL & (unsigned int )driv->flagmask) && (NULL != driv->devlst))
+ 325:../../iot_link/driver/driver.c ****     {
+ 326:../../iot_link/driver/driver.c ****         goto EXIT_EXCLERR;
+ 327:../../iot_link/driver/driver.c ****     }
+ 328:../../iot_link/driver/driver.c **** 
+ 329:../../iot_link/driver/driver.c ****     if((0 == (driv->drivstatus & cn_driv_status_initialized)) && \
+ 330:../../iot_link/driver/driver.c ****         (NULL != driv->op->init))
+ 331:../../iot_link/driver/driver.c ****     {
+ 332:../../iot_link/driver/driver.c ****         opret = driv->op->init(driv->pri);
+ 333:../../iot_link/driver/driver.c ****         if(false == opret)
+ 334:../../iot_link/driver/driver.c ****         {
+ 335:../../iot_link/driver/driver.c ****             driv->errno = en_dev_err_init;
+ 336:../../iot_link/driver/driver.c ****             goto EXIT_INITERR;
+ 337:../../iot_link/driver/driver.c ****         }
+ 338:../../iot_link/driver/driver.c ****         driv->drivstatus |= cn_driv_status_initialized;
+ 339:../../iot_link/driver/driver.c ****     }
+ 340:../../iot_link/driver/driver.c **** 
+ 341:../../iot_link/driver/driver.c ****     if(NULL != driv->op->open)
+ 342:../../iot_link/driver/driver.c ****     {
+ 343:../../iot_link/driver/driver.c ****         opret = driv->op->open(driv->pri,flag);
+ 344:../../iot_link/driver/driver.c ****         if(false == opret)
+ 345:../../iot_link/driver/driver.c ****         {
+ 346:../../iot_link/driver/driver.c ****             driv->errno = en_dev_err_open;
+ 347:../../iot_link/driver/driver.c ****             goto EXIT_OPENERR;
+ 348:../../iot_link/driver/driver.c ****         }
+ 349:../../iot_link/driver/driver.c ****     }
+ 350:../../iot_link/driver/driver.c **** 
+ 351:../../iot_link/driver/driver.c ****     //reach here means all the initialize is ok
+ 352:../../iot_link/driver/driver.c ****     //add the dev to the list of the drive and  attach the driv to the device
+ 353:../../iot_link/driver/driver.c ****     driv->opencounter++;
+ 354:../../iot_link/driver/driver.c ****     dev->nxt = driv->devlst;
+ 355:../../iot_link/driver/driver.c ****     driv->devlst = dev;
+ 356:../../iot_link/driver/driver.c **** 
+ 357:../../iot_link/driver/driver.c ****     dev->driv = driv;
+ 358:../../iot_link/driver/driver.c ****     dev->openflag =  flag;
+ 359:../../iot_link/driver/driver.c **** 
+ 360:../../iot_link/driver/driver.c ****     (void) osal_mutex_unlock(s_los_driv_module.lock);
+ 361:../../iot_link/driver/driver.c ****     return dev;
+ 362:../../iot_link/driver/driver.c **** 
+ 363:../../iot_link/driver/driver.c **** EXIT_OPENERR:
+ 364:../../iot_link/driver/driver.c **** EXIT_INITERR:
+ 365:../../iot_link/driver/driver.c **** EXIT_EXCLERR:
+ 366:../../iot_link/driver/driver.c **** EXIT_DRIVERR:
+ 367:../../iot_link/driver/driver.c ****     (void) osal_mutex_unlock(s_los_driv_module.lock);
+ 368:../../iot_link/driver/driver.c **** EXIT_MUTEXERR:
+ 369:../../iot_link/driver/driver.c ****     osal_free(dev);
+ 370:../../iot_link/driver/driver.c ****     dev = NULL;
+ 371:../../iot_link/driver/driver.c **** EXIT_MEMERR:
+ 372:../../iot_link/driver/driver.c **** EXIT_PARAERR:
+ 373:../../iot_link/driver/driver.c ****     return dev;
+ 374:../../iot_link/driver/driver.c **** }
+ 375:../../iot_link/driver/driver.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 9
+
+
+ 376:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 377:../../iot_link/driver/driver.c **** function     :close the device of opened
+ 378:../../iot_link/driver/driver.c **** parameters   :handle returned by open
+ 379:../../iot_link/driver/driver.c **** instruction  :
+ 380:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 381:../../iot_link/driver/driver.c **** bool_t  los_dev_close  (los_dev_t dev)
+ 382:../../iot_link/driver/driver.c **** {
+ 383:../../iot_link/driver/driver.c ****     bool_t ret = false;
+ 384:../../iot_link/driver/driver.c ****     struct dev_cb *devcb = NULL;
+ 385:../../iot_link/driver/driver.c ****     struct dev_cb *tmp = NULL;
+ 386:../../iot_link/driver/driver.c ****     struct driv_cb *driv = NULL;
+ 387:../../iot_link/driver/driver.c **** 
+ 388:../../iot_link/driver/driver.c ****     if ( NULL == dev )
+ 389:../../iot_link/driver/driver.c ****     {
+ 390:../../iot_link/driver/driver.c ****         goto EXIT_PARAERR;
+ 391:../../iot_link/driver/driver.c ****     }
+ 392:../../iot_link/driver/driver.c ****     devcb = dev;
+ 393:../../iot_link/driver/driver.c **** 
+ 394:../../iot_link/driver/driver.c ****     if(false == osal_mutex_lock(s_los_driv_module.lock))
+ 395:../../iot_link/driver/driver.c ****     {
+ 396:../../iot_link/driver/driver.c ****         goto EXIT_MUTEXERR;
+ 397:../../iot_link/driver/driver.c ****     }
+ 398:../../iot_link/driver/driver.c **** 
+ 399:../../iot_link/driver/driver.c ****     //deattach the dev from the driv
+ 400:../../iot_link/driver/driver.c ****     driv = devcb->driv;
+ 401:../../iot_link/driver/driver.c ****     if(NULL == driv)
+ 402:../../iot_link/driver/driver.c ****     {
+ 403:../../iot_link/driver/driver.c ****         goto EXIT_DRIVERR;
+ 404:../../iot_link/driver/driver.c ****     }
+ 405:../../iot_link/driver/driver.c **** 
+ 406:../../iot_link/driver/driver.c ****     if(devcb == driv->devlst)
+ 407:../../iot_link/driver/driver.c ****     {
+ 408:../../iot_link/driver/driver.c ****         driv->devlst = devcb->nxt;
+ 409:../../iot_link/driver/driver.c ****     }
+ 410:../../iot_link/driver/driver.c ****     else
+ 411:../../iot_link/driver/driver.c ****     {
+ 412:../../iot_link/driver/driver.c ****         tmp = driv->devlst;
+ 413:../../iot_link/driver/driver.c ****         while(NULL != tmp)
+ 414:../../iot_link/driver/driver.c ****         {
+ 415:../../iot_link/driver/driver.c ****             if(tmp->nxt == devcb)
+ 416:../../iot_link/driver/driver.c ****             {
+ 417:../../iot_link/driver/driver.c ****                 tmp->nxt = devcb->nxt;
+ 418:../../iot_link/driver/driver.c ****                 break;
+ 419:../../iot_link/driver/driver.c ****             }
+ 420:../../iot_link/driver/driver.c ****             tmp = tmp->nxt;
+ 421:../../iot_link/driver/driver.c ****         }
+ 422:../../iot_link/driver/driver.c ****         if(NULL == tmp)
+ 423:../../iot_link/driver/driver.c ****         {
+ 424:../../iot_link/driver/driver.c ****             goto EXIT_DETACHERR;
+ 425:../../iot_link/driver/driver.c ****         }
+ 426:../../iot_link/driver/driver.c ****     }
+ 427:../../iot_link/driver/driver.c ****     if(NULL != driv->op->close)
+ 428:../../iot_link/driver/driver.c ****     {
+ 429:../../iot_link/driver/driver.c ****         driv->op->close(driv->pri);
+ 430:../../iot_link/driver/driver.c ****     }
+ 431:../../iot_link/driver/driver.c **** 
+ 432:../../iot_link/driver/driver.c ****     if((NULL == driv->devlst) && (NULL != driv->op->deinit))
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 10
+
+
+ 433:../../iot_link/driver/driver.c ****     {
+ 434:../../iot_link/driver/driver.c ****         driv->op->deinit(driv->pri);
+ 435:../../iot_link/driver/driver.c ****         driv->drivstatus &= (~cn_driv_status_initialized);
+ 436:../../iot_link/driver/driver.c ****     }
+ 437:../../iot_link/driver/driver.c **** 
+ 438:../../iot_link/driver/driver.c ****     osal_free(dev);
+ 439:../../iot_link/driver/driver.c ****     driv->opencounter--;
+ 440:../../iot_link/driver/driver.c **** 
+ 441:../../iot_link/driver/driver.c ****     (void) osal_mutex_unlock(s_los_driv_module.lock);
+ 442:../../iot_link/driver/driver.c **** 
+ 443:../../iot_link/driver/driver.c ****     ret = true;
+ 444:../../iot_link/driver/driver.c **** 
+ 445:../../iot_link/driver/driver.c **** EXIT_DETACHERR:
+ 446:../../iot_link/driver/driver.c **** EXIT_DRIVERR:
+ 447:../../iot_link/driver/driver.c ****     (void) osal_mutex_unlock(s_los_driv_module.lock);
+ 448:../../iot_link/driver/driver.c **** EXIT_MUTEXERR:
+ 449:../../iot_link/driver/driver.c **** EXIT_PARAERR:
+ 450:../../iot_link/driver/driver.c ****     return ret;
+ 451:../../iot_link/driver/driver.c **** }
+ 452:../../iot_link/driver/driver.c **** 
+ 453:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 454:../../iot_link/driver/driver.c **** function     :use this function to read data from the device
+ 455:../../iot_link/driver/driver.c **** parameters   :dev,returned by the los_dev_open function
+ 456:../../iot_link/driver/driver.c ****               offet:from where to read,only used for storage device
+ 457:../../iot_link/driver/driver.c ****               buf:used to storage the data
+ 458:../../iot_link/driver/driver.c ****               len:the length of the buf
+ 459:../../iot_link/driver/driver.c ****               timeout:the waittime if no data current
+ 460:../../iot_link/driver/driver.c **** instruction  :how many data has been read to the buf
+ 461:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 462:../../iot_link/driver/driver.c **** ssize_t   los_dev_read  (los_dev_t dev,size_t offset, void *buf,size_t len,uint32_t timeout)
+ 463:../../iot_link/driver/driver.c **** {
+ 464:../../iot_link/driver/driver.c ****     ssize_t ret = 0;
+ 465:../../iot_link/driver/driver.c ****     struct dev_cb  *devcb;
+ 466:../../iot_link/driver/driver.c ****     struct driv_cb *drivcb;
+ 467:../../iot_link/driver/driver.c **** 
+ 468:../../iot_link/driver/driver.c ****     if((NULL != dev)&&(NULL != buf)&&(0 != len))
+ 469:../../iot_link/driver/driver.c ****     {
+ 470:../../iot_link/driver/driver.c ****         devcb = dev;
+ 471:../../iot_link/driver/driver.c ****         if((0 == ((uint32_t)devcb->openflag & O_WRONLY)))
+ 472:../../iot_link/driver/driver.c ****         {
+ 473:../../iot_link/driver/driver.c ****             drivcb = devcb->driv;
+ 474:../../iot_link/driver/driver.c ****             if((NULL != drivcb->op)&&(NULL != drivcb->op->read))
+ 475:../../iot_link/driver/driver.c ****             {
+ 476:../../iot_link/driver/driver.c ****                 ret = drivcb->op->read( drivcb->pri,offset,buf,len,timeout);
+ 477:../../iot_link/driver/driver.c ****                 if(ret > 0)
+ 478:../../iot_link/driver/driver.c ****                 {
+ 479:../../iot_link/driver/driver.c ****                     drivcb->total_read += ret;
+ 480:../../iot_link/driver/driver.c ****                 }
+ 481:../../iot_link/driver/driver.c ****             }
+ 482:../../iot_link/driver/driver.c ****         }
+ 483:../../iot_link/driver/driver.c ****     }
+ 484:../../iot_link/driver/driver.c **** 
+ 485:../../iot_link/driver/driver.c ****     return ret;
+ 486:../../iot_link/driver/driver.c **** }
+ 487:../../iot_link/driver/driver.c **** 
+ 488:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 489:../../iot_link/driver/driver.c **** function     :use this function to write data to the device
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 11
+
+
+ 490:../../iot_link/driver/driver.c **** parameters   :dev,returned by the los_dev_open function
+ 491:../../iot_link/driver/driver.c ****               offset: from where to write,only used for storage device
+ 492:../../iot_link/driver/driver.c ****               buf:the data to be written
+ 493:../../iot_link/driver/driver.c ****               len:the length of the buf
+ 494:../../iot_link/driver/driver.c ****               timeout:the waittime if no data current
+ 495:../../iot_link/driver/driver.c **** instruction  :how many data has been written to the device
+ 496:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 497:../../iot_link/driver/driver.c **** ssize_t los_dev_write (los_dev_t dev,size_t offset,const void *buf,size_t len, uint32_t timeout)
+ 498:../../iot_link/driver/driver.c **** {
+ 499:../../iot_link/driver/driver.c ****     ssize_t ret = 0;
+ 500:../../iot_link/driver/driver.c ****     struct dev_cb  *devcb;
+ 501:../../iot_link/driver/driver.c ****     struct driv_cb *drivcb;
+ 502:../../iot_link/driver/driver.c **** 
+ 503:../../iot_link/driver/driver.c ****     if((NULL != dev) && (NULL != buf) && (len != 0))
+ 504:../../iot_link/driver/driver.c ****     {
+ 505:../../iot_link/driver/driver.c ****         devcb = dev;
+ 506:../../iot_link/driver/driver.c ****         if((((uint32_t)devcb->openflag) & O_WRONLY) || (((uint32_t)devcb->openflag) & O_RDWR))
+ 507:../../iot_link/driver/driver.c ****         {
+ 508:../../iot_link/driver/driver.c ****             drivcb = devcb->driv;
+ 509:../../iot_link/driver/driver.c ****             if((NULL != drivcb->op)&&(NULL != drivcb->op->write))
+ 510:../../iot_link/driver/driver.c ****             {
+ 511:../../iot_link/driver/driver.c ****                 ret = drivcb->op->write( drivcb->pri,offset,buf,len,timeout);
+ 512:../../iot_link/driver/driver.c ****                 if(ret > 0)
+ 513:../../iot_link/driver/driver.c ****                 {
+ 514:../../iot_link/driver/driver.c ****                     drivcb->total_write += ret;
+ 515:../../iot_link/driver/driver.c ****                 }
+ 516:../../iot_link/driver/driver.c ****             }
+ 517:../../iot_link/driver/driver.c ****         }
+ 518:../../iot_link/driver/driver.c ****     }
+ 519:../../iot_link/driver/driver.c **** 
+ 520:../../iot_link/driver/driver.c ****     return ret;
+ 521:../../iot_link/driver/driver.c **** }
+ 522:../../iot_link/driver/driver.c **** 
+ 523:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 524:../../iot_link/driver/driver.c **** function     :use this function to control the device
+ 525:../../iot_link/driver/driver.c **** parameters   :dev,returned by the los_dev_open function
+ 526:../../iot_link/driver/driver.c ****               cmd, must compatible with bsp develop
+ 527:../../iot_link/driver/driver.c ****               para,used with cmd, its length and format depend on the bsp develop
+ 528:../../iot_link/driver/driver.c **** instruction  :ctrol true or false
+ 529:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 530:../../iot_link/driver/driver.c **** bool_t los_dev_ioctl (los_dev_t dev,unsigned int cmd,void *para,int paralen)
+ 531:../../iot_link/driver/driver.c **** {
+ 532:../../iot_link/driver/driver.c ****     bool_t ret = false;
+ 533:../../iot_link/driver/driver.c ****     struct dev_cb  *devcb;
+ 534:../../iot_link/driver/driver.c ****     struct driv_cb *drivcb;
+ 535:../../iot_link/driver/driver.c **** 
+ 536:../../iot_link/driver/driver.c ****     if(NULL != dev)
+ 537:../../iot_link/driver/driver.c ****     {
+ 538:../../iot_link/driver/driver.c ****         devcb = dev;
+ 539:../../iot_link/driver/driver.c ****         drivcb = devcb->driv;
+ 540:../../iot_link/driver/driver.c ****         if((NULL != drivcb->op)&&(NULL != drivcb->op->ioctl))
+ 541:../../iot_link/driver/driver.c ****         {
+ 542:../../iot_link/driver/driver.c ****             ret = drivcb->op->ioctl( drivcb->pri,cmd,para,paralen);
+ 543:../../iot_link/driver/driver.c ****         }
+ 544:../../iot_link/driver/driver.c ****     }
+ 545:../../iot_link/driver/driver.c **** 
+ 546:../../iot_link/driver/driver.c ****     return ret;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 12
+
+
+ 547:../../iot_link/driver/driver.c **** }
+ 548:../../iot_link/driver/driver.c **** 
+ 549:../../iot_link/driver/driver.c **** /*******************************************************************************
+ 550:../../iot_link/driver/driver.c **** function     :use this function to set the buffer current position,like lseek
+ 551:../../iot_link/driver/driver.c **** parameters   :dev,returned by the los_dev_open function
+ 552:../../iot_link/driver/driver.c ****               offset, refer to the lseek
+ 553:../../iot_link/driver/driver.c ****               fromwhere, refer to the lseek
+ 554:../../iot_link/driver/driver.c **** instruction  :return the current write/read position if success, else -1
+ 555:../../iot_link/driver/driver.c **** *******************************************************************************/
+ 556:../../iot_link/driver/driver.c **** off_t  los_dev_seek (los_dev_t dev,off_t offset,int fromwhere)
+ 557:../../iot_link/driver/driver.c **** {
+ 558:../../iot_link/driver/driver.c ****     off_t ret = -1;
+ 559:../../iot_link/driver/driver.c ****     struct dev_cb  *devcb;
+ 560:../../iot_link/driver/driver.c ****     struct driv_cb *drivcb;
+ 561:../../iot_link/driver/driver.c **** 
+ 562:../../iot_link/driver/driver.c ****     if(NULL != dev)
+ 563:../../iot_link/driver/driver.c ****     {
+ 564:../../iot_link/driver/driver.c ****         devcb = dev;
+ 565:../../iot_link/driver/driver.c ****         drivcb = devcb->driv;
+ 566:../../iot_link/driver/driver.c ****         if((NULL != drivcb->op)&&(NULL != drivcb->op->seek))
+ 567:../../iot_link/driver/driver.c ****         {
+ 568:../../iot_link/driver/driver.c ****             ret = drivcb->op->seek( drivcb->pri,offset,fromwhere);
+ 569:../../iot_link/driver/driver.c ****         }
+ 570:../../iot_link/driver/driver.c ****     }
+ 571:../../iot_link/driver/driver.c **** 
+ 572:../../iot_link/driver/driver.c ****     return ret;
+ 573:../../iot_link/driver/driver.c **** }
+ 574:../../iot_link/driver/driver.c **** 
+ 575:../../iot_link/driver/driver.c **** 
+ 576:../../iot_link/driver/driver.c **** //the following function should be implement by the vfs,
+ 577:../../iot_link/driver/driver.c **** //this is very important for the multi io operation, like the select epoll and so on
+ 578:../../iot_link/driver/driver.c **** //bool_t     los_dev_upara_set (los_dev_t dev,void *para);
+ 579:../../iot_link/driver/driver.c **** //void*      los_dev_upara_get (los_dev_t dev);
+ 580:../../iot_link/driver/driver.c **** 
+ 581:../../iot_link/driver/driver.c **** //export some shell for the driver debug
+ 582:../../iot_link/driver/driver.c **** #ifdef CONFIG_SHELL_ENABLE
+ 583:../../iot_link/driver/driver.c **** 
+ 584:../../iot_link/driver/driver.c **** #include <shell.h>
+ 585:../../iot_link/driver/driver.c **** //use this function to show all the driver infomation
+ 586:../../iot_link/driver/driver.c **** static int  __driv_show_shell(int argc,const char *argv[])
+ 587:../../iot_link/driver/driver.c **** {
+  82              		.loc 1 587 0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 0
+  85              		@ frame_needed = 0, uses_anonymous_args = 0
+  86              	.LVL6:
+  87 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  88              	.LCFI1:
+  89              		.cfi_def_cfa_offset 20
+  90              		.cfi_offset 4, -20
+  91              		.cfi_offset 5, -16
+  92              		.cfi_offset 6, -12
+  93              		.cfi_offset 7, -8
+  94              		.cfi_offset 14, -4
+ 588:../../iot_link/driver/driver.c ****     struct driv_cb  *driv;
+ 589:../../iot_link/driver/driver.c **** 
+ 590:../../iot_link/driver/driver.c ****     if(osal_mutex_lock(s_los_driv_module.lock))
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 13
+
+
+  95              		.loc 1 590 0
+  96 0002 214D     		ldr	r5, .L19
+ 587:../../iot_link/driver/driver.c ****     struct driv_cb  *driv;
+  97              		.loc 1 587 0
+  98 0004 85B0     		sub	sp, sp, #20
+  99              	.LCFI2:
+ 100              		.cfi_def_cfa_offset 40
+ 101              		.loc 1 590 0
+ 102 0006 2868     		ldr	r0, [r5]
+ 103              	.LVL7:
+ 104 0008 FFF7FEFF 		bl	osal_mutex_lock
+ 105              	.LVL8:
+ 106 000c 70B1     		cbz	r0, .L11
+ 107              	.LVL9:
+ 108              	.LBB4:
+ 109              	.LBB5:
+ 591:../../iot_link/driver/driver.c ****     {
+ 592:../../iot_link/driver/driver.c ****         link_printf("%s:total %d drivers\n\r",__FUNCTION__,s_los_driv_module.drivnum);
+ 110              		.loc 1 592 0
+ 111 000e 1F4E     		ldr	r6, .L19+4
+ 112 0010 AA68     		ldr	r2, [r5, #8]
+ 113 0012 1F49     		ldr	r1, .L19+8
+ 114 0014 1F48     		ldr	r0, .L19+12
+ 115 0016 FFF7FEFF 		bl	printf
+ 116              	.LVL10:
+ 117 001a 3368     		ldr	r3, [r6]
+ 118 001c 9868     		ldr	r0, [r3, #8]
+ 119 001e FFF7FEFF 		bl	fflush
+ 120              	.LVL11:
+ 593:../../iot_link/driver/driver.c ****         if(s_los_driv_module.drivnum != 0) //print all the driver
+ 121              		.loc 1 593 0
+ 122 0022 AB68     		ldr	r3, [r5, #8]
+ 123 0024 2BB9     		cbnz	r3, .L12
+ 124              	.L15:
+ 594:../../iot_link/driver/driver.c ****         {
+ 595:../../iot_link/driver/driver.c **** 
+ 596:../../iot_link/driver/driver.c ****             link_printf("%-16s %-8s %-8s %-8s %-8s %-8s %-8s\r\n",\
+ 597:../../iot_link/driver/driver.c ****                         "drivername","flagmask","status","writbyte","readbyte","open","errno");
+ 598:../../iot_link/driver/driver.c **** 
+ 599:../../iot_link/driver/driver.c ****             driv = s_los_driv_module.drivlst;
+ 600:../../iot_link/driver/driver.c ****             while(NULL != driv)
+ 601:../../iot_link/driver/driver.c ****             {
+ 602:../../iot_link/driver/driver.c ****                 link_printf("%-16s %08x %08x %08x %08x %08x %08x\r\n",driv->name,driv->flagmask,\
+ 603:../../iot_link/driver/driver.c ****                              driv->drivstatus,driv->total_write,driv->total_read,driv->opencounter,
+ 604:../../iot_link/driver/driver.c ****                 driv=driv->nxt;
+ 605:../../iot_link/driver/driver.c ****             }
+ 606:../../iot_link/driver/driver.c ****         }
+ 607:../../iot_link/driver/driver.c **** 
+ 608:../../iot_link/driver/driver.c ****         (void) osal_mutex_unlock(s_los_driv_module.lock);
+ 125              		.loc 1 608 0
+ 126 0026 2868     		ldr	r0, [r5]
+ 127 0028 FFF7FEFF 		bl	osal_mutex_unlock
+ 128              	.LVL12:
+ 129              	.L11:
+ 130              	.LBE5:
+ 131              	.LBE4:
+ 609:../../iot_link/driver/driver.c ****     }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 14
+
+
+ 610:../../iot_link/driver/driver.c **** 
+ 611:../../iot_link/driver/driver.c ****     return 0;
+ 612:../../iot_link/driver/driver.c **** }
+ 132              		.loc 1 612 0
+ 133 002c 0020     		movs	r0, #0
+ 134 002e 05B0     		add	sp, sp, #20
+ 135              	.LCFI3:
+ 136              		.cfi_remember_state
+ 137              		.cfi_def_cfa_offset 20
+ 138              		@ sp needed
+ 139 0030 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 140              	.LVL13:
+ 141              	.L12:
+ 142              	.LCFI4:
+ 143              		.cfi_restore_state
+ 144              	.LBB7:
+ 145              	.LBB6:
+ 596:../../iot_link/driver/driver.c ****                         "drivername","flagmask","status","writbyte","readbyte","open","errno");
+ 146              		.loc 1 596 0
+ 147 0032 194B     		ldr	r3, .L19+16
+ 148 0034 0393     		str	r3, [sp, #12]
+ 149 0036 194B     		ldr	r3, .L19+20
+ 150 0038 0293     		str	r3, [sp, #8]
+ 151 003a 194B     		ldr	r3, .L19+24
+ 152 003c 0193     		str	r3, [sp, #4]
+ 153 003e 194B     		ldr	r3, .L19+28
+ 154 0040 0093     		str	r3, [sp]
+ 155 0042 194A     		ldr	r2, .L19+32
+ 156 0044 194B     		ldr	r3, .L19+36
+ 157 0046 1A49     		ldr	r1, .L19+40
+ 158 0048 1A48     		ldr	r0, .L19+44
+ 602:../../iot_link/driver/driver.c ****                              driv->drivstatus,driv->total_write,driv->total_read,driv->opencounter,
+ 159              		.loc 1 602 0
+ 160 004a 1B4F     		ldr	r7, .L19+48
+ 596:../../iot_link/driver/driver.c ****                         "drivername","flagmask","status","writbyte","readbyte","open","errno");
+ 161              		.loc 1 596 0
+ 162 004c FFF7FEFF 		bl	printf
+ 163              	.LVL14:
+ 164 0050 3368     		ldr	r3, [r6]
+ 165 0052 9868     		ldr	r0, [r3, #8]
+ 166 0054 FFF7FEFF 		bl	fflush
+ 167              	.LVL15:
+ 599:../../iot_link/driver/driver.c ****             while(NULL != driv)
+ 168              		.loc 1 599 0
+ 169 0058 6C68     		ldr	r4, [r5, #4]
+ 170              	.LVL16:
+ 171              	.L13:
+ 600:../../iot_link/driver/driver.c ****             {
+ 172              		.loc 1 600 0
+ 173 005a 002C     		cmp	r4, #0
+ 174 005c E3D0     		beq	.L15
+ 602:../../iot_link/driver/driver.c ****                              driv->drivstatus,driv->total_write,driv->total_read,driv->opencounter,
+ 175              		.loc 1 602 0
+ 176 005e A36A     		ldr	r3, [r4, #40]
+ 177 0060 0393     		str	r3, [sp, #12]
+ 178 0062 636A     		ldr	r3, [r4, #36]
+ 179 0064 0293     		str	r3, [sp, #8]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 15
+
+
+ 180 0066 236A     		ldr	r3, [r4, #32]
+ 181 0068 0193     		str	r3, [sp, #4]
+ 182 006a E369     		ldr	r3, [r4, #28]
+ 183 006c 0093     		str	r3, [sp]
+ 184 006e 6369     		ldr	r3, [r4, #20]
+ 185 0070 D4E90212 		ldrd	r1, r2, [r4, #8]
+ 186 0074 3846     		mov	r0, r7
+ 187 0076 FFF7FEFF 		bl	printf
+ 188              	.LVL17:
+ 189 007a 3368     		ldr	r3, [r6]
+ 190 007c 9868     		ldr	r0, [r3, #8]
+ 191 007e FFF7FEFF 		bl	fflush
+ 192              	.LVL18:
+ 604:../../iot_link/driver/driver.c ****             }
+ 193              		.loc 1 604 0
+ 194 0082 2468     		ldr	r4, [r4]
+ 195              	.LVL19:
+ 196 0084 E9E7     		b	.L13
+ 197              	.L20:
+ 198 0086 00BF     		.align	2
+ 199              	.L19:
+ 200 0088 00000000 		.word	.LANCHOR0
+ 201 008c 00000000 		.word	_impure_ptr
+ 202 0090 00000000 		.word	.LANCHOR1
+ 203 0094 00000000 		.word	.LC0
+ 204 0098 57000000 		.word	.LC5
+ 205 009c 5D000000 		.word	.LC6
+ 206 00a0 62000000 		.word	.LC7
+ 207 00a4 6B000000 		.word	.LC8
+ 208 00a8 1D000000 		.word	.LC2
+ 209 00ac 16000000 		.word	.LC1
+ 210 00b0 26000000 		.word	.LC3
+ 211 00b4 31000000 		.word	.LC4
+ 212 00b8 74000000 		.word	.LC9
+ 213              	.LBE6:
+ 214              	.LBE7:
+ 215              		.cfi_endproc
+ 216              	.LFE15:
+ 218              		.section	.text.los_driv_register,"ax",%progbits
+ 219              		.align	1
+ 220              		.global	los_driv_register
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 224              		.fpu fpv4-sp-d16
+ 226              	los_driv_register:
+ 227              	.LFB4:
+ 108:../../iot_link/driver/driver.c ****     struct driv_cb  *driv = NULL;
+ 228              		.loc 1 108 0
+ 229              		.cfi_startproc
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              	.LVL20:
+ 111:../../iot_link/driver/driver.c ****     {
+ 233              		.loc 1 111 0
+ 234 0000 0368     		ldr	r3, [r0]
+ 108:../../iot_link/driver/driver.c ****     struct driv_cb  *driv = NULL;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 16
+
+
+ 235              		.loc 1 108 0
+ 236 0002 70B5     		push	{r4, r5, r6, lr}
+ 237              	.LCFI5:
+ 238              		.cfi_def_cfa_offset 16
+ 239              		.cfi_offset 4, -16
+ 240              		.cfi_offset 5, -12
+ 241              		.cfi_offset 6, -8
+ 242              		.cfi_offset 14, -4
+ 108:../../iot_link/driver/driver.c ****     struct driv_cb  *driv = NULL;
+ 243              		.loc 1 108 0
+ 244 0004 0546     		mov	r5, r0
+ 111:../../iot_link/driver/driver.c ****     {
+ 245              		.loc 1 111 0
+ 246 0006 0BB9     		cbnz	r3, .L22
+ 247              	.LVL21:
+ 248              	.L36:
+ 153:../../iot_link/driver/driver.c **** EXIT_MALLOC:
+ 249              		.loc 1 153 0
+ 250 0008 0024     		movs	r4, #0
+ 251 000a 27E0     		b	.L21
+ 252              	.LVL22:
+ 253              	.L22:
+ 111:../../iot_link/driver/driver.c ****     {
+ 254              		.loc 1 111 0 discriminator 1
+ 255 000c 4368     		ldr	r3, [r0, #4]
+ 256 000e 002B     		cmp	r3, #0
+ 257 0010 FAD0     		beq	.L36
+ 116:../../iot_link/driver/driver.c ****     if(NULL == driv)
+ 258              		.loc 1 116 0
+ 259 0012 2C20     		movs	r0, #44
+ 260              	.LVL23:
+ 261 0014 FFF7FEFF 		bl	osal_malloc
+ 262              	.LVL24:
+ 117:../../iot_link/driver/driver.c ****     {
+ 263              		.loc 1 117 0
+ 264 0018 0446     		mov	r4, r0
+ 265 001a 0028     		cmp	r0, #0
+ 266 001c F4D0     		beq	.L36
+ 121:../../iot_link/driver/driver.c **** 
+ 267              		.loc 1 121 0
+ 268 001e 2C22     		movs	r2, #44
+ 269 0020 0021     		movs	r1, #0
+ 270 0022 FFF7FEFF 		bl	memset
+ 271              	.LVL25:
+ 124:../../iot_link/driver/driver.c ****     driv->op = para->op;
+ 272              		.loc 1 124 0
+ 273 0026 2B68     		ldr	r3, [r5]
+ 274 0028 A360     		str	r3, [r4, #8]
+ 125:../../iot_link/driver/driver.c ****     driv->pri = para->pri;
+ 275              		.loc 1 125 0
+ 276 002a 6B68     		ldr	r3, [r5, #4]
+ 277 002c 2361     		str	r3, [r4, #16]
+ 130:../../iot_link/driver/driver.c ****     {
+ 278              		.loc 1 130 0
+ 279 002e 104E     		ldr	r6, .L37
+ 126:../../iot_link/driver/driver.c ****     driv->flagmask = para->flag;
+ 280              		.loc 1 126 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 17
+
+
+ 281 0030 AB68     		ldr	r3, [r5, #8]
+ 282 0032 6360     		str	r3, [r4, #4]
+ 127:../../iot_link/driver/driver.c **** 
+ 283              		.loc 1 127 0
+ 284 0034 EB68     		ldr	r3, [r5, #12]
+ 285 0036 E360     		str	r3, [r4, #12]
+ 130:../../iot_link/driver/driver.c ****     {
+ 286              		.loc 1 130 0
+ 287 0038 3068     		ldr	r0, [r6]
+ 288 003a FFF7FEFF 		bl	osal_mutex_lock
+ 289              	.LVL26:
+ 290 003e 90B1     		cbz	r0, .L25
+ 135:../../iot_link/driver/driver.c ****     {
+ 291              		.loc 1 135 0
+ 292 0040 2868     		ldr	r0, [r5]
+ 293 0042 FFF7FEFF 		bl	__driv_match
+ 294              	.LVL27:
+ 295 0046 3368     		ldr	r3, [r6]
+ 296 0048 50B9     		cbnz	r0, .L26
+ 140:../../iot_link/driver/driver.c ****     s_los_driv_module.drivlst = driv;
+ 297              		.loc 1 140 0
+ 298 004a 7268     		ldr	r2, [r6, #4]
+ 299 004c 2260     		str	r2, [r4]
+ 142:../../iot_link/driver/driver.c **** 
+ 300              		.loc 1 142 0
+ 301 004e 1846     		mov	r0, r3
+ 141:../../iot_link/driver/driver.c ****     (void) osal_mutex_unlock(s_los_driv_module.lock);
+ 302              		.loc 1 141 0
+ 303 0050 7460     		str	r4, [r6, #4]
+ 142:../../iot_link/driver/driver.c **** 
+ 304              		.loc 1 142 0
+ 305 0052 FFF7FEFF 		bl	osal_mutex_unlock
+ 306              	.LVL28:
+ 144:../../iot_link/driver/driver.c **** 
+ 307              		.loc 1 144 0
+ 308 0056 B368     		ldr	r3, [r6, #8]
+ 309 0058 0133     		adds	r3, r3, #1
+ 310 005a B360     		str	r3, [r6, #8]
+ 311              	.LVL29:
+ 312              	.L21:
+ 157:../../iot_link/driver/driver.c **** 
+ 313              		.loc 1 157 0
+ 314 005c 2046     		mov	r0, r4
+ 315 005e 70BD     		pop	{r4, r5, r6, pc}
+ 316              	.LVL30:
+ 317              	.L26:
+ 150:../../iot_link/driver/driver.c **** EXIT_MUTEX:
+ 318              		.loc 1 150 0
+ 319 0060 1846     		mov	r0, r3
+ 320 0062 FFF7FEFF 		bl	osal_mutex_unlock
+ 321              	.LVL31:
+ 322              	.L25:
+ 152:../../iot_link/driver/driver.c ****     driv = NULL;
+ 323              		.loc 1 152 0
+ 324 0066 2046     		mov	r0, r4
+ 325 0068 FFF7FEFF 		bl	osal_free
+ 326              	.LVL32:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 18
+
+
+ 327 006c CCE7     		b	.L36
+ 328              	.L38:
+ 329 006e 00BF     		.align	2
+ 330              	.L37:
+ 331 0070 00000000 		.word	.LANCHOR0
+ 332              		.cfi_endproc
+ 333              	.LFE4:
+ 335              		.section	.text.los_driv_unregister,"ax",%progbits
+ 336              		.align	1
+ 337              		.global	los_driv_unregister
+ 338              		.syntax unified
+ 339              		.thumb
+ 340              		.thumb_func
+ 341              		.fpu fpv4-sp-d16
+ 343              	los_driv_unregister:
+ 344              	.LFB5:
+ 165:../../iot_link/driver/driver.c ****     struct driv_cb *tmp = NULL;
+ 345              		.loc 1 165 0
+ 346              		.cfi_startproc
+ 347              		@ args = 0, pretend = 0, frame = 0
+ 348              		@ frame_needed = 0, uses_anonymous_args = 0
+ 349              	.LVL33:
+ 350 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 351              	.LCFI6:
+ 352              		.cfi_def_cfa_offset 24
+ 353              		.cfi_offset 3, -24
+ 354              		.cfi_offset 4, -20
+ 355              		.cfi_offset 5, -16
+ 356              		.cfi_offset 6, -12
+ 357              		.cfi_offset 7, -8
+ 358              		.cfi_offset 14, -4
+ 169:../../iot_link/driver/driver.c ****     {
+ 359              		.loc 1 169 0
+ 360 0002 0746     		mov	r7, r0
+ 361 0004 10B9     		cbnz	r0, .L40
+ 362              	.LVL34:
+ 363              	.L42:
+ 171:../../iot_link/driver/driver.c ****     }
+ 364              		.loc 1 171 0
+ 365 0006 0024     		movs	r4, #0
+ 366              	.LVL35:
+ 367              	.L39:
+ 208:../../iot_link/driver/driver.c **** 
+ 368              		.loc 1 208 0
+ 369 0008 2046     		mov	r0, r4
+ 370 000a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 371              	.LVL36:
+ 372              	.L40:
+ 174:../../iot_link/driver/driver.c ****     {
+ 373              		.loc 1 174 0
+ 374 000c 114D     		ldr	r5, .L54
+ 375 000e 2868     		ldr	r0, [r5]
+ 376              	.LVL37:
+ 377 0010 FFF7FEFF 		bl	osal_mutex_lock
+ 378              	.LVL38:
+ 379 0014 0028     		cmp	r0, #0
+ 380 0016 F6D0     		beq	.L42
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 19
+
+
+ 176:../../iot_link/driver/driver.c ****         pre = NULL;
+ 381              		.loc 1 176 0
+ 382 0018 6C68     		ldr	r4, [r5, #4]
+ 383              	.LVL39:
+ 177:../../iot_link/driver/driver.c ****         while(NULL != tmp)
+ 384              		.loc 1 177 0
+ 385 001a 0026     		movs	r6, #0
+ 386              	.LVL40:
+ 387              	.L43:
+ 178:../../iot_link/driver/driver.c ****         {
+ 388              		.loc 1 178 0
+ 389 001c 1CB9     		cbnz	r4, .L45
+ 390              	.LVL41:
+ 391              	.L46:
+ 204:../../iot_link/driver/driver.c ****     }
+ 392              		.loc 1 204 0
+ 393 001e 2868     		ldr	r0, [r5]
+ 394 0020 FFF7FEFF 		bl	osal_mutex_unlock
+ 395              	.LVL42:
+ 396 0024 F0E7     		b	.L39
+ 397              	.LVL43:
+ 398              	.L45:
+ 180:../../iot_link/driver/driver.c ****             {
+ 399              		.loc 1 180 0
+ 400 0026 A168     		ldr	r1, [r4, #8]
+ 401 0028 3846     		mov	r0, r7
+ 402 002a FFF7FEFF 		bl	strcmp
+ 403              	.LVL44:
+ 404 002e 2368     		ldr	r3, [r4]
+ 405 0030 20B1     		cbz	r0, .L44
+ 406 0032 2646     		mov	r6, r4
+ 407 0034 1C46     		mov	r4, r3
+ 408              	.LVL45:
+ 409 0036 F1E7     		b	.L43
+ 410              	.LVL46:
+ 411              	.L53:
+ 195:../../iot_link/driver/driver.c ****             }
+ 412              		.loc 1 195 0
+ 413 0038 3360     		str	r3, [r6]
+ 414 003a 02E0     		b	.L47
+ 415              	.L44:
+ 189:../../iot_link/driver/driver.c ****             {
+ 416              		.loc 1 189 0
+ 417 003c 002E     		cmp	r6, #0
+ 418 003e FBD1     		bne	.L53
+ 191:../../iot_link/driver/driver.c ****             }
+ 419              		.loc 1 191 0
+ 420 0040 6B60     		str	r3, [r5, #4]
+ 421              	.L47:
+ 198:../../iot_link/driver/driver.c ****             ret = true;
+ 422              		.loc 1 198 0
+ 423 0042 2046     		mov	r0, r4
+ 424 0044 FFF7FEFF 		bl	osal_free
+ 425              	.LVL47:
+ 201:../../iot_link/driver/driver.c ****         }
+ 426              		.loc 1 201 0
+ 427 0048 AB68     		ldr	r3, [r5, #8]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 20
+
+
+ 428 004a 013B     		subs	r3, r3, #1
+ 429 004c AB60     		str	r3, [r5, #8]
+ 199:../../iot_link/driver/driver.c **** 
+ 430              		.loc 1 199 0
+ 431 004e 0124     		movs	r4, #1
+ 432              	.LVL48:
+ 433 0050 E5E7     		b	.L46
+ 434              	.L55:
+ 435 0052 00BF     		.align	2
+ 436              	.L54:
+ 437 0054 00000000 		.word	.LANCHOR0
+ 438              		.cfi_endproc
+ 439              	.LFE5:
+ 441              		.section	.text.los_driv_event,"ax",%progbits
+ 442              		.align	1
+ 443              		.global	los_driv_event
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 447              		.fpu fpv4-sp-d16
+ 449              	los_driv_event:
+ 450              	.LFB6:
+ 216:../../iot_link/driver/driver.c ****     return false;
+ 451              		.loc 1 216 0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 0
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 455              		@ link register save eliminated.
+ 456              	.LVL49:
+ 218:../../iot_link/driver/driver.c **** 
+ 457              		.loc 1 218 0
+ 458 0000 0020     		movs	r0, #0
+ 459              	.LVL50:
+ 460 0002 7047     		bx	lr
+ 461              		.cfi_endproc
+ 462              	.LFE6:
+ 464              		.section	.text.los_driv_init,"ax",%progbits
+ 465              		.align	1
+ 466              		.global	los_driv_init
+ 467              		.syntax unified
+ 468              		.thumb
+ 469              		.thumb_func
+ 470              		.fpu fpv4-sp-d16
+ 472              	los_driv_init:
+ 473              	.LFB8:
+ 262:../../iot_link/driver/driver.c ****     bool_t ret = false;
+ 474              		.loc 1 262 0
+ 475              		.cfi_startproc
+ 476              		@ args = 0, pretend = 0, frame = 0
+ 477              		@ frame_needed = 0, uses_anonymous_args = 0
+ 478              	.LVL51:
+ 479 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 480              	.LCFI7:
+ 481              		.cfi_def_cfa_offset 24
+ 482              		.cfi_offset 3, -24
+ 483              		.cfi_offset 4, -20
+ 484              		.cfi_offset 5, -16
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 21
+
+
+ 485              		.cfi_offset 6, -12
+ 486              		.cfi_offset 7, -8
+ 487              		.cfi_offset 14, -4
+ 265:../../iot_link/driver/driver.c ****     if(false == ret)
+ 488              		.loc 1 265 0
+ 489 0002 0A48     		ldr	r0, .L62
+ 490 0004 FFF7FEFF 		bl	osal_mutex_create
+ 491              	.LVL52:
+ 266:../../iot_link/driver/driver.c ****     {
+ 492              		.loc 1 266 0
+ 493 0008 0646     		mov	r6, r0
+ 494 000a 40B1     		cbz	r0, .L57
+ 495              	.LVL53:
+ 496              	.LBB10:
+ 497              	.LBB11:
+ 244:../../iot_link/driver/driver.c **** #endif
+ 498              		.loc 1 244 0
+ 499 000c 084F     		ldr	r7, .L62+4
+ 500 000e 094C     		ldr	r4, .L62+8
+ 501 0010 E41B     		subs	r4, r4, r7
+ 502 0012 2409     		lsrs	r4, r4, #4
+ 503              	.LVL54:
+ 246:../../iot_link/driver/driver.c ****     {
+ 504              		.loc 1 246 0
+ 505 0014 0025     		movs	r5, #0
+ 506              	.LVL55:
+ 507              	.L59:
+ 508 0016 AC42     		cmp	r4, r5
+ 509 0018 07EB0510 		add	r0, r7, r5, lsl #4
+ 510              	.LVL56:
+ 511 001c 01D1     		bne	.L60
+ 512              	.LVL57:
+ 513              	.L57:
+ 514              	.LBE11:
+ 515              	.LBE10:
+ 276:../../iot_link/driver/driver.c **** 
+ 516              		.loc 1 276 0
+ 517 001e 3046     		mov	r0, r6
+ 518 0020 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 519              	.LVL58:
+ 520              	.L60:
+ 521              	.LBB13:
+ 522              	.LBB12:
+ 248:../../iot_link/driver/driver.c ****         para++;
+ 523              		.loc 1 248 0
+ 524 0022 FFF7FEFF 		bl	los_driv_register
+ 525              	.LVL59:
+ 246:../../iot_link/driver/driver.c ****     {
+ 526              		.loc 1 246 0
+ 527 0026 0135     		adds	r5, r5, #1
+ 528              	.LVL60:
+ 529 0028 F5E7     		b	.L59
+ 530              	.L63:
+ 531 002a 00BF     		.align	2
+ 532              	.L62:
+ 533 002c 00000000 		.word	.LANCHOR0
+ 534 0030 00000000 		.word	__osdriv_start
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 22
+
+
+ 535 0034 00000000 		.word	__osdriv_end
+ 536              	.LBE12:
+ 537              	.LBE13:
+ 538              		.cfi_endproc
+ 539              	.LFE8:
+ 541              		.section	.text.los_dev_open,"ax",%progbits
+ 542              		.align	1
+ 543              		.global	los_dev_open
+ 544              		.syntax unified
+ 545              		.thumb
+ 546              		.thumb_func
+ 547              		.fpu fpv4-sp-d16
+ 549              	los_dev_open:
+ 550              	.LFB9:
+ 296:../../iot_link/driver/driver.c ****     bool_t opret = true;           //operate result
+ 551              		.loc 1 296 0
+ 552              		.cfi_startproc
+ 553              		@ args = 0, pretend = 0, frame = 0
+ 554              		@ frame_needed = 0, uses_anonymous_args = 0
+ 555              	.LVL61:
+ 556 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 557              	.LCFI8:
+ 558              		.cfi_def_cfa_offset 24
+ 559              		.cfi_offset 3, -24
+ 560              		.cfi_offset 4, -20
+ 561              		.cfi_offset 5, -16
+ 562              		.cfi_offset 6, -12
+ 563              		.cfi_offset 7, -8
+ 564              		.cfi_offset 14, -4
+ 296:../../iot_link/driver/driver.c ****     bool_t opret = true;           //operate result
+ 565              		.loc 1 296 0
+ 566 0002 0F46     		mov	r7, r1
+ 300:../../iot_link/driver/driver.c ****     {
+ 567              		.loc 1 300 0
+ 568 0004 0446     		mov	r4, r0
+ 569 0006 08B9     		cbnz	r0, .L65
+ 570              	.LVL62:
+ 571              	.L96:
+ 370:../../iot_link/driver/driver.c **** EXIT_MEMERR:
+ 572              		.loc 1 370 0
+ 573 0008 0025     		movs	r5, #0
+ 574 000a 42E0     		b	.L64
+ 575              	.LVL63:
+ 576              	.L65:
+ 305:../../iot_link/driver/driver.c ****     if (NULL == dev)
+ 577              		.loc 1 305 0
+ 578 000c 1820     		movs	r0, #24
+ 579              	.LVL64:
+ 580 000e FFF7FEFF 		bl	osal_malloc
+ 581              	.LVL65:
+ 306:../../iot_link/driver/driver.c ****     {
+ 582              		.loc 1 306 0
+ 583 0012 0546     		mov	r5, r0
+ 584 0014 0028     		cmp	r0, #0
+ 585 0016 F7D0     		beq	.L96
+ 312:../../iot_link/driver/driver.c ****     if(false == opret)
+ 586              		.loc 1 312 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 23
+
+
+ 587 0018 1F4E     		ldr	r6, .L97
+ 310:../../iot_link/driver/driver.c **** 
+ 588              		.loc 1 310 0
+ 589 001a 1822     		movs	r2, #24
+ 590 001c 0021     		movs	r1, #0
+ 591 001e FFF7FEFF 		bl	memset
+ 592              	.LVL66:
+ 312:../../iot_link/driver/driver.c ****     if(false == opret)
+ 593              		.loc 1 312 0
+ 594 0022 3068     		ldr	r0, [r6]
+ 595 0024 FFF7FEFF 		bl	osal_mutex_lock
+ 596              	.LVL67:
+ 313:../../iot_link/driver/driver.c ****     {
+ 597              		.loc 1 313 0
+ 598 0028 B8B1     		cbz	r0, .L68
+ 318:../../iot_link/driver/driver.c ****     if(NULL == driv)
+ 599              		.loc 1 318 0
+ 600 002a 2046     		mov	r0, r4
+ 601              	.LVL68:
+ 602 002c FFF7FEFF 		bl	__driv_match
+ 603              	.LVL69:
+ 319:../../iot_link/driver/driver.c ****     {
+ 604              		.loc 1 319 0
+ 605 0030 0446     		mov	r4, r0
+ 606              	.LVL70:
+ 607 0032 78B1     		cbz	r0, .L76
+ 324:../../iot_link/driver/driver.c ****     {
+ 608              		.loc 1 324 0
+ 609 0034 C368     		ldr	r3, [r0, #12]
+ 610 0036 1A05     		lsls	r2, r3, #20
+ 611 0038 01D5     		bpl	.L70
+ 324:../../iot_link/driver/driver.c ****     {
+ 612              		.loc 1 324 0 is_stmt 0 discriminator 1
+ 613 003a 8369     		ldr	r3, [r0, #24]
+ 614 003c 53B9     		cbnz	r3, .L76
+ 615              	.L70:
+ 329:../../iot_link/driver/driver.c ****         (NULL != driv->op->init))
+ 616              		.loc 1 329 0 is_stmt 1
+ 617 003e 6369     		ldr	r3, [r4, #20]
+ 618 0040 DB07     		lsls	r3, r3, #31
+ 619 0042 12D4     		bmi	.L71
+ 330:../../iot_link/driver/driver.c ****     {
+ 620              		.loc 1 330 0 discriminator 1
+ 621 0044 2369     		ldr	r3, [r4, #16]
+ 622 0046 9B69     		ldr	r3, [r3, #24]
+ 329:../../iot_link/driver/driver.c ****         (NULL != driv->op->init))
+ 623              		.loc 1 329 0 discriminator 1
+ 624 0048 7BB1     		cbz	r3, .L71
+ 332:../../iot_link/driver/driver.c ****         if(false == opret)
+ 625              		.loc 1 332 0
+ 626 004a 6068     		ldr	r0, [r4, #4]
+ 627              	.LVL71:
+ 628 004c 9847     		blx	r3
+ 629              	.LVL72:
+ 333:../../iot_link/driver/driver.c ****         {
+ 630              		.loc 1 333 0
+ 631 004e 40B9     		cbnz	r0, .L72
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 24
+
+
+ 335:../../iot_link/driver/driver.c ****             goto EXIT_INITERR;
+ 632              		.loc 1 335 0
+ 633 0050 0123     		movs	r3, #1
+ 634              	.L95:
+ 346:../../iot_link/driver/driver.c ****             goto EXIT_OPENERR;
+ 635              		.loc 1 346 0
+ 636 0052 A362     		str	r3, [r4, #40]
+ 637              	.L69:
+ 638              	.L74:
+ 639              	.L75:
+ 640              	.LVL73:
+ 641              	.L76:
+ 367:../../iot_link/driver/driver.c **** EXIT_MUTEXERR:
+ 642              		.loc 1 367 0
+ 643 0054 3068     		ldr	r0, [r6]
+ 644 0056 FFF7FEFF 		bl	osal_mutex_unlock
+ 645              	.LVL74:
+ 646              	.L68:
+ 369:../../iot_link/driver/driver.c ****     dev = NULL;
+ 647              		.loc 1 369 0
+ 648 005a 2846     		mov	r0, r5
+ 649 005c FFF7FEFF 		bl	osal_free
+ 650              	.LVL75:
+ 651 0060 D2E7     		b	.L96
+ 652              	.LVL76:
+ 653              	.L72:
+ 338:../../iot_link/driver/driver.c ****     }
+ 654              		.loc 1 338 0
+ 655 0062 6369     		ldr	r3, [r4, #20]
+ 656 0064 43F00103 		orr	r3, r3, #1
+ 657 0068 6361     		str	r3, [r4, #20]
+ 658              	.LVL77:
+ 659              	.L71:
+ 341:../../iot_link/driver/driver.c ****     {
+ 660              		.loc 1 341 0
+ 661 006a 2369     		ldr	r3, [r4, #16]
+ 662 006c 1B68     		ldr	r3, [r3]
+ 663 006e 2BB1     		cbz	r3, .L73
+ 343:../../iot_link/driver/driver.c ****         if(false == opret)
+ 664              		.loc 1 343 0
+ 665 0070 3946     		mov	r1, r7
+ 666 0072 6068     		ldr	r0, [r4, #4]
+ 667 0074 9847     		blx	r3
+ 668              	.LVL78:
+ 344:../../iot_link/driver/driver.c ****         {
+ 669              		.loc 1 344 0
+ 670 0076 08B9     		cbnz	r0, .L73
+ 346:../../iot_link/driver/driver.c ****             goto EXIT_OPENERR;
+ 671              		.loc 1 346 0
+ 672 0078 0223     		movs	r3, #2
+ 673 007a EAE7     		b	.L95
+ 674              	.LVL79:
+ 675              	.L73:
+ 353:../../iot_link/driver/driver.c ****     dev->nxt = driv->devlst;
+ 676              		.loc 1 353 0
+ 677 007c 636A     		ldr	r3, [r4, #36]
+ 360:../../iot_link/driver/driver.c ****     return dev;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 25
+
+
+ 678              		.loc 1 360 0
+ 679 007e 3068     		ldr	r0, [r6]
+ 353:../../iot_link/driver/driver.c ****     dev->nxt = driv->devlst;
+ 680              		.loc 1 353 0
+ 681 0080 0133     		adds	r3, r3, #1
+ 682 0082 6362     		str	r3, [r4, #36]
+ 354:../../iot_link/driver/driver.c ****     driv->devlst = dev;
+ 683              		.loc 1 354 0
+ 684 0084 A369     		ldr	r3, [r4, #24]
+ 685 0086 2B60     		str	r3, [r5]
+ 355:../../iot_link/driver/driver.c **** 
+ 686              		.loc 1 355 0
+ 687 0088 A561     		str	r5, [r4, #24]
+ 358:../../iot_link/driver/driver.c **** 
+ 688              		.loc 1 358 0
+ 689 008a C5E90147 		strd	r4, r7, [r5, #4]
+ 360:../../iot_link/driver/driver.c ****     return dev;
+ 690              		.loc 1 360 0
+ 691 008e FFF7FEFF 		bl	osal_mutex_unlock
+ 692              	.LVL80:
+ 693              	.L64:
+ 374:../../iot_link/driver/driver.c **** 
+ 694              		.loc 1 374 0
+ 695 0092 2846     		mov	r0, r5
+ 696 0094 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 697              	.LVL81:
+ 698              	.L98:
+ 699 0096 00BF     		.align	2
+ 700              	.L97:
+ 701 0098 00000000 		.word	.LANCHOR0
+ 702              		.cfi_endproc
+ 703              	.LFE9:
+ 705              		.section	.text.los_dev_close,"ax",%progbits
+ 706              		.align	1
+ 707              		.global	los_dev_close
+ 708              		.syntax unified
+ 709              		.thumb
+ 710              		.thumb_func
+ 711              		.fpu fpv4-sp-d16
+ 713              	los_dev_close:
+ 714              	.LFB10:
+ 382:../../iot_link/driver/driver.c ****     bool_t ret = false;
+ 715              		.loc 1 382 0
+ 716              		.cfi_startproc
+ 717              		@ args = 0, pretend = 0, frame = 0
+ 718              		@ frame_needed = 0, uses_anonymous_args = 0
+ 719              	.LVL82:
+ 720 0000 70B5     		push	{r4, r5, r6, lr}
+ 721              	.LCFI9:
+ 722              		.cfi_def_cfa_offset 16
+ 723              		.cfi_offset 4, -16
+ 724              		.cfi_offset 5, -12
+ 725              		.cfi_offset 6, -8
+ 726              		.cfi_offset 14, -4
+ 388:../../iot_link/driver/driver.c ****     {
+ 727              		.loc 1 388 0
+ 728 0002 0546     		mov	r5, r0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 26
+
+
+ 729 0004 10B9     		cbnz	r0, .L100
+ 730              	.LVL83:
+ 731              	.L102:
+ 383:../../iot_link/driver/driver.c ****     struct dev_cb *devcb = NULL;
+ 732              		.loc 1 383 0
+ 733 0006 0024     		movs	r4, #0
+ 734              	.LVL84:
+ 735              	.L99:
+ 451:../../iot_link/driver/driver.c **** 
+ 736              		.loc 1 451 0
+ 737 0008 2046     		mov	r0, r4
+ 738 000a 70BD     		pop	{r4, r5, r6, pc}
+ 739              	.LVL85:
+ 740              	.L100:
+ 394:../../iot_link/driver/driver.c ****     {
+ 741              		.loc 1 394 0
+ 742 000c 1A4E     		ldr	r6, .L123
+ 743 000e 3068     		ldr	r0, [r6]
+ 744              	.LVL86:
+ 745 0010 FFF7FEFF 		bl	osal_mutex_lock
+ 746              	.LVL87:
+ 747 0014 0028     		cmp	r0, #0
+ 748 0016 F6D0     		beq	.L102
+ 400:../../iot_link/driver/driver.c ****     if(NULL == driv)
+ 749              		.loc 1 400 0
+ 750 0018 6C68     		ldr	r4, [r5, #4]
+ 751              	.LVL88:
+ 401:../../iot_link/driver/driver.c ****     {
+ 752              		.loc 1 401 0
+ 753 001a 4CB3     		cbz	r4, .L109
+ 406:../../iot_link/driver/driver.c ****     {
+ 754              		.loc 1 406 0
+ 755 001c A369     		ldr	r3, [r4, #24]
+ 756 001e AB42     		cmp	r3, r5
+ 757 0020 23D1     		bne	.L104
+ 408:../../iot_link/driver/driver.c ****     }
+ 758              		.loc 1 408 0
+ 759 0022 2B68     		ldr	r3, [r5]
+ 760 0024 A361     		str	r3, [r4, #24]
+ 761              	.LVL89:
+ 762              	.L105:
+ 427:../../iot_link/driver/driver.c ****     {
+ 763              		.loc 1 427 0
+ 764 0026 2369     		ldr	r3, [r4, #16]
+ 765 0028 DB68     		ldr	r3, [r3, #12]
+ 766 002a 0BB1     		cbz	r3, .L107
+ 429:../../iot_link/driver/driver.c ****     }
+ 767              		.loc 1 429 0
+ 768 002c 6068     		ldr	r0, [r4, #4]
+ 769 002e 9847     		blx	r3
+ 770              	.LVL90:
+ 771              	.L107:
+ 432:../../iot_link/driver/driver.c ****     {
+ 772              		.loc 1 432 0
+ 773 0030 A369     		ldr	r3, [r4, #24]
+ 774 0032 43B9     		cbnz	r3, .L108
+ 432:../../iot_link/driver/driver.c ****     {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 27
+
+
+ 775              		.loc 1 432 0 is_stmt 0 discriminator 1
+ 776 0034 2369     		ldr	r3, [r4, #16]
+ 777 0036 DB69     		ldr	r3, [r3, #28]
+ 778 0038 2BB1     		cbz	r3, .L108
+ 434:../../iot_link/driver/driver.c ****         driv->drivstatus &= (~cn_driv_status_initialized);
+ 779              		.loc 1 434 0 is_stmt 1
+ 780 003a 6068     		ldr	r0, [r4, #4]
+ 781 003c 9847     		blx	r3
+ 782              	.LVL91:
+ 435:../../iot_link/driver/driver.c ****     }
+ 783              		.loc 1 435 0
+ 784 003e 6369     		ldr	r3, [r4, #20]
+ 785 0040 23F00103 		bic	r3, r3, #1
+ 786 0044 6361     		str	r3, [r4, #20]
+ 787              	.L108:
+ 438:../../iot_link/driver/driver.c ****     driv->opencounter--;
+ 788              		.loc 1 438 0
+ 789 0046 2846     		mov	r0, r5
+ 790 0048 FFF7FEFF 		bl	osal_free
+ 791              	.LVL92:
+ 439:../../iot_link/driver/driver.c **** 
+ 792              		.loc 1 439 0
+ 793 004c 636A     		ldr	r3, [r4, #36]
+ 441:../../iot_link/driver/driver.c **** 
+ 794              		.loc 1 441 0
+ 795 004e 3068     		ldr	r0, [r6]
+ 439:../../iot_link/driver/driver.c **** 
+ 796              		.loc 1 439 0
+ 797 0050 013B     		subs	r3, r3, #1
+ 798 0052 6362     		str	r3, [r4, #36]
+ 441:../../iot_link/driver/driver.c **** 
+ 799              		.loc 1 441 0
+ 800 0054 FFF7FEFF 		bl	osal_mutex_unlock
+ 801              	.LVL93:
+ 443:../../iot_link/driver/driver.c **** 
+ 802              		.loc 1 443 0
+ 803 0058 0124     		movs	r4, #1
+ 804              	.LVL94:
+ 805 005a 09E0     		b	.L109
+ 806              	.LVL95:
+ 807              	.L106:
+ 415:../../iot_link/driver/driver.c ****             {
+ 808              		.loc 1 415 0
+ 809 005c 1A68     		ldr	r2, [r3]
+ 810 005e AA42     		cmp	r2, r5
+ 811 0060 02D1     		bne	.L112
+ 417:../../iot_link/driver/driver.c ****                 break;
+ 812              		.loc 1 417 0
+ 813 0062 2A68     		ldr	r2, [r5]
+ 814 0064 1A60     		str	r2, [r3]
+ 815 0066 DEE7     		b	.L105
+ 816              	.L112:
+ 817 0068 1346     		mov	r3, r2
+ 818              	.LVL96:
+ 819              	.L104:
+ 413:../../iot_link/driver/driver.c ****         {
+ 820              		.loc 1 413 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 28
+
+
+ 821 006a 002B     		cmp	r3, #0
+ 822 006c F6D1     		bne	.L106
+ 383:../../iot_link/driver/driver.c ****     struct dev_cb *devcb = NULL;
+ 823              		.loc 1 383 0
+ 824 006e 1C46     		mov	r4, r3
+ 825              	.LVL97:
+ 826              	.L103:
+ 827              	.L109:
+ 828              	.L101:
+ 829              	.L110:
+ 447:../../iot_link/driver/driver.c **** EXIT_MUTEXERR:
+ 830              		.loc 1 447 0
+ 831 0070 3068     		ldr	r0, [r6]
+ 832 0072 FFF7FEFF 		bl	osal_mutex_unlock
+ 833              	.LVL98:
+ 450:../../iot_link/driver/driver.c **** }
+ 834              		.loc 1 450 0
+ 835 0076 C7E7     		b	.L99
+ 836              	.L124:
+ 837              		.align	2
+ 838              	.L123:
+ 839 0078 00000000 		.word	.LANCHOR0
+ 840              		.cfi_endproc
+ 841              	.LFE10:
+ 843              		.section	.text.los_dev_read,"ax",%progbits
+ 844              		.align	1
+ 845              		.global	los_dev_read
+ 846              		.syntax unified
+ 847              		.thumb
+ 848              		.thumb_func
+ 849              		.fpu fpv4-sp-d16
+ 851              	los_dev_read:
+ 852              	.LFB11:
+ 463:../../iot_link/driver/driver.c ****     ssize_t ret = 0;
+ 853              		.loc 1 463 0
+ 854              		.cfi_startproc
+ 855              		@ args = 4, pretend = 0, frame = 0
+ 856              		@ frame_needed = 0, uses_anonymous_args = 0
+ 857              	.LVL99:
+ 858 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 859              	.LCFI10:
+ 860              		.cfi_def_cfa_offset 24
+ 861              		.cfi_offset 4, -12
+ 862              		.cfi_offset 5, -8
+ 863              		.cfi_offset 14, -4
+ 463:../../iot_link/driver/driver.c ****     ssize_t ret = 0;
+ 864              		.loc 1 463 0
+ 865 0002 1C46     		mov	r4, r3
+ 468:../../iot_link/driver/driver.c ****     {
+ 866              		.loc 1 468 0
+ 867 0004 90B1     		cbz	r0, .L125
+ 468:../../iot_link/driver/driver.c ****     {
+ 868              		.loc 1 468 0 is_stmt 0 discriminator 1
+ 869 0006 9AB1     		cbz	r2, .L130
+ 468:../../iot_link/driver/driver.c ****     {
+ 870              		.loc 1 468 0 discriminator 2
+ 871 0008 A3B1     		cbz	r3, .L132
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 29
+
+
+ 872              	.LVL100:
+ 471:../../iot_link/driver/driver.c ****         {
+ 873              		.loc 1 471 0 is_stmt 1
+ 874 000a 8468     		ldr	r4, [r0, #8]
+ 875 000c E407     		lsls	r4, r4, #31
+ 876 000e 0FD4     		bmi	.L130
+ 473:../../iot_link/driver/driver.c ****             if((NULL != drivcb->op)&&(NULL != drivcb->op->read))
+ 877              		.loc 1 473 0
+ 878 0010 4568     		ldr	r5, [r0, #4]
+ 879              	.LVL101:
+ 474:../../iot_link/driver/driver.c ****             {
+ 880              		.loc 1 474 0
+ 881 0012 2869     		ldr	r0, [r5, #16]
+ 882              	.LVL102:
+ 883 0014 50B1     		cbz	r0, .L125
+ 474:../../iot_link/driver/driver.c ****             {
+ 884              		.loc 1 474 0 is_stmt 0 discriminator 1
+ 885 0016 4468     		ldr	r4, [r0, #4]
+ 886 0018 64B1     		cbz	r4, .L132
+ 476:../../iot_link/driver/driver.c ****                 if(ret > 0)
+ 887              		.loc 1 476 0 is_stmt 1
+ 888 001a 0698     		ldr	r0, [sp, #24]
+ 889 001c 0090     		str	r0, [sp]
+ 890 001e 6868     		ldr	r0, [r5, #4]
+ 891 0020 A047     		blx	r4
+ 892              	.LVL103:
+ 477:../../iot_link/driver/driver.c ****                 {
+ 893              		.loc 1 477 0
+ 894 0022 0028     		cmp	r0, #0
+ 895 0024 02DD     		ble	.L125
+ 479:../../iot_link/driver/driver.c ****                 }
+ 896              		.loc 1 479 0
+ 897 0026 2B6A     		ldr	r3, [r5, #32]
+ 898 0028 0344     		add	r3, r3, r0
+ 899 002a 2B62     		str	r3, [r5, #32]
+ 900              	.LVL104:
+ 901              	.L125:
+ 486:../../iot_link/driver/driver.c **** 
+ 902              		.loc 1 486 0
+ 903 002c 03B0     		add	sp, sp, #12
+ 904              	.LCFI11:
+ 905              		.cfi_remember_state
+ 906              		.cfi_def_cfa_offset 12
+ 907              		@ sp needed
+ 908 002e 30BD     		pop	{r4, r5, pc}
+ 909              	.LVL105:
+ 910              	.L130:
+ 911              	.LCFI12:
+ 912              		.cfi_restore_state
+ 464:../../iot_link/driver/driver.c ****     struct dev_cb  *devcb;
+ 913              		.loc 1 464 0
+ 914 0030 0020     		movs	r0, #0
+ 915              	.LVL106:
+ 916 0032 FBE7     		b	.L125
+ 917              	.L132:
+ 918 0034 2046     		mov	r0, r4
+ 919              	.LVL107:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 30
+
+
+ 485:../../iot_link/driver/driver.c **** }
+ 920              		.loc 1 485 0
+ 921 0036 F9E7     		b	.L125
+ 922              		.cfi_endproc
+ 923              	.LFE11:
+ 925              		.section	.text.los_dev_write,"ax",%progbits
+ 926              		.align	1
+ 927              		.global	los_dev_write
+ 928              		.syntax unified
+ 929              		.thumb
+ 930              		.thumb_func
+ 931              		.fpu fpv4-sp-d16
+ 933              	los_dev_write:
+ 934              	.LFB12:
+ 498:../../iot_link/driver/driver.c ****     ssize_t ret = 0;
+ 935              		.loc 1 498 0
+ 936              		.cfi_startproc
+ 937              		@ args = 4, pretend = 0, frame = 0
+ 938              		@ frame_needed = 0, uses_anonymous_args = 0
+ 939              	.LVL108:
+ 940 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 941              	.LCFI13:
+ 942              		.cfi_def_cfa_offset 24
+ 943              		.cfi_offset 4, -12
+ 944              		.cfi_offset 5, -8
+ 945              		.cfi_offset 14, -4
+ 498:../../iot_link/driver/driver.c ****     ssize_t ret = 0;
+ 946              		.loc 1 498 0
+ 947 0002 1C46     		mov	r4, r3
+ 503:../../iot_link/driver/driver.c ****     {
+ 948              		.loc 1 503 0
+ 949 0004 98B1     		cbz	r0, .L133
+ 503:../../iot_link/driver/driver.c ****     {
+ 950              		.loc 1 503 0 is_stmt 0 discriminator 1
+ 951 0006 A2B1     		cbz	r2, .L136
+ 503:../../iot_link/driver/driver.c ****     {
+ 952              		.loc 1 503 0 discriminator 2
+ 953 0008 ABB1     		cbz	r3, .L140
+ 954              	.LVL109:
+ 506:../../iot_link/driver/driver.c ****         {
+ 955              		.loc 1 506 0 is_stmt 1
+ 956 000a 8468     		ldr	r4, [r0, #8]
+ 957 000c 14F00304 		ands	r4, r4, #3
+ 958 0010 11D0     		beq	.L140
+ 508:../../iot_link/driver/driver.c ****             if((NULL != drivcb->op)&&(NULL != drivcb->op->write))
+ 959              		.loc 1 508 0
+ 960 0012 4568     		ldr	r5, [r0, #4]
+ 961              	.LVL110:
+ 509:../../iot_link/driver/driver.c ****             {
+ 962              		.loc 1 509 0
+ 963 0014 2869     		ldr	r0, [r5, #16]
+ 964              	.LVL111:
+ 965 0016 50B1     		cbz	r0, .L133
+ 509:../../iot_link/driver/driver.c ****             {
+ 966              		.loc 1 509 0 is_stmt 0 discriminator 1
+ 967 0018 8468     		ldr	r4, [r0, #8]
+ 968 001a 64B1     		cbz	r4, .L140
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 31
+
+
+ 511:../../iot_link/driver/driver.c ****                 if(ret > 0)
+ 969              		.loc 1 511 0 is_stmt 1
+ 970 001c 0698     		ldr	r0, [sp, #24]
+ 971 001e 0090     		str	r0, [sp]
+ 972 0020 6868     		ldr	r0, [r5, #4]
+ 973 0022 A047     		blx	r4
+ 974              	.LVL112:
+ 512:../../iot_link/driver/driver.c ****                 {
+ 975              		.loc 1 512 0
+ 976 0024 0028     		cmp	r0, #0
+ 977 0026 02DD     		ble	.L133
+ 514:../../iot_link/driver/driver.c ****                 }
+ 978              		.loc 1 514 0
+ 979 0028 EB69     		ldr	r3, [r5, #28]
+ 980 002a 0344     		add	r3, r3, r0
+ 981 002c EB61     		str	r3, [r5, #28]
+ 982              	.LVL113:
+ 983              	.L133:
+ 521:../../iot_link/driver/driver.c **** 
+ 984              		.loc 1 521 0
+ 985 002e 03B0     		add	sp, sp, #12
+ 986              	.LCFI14:
+ 987              		.cfi_remember_state
+ 988              		.cfi_def_cfa_offset 12
+ 989              		@ sp needed
+ 990 0030 30BD     		pop	{r4, r5, pc}
+ 991              	.LVL114:
+ 992              	.L136:
+ 993              	.LCFI15:
+ 994              		.cfi_restore_state
+ 499:../../iot_link/driver/driver.c ****     struct dev_cb  *devcb;
+ 995              		.loc 1 499 0
+ 996 0032 1046     		mov	r0, r2
+ 997              	.LVL115:
+ 998 0034 FBE7     		b	.L133
+ 999              	.L140:
+ 1000 0036 2046     		mov	r0, r4
+ 1001              	.LVL116:
+ 520:../../iot_link/driver/driver.c **** }
+ 1002              		.loc 1 520 0
+ 1003 0038 F9E7     		b	.L133
+ 1004              		.cfi_endproc
+ 1005              	.LFE12:
+ 1007              		.section	.text.los_dev_ioctl,"ax",%progbits
+ 1008              		.align	1
+ 1009              		.global	los_dev_ioctl
+ 1010              		.syntax unified
+ 1011              		.thumb
+ 1012              		.thumb_func
+ 1013              		.fpu fpv4-sp-d16
+ 1015              	los_dev_ioctl:
+ 1016              	.LFB13:
+ 531:../../iot_link/driver/driver.c ****     bool_t ret = false;
+ 1017              		.loc 1 531 0
+ 1018              		.cfi_startproc
+ 1019              		@ args = 0, pretend = 0, frame = 0
+ 1020              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 32
+
+
+ 1021              		@ link register save eliminated.
+ 1022              	.LVL117:
+ 1023 0000 10B4     		push	{r4}
+ 1024              	.LCFI16:
+ 1025              		.cfi_def_cfa_offset 4
+ 1026              		.cfi_offset 4, -4
+ 536:../../iot_link/driver/driver.c ****     {
+ 1027              		.loc 1 536 0
+ 1028 0002 48B1     		cbz	r0, .L141
+ 1029              	.LVL118:
+ 539:../../iot_link/driver/driver.c ****         if((NULL != drivcb->op)&&(NULL != drivcb->op->ioctl))
+ 1030              		.loc 1 539 0
+ 1031 0004 4068     		ldr	r0, [r0, #4]
+ 1032              	.LVL119:
+ 540:../../iot_link/driver/driver.c ****         {
+ 1033              		.loc 1 540 0
+ 1034 0006 0469     		ldr	r4, [r0, #16]
+ 1035 0008 34B1     		cbz	r4, .L141
+ 540:../../iot_link/driver/driver.c ****         {
+ 1036              		.loc 1 540 0 is_stmt 0 discriminator 1
+ 1037 000a 2469     		ldr	r4, [r4, #16]
+ 1038 000c 24B1     		cbz	r4, .L141
+ 542:../../iot_link/driver/driver.c ****         }
+ 1039              		.loc 1 542 0 is_stmt 1
+ 1040 000e A446     		mov	ip, r4
+ 1041 0010 4068     		ldr	r0, [r0, #4]
+ 1042              	.LVL120:
+ 547:../../iot_link/driver/driver.c **** 
+ 1043              		.loc 1 547 0
+ 1044 0012 5DF8044B 		ldr	r4, [sp], #4
+ 1045              	.LCFI17:
+ 1046              		.cfi_remember_state
+ 1047              		.cfi_restore 4
+ 1048              		.cfi_def_cfa_offset 0
+ 542:../../iot_link/driver/driver.c ****         }
+ 1049              		.loc 1 542 0
+ 1050 0016 6047     		bx	ip
+ 1051              	.LVL121:
+ 1052              	.L141:
+ 1053              	.LCFI18:
+ 1054              		.cfi_restore_state
+ 547:../../iot_link/driver/driver.c **** 
+ 1055              		.loc 1 547 0
+ 1056 0018 0020     		movs	r0, #0
+ 1057 001a 5DF8044B 		ldr	r4, [sp], #4
+ 1058              	.LCFI19:
+ 1059              		.cfi_restore 4
+ 1060              		.cfi_def_cfa_offset 0
+ 1061 001e 7047     		bx	lr
+ 1062              		.cfi_endproc
+ 1063              	.LFE13:
+ 1065              		.section	.text.los_dev_seek,"ax",%progbits
+ 1066              		.align	1
+ 1067              		.global	los_dev_seek
+ 1068              		.syntax unified
+ 1069              		.thumb
+ 1070              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 33
+
+
+ 1071              		.fpu fpv4-sp-d16
+ 1073              	los_dev_seek:
+ 1074              	.LFB14:
+ 557:../../iot_link/driver/driver.c ****     off_t ret = -1;
+ 1075              		.loc 1 557 0
+ 1076              		.cfi_startproc
+ 1077              		@ args = 0, pretend = 0, frame = 0
+ 1078              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1079              		@ link register save eliminated.
+ 1080              	.LVL122:
+ 562:../../iot_link/driver/driver.c ****     {
+ 1081              		.loc 1 562 0
+ 1082 0000 30B1     		cbz	r0, .L149
+ 1083              	.LVL123:
+ 565:../../iot_link/driver/driver.c ****         if((NULL != drivcb->op)&&(NULL != drivcb->op->seek))
+ 1084              		.loc 1 565 0
+ 1085 0002 4068     		ldr	r0, [r0, #4]
+ 1086              	.LVL124:
+ 566:../../iot_link/driver/driver.c ****         {
+ 1087              		.loc 1 566 0
+ 1088 0004 0369     		ldr	r3, [r0, #16]
+ 1089 0006 1BB1     		cbz	r3, .L149
+ 566:../../iot_link/driver/driver.c ****         {
+ 1090              		.loc 1 566 0 is_stmt 0 discriminator 1
+ 1091 0008 5B69     		ldr	r3, [r3, #20]
+ 1092 000a 0BB1     		cbz	r3, .L149
+ 568:../../iot_link/driver/driver.c ****         }
+ 1093              		.loc 1 568 0 is_stmt 1
+ 1094 000c 4068     		ldr	r0, [r0, #4]
+ 1095              	.LVL125:
+ 1096 000e 1847     		bx	r3
+ 1097              	.LVL126:
+ 1098              	.L149:
+ 573:../../iot_link/driver/driver.c **** 
+ 1099              		.loc 1 573 0
+ 1100 0010 4FF0FF30 		mov	r0, #-1
+ 1101 0014 7047     		bx	lr
+ 1102              		.cfi_endproc
+ 1103              	.LFE14:
+ 1105              		.section	.bss.s_los_driv_module,"aw",%nobits
+ 1106              		.align	2
+ 1107              		.set	.LANCHOR0,. + 0
+ 1110              	s_los_driv_module:
+ 1111 0000 00000000 		.space	12
+ 1111      00000000 
+ 1111      00000000 
+ 1112              		.section	.rodata.__FUNCTION__.7640,"a",%progbits
+ 1113              		.set	.LANCHOR1,. + 0
+ 1116              	__FUNCTION__.7640:
+ 1117 0000 5F5F6472 		.ascii	"__driv_show_shell\000"
+ 1117      69765F73 
+ 1117      686F775F 
+ 1117      7368656C 
+ 1117      6C00
+ 1118              		.section	.rodata.__driv_show_shell.str1.1,"aMS",%progbits,1
+ 1119              	.LC0:
+ 1120 0000 25733A74 		.ascii	"%s:total %d drivers\012\015\000"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 34
+
+
+ 1120      6F74616C 
+ 1120      20256420 
+ 1120      64726976 
+ 1120      6572730A 
+ 1121              	.LC1:
+ 1122 0016 73746174 		.ascii	"status\000"
+ 1122      757300
+ 1123              	.LC2:
+ 1124 001d 666C6167 		.ascii	"flagmask\000"
+ 1124      6D61736B 
+ 1124      00
+ 1125              	.LC3:
+ 1126 0026 64726976 		.ascii	"drivername\000"
+ 1126      65726E61 
+ 1126      6D6500
+ 1127              	.LC4:
+ 1128 0031 252D3136 		.ascii	"%-16s %-8s %-8s %-8s %-8s %-8s %-8s\015\012\000"
+ 1128      7320252D 
+ 1128      38732025 
+ 1128      2D387320 
+ 1128      252D3873 
+ 1129              	.LC5:
+ 1130 0057 6572726E 		.ascii	"errno\000"
+ 1130      6F00
+ 1131              	.LC6:
+ 1132 005d 6F70656E 		.ascii	"open\000"
+ 1132      00
+ 1133              	.LC7:
+ 1134 0062 72656164 		.ascii	"readbyte\000"
+ 1134      62797465 
+ 1134      00
+ 1135              	.LC8:
+ 1136 006b 77726974 		.ascii	"writbyte\000"
+ 1136      62797465 
+ 1136      00
+ 1137              	.LC9:
+ 1138 0074 252D3136 		.ascii	"%-16s %08x %08x %08x %08x %08x %08x\015\012\000"
+ 1138      73202530 
+ 1138      38782025 
+ 1138      30387820 
+ 1138      25303878 
+ 1139              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 1140              	.LC10:
+ 1141 0000 6465766C 		.ascii	"devlst\000"
+ 1141      737400
+ 1142              		.section	oshell,"a",%progbits
+ 1143              		.align	2
+ 1146              	__oshell___driv_show_shell:
+ 1147 0000 00000000 		.word	.LC10
+ 1148 0004 00000000 		.word	.LC10
+ 1149 0008 00000000 		.word	__driv_show_shell
+ 1150 000c 0000     		.short	0
+ 1151 000e 0400     		.short	4
+ 1152              		.text
+ 1153              	.Letext0:
+ 1154              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 1155              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 35
+
+
+ 1156              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1157              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1158              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1159              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1160              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1161              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1162              		.file 10 "../../iot_link/os/osal/osal_types.h"
+ 1163              		.file 11 "../../iot_link/driver/driver.h"
+ 1164              		.file 12 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1165              		.file 13 "../../iot_link/inc/shell.h"
+ 1166              		.file 14 "../../iot_link/os/osal/osal.h"
+ 1167              		.file 15 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1168              		.file 16 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1169              		.file 17 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s 			page 36
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 driver.c
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:18     .text.__driv_match:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:24     .text.__driv_match:00000000 __driv_match
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:69     .text.__driv_match:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:74     .text.__driv_show_shell:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:80     .text.__driv_show_shell:00000000 __driv_show_shell
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:200    .text.__driv_show_shell:00000088 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:219    .text.los_driv_register:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:226    .text.los_driv_register:00000000 los_driv_register
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:331    .text.los_driv_register:00000070 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:336    .text.los_driv_unregister:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:343    .text.los_driv_unregister:00000000 los_driv_unregister
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:437    .text.los_driv_unregister:00000054 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:442    .text.los_driv_event:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:449    .text.los_driv_event:00000000 los_driv_event
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:465    .text.los_driv_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:472    .text.los_driv_init:00000000 los_driv_init
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:533    .text.los_driv_init:0000002c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:542    .text.los_dev_open:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:549    .text.los_dev_open:00000000 los_dev_open
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:701    .text.los_dev_open:00000098 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:706    .text.los_dev_close:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:713    .text.los_dev_close:00000000 los_dev_close
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:839    .text.los_dev_close:00000078 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:844    .text.los_dev_read:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:851    .text.los_dev_read:00000000 los_dev_read
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:926    .text.los_dev_write:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:933    .text.los_dev_write:00000000 los_dev_write
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1008   .text.los_dev_ioctl:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1015   .text.los_dev_ioctl:00000000 los_dev_ioctl
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1066   .text.los_dev_seek:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1073   .text.los_dev_seek:00000000 los_dev_seek
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1106   .bss.s_los_driv_module:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1110   .bss.s_los_driv_module:00000000 s_los_driv_module
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1116   .rodata.__FUNCTION__.7640:00000000 __FUNCTION__.7640
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1143   oshell:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccGCXGgc.s:1146   oshell:00000000 __oshell___driv_show_shell
+
+UNDEFINED SYMBOLS
+strcmp
+osal_mutex_lock
+printf
+fflush
+osal_mutex_unlock
+_impure_ptr
+osal_malloc
+memset
+osal_free
+osal_mutex_create
+__osdriv_start
+__osdriv_end

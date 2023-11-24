@@ -1,0 +1,416 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"quadspi.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MX_QUADSPI_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	MX_QUADSPI_Init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	MX_QUADSPI_Init:
+  26              	.LFB287:
+  27              		.file 1 "Src/quadspi.c"
+   1:Src/quadspi.c **** /**
+   2:Src/quadspi.c ****   ******************************************************************************
+   3:Src/quadspi.c ****   * @file    quadspi.c
+   4:Src/quadspi.c ****   * @brief   This file provides code for the configuration
+   5:Src/quadspi.c ****   *          of the QUADSPI instances.
+   6:Src/quadspi.c ****   ******************************************************************************
+   7:Src/quadspi.c ****   * @attention
+   8:Src/quadspi.c ****   *
+   9:Src/quadspi.c ****   * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  10:Src/quadspi.c ****   * All rights reserved.</center></h2>
+  11:Src/quadspi.c ****   *
+  12:Src/quadspi.c ****   * This software component is licensed by ST under BSD 3-Clause license,
+  13:Src/quadspi.c ****   * the "License"; You may not use this file except in compliance with the
+  14:Src/quadspi.c ****   * License. You may obtain a copy of the License at:
+  15:Src/quadspi.c ****   *                        opensource.org/licenses/BSD-3-Clause
+  16:Src/quadspi.c ****   *
+  17:Src/quadspi.c ****   ******************************************************************************
+  18:Src/quadspi.c ****   */
+  19:Src/quadspi.c **** 
+  20:Src/quadspi.c **** /* Includes ------------------------------------------------------------------*/
+  21:Src/quadspi.c **** #include "quadspi.h"
+  22:Src/quadspi.c **** 
+  23:Src/quadspi.c **** /* USER CODE BEGIN 0 */
+  24:Src/quadspi.c **** 
+  25:Src/quadspi.c **** /* USER CODE END 0 */
+  26:Src/quadspi.c **** 
+  27:Src/quadspi.c **** QSPI_HandleTypeDef hqspi;
+  28:Src/quadspi.c **** 
+  29:Src/quadspi.c **** /* QUADSPI init function */
+  30:Src/quadspi.c **** void MX_QUADSPI_Init(void)
+  31:Src/quadspi.c **** {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s 			page 2
+
+
+  28              		.loc 1 31 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32:Src/quadspi.c **** 
+  33:Src/quadspi.c ****   /* USER CODE BEGIN QUADSPI_Init 0 */
+  34:Src/quadspi.c **** 
+  35:Src/quadspi.c ****   /* USER CODE END QUADSPI_Init 0 */
+  36:Src/quadspi.c **** 
+  37:Src/quadspi.c ****   /* USER CODE BEGIN QUADSPI_Init 1 */
+  38:Src/quadspi.c **** 
+  39:Src/quadspi.c ****   /* USER CODE END QUADSPI_Init 1 */
+  40:Src/quadspi.c ****   hqspi.Instance = QUADSPI;
+  32              		.loc 1 40 0
+  33 0000 0E48     		ldr	r0, .L3
+  41:Src/quadspi.c ****   hqspi.Init.ClockPrescaler = 0;
+  34              		.loc 1 41 0
+  35 0002 0F4A     		ldr	r2, .L3+4
+  31:Src/quadspi.c **** 
+  36              		.loc 1 31 0
+  37 0004 08B5     		push	{r3, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 8
+  40              		.cfi_offset 3, -8
+  41              		.cfi_offset 14, -4
+  42              		.loc 1 41 0
+  43 0006 0023     		movs	r3, #0
+  44 0008 C0E90023 		strd	r2, r3, [r0]
+  42:Src/quadspi.c ****   hqspi.Init.FifoThreshold = 4;
+  43:Src/quadspi.c ****   hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_HALFCYCLE;
+  45              		.loc 1 43 0
+  46 000c 0421     		movs	r1, #4
+  47 000e 1022     		movs	r2, #16
+  48 0010 C0E90212 		strd	r1, r2, [r0, #8]
+  44:Src/quadspi.c ****   hqspi.Init.FlashSize = 25;
+  45:Src/quadspi.c ****   hqspi.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_4_CYCLE;
+  49              		.loc 1 45 0
+  50 0014 4FF0190C 		mov	ip, #25
+  51 0018 4FF44072 		mov	r2, #768
+  52 001c C0E904C2 		strd	ip, r2, [r0, #16]
+  46:Src/quadspi.c ****   hqspi.Init.ClockMode = QSPI_CLOCK_MODE_0;
+  47:Src/quadspi.c ****   hqspi.Init.FlashID = QSPI_FLASH_ID_1;
+  53              		.loc 1 47 0
+  54 0020 C0E90633 		strd	r3, r3, [r0, #24]
+  48:Src/quadspi.c ****   hqspi.Init.DualFlash = QSPI_DUALFLASH_DISABLE;
+  55              		.loc 1 48 0
+  56 0024 0362     		str	r3, [r0, #32]
+  49:Src/quadspi.c ****   if (HAL_QSPI_Init(&hqspi) != HAL_OK)
+  57              		.loc 1 49 0
+  58 0026 FFF7FEFF 		bl	HAL_QSPI_Init
+  59              	.LVL0:
+  60 002a 28B1     		cbz	r0, .L1
+  50:Src/quadspi.c ****   {
+  51:Src/quadspi.c ****     Error_Handler();
+  61              		.loc 1 51 0
+  62 002c 3321     		movs	r1, #51
+  63 002e 0548     		ldr	r0, .L3+8
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s 			page 3
+
+
+  52:Src/quadspi.c ****   }
+  53:Src/quadspi.c ****   /* USER CODE BEGIN QUADSPI_Init 2 */
+  54:Src/quadspi.c **** 
+  55:Src/quadspi.c ****   /* USER CODE END QUADSPI_Init 2 */
+  56:Src/quadspi.c **** 
+  57:Src/quadspi.c **** }
+  64              		.loc 1 57 0
+  65 0030 BDE80840 		pop	{r3, lr}
+  66              	.LCFI1:
+  67              		.cfi_remember_state
+  68              		.cfi_restore 14
+  69              		.cfi_restore 3
+  70              		.cfi_def_cfa_offset 0
+  51:Src/quadspi.c ****   }
+  71              		.loc 1 51 0
+  72 0034 FFF7FEBF 		b	_Error_Handler
+  73              	.LVL1:
+  74              	.L1:
+  75              	.LCFI2:
+  76              		.cfi_restore_state
+  77              		.loc 1 57 0
+  78 0038 08BD     		pop	{r3, pc}
+  79              	.L4:
+  80 003a 00BF     		.align	2
+  81              	.L3:
+  82 003c 00000000 		.word	hqspi
+  83 0040 001000A0 		.word	-1610608640
+  84 0044 00000000 		.word	.LC0
+  85              		.cfi_endproc
+  86              	.LFE287:
+  88              		.section	.text.HAL_QSPI_MspInit,"ax",%progbits
+  89              		.align	1
+  90              		.global	HAL_QSPI_MspInit
+  91              		.syntax unified
+  92              		.thumb
+  93              		.thumb_func
+  94              		.fpu fpv4-sp-d16
+  96              	HAL_QSPI_MspInit:
+  97              	.LFB288:
+  58:Src/quadspi.c **** 
+  59:Src/quadspi.c **** void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
+  60:Src/quadspi.c **** {
+  98              		.loc 1 60 0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 32
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              	.LVL2:
+ 103 0000 10B5     		push	{r4, lr}
+ 104              	.LCFI3:
+ 105              		.cfi_def_cfa_offset 8
+ 106              		.cfi_offset 4, -8
+ 107              		.cfi_offset 14, -4
+ 108 0002 0446     		mov	r4, r0
+ 109 0004 88B0     		sub	sp, sp, #32
+ 110              	.LCFI4:
+ 111              		.cfi_def_cfa_offset 40
+  61:Src/quadspi.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s 			page 4
+
+
+  62:Src/quadspi.c ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
+ 112              		.loc 1 62 0
+ 113 0006 1422     		movs	r2, #20
+ 114 0008 0021     		movs	r1, #0
+ 115 000a 03A8     		add	r0, sp, #12
+ 116              	.LVL3:
+ 117 000c FFF7FEFF 		bl	memset
+ 118              	.LVL4:
+  63:Src/quadspi.c ****   if(qspiHandle->Instance==QUADSPI)
+ 119              		.loc 1 63 0
+ 120 0010 2268     		ldr	r2, [r4]
+ 121 0012 144B     		ldr	r3, .L7
+ 122 0014 9A42     		cmp	r2, r3
+ 123 0016 22D1     		bne	.L5
+ 124              	.LBB2:
+  64:Src/quadspi.c ****   {
+  65:Src/quadspi.c ****   /* USER CODE BEGIN QUADSPI_MspInit 0 */
+  66:Src/quadspi.c **** 
+  67:Src/quadspi.c ****   /* USER CODE END QUADSPI_MspInit 0 */
+  68:Src/quadspi.c ****     /* QUADSPI clock enable */
+  69:Src/quadspi.c ****     __HAL_RCC_QSPI_CLK_ENABLE();
+ 125              		.loc 1 69 0
+ 126 0018 03F12043 		add	r3, r3, #-1610612736
+ 127 001c 03F50033 		add	r3, r3, #131072
+ 128              	.LBE2:
+  70:Src/quadspi.c **** 
+  71:Src/quadspi.c ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+  72:Src/quadspi.c ****     /**QUADSPI GPIO Configuration
+  73:Src/quadspi.c ****     PB0     ------> QUADSPI_BK1_IO1
+  74:Src/quadspi.c ****     PB1     ------> QUADSPI_BK1_IO0
+  75:Src/quadspi.c ****     PB10     ------> QUADSPI_CLK
+  76:Src/quadspi.c ****     PB11     ------> QUADSPI_BK1_NCS
+  77:Src/quadspi.c ****     */
+  78:Src/quadspi.c ****     GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_11;
+  79:Src/quadspi.c ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  80:Src/quadspi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+  81:Src/quadspi.c ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  82:Src/quadspi.c ****     GPIO_InitStruct.Alternate = GPIO_AF10_QUADSPI;
+ 129              		.loc 1 82 0
+ 130 0020 0321     		movs	r1, #3
+ 131              	.LBB3:
+  69:Src/quadspi.c **** 
+ 132              		.loc 1 69 0
+ 133 0022 1A6D     		ldr	r2, [r3, #80]
+ 134              	.LBE3:
+  83:Src/quadspi.c ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 135              		.loc 1 83 0
+ 136 0024 1048     		ldr	r0, .L7+4
+ 137              	.LBB4:
+  69:Src/quadspi.c **** 
+ 138              		.loc 1 69 0
+ 139 0026 42F48072 		orr	r2, r2, #256
+ 140 002a 1A65     		str	r2, [r3, #80]
+ 141 002c 1A6D     		ldr	r2, [r3, #80]
+ 142 002e 02F48072 		and	r2, r2, #256
+ 143 0032 0192     		str	r2, [sp, #4]
+ 144 0034 019A     		ldr	r2, [sp, #4]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s 			page 5
+
+
+ 145              	.LBE4:
+ 146              	.LBB5:
+  71:Src/quadspi.c ****     /**QUADSPI GPIO Configuration
+ 147              		.loc 1 71 0
+ 148 0036 DA6C     		ldr	r2, [r3, #76]
+ 149 0038 42F00202 		orr	r2, r2, #2
+ 150 003c DA64     		str	r2, [r3, #76]
+ 151 003e DB6C     		ldr	r3, [r3, #76]
+ 152 0040 03F00203 		and	r3, r3, #2
+ 153 0044 0293     		str	r3, [sp, #8]
+ 154 0046 029B     		ldr	r3, [sp, #8]
+ 155              	.LBE5:
+  79:Src/quadspi.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 156              		.loc 1 79 0
+ 157 0048 40F60342 		movw	r2, #3075
+ 158 004c 0223     		movs	r3, #2
+ 159 004e CDE90323 		strd	r2, r3, [sp, #12]
+  82:Src/quadspi.c ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 160              		.loc 1 82 0
+ 161 0052 0A23     		movs	r3, #10
+ 162 0054 CDE90613 		strd	r1, r3, [sp, #24]
+ 163              		.loc 1 83 0
+ 164 0058 03A9     		add	r1, sp, #12
+ 165 005a FFF7FEFF 		bl	HAL_GPIO_Init
+ 166              	.LVL5:
+ 167              	.L5:
+  84:Src/quadspi.c **** 
+  85:Src/quadspi.c ****   /* USER CODE BEGIN QUADSPI_MspInit 1 */
+  86:Src/quadspi.c **** 
+  87:Src/quadspi.c ****   /* USER CODE END QUADSPI_MspInit 1 */
+  88:Src/quadspi.c ****   }
+  89:Src/quadspi.c **** }
+ 168              		.loc 1 89 0
+ 169 005e 08B0     		add	sp, sp, #32
+ 170              	.LCFI5:
+ 171              		.cfi_def_cfa_offset 8
+ 172              		@ sp needed
+ 173 0060 10BD     		pop	{r4, pc}
+ 174              	.LVL6:
+ 175              	.L8:
+ 176 0062 00BF     		.align	2
+ 177              	.L7:
+ 178 0064 001000A0 		.word	-1610608640
+ 179 0068 00040048 		.word	1207960576
+ 180              		.cfi_endproc
+ 181              	.LFE288:
+ 183              		.section	.text.HAL_QSPI_MspDeInit,"ax",%progbits
+ 184              		.align	1
+ 185              		.global	HAL_QSPI_MspDeInit
+ 186              		.syntax unified
+ 187              		.thumb
+ 188              		.thumb_func
+ 189              		.fpu fpv4-sp-d16
+ 191              	HAL_QSPI_MspDeInit:
+ 192              	.LFB289:
+  90:Src/quadspi.c **** 
+  91:Src/quadspi.c **** void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef* qspiHandle)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s 			page 6
+
+
+  92:Src/quadspi.c **** {
+ 193              		.loc 1 92 0
+ 194              		.cfi_startproc
+ 195              		@ args = 0, pretend = 0, frame = 0
+ 196              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197              		@ link register save eliminated.
+ 198              	.LVL7:
+  93:Src/quadspi.c **** 
+  94:Src/quadspi.c ****   if(qspiHandle->Instance==QUADSPI)
+ 199              		.loc 1 94 0
+ 200 0000 0268     		ldr	r2, [r0]
+ 201 0002 074B     		ldr	r3, .L11
+ 202 0004 9A42     		cmp	r2, r3
+ 203 0006 09D1     		bne	.L9
+  95:Src/quadspi.c ****   {
+  96:Src/quadspi.c ****   /* USER CODE BEGIN QUADSPI_MspDeInit 0 */
+  97:Src/quadspi.c **** 
+  98:Src/quadspi.c ****   /* USER CODE END QUADSPI_MspDeInit 0 */
+  99:Src/quadspi.c ****     /* Peripheral clock disable */
+ 100:Src/quadspi.c ****     __HAL_RCC_QSPI_CLK_DISABLE();
+ 204              		.loc 1 100 0
+ 205 0008 064A     		ldr	r2, .L11+4
+ 101:Src/quadspi.c **** 
+ 102:Src/quadspi.c ****     /**QUADSPI GPIO Configuration
+ 103:Src/quadspi.c ****     PB0     ------> QUADSPI_BK1_IO1
+ 104:Src/quadspi.c ****     PB1     ------> QUADSPI_BK1_IO0
+ 105:Src/quadspi.c ****     PB10     ------> QUADSPI_CLK
+ 106:Src/quadspi.c ****     PB11     ------> QUADSPI_BK1_NCS
+ 107:Src/quadspi.c ****     */
+ 108:Src/quadspi.c ****     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_10|GPIO_PIN_11);
+ 206              		.loc 1 108 0
+ 207 000a 0748     		ldr	r0, .L11+8
+ 208              	.LVL8:
+ 100:Src/quadspi.c **** 
+ 209              		.loc 1 100 0
+ 210 000c 136D     		ldr	r3, [r2, #80]
+ 211 000e 23F48073 		bic	r3, r3, #256
+ 212 0012 1365     		str	r3, [r2, #80]
+ 213              		.loc 1 108 0
+ 214 0014 40F60341 		movw	r1, #3075
+ 215 0018 FFF7FEBF 		b	HAL_GPIO_DeInit
+ 216              	.LVL9:
+ 217              	.L9:
+ 109:Src/quadspi.c **** 
+ 110:Src/quadspi.c ****   /* USER CODE BEGIN QUADSPI_MspDeInit 1 */
+ 111:Src/quadspi.c **** 
+ 112:Src/quadspi.c ****   /* USER CODE END QUADSPI_MspDeInit 1 */
+ 113:Src/quadspi.c ****   }
+ 114:Src/quadspi.c **** }
+ 218              		.loc 1 114 0
+ 219 001c 7047     		bx	lr
+ 220              	.L12:
+ 221 001e 00BF     		.align	2
+ 222              	.L11:
+ 223 0020 001000A0 		.word	-1610608640
+ 224 0024 00100240 		.word	1073876992
+ 225 0028 00040048 		.word	1207960576
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s 			page 7
+
+
+ 226              		.cfi_endproc
+ 227              	.LFE289:
+ 229              		.comm	hqspi,76,4
+ 230              		.section	.rodata.MX_QUADSPI_Init.str1.1,"aMS",%progbits,1
+ 231              	.LC0:
+ 232 0000 5372632F 		.ascii	"Src/quadspi.c\000"
+ 232      71756164 
+ 232      7370692E 
+ 232      6300
+ 233              		.text
+ 234              	.Letext0:
+ 235              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 236              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 237              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 238              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 239              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 240              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 241              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 242              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 243              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 244              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l43
+ 245              		.file 12 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 246              		.file 13 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 247              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 248              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_qspi.h"
+ 249              		.file 16 "../../iot_link/os/liteos/include/los_config.h"
+ 250              		.file 17 "../../iot_link/os/liteos/include/los_err.h"
+ 251              		.file 18 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 252              		.file 19 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/quadspi.
+ 253              		.file 20 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/main.h"
+ 254              		.file 21 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 quadspi.c
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:18     .text.MX_QUADSPI_Init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:25     .text.MX_QUADSPI_Init:00000000 MX_QUADSPI_Init
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:82     .text.MX_QUADSPI_Init:0000003c $d
+                            *COM*:0000004c hqspi
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:89     .text.HAL_QSPI_MspInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:96     .text.HAL_QSPI_MspInit:00000000 HAL_QSPI_MspInit
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:178    .text.HAL_QSPI_MspInit:00000064 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:184    .text.HAL_QSPI_MspDeInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:191    .text.HAL_QSPI_MspDeInit:00000000 HAL_QSPI_MspDeInit
+C:\Users\LuckyE\AppData\Local\Temp\ccWVfhLz.s:223    .text.HAL_QSPI_MspDeInit:00000020 $d
+
+UNDEFINED SYMBOLS
+HAL_QSPI_Init
+_Error_Handler
+memset
+HAL_GPIO_Init
+HAL_GPIO_DeInit

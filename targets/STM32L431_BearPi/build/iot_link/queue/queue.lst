@@ -1,0 +1,795 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"queue.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.queue_create,"ax",%progbits
+  18              		.align	1
+  19              		.global	queue_create
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	queue_create:
+  26              	.LFB3:
+  27              		.file 1 "../../iot_link/queue/queue.c"
+   1:../../iot_link/queue/queue.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/queue/queue.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/queue/queue.c ****  * All rights reserved.
+   4:../../iot_link/queue/queue.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/queue/queue.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/queue/queue.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/queue/queue.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/queue/queue.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/queue/queue.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/queue/queue.c ****  * provided with the distribution.
+  11:../../iot_link/queue/queue.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/queue/queue.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/queue/queue.c ****  * permission.
+  14:../../iot_link/queue/queue.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/queue/queue.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/queue/queue.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/queue/queue.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/queue/queue.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/queue/queue.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/queue/queue.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/queue/queue.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/queue/queue.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/queue/queue.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/queue/queue.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/queue/queue.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/queue/queue.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/queue/queue.c ****  * Notice of Export Control Law
+  28:../../iot_link/queue/queue.c ****  * ===============================================
+  29:../../iot_link/queue/queue.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/queue/queue.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/queue/queue.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 2
+
+
+  32:../../iot_link/queue/queue.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/queue/queue.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/queue/queue.c **** /**
+  35:../../iot_link/queue/queue.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/queue/queue.c ****  *  2019-09-16 18:27  zhangqianfu  The first version
+  37:../../iot_link/queue/queue.c ****  *
+  38:../../iot_link/queue/queue.c ****  */
+  39:../../iot_link/queue/queue.c **** #include <stdlib.h>
+  40:../../iot_link/queue/queue.c **** #include <stdio.h>
+  41:../../iot_link/queue/queue.c **** #include <string.h>
+  42:../../iot_link/queue/queue.c **** #include <osal.h>
+  43:../../iot_link/queue/queue.c **** 
+  44:../../iot_link/queue/queue.c **** 
+  45:../../iot_link/queue/queue.c **** #include "queue.h"
+  46:../../iot_link/queue/queue.c **** 
+  47:../../iot_link/queue/queue.c **** queue_t* queue_create(const char *name,int len,int syncmode)
+  48:../../iot_link/queue/queue.c **** {
+  28              		.loc 1 48 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 3, -24
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42              		.loc 1 48 0
+  43 0002 0746     		mov	r7, r0
+  49:../../iot_link/queue/queue.c ****     queue_t *ret;
+  50:../../iot_link/queue/queue.c **** 
+  51:../../iot_link/queue/queue.c ****     ret = osal_malloc(sizeof(queue_t) + len*sizeof(void *));
+  44              		.loc 1 51 0
+  45 0004 01F10A00 		add	r0, r1, #10
+  46              	.LVL1:
+  47 0008 8000     		lsls	r0, r0, #2
+  48:../../iot_link/queue/queue.c ****     queue_t *ret;
+  48              		.loc 1 48 0
+  49 000a 0D46     		mov	r5, r1
+  50 000c 1646     		mov	r6, r2
+  51              		.loc 1 51 0
+  52 000e FFF7FEFF 		bl	osal_malloc
+  53              	.LVL2:
+  52:../../iot_link/queue/queue.c **** 
+  53:../../iot_link/queue/queue.c ****     if(NULL == ret)
+  54              		.loc 1 53 0
+  55 0012 0446     		mov	r4, r0
+  56 0014 40B3     		cbz	r0, .L1
+  54:../../iot_link/queue/queue.c ****     {
+  55:../../iot_link/queue/queue.c ****         goto EXIT_MEM;
+  56:../../iot_link/queue/queue.c ****     }
+  57:../../iot_link/queue/queue.c **** 
+  58:../../iot_link/queue/queue.c ****     (void) memset(ret,0,sizeof(queue_t));
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 3
+
+
+  57              		.loc 1 58 0
+  58 0016 1C22     		movs	r2, #28
+  59 0018 0021     		movs	r1, #0
+  60 001a 0C30     		adds	r0, r0, #12
+  61              	.LVL3:
+  62 001c FFF7FEFF 		bl	memset
+  63              	.LVL4:
+  59:../../iot_link/queue/queue.c ****     ret->name = name;
+  60:../../iot_link/queue/queue.c ****     ret->msg_buflen = len;
+  61:../../iot_link/queue/queue.c ****     ret->msg_buf = (void **)(uintptr_t)((uint8_t *)ret + sizeof(queue_t));
+  64              		.loc 1 61 0
+  65 0020 04F12803 		add	r3, r4, #40
+  60:../../iot_link/queue/queue.c ****     ret->msg_buf = (void **)(uintptr_t)((uint8_t *)ret + sizeof(queue_t));
+  66              		.loc 1 60 0
+  67 0024 C4E90075 		strd	r7, r5, [r4]
+  68              		.loc 1 61 0
+  69 0028 A360     		str	r3, [r4, #8]
+  62:../../iot_link/queue/queue.c ****     ret->sync_mode = syncmode;
+  70              		.loc 1 62 0
+  71 002a A661     		str	r6, [r4, #24]
+  63:../../iot_link/queue/queue.c **** 
+  64:../../iot_link/queue/queue.c ****     if(0 == syncmode)
+  72              		.loc 1 64 0
+  73 002c E6B1     		cbz	r6, .L1
+  65:../../iot_link/queue/queue.c ****     {
+  66:../../iot_link/queue/queue.c ****         goto EXIT_OK;
+  67:../../iot_link/queue/queue.c ****     }
+  68:../../iot_link/queue/queue.c **** 
+  69:../../iot_link/queue/queue.c ****     if(false == osal_semp_create(&ret->sync_read,len,0))
+  74              		.loc 1 69 0
+  75 002e 0022     		movs	r2, #0
+  76 0030 2946     		mov	r1, r5
+  77 0032 04F11C00 		add	r0, r4, #28
+  78 0036 FFF7FEFF 		bl	osal_semp_create
+  79              	.LVL5:
+  80 003a 88B1     		cbz	r0, .L3
+  70:../../iot_link/queue/queue.c ****     {
+  71:../../iot_link/queue/queue.c ****         goto EXIT_SYNCREAD;
+  72:../../iot_link/queue/queue.c ****     }
+  73:../../iot_link/queue/queue.c **** 
+  74:../../iot_link/queue/queue.c ****     if(false == osal_semp_create(&ret->sync_write,len,len))
+  81              		.loc 1 74 0
+  82 003c 2A46     		mov	r2, r5
+  83 003e 2946     		mov	r1, r5
+  84 0040 04F12000 		add	r0, r4, #32
+  85 0044 FFF7FEFF 		bl	osal_semp_create
+  86              	.LVL6:
+  87 0048 38B1     		cbz	r0, .L4
+  75:../../iot_link/queue/queue.c ****     {
+  76:../../iot_link/queue/queue.c ****         goto EXIT_SYNCWRITE;
+  77:../../iot_link/queue/queue.c ****     }
+  78:../../iot_link/queue/queue.c **** 
+  79:../../iot_link/queue/queue.c ****     if(false == osal_mutex_create(&ret->lock))
+  88              		.loc 1 79 0
+  89 004a 04F12400 		add	r0, r4, #36
+  90 004e FFF7FEFF 		bl	osal_mutex_create
+  91              	.LVL7:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 4
+
+
+  92 0052 48B9     		cbnz	r0, .L1
+  93              	.L5:
+  80:../../iot_link/queue/queue.c ****     {
+  81:../../iot_link/queue/queue.c ****         goto EXIT_LOCK;
+  82:../../iot_link/queue/queue.c ****     }
+  83:../../iot_link/queue/queue.c **** 
+  84:../../iot_link/queue/queue.c **** 
+  85:../../iot_link/queue/queue.c **** EXIT_OK:
+  86:../../iot_link/queue/queue.c ****     return ret;
+  87:../../iot_link/queue/queue.c **** 
+  88:../../iot_link/queue/queue.c **** EXIT_LOCK:
+  89:../../iot_link/queue/queue.c ****     (void) osal_semp_del(ret->sync_write);
+  94              		.loc 1 89 0
+  95 0054 206A     		ldr	r0, [r4, #32]
+  96 0056 FFF7FEFF 		bl	osal_semp_del
+  97              	.LVL8:
+  98              	.L4:
+  90:../../iot_link/queue/queue.c **** EXIT_SYNCWRITE:
+  91:../../iot_link/queue/queue.c ****     (void) osal_semp_del(ret->sync_read);
+  99              		.loc 1 91 0
+ 100 005a E069     		ldr	r0, [r4, #28]
+ 101 005c FFF7FEFF 		bl	osal_semp_del
+ 102              	.LVL9:
+ 103              	.L3:
+  92:../../iot_link/queue/queue.c **** EXIT_SYNCREAD:
+  93:../../iot_link/queue/queue.c ****     osal_free(ret);
+ 104              		.loc 1 93 0
+ 105 0060 2046     		mov	r0, r4
+ 106 0062 FFF7FEFF 		bl	osal_free
+ 107              	.LVL10:
+  94:../../iot_link/queue/queue.c ****     ret = NULL;
+  95:../../iot_link/queue/queue.c **** EXIT_MEM:
+  96:../../iot_link/queue/queue.c ****     ret = NULL;
+  97:../../iot_link/queue/queue.c ****     return ret;
+ 108              		.loc 1 97 0
+ 109 0066 0024     		movs	r4, #0
+ 110              	.LVL11:
+ 111              	.L1:
+  98:../../iot_link/queue/queue.c **** 
+  99:../../iot_link/queue/queue.c **** }
+ 112              		.loc 1 99 0
+ 113 0068 2046     		mov	r0, r4
+ 114 006a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 115              		.cfi_endproc
+ 116              	.LFE3:
+ 118              		.section	.text.queue_push,"ax",%progbits
+ 119              		.align	1
+ 120              		.global	queue_push
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 124              		.fpu fpv4-sp-d16
+ 126              	queue_push:
+ 127              	.LFB5:
+ 100:../../iot_link/queue/queue.c **** 
+ 101:../../iot_link/queue/queue.c **** 
+ 102:../../iot_link/queue/queue.c **** static int raw_queue_pushdata(queue_t *queue,void *data)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 5
+
+
+ 103:../../iot_link/queue/queue.c **** {
+ 104:../../iot_link/queue/queue.c ****     int ret = -1;
+ 105:../../iot_link/queue/queue.c ****     if(queue->msg_num < queue->msg_buflen)
+ 106:../../iot_link/queue/queue.c ****     {
+ 107:../../iot_link/queue/queue.c ****         queue->msg_buf[queue->cur_write] = data;
+ 108:../../iot_link/queue/queue.c ****         queue->cur_write = (queue->cur_write + 1)%queue->msg_buflen;
+ 109:../../iot_link/queue/queue.c ****         queue->msg_num ++;
+ 110:../../iot_link/queue/queue.c ****         ret = 0;
+ 111:../../iot_link/queue/queue.c ****     }
+ 112:../../iot_link/queue/queue.c **** 
+ 113:../../iot_link/queue/queue.c ****     return ret;
+ 114:../../iot_link/queue/queue.c **** }
+ 115:../../iot_link/queue/queue.c **** 
+ 116:../../iot_link/queue/queue.c **** ///< push a data to the queue, 0 success while -1 failed
+ 117:../../iot_link/queue/queue.c **** int queue_push(queue_t *queue,void *data,int timeout)
+ 118:../../iot_link/queue/queue.c **** {
+ 128              		.loc 1 118 0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 0
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132              	.LVL12:
+ 133 0000 70B5     		push	{r4, r5, r6, lr}
+ 134              	.LCFI1:
+ 135              		.cfi_def_cfa_offset 16
+ 136              		.cfi_offset 4, -16
+ 137              		.cfi_offset 5, -12
+ 138              		.cfi_offset 6, -8
+ 139              		.cfi_offset 14, -4
+ 140              		.loc 1 118 0
+ 141 0002 0E46     		mov	r6, r1
+ 119:../../iot_link/queue/queue.c ****     int ret = -1;
+ 120:../../iot_link/queue/queue.c **** 
+ 121:../../iot_link/queue/queue.c ****     if((NULL == queue) || (NULL == data))
+ 142              		.loc 1 121 0
+ 143 0004 0446     		mov	r4, r0
+ 144 0006 18B9     		cbnz	r0, .L19
+ 145              	.LVL13:
+ 146              	.L21:
+ 122:../../iot_link/queue/queue.c ****     {
+ 123:../../iot_link/queue/queue.c ****         return ret;
+ 147              		.loc 1 123 0
+ 148 0008 4FF0FF35 		mov	r5, #-1
+ 149              	.L18:
+ 124:../../iot_link/queue/queue.c ****     }
+ 125:../../iot_link/queue/queue.c ****     if(queue->sync_mode)
+ 126:../../iot_link/queue/queue.c ****     {
+ 127:../../iot_link/queue/queue.c ****         if(osal_semp_pend(queue->sync_write,timeout))
+ 128:../../iot_link/queue/queue.c ****         {
+ 129:../../iot_link/queue/queue.c ****             if(osal_mutex_lock(queue->lock))
+ 130:../../iot_link/queue/queue.c ****             {
+ 131:../../iot_link/queue/queue.c ****                 ret = raw_queue_pushdata(queue,data);
+ 132:../../iot_link/queue/queue.c ****                 (void) osal_mutex_unlock(queue->lock);
+ 133:../../iot_link/queue/queue.c ****             }
+ 134:../../iot_link/queue/queue.c **** 
+ 135:../../iot_link/queue/queue.c ****             if(0 == ret)
+ 136:../../iot_link/queue/queue.c ****             {
+ 137:../../iot_link/queue/queue.c ****                 (void) osal_semp_post(queue->sync_read);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 6
+
+
+ 138:../../iot_link/queue/queue.c ****             }
+ 139:../../iot_link/queue/queue.c ****         }
+ 140:../../iot_link/queue/queue.c ****     }
+ 141:../../iot_link/queue/queue.c ****     else
+ 142:../../iot_link/queue/queue.c ****     {
+ 143:../../iot_link/queue/queue.c ****         ret = raw_queue_pushdata(queue,data);
+ 144:../../iot_link/queue/queue.c ****     }
+ 145:../../iot_link/queue/queue.c ****     return ret;
+ 146:../../iot_link/queue/queue.c **** 
+ 147:../../iot_link/queue/queue.c **** }
+ 150              		.loc 1 147 0
+ 151 000c 2846     		mov	r0, r5
+ 152 000e 70BD     		pop	{r4, r5, r6, pc}
+ 153              	.LVL14:
+ 154              	.L19:
+ 121:../../iot_link/queue/queue.c ****     {
+ 155              		.loc 1 121 0 discriminator 1
+ 156 0010 0029     		cmp	r1, #0
+ 157 0012 F9D0     		beq	.L21
+ 125:../../iot_link/queue/queue.c ****     {
+ 158              		.loc 1 125 0
+ 159 0014 8569     		ldr	r5, [r0, #24]
+ 160 0016 3DB3     		cbz	r5, .L22
+ 127:../../iot_link/queue/queue.c ****         {
+ 161              		.loc 1 127 0
+ 162 0018 1146     		mov	r1, r2
+ 163              	.LVL15:
+ 164 001a 006A     		ldr	r0, [r0, #32]
+ 165              	.LVL16:
+ 166 001c FFF7FEFF 		bl	osal_semp_pend
+ 167              	.LVL17:
+ 168 0020 0028     		cmp	r0, #0
+ 169 0022 F1D0     		beq	.L21
+ 129:../../iot_link/queue/queue.c ****             {
+ 170              		.loc 1 129 0
+ 171 0024 606A     		ldr	r0, [r4, #36]
+ 172 0026 FFF7FEFF 		bl	osal_mutex_lock
+ 173              	.LVL18:
+ 174 002a 0028     		cmp	r0, #0
+ 175 002c ECD0     		beq	.L21
+ 176              	.LVL19:
+ 177              	.LBB6:
+ 178              	.LBB7:
+ 105:../../iot_link/queue/queue.c ****     {
+ 179              		.loc 1 105 0
+ 180 002e 6269     		ldr	r2, [r4, #20]
+ 181 0030 6068     		ldr	r0, [r4, #4]
+ 182 0032 8242     		cmp	r2, r0
+ 183 0034 15DA     		bge	.L24
+ 107:../../iot_link/queue/queue.c ****         queue->cur_write = (queue->cur_write + 1)%queue->msg_buflen;
+ 184              		.loc 1 107 0
+ 185 0036 D4E90213 		ldrd	r1, r3, [r4, #8]
+ 186 003a 41F82360 		str	r6, [r1, r3, lsl #2]
+ 108:../../iot_link/queue/queue.c ****         queue->msg_num ++;
+ 187              		.loc 1 108 0
+ 188 003e 0133     		adds	r3, r3, #1
+ 109:../../iot_link/queue/queue.c ****         ret = 0;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 7
+
+
+ 189              		.loc 1 109 0
+ 190 0040 0132     		adds	r2, r2, #1
+ 108:../../iot_link/queue/queue.c ****         queue->msg_num ++;
+ 191              		.loc 1 108 0
+ 192 0042 93FBF0F1 		sdiv	r1, r3, r0
+ 193 0046 00FB1133 		mls	r3, r0, r1, r3
+ 194 004a E360     		str	r3, [r4, #12]
+ 109:../../iot_link/queue/queue.c ****         ret = 0;
+ 195              		.loc 1 109 0
+ 196 004c 6261     		str	r2, [r4, #20]
+ 197              	.LVL20:
+ 110:../../iot_link/queue/queue.c ****     }
+ 198              		.loc 1 110 0
+ 199 004e 0025     		movs	r5, #0
+ 200              	.LVL21:
+ 201              	.L23:
+ 202              	.LBE7:
+ 203              	.LBE6:
+ 132:../../iot_link/queue/queue.c ****             }
+ 204              		.loc 1 132 0
+ 205 0050 606A     		ldr	r0, [r4, #36]
+ 206 0052 FFF7FEFF 		bl	osal_mutex_unlock
+ 207              	.LVL22:
+ 135:../../iot_link/queue/queue.c ****             {
+ 208              		.loc 1 135 0
+ 209 0056 002D     		cmp	r5, #0
+ 210 0058 D6D1     		bne	.L21
+ 137:../../iot_link/queue/queue.c ****             }
+ 211              		.loc 1 137 0
+ 212 005a E069     		ldr	r0, [r4, #28]
+ 213 005c FFF7FEFF 		bl	osal_semp_post
+ 214              	.LVL23:
+ 215 0060 D4E7     		b	.L18
+ 216              	.LVL24:
+ 217              	.L24:
+ 218              	.LBB9:
+ 219              	.LBB8:
+ 104:../../iot_link/queue/queue.c ****     if(queue->msg_num < queue->msg_buflen)
+ 220              		.loc 1 104 0
+ 221 0062 4FF0FF35 		mov	r5, #-1
+ 222 0066 F3E7     		b	.L23
+ 223              	.LVL25:
+ 224              	.L22:
+ 225              	.LBE8:
+ 226              	.LBE9:
+ 227              	.LBB10:
+ 228              	.LBB11:
+ 105:../../iot_link/queue/queue.c ****     {
+ 229              		.loc 1 105 0
+ 230 0068 4269     		ldr	r2, [r0, #20]
+ 231              	.LVL26:
+ 232 006a 4068     		ldr	r0, [r0, #4]
+ 233              	.LVL27:
+ 234 006c 8242     		cmp	r2, r0
+ 235 006e CBDA     		bge	.L21
+ 107:../../iot_link/queue/queue.c ****         queue->cur_write = (queue->cur_write + 1)%queue->msg_buflen;
+ 236              		.loc 1 107 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 8
+
+
+ 237 0070 D4E90213 		ldrd	r1, r3, [r4, #8]
+ 238              	.LVL28:
+ 239 0074 41F82360 		str	r6, [r1, r3, lsl #2]
+ 108:../../iot_link/queue/queue.c ****         queue->msg_num ++;
+ 240              		.loc 1 108 0
+ 241 0078 0133     		adds	r3, r3, #1
+ 109:../../iot_link/queue/queue.c ****         ret = 0;
+ 242              		.loc 1 109 0
+ 243 007a 0132     		adds	r2, r2, #1
+ 108:../../iot_link/queue/queue.c ****         queue->msg_num ++;
+ 244              		.loc 1 108 0
+ 245 007c 93FBF0F1 		sdiv	r1, r3, r0
+ 246 0080 00FB1133 		mls	r3, r0, r1, r3
+ 247 0084 E360     		str	r3, [r4, #12]
+ 109:../../iot_link/queue/queue.c ****         ret = 0;
+ 248              		.loc 1 109 0
+ 249 0086 6261     		str	r2, [r4, #20]
+ 250              	.LVL29:
+ 251 0088 C0E7     		b	.L18
+ 252              	.LBE11:
+ 253              	.LBE10:
+ 254              		.cfi_endproc
+ 255              	.LFE5:
+ 257              		.section	.text.queue_pop,"ax",%progbits
+ 258              		.align	1
+ 259              		.global	queue_pop
+ 260              		.syntax unified
+ 261              		.thumb
+ 262              		.thumb_func
+ 263              		.fpu fpv4-sp-d16
+ 265              	queue_pop:
+ 266              	.LFB7:
+ 148:../../iot_link/queue/queue.c **** 
+ 149:../../iot_link/queue/queue.c **** ///< pop a data from the queue
+ 150:../../iot_link/queue/queue.c **** static int raw_queue_pop(queue_t *queue,void **buf)
+ 151:../../iot_link/queue/queue.c **** {
+ 152:../../iot_link/queue/queue.c ****     int ret = -1;
+ 153:../../iot_link/queue/queue.c ****     if(queue->msg_num > 0)
+ 154:../../iot_link/queue/queue.c ****     {
+ 155:../../iot_link/queue/queue.c ****         *buf = queue->msg_buf[queue->cur_read];
+ 156:../../iot_link/queue/queue.c ****         queue->cur_read = (queue->cur_read +1)%queue->msg_buflen;
+ 157:../../iot_link/queue/queue.c ****         queue->msg_num--;
+ 158:../../iot_link/queue/queue.c ****         ret = 0;
+ 159:../../iot_link/queue/queue.c ****     }
+ 160:../../iot_link/queue/queue.c ****     return ret;
+ 161:../../iot_link/queue/queue.c **** }
+ 162:../../iot_link/queue/queue.c **** 
+ 163:../../iot_link/queue/queue.c **** 
+ 164:../../iot_link/queue/queue.c **** int queue_pop(queue_t *queue,void **buf, int timeout)
+ 165:../../iot_link/queue/queue.c **** {
+ 267              		.loc 1 165 0
+ 268              		.cfi_startproc
+ 269              		@ args = 0, pretend = 0, frame = 0
+ 270              		@ frame_needed = 0, uses_anonymous_args = 0
+ 271              	.LVL30:
+ 272 0000 70B5     		push	{r4, r5, r6, lr}
+ 273              	.LCFI2:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 9
+
+
+ 274              		.cfi_def_cfa_offset 16
+ 275              		.cfi_offset 4, -16
+ 276              		.cfi_offset 5, -12
+ 277              		.cfi_offset 6, -8
+ 278              		.cfi_offset 14, -4
+ 279              		.loc 1 165 0
+ 280 0002 0E46     		mov	r6, r1
+ 166:../../iot_link/queue/queue.c ****     int ret = -1;
+ 167:../../iot_link/queue/queue.c ****     if((NULL == queue) || (NULL == buf))
+ 281              		.loc 1 167 0
+ 282 0004 0446     		mov	r4, r0
+ 283 0006 18B9     		cbnz	r0, .L35
+ 284              	.LVL31:
+ 285              	.L37:
+ 168:../../iot_link/queue/queue.c ****     {
+ 169:../../iot_link/queue/queue.c ****         return ret;
+ 286              		.loc 1 169 0
+ 287 0008 4FF0FF35 		mov	r5, #-1
+ 288              	.L34:
+ 170:../../iot_link/queue/queue.c ****     }
+ 171:../../iot_link/queue/queue.c **** 
+ 172:../../iot_link/queue/queue.c ****     if(queue->sync_mode)
+ 173:../../iot_link/queue/queue.c ****     {
+ 174:../../iot_link/queue/queue.c ****         if(osal_semp_pend(queue->sync_read,timeout))
+ 175:../../iot_link/queue/queue.c ****         {
+ 176:../../iot_link/queue/queue.c ****             if(osal_mutex_lock(queue->lock))
+ 177:../../iot_link/queue/queue.c ****             {
+ 178:../../iot_link/queue/queue.c ****                 ret = raw_queue_pop(queue,buf);
+ 179:../../iot_link/queue/queue.c ****                 (void) osal_mutex_unlock(queue->lock);
+ 180:../../iot_link/queue/queue.c ****             }
+ 181:../../iot_link/queue/queue.c ****             if(0 == ret)
+ 182:../../iot_link/queue/queue.c ****             {
+ 183:../../iot_link/queue/queue.c ****                 (void) osal_semp_post(queue->sync_write);
+ 184:../../iot_link/queue/queue.c ****             }
+ 185:../../iot_link/queue/queue.c ****         }
+ 186:../../iot_link/queue/queue.c ****     }
+ 187:../../iot_link/queue/queue.c ****     else
+ 188:../../iot_link/queue/queue.c ****     {
+ 189:../../iot_link/queue/queue.c ****         ret = raw_queue_pop(queue,buf);
+ 190:../../iot_link/queue/queue.c ****     }
+ 191:../../iot_link/queue/queue.c ****     return ret;
+ 192:../../iot_link/queue/queue.c **** }
+ 289              		.loc 1 192 0
+ 290 000c 2846     		mov	r0, r5
+ 291 000e 70BD     		pop	{r4, r5, r6, pc}
+ 292              	.LVL32:
+ 293              	.L35:
+ 167:../../iot_link/queue/queue.c ****     {
+ 294              		.loc 1 167 0 discriminator 1
+ 295 0010 0029     		cmp	r1, #0
+ 296 0012 F9D0     		beq	.L37
+ 172:../../iot_link/queue/queue.c ****     {
+ 297              		.loc 1 172 0
+ 298 0014 8569     		ldr	r5, [r0, #24]
+ 299 0016 45B3     		cbz	r5, .L38
+ 174:../../iot_link/queue/queue.c ****         {
+ 300              		.loc 1 174 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 10
+
+
+ 301 0018 1146     		mov	r1, r2
+ 302              	.LVL33:
+ 303 001a C069     		ldr	r0, [r0, #28]
+ 304              	.LVL34:
+ 305 001c FFF7FEFF 		bl	osal_semp_pend
+ 306              	.LVL35:
+ 307 0020 0028     		cmp	r0, #0
+ 308 0022 F1D0     		beq	.L37
+ 176:../../iot_link/queue/queue.c ****             {
+ 309              		.loc 1 176 0
+ 310 0024 606A     		ldr	r0, [r4, #36]
+ 311 0026 FFF7FEFF 		bl	osal_mutex_lock
+ 312              	.LVL36:
+ 313 002a 0028     		cmp	r0, #0
+ 314 002c ECD0     		beq	.L37
+ 315              	.LVL37:
+ 316              	.LBB16:
+ 317              	.LBB17:
+ 153:../../iot_link/queue/queue.c ****     {
+ 318              		.loc 1 153 0
+ 319 002e 6269     		ldr	r2, [r4, #20]
+ 320 0030 002A     		cmp	r2, #0
+ 321 0032 17DD     		ble	.L40
+ 155:../../iot_link/queue/queue.c ****         queue->cur_read = (queue->cur_read +1)%queue->msg_buflen;
+ 322              		.loc 1 155 0
+ 323 0034 2369     		ldr	r3, [r4, #16]
+ 324 0036 A168     		ldr	r1, [r4, #8]
+ 156:../../iot_link/queue/queue.c ****         queue->msg_num--;
+ 325              		.loc 1 156 0
+ 326 0038 6068     		ldr	r0, [r4, #4]
+ 155:../../iot_link/queue/queue.c ****         queue->cur_read = (queue->cur_read +1)%queue->msg_buflen;
+ 327              		.loc 1 155 0
+ 328 003a 51F82310 		ldr	r1, [r1, r3, lsl #2]
+ 329 003e 3160     		str	r1, [r6]
+ 156:../../iot_link/queue/queue.c ****         queue->msg_num--;
+ 330              		.loc 1 156 0
+ 331 0040 0133     		adds	r3, r3, #1
+ 157:../../iot_link/queue/queue.c ****         ret = 0;
+ 332              		.loc 1 157 0
+ 333 0042 013A     		subs	r2, r2, #1
+ 156:../../iot_link/queue/queue.c ****         queue->msg_num--;
+ 334              		.loc 1 156 0
+ 335 0044 93FBF0F1 		sdiv	r1, r3, r0
+ 336 0048 00FB1133 		mls	r3, r0, r1, r3
+ 337 004c 2361     		str	r3, [r4, #16]
+ 157:../../iot_link/queue/queue.c ****         ret = 0;
+ 338              		.loc 1 157 0
+ 339 004e 6261     		str	r2, [r4, #20]
+ 340              	.LVL38:
+ 158:../../iot_link/queue/queue.c ****     }
+ 341              		.loc 1 158 0
+ 342 0050 0025     		movs	r5, #0
+ 343              	.LVL39:
+ 344              	.L39:
+ 345              	.LBE17:
+ 346              	.LBE16:
+ 179:../../iot_link/queue/queue.c ****             }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 11
+
+
+ 347              		.loc 1 179 0
+ 348 0052 606A     		ldr	r0, [r4, #36]
+ 349 0054 FFF7FEFF 		bl	osal_mutex_unlock
+ 350              	.LVL40:
+ 181:../../iot_link/queue/queue.c ****             {
+ 351              		.loc 1 181 0
+ 352 0058 002D     		cmp	r5, #0
+ 353 005a D5D1     		bne	.L37
+ 183:../../iot_link/queue/queue.c ****             }
+ 354              		.loc 1 183 0
+ 355 005c 206A     		ldr	r0, [r4, #32]
+ 356 005e FFF7FEFF 		bl	osal_semp_post
+ 357              	.LVL41:
+ 358 0062 D3E7     		b	.L34
+ 359              	.LVL42:
+ 360              	.L40:
+ 361              	.LBB19:
+ 362              	.LBB18:
+ 152:../../iot_link/queue/queue.c ****     if(queue->msg_num > 0)
+ 363              		.loc 1 152 0
+ 364 0064 4FF0FF35 		mov	r5, #-1
+ 365 0068 F3E7     		b	.L39
+ 366              	.LVL43:
+ 367              	.L38:
+ 368              	.LBE18:
+ 369              	.LBE19:
+ 370              	.LBB20:
+ 371              	.LBB21:
+ 153:../../iot_link/queue/queue.c ****     {
+ 372              		.loc 1 153 0
+ 373 006a 4269     		ldr	r2, [r0, #20]
+ 374              	.LVL44:
+ 375 006c 002A     		cmp	r2, #0
+ 376 006e CBDD     		ble	.L37
+ 155:../../iot_link/queue/queue.c ****         queue->cur_read = (queue->cur_read +1)%queue->msg_buflen;
+ 377              		.loc 1 155 0
+ 378 0070 0369     		ldr	r3, [r0, #16]
+ 379 0072 8168     		ldr	r1, [r0, #8]
+ 380              	.LVL45:
+ 156:../../iot_link/queue/queue.c ****         queue->msg_num--;
+ 381              		.loc 1 156 0
+ 382 0074 4068     		ldr	r0, [r0, #4]
+ 383              	.LVL46:
+ 155:../../iot_link/queue/queue.c ****         queue->cur_read = (queue->cur_read +1)%queue->msg_buflen;
+ 384              		.loc 1 155 0
+ 385 0076 51F82310 		ldr	r1, [r1, r3, lsl #2]
+ 386 007a 3160     		str	r1, [r6]
+ 156:../../iot_link/queue/queue.c ****         queue->msg_num--;
+ 387              		.loc 1 156 0
+ 388 007c 0133     		adds	r3, r3, #1
+ 157:../../iot_link/queue/queue.c ****         ret = 0;
+ 389              		.loc 1 157 0
+ 390 007e 013A     		subs	r2, r2, #1
+ 156:../../iot_link/queue/queue.c ****         queue->msg_num--;
+ 391              		.loc 1 156 0
+ 392 0080 93FBF0F1 		sdiv	r1, r3, r0
+ 393 0084 00FB1133 		mls	r3, r0, r1, r3
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 12
+
+
+ 394 0088 2361     		str	r3, [r4, #16]
+ 157:../../iot_link/queue/queue.c ****         ret = 0;
+ 395              		.loc 1 157 0
+ 396 008a 6261     		str	r2, [r4, #20]
+ 397              	.LVL47:
+ 398 008c BEE7     		b	.L34
+ 399              	.LBE21:
+ 400              	.LBE20:
+ 401              		.cfi_endproc
+ 402              	.LFE7:
+ 404              		.section	.text.queue_delete,"ax",%progbits
+ 405              		.align	1
+ 406              		.global	queue_delete
+ 407              		.syntax unified
+ 408              		.thumb
+ 409              		.thumb_func
+ 410              		.fpu fpv4-sp-d16
+ 412              	queue_delete:
+ 413              	.LFB8:
+ 193:../../iot_link/queue/queue.c **** 
+ 194:../../iot_link/queue/queue.c **** ///< delete the queue,if any data in the queue, which means could not kill it
+ 195:../../iot_link/queue/queue.c **** int queue_delete(queue_t *queue)
+ 196:../../iot_link/queue/queue.c **** {
+ 414              		.loc 1 196 0
+ 415              		.cfi_startproc
+ 416              		@ args = 0, pretend = 0, frame = 0
+ 417              		@ frame_needed = 0, uses_anonymous_args = 0
+ 418              	.LVL48:
+ 419 0000 10B5     		push	{r4, lr}
+ 420              	.LCFI3:
+ 421              		.cfi_def_cfa_offset 8
+ 422              		.cfi_offset 4, -8
+ 423              		.cfi_offset 14, -4
+ 197:../../iot_link/queue/queue.c ****     int ret = -1;
+ 198:../../iot_link/queue/queue.c **** 
+ 199:../../iot_link/queue/queue.c ****     if((NULL == queue))
+ 424              		.loc 1 199 0
+ 425 0002 0446     		mov	r4, r0
+ 426 0004 78B1     		cbz	r0, .L53
+ 200:../../iot_link/queue/queue.c ****     {
+ 201:../../iot_link/queue/queue.c ****         return ret;
+ 202:../../iot_link/queue/queue.c ****     }
+ 203:../../iot_link/queue/queue.c ****     if(queue->sync_mode)
+ 427              		.loc 1 203 0
+ 428 0006 8369     		ldr	r3, [r0, #24]
+ 429 0008 43B1     		cbz	r3, .L52
+ 204:../../iot_link/queue/queue.c ****     {
+ 205:../../iot_link/queue/queue.c ****         (void) osal_semp_del(queue->sync_read);
+ 430              		.loc 1 205 0
+ 431 000a C069     		ldr	r0, [r0, #28]
+ 432              	.LVL49:
+ 433 000c FFF7FEFF 		bl	osal_semp_del
+ 434              	.LVL50:
+ 206:../../iot_link/queue/queue.c ****         (void) osal_semp_del(queue->sync_write);
+ 435              		.loc 1 206 0
+ 436 0010 206A     		ldr	r0, [r4, #32]
+ 437 0012 FFF7FEFF 		bl	osal_semp_del
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 13
+
+
+ 438              	.LVL51:
+ 207:../../iot_link/queue/queue.c ****         (void) osal_mutex_del(queue->lock);
+ 439              		.loc 1 207 0
+ 440 0016 606A     		ldr	r0, [r4, #36]
+ 441 0018 FFF7FEFF 		bl	osal_mutex_del
+ 442              	.LVL52:
+ 443              	.L52:
+ 208:../../iot_link/queue/queue.c ****     }
+ 209:../../iot_link/queue/queue.c ****     osal_free(queue);
+ 444              		.loc 1 209 0
+ 445 001c 2046     		mov	r0, r4
+ 446 001e FFF7FEFF 		bl	osal_free
+ 447              	.LVL53:
+ 210:../../iot_link/queue/queue.c ****     ret = 0;
+ 211:../../iot_link/queue/queue.c **** 
+ 212:../../iot_link/queue/queue.c ****     return ret;
+ 448              		.loc 1 212 0
+ 449 0022 0020     		movs	r0, #0
+ 450              	.LVL54:
+ 451              	.L50:
+ 213:../../iot_link/queue/queue.c **** 
+ 214:../../iot_link/queue/queue.c **** }
+ 452              		.loc 1 214 0
+ 453 0024 10BD     		pop	{r4, pc}
+ 454              	.LVL55:
+ 455              	.L53:
+ 201:../../iot_link/queue/queue.c ****     }
+ 456              		.loc 1 201 0
+ 457 0026 4FF0FF30 		mov	r0, #-1
+ 458              	.LVL56:
+ 459 002a FBE7     		b	.L50
+ 460              		.cfi_endproc
+ 461              	.LFE8:
+ 463              		.text
+ 464              	.Letext0:
+ 465              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 466              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 467              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 468              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 469              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 470              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 471              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 472              		.file 9 "../../iot_link/os/osal/osal_types.h"
+ 473              		.file 10 "../../iot_link/queue/queue.h"
+ 474              		.file 11 "../../iot_link/os/osal/osal.h"
+ 475              		.file 12 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 queue.c
+C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s:18     .text.queue_create:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s:25     .text.queue_create:00000000 queue_create
+C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s:119    .text.queue_push:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s:126    .text.queue_push:00000000 queue_push
+C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s:258    .text.queue_pop:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s:265    .text.queue_pop:00000000 queue_pop
+C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s:405    .text.queue_delete:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccXXB7jd.s:412    .text.queue_delete:00000000 queue_delete
+
+UNDEFINED SYMBOLS
+osal_malloc
+memset
+osal_semp_create
+osal_mutex_create
+osal_semp_del
+osal_free
+osal_semp_pend
+osal_mutex_lock
+osal_mutex_unlock
+osal_semp_post
+osal_mutex_del

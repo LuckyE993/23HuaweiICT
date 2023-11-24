@@ -1,0 +1,443 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"crc16.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.calc_crc16,"ax",%progbits
+  18              		.align	1
+  19              		.global	calc_crc16
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	calc_crc16:
+  26              	.LFB0:
+  27              		.file 1 "../../iot_link/crc/crc16.c"
+   1:../../iot_link/crc/crc16.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/crc/crc16.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/crc/crc16.c ****  * All rights reserved.
+   4:../../iot_link/crc/crc16.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/crc/crc16.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/crc/crc16.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/crc/crc16.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/crc/crc16.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/crc/crc16.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/crc/crc16.c ****  * provided with the distribution.
+  11:../../iot_link/crc/crc16.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/crc/crc16.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/crc/crc16.c ****  * permission.
+  14:../../iot_link/crc/crc16.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/crc/crc16.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/crc/crc16.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/crc/crc16.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/crc/crc16.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/crc/crc16.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/crc/crc16.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/crc/crc16.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/crc/crc16.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/crc/crc16.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/crc/crc16.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/crc/crc16.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/crc/crc16.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/crc/crc16.c ****  * Notice of Export Control Law
+  28:../../iot_link/crc/crc16.c ****  * ===============================================
+  29:../../iot_link/crc/crc16.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/crc/crc16.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/crc/crc16.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 2
+
+
+  32:../../iot_link/crc/crc16.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/crc/crc16.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/crc/crc16.c **** /**
+  35:../../iot_link/crc/crc16.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:../../iot_link/crc/crc16.c ****  *  2019-05-30 15:20  zhangqianfu  The first version
+  37:../../iot_link/crc/crc16.c ****  *
+  38:../../iot_link/crc/crc16.c ****  */
+  39:../../iot_link/crc/crc16.c **** 
+  40:../../iot_link/crc/crc16.c **** #include <stdint.h>
+  41:../../iot_link/crc/crc16.c **** #include <stddef.h>
+  42:../../iot_link/crc/crc16.c **** 
+  43:../../iot_link/crc/crc16.c **** uint16_t crc16_ccitt_table[] = { 0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5, 0x60c6, 0x70e7, 0x
+  44:../../iot_link/crc/crc16.c ****                             0xb16b, 0xc18c, 0xd1ad, 0xe1ce, 0xf1ef, 0x1231, 0x0210, 0x3273, 0x2252,
+  45:../../iot_link/crc/crc16.c ****                             0xa35a, 0xd3bd, 0xc39c, 0xf3ff, 0xe3de, 0x2462, 0x3443, 0x0420, 0x1401,
+  46:../../iot_link/crc/crc16.c ****                             0x9509, 0xe5ee, 0xf5cf, 0xc5ac, 0xd58d, 0x3653, 0x2672, 0x1611, 0x0630,
+  47:../../iot_link/crc/crc16.c ****                             0x8738, 0xf7df, 0xe7fe, 0xd79d, 0xc7bc, 0x48c4, 0x58e5, 0x6886, 0x78a7,
+  48:../../iot_link/crc/crc16.c ****                             0xf9af, 0x8948, 0x9969, 0xa90a, 0xb92b, 0x5af5, 0x4ad4, 0x7ab7, 0x6a96,
+  49:../../iot_link/crc/crc16.c ****                             0xeb9e, 0x9b79, 0x8b58, 0xbb3b, 0xab1a, 0x6ca6, 0x7c87, 0x4ce4, 0x5cc5,
+  50:../../iot_link/crc/crc16.c ****                             0xddcd, 0xad2a, 0xbd0b, 0x8d68, 0x9d49, 0x7e97, 0x6eb6, 0x5ed5, 0x4ef4,
+  51:../../iot_link/crc/crc16.c ****                             0xcffc, 0xbf1b, 0xaf3a, 0x9f59, 0x8f78, 0x9188, 0x81a9, 0xb1ca, 0xa1eb,
+  52:../../iot_link/crc/crc16.c ****                             0x20e3, 0x5004, 0x4025, 0x7046, 0x6067, 0x83b9, 0x9398, 0xa3fb, 0xb3da,
+  53:../../iot_link/crc/crc16.c ****                             0x32d2, 0x4235, 0x5214, 0x6277, 0x7256, 0xb5ea, 0xa5cb, 0x95a8, 0x8589,
+  54:../../iot_link/crc/crc16.c ****                             0x0481, 0x7466, 0x6447, 0x5424, 0x4405, 0xa7db, 0xb7fa, 0x8799, 0x97b8,
+  55:../../iot_link/crc/crc16.c ****                             0x16b0, 0x6657, 0x7676, 0x4615, 0x5634, 0xd94c, 0xc96d, 0xf90e, 0xe92f,
+  56:../../iot_link/crc/crc16.c ****                             0x6827, 0x18c0, 0x08e1, 0x3882, 0x28a3, 0xcb7d, 0xdb5c, 0xeb3f, 0xfb1e,
+  57:../../iot_link/crc/crc16.c ****                             0x7a16, 0x0af1, 0x1ad0, 0x2ab3, 0x3a92, 0xfd2e, 0xed0f, 0xdd6c, 0xcd4d,
+  58:../../iot_link/crc/crc16.c ****                             0x4c45, 0x3ca2, 0x2c83, 0x1ce0, 0x0cc1, 0xef1f, 0xff3e, 0xcf5d, 0xdf7c,
+  59:../../iot_link/crc/crc16.c ****                             0x5e74, 0x2e93, 0x3eb2, 0x0ed1, 0x1ef0
+  60:../../iot_link/crc/crc16.c ****                           };
+  61:../../iot_link/crc/crc16.c **** 
+  62:../../iot_link/crc/crc16.c **** uint16_t calc_crc16(uint16_t reg_init, const unsigned char *massage, int len)
+  63:../../iot_link/crc/crc16.c **** {
+  28              		.loc 1 63 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 30B5     		push	{r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+  64:../../iot_link/crc/crc16.c ****     uint16_t crc_reg = 0;
+  65:../../iot_link/crc/crc16.c ****     int i = 0;
+  66:../../iot_link/crc/crc16.c ****     crc_reg = reg_init;
+  67:../../iot_link/crc/crc16.c **** 
+  68:../../iot_link/crc/crc16.c ****     for(i = 0; i < len; i++)
+  69:../../iot_link/crc/crc16.c ****     {
+  70:../../iot_link/crc/crc16.c ****         crc_reg = (crc_reg >> 8) ^ crc16_ccitt_table[(crc_reg ^ massage[i]) & 0xff];
+  39              		.loc 1 70 0
+  40 0002 074D     		ldr	r5, .L4
+  68:../../iot_link/crc/crc16.c ****     {
+  41              		.loc 1 68 0
+  42 0004 0C46     		mov	r4, r1
+  43              	.LVL1:
+  44              	.L2:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 3
+
+
+  68:../../iot_link/crc/crc16.c ****     {
+  45              		.loc 1 68 0 is_stmt 0 discriminator 1
+  46 0006 631A     		subs	r3, r4, r1
+  47 0008 9A42     		cmp	r2, r3
+  48 000a 00DC     		bgt	.L3
+  71:../../iot_link/crc/crc16.c ****     }
+  72:../../iot_link/crc/crc16.c ****     return crc_reg;
+  73:../../iot_link/crc/crc16.c **** }
+  49              		.loc 1 73 0 is_stmt 1
+  50 000c 30BD     		pop	{r4, r5, pc}
+  51              	.LVL2:
+  52              	.L3:
+  70:../../iot_link/crc/crc16.c ****     }
+  53              		.loc 1 70 0 discriminator 3
+  54 000e 14F8013B 		ldrb	r3, [r4], #1	@ zero_extendqisi2
+  55              	.LVL3:
+  56 0012 4340     		eors	r3, r3, r0
+  57 0014 DBB2     		uxtb	r3, r3
+  58 0016 35F81330 		ldrh	r3, [r5, r3, lsl #1]
+  59 001a 83EA1020 		eor	r0, r3, r0, lsr #8
+  60              	.LVL4:
+  61 001e F2E7     		b	.L2
+  62              	.L5:
+  63              		.align	2
+  64              	.L4:
+  65 0020 00000000 		.word	.LANCHOR0
+  66              		.cfi_endproc
+  67              	.LFE0:
+  69              		.global	crc16_ccitt_table
+  70              		.section	.data.crc16_ccitt_table,"aw",%progbits
+  71              		.align	1
+  72              		.set	.LANCHOR0,. + 0
+  75              	crc16_ccitt_table:
+  76 0000 0000     		.short	0
+  77 0002 2110     		.short	4129
+  78 0004 4220     		.short	8258
+  79 0006 6330     		.short	12387
+  80 0008 8440     		.short	16516
+  81 000a A550     		.short	20645
+  82 000c C660     		.short	24774
+  83 000e E770     		.short	28903
+  84 0010 0881     		.short	-32504
+  85 0012 2991     		.short	-28375
+  86 0014 4AA1     		.short	-24246
+  87 0016 6BB1     		.short	-20117
+  88 0018 8CC1     		.short	-15988
+  89 001a ADD1     		.short	-11859
+  90 001c CEE1     		.short	-7730
+  91 001e EFF1     		.short	-3601
+  92 0020 3112     		.short	4657
+  93 0022 1002     		.short	528
+  94 0024 7332     		.short	12915
+  95 0026 5222     		.short	8786
+  96 0028 B552     		.short	21173
+  97 002a 9442     		.short	17044
+  98 002c F772     		.short	29431
+  99 002e D662     		.short	25302
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 4
+
+
+ 100 0030 3993     		.short	-27847
+ 101 0032 1883     		.short	-31976
+ 102 0034 7BB3     		.short	-19589
+ 103 0036 5AA3     		.short	-23718
+ 104 0038 BDD3     		.short	-11331
+ 105 003a 9CC3     		.short	-15460
+ 106 003c FFF3     		.short	-3073
+ 107 003e DEE3     		.short	-7202
+ 108 0040 6224     		.short	9314
+ 109 0042 4334     		.short	13379
+ 110 0044 2004     		.short	1056
+ 111 0046 0114     		.short	5121
+ 112 0048 E664     		.short	25830
+ 113 004a C774     		.short	29895
+ 114 004c A444     		.short	17572
+ 115 004e 8554     		.short	21637
+ 116 0050 6AA5     		.short	-23190
+ 117 0052 4BB5     		.short	-19125
+ 118 0054 2885     		.short	-31448
+ 119 0056 0995     		.short	-27383
+ 120 0058 EEE5     		.short	-6674
+ 121 005a CFF5     		.short	-2609
+ 122 005c ACC5     		.short	-14932
+ 123 005e 8DD5     		.short	-10867
+ 124 0060 5336     		.short	13907
+ 125 0062 7226     		.short	9842
+ 126 0064 1116     		.short	5649
+ 127 0066 3006     		.short	1584
+ 128 0068 D776     		.short	30423
+ 129 006a F666     		.short	26358
+ 130 006c 9556     		.short	22165
+ 131 006e B446     		.short	18100
+ 132 0070 5BB7     		.short	-18597
+ 133 0072 7AA7     		.short	-22662
+ 134 0074 1997     		.short	-26855
+ 135 0076 3887     		.short	-30920
+ 136 0078 DFF7     		.short	-2081
+ 137 007a FEE7     		.short	-6146
+ 138 007c 9DD7     		.short	-10339
+ 139 007e BCC7     		.short	-14404
+ 140 0080 C448     		.short	18628
+ 141 0082 E558     		.short	22757
+ 142 0084 8668     		.short	26758
+ 143 0086 A778     		.short	30887
+ 144 0088 4008     		.short	2112
+ 145 008a 6118     		.short	6241
+ 146 008c 0228     		.short	10242
+ 147 008e 2338     		.short	14371
+ 148 0090 CCC9     		.short	-13876
+ 149 0092 EDD9     		.short	-9747
+ 150 0094 8EE9     		.short	-5746
+ 151 0096 AFF9     		.short	-1617
+ 152 0098 4889     		.short	-30392
+ 153 009a 6999     		.short	-26263
+ 154 009c 0AA9     		.short	-22262
+ 155 009e 2BB9     		.short	-18133
+ 156 00a0 F55A     		.short	23285
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 5
+
+
+ 157 00a2 D44A     		.short	19156
+ 158 00a4 B77A     		.short	31415
+ 159 00a6 966A     		.short	27286
+ 160 00a8 711A     		.short	6769
+ 161 00aa 500A     		.short	2640
+ 162 00ac 333A     		.short	14899
+ 163 00ae 122A     		.short	10770
+ 164 00b0 FDDB     		.short	-9219
+ 165 00b2 DCCB     		.short	-13348
+ 166 00b4 BFFB     		.short	-1089
+ 167 00b6 9EEB     		.short	-5218
+ 168 00b8 799B     		.short	-25735
+ 169 00ba 588B     		.short	-29864
+ 170 00bc 3BBB     		.short	-17605
+ 171 00be 1AAB     		.short	-21734
+ 172 00c0 A66C     		.short	27814
+ 173 00c2 877C     		.short	31879
+ 174 00c4 E44C     		.short	19684
+ 175 00c6 C55C     		.short	23749
+ 176 00c8 222C     		.short	11298
+ 177 00ca 033C     		.short	15363
+ 178 00cc 600C     		.short	3168
+ 179 00ce 411C     		.short	7233
+ 180 00d0 AEED     		.short	-4690
+ 181 00d2 8FFD     		.short	-625
+ 182 00d4 ECCD     		.short	-12820
+ 183 00d6 CDDD     		.short	-8755
+ 184 00d8 2AAD     		.short	-21206
+ 185 00da 0BBD     		.short	-17141
+ 186 00dc 688D     		.short	-29336
+ 187 00de 499D     		.short	-25271
+ 188 00e0 977E     		.short	32407
+ 189 00e2 B66E     		.short	28342
+ 190 00e4 D55E     		.short	24277
+ 191 00e6 F44E     		.short	20212
+ 192 00e8 133E     		.short	15891
+ 193 00ea 322E     		.short	11826
+ 194 00ec 511E     		.short	7761
+ 195 00ee 700E     		.short	3696
+ 196 00f0 9FFF     		.short	-97
+ 197 00f2 BEEF     		.short	-4162
+ 198 00f4 DDDF     		.short	-8227
+ 199 00f6 FCCF     		.short	-12292
+ 200 00f8 1BBF     		.short	-16613
+ 201 00fa 3AAF     		.short	-20678
+ 202 00fc 599F     		.short	-24743
+ 203 00fe 788F     		.short	-28808
+ 204 0100 8891     		.short	-28280
+ 205 0102 A981     		.short	-32343
+ 206 0104 CAB1     		.short	-20022
+ 207 0106 EBA1     		.short	-24085
+ 208 0108 0CD1     		.short	-12020
+ 209 010a 2DC1     		.short	-16083
+ 210 010c 4EF1     		.short	-3762
+ 211 010e 6FE1     		.short	-7825
+ 212 0110 8010     		.short	4224
+ 213 0112 A100     		.short	161
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 6
+
+
+ 214 0114 C230     		.short	12482
+ 215 0116 E320     		.short	8419
+ 216 0118 0450     		.short	20484
+ 217 011a 2540     		.short	16421
+ 218 011c 4670     		.short	28742
+ 219 011e 6760     		.short	24679
+ 220 0120 B983     		.short	-31815
+ 221 0122 9893     		.short	-27752
+ 222 0124 FBA3     		.short	-23557
+ 223 0126 DAB3     		.short	-19494
+ 224 0128 3DC3     		.short	-15555
+ 225 012a 1CD3     		.short	-11492
+ 226 012c 7FE3     		.short	-7297
+ 227 012e 5EF3     		.short	-3234
+ 228 0130 B102     		.short	689
+ 229 0132 9012     		.short	4752
+ 230 0134 F322     		.short	8947
+ 231 0136 D232     		.short	13010
+ 232 0138 3542     		.short	16949
+ 233 013a 1452     		.short	21012
+ 234 013c 7762     		.short	25207
+ 235 013e 5672     		.short	29270
+ 236 0140 EAB5     		.short	-18966
+ 237 0142 CBA5     		.short	-23093
+ 238 0144 A895     		.short	-27224
+ 239 0146 8985     		.short	-31351
+ 240 0148 6EF5     		.short	-2706
+ 241 014a 4FE5     		.short	-6833
+ 242 014c 2CD5     		.short	-10964
+ 243 014e 0DC5     		.short	-15091
+ 244 0150 E234     		.short	13538
+ 245 0152 C324     		.short	9411
+ 246 0154 A014     		.short	5280
+ 247 0156 8104     		.short	1153
+ 248 0158 6674     		.short	29798
+ 249 015a 4764     		.short	25671
+ 250 015c 2454     		.short	21540
+ 251 015e 0544     		.short	17413
+ 252 0160 DBA7     		.short	-22565
+ 253 0162 FAB7     		.short	-18438
+ 254 0164 9987     		.short	-30823
+ 255 0166 B897     		.short	-26696
+ 256 0168 5FE7     		.short	-6305
+ 257 016a 7EF7     		.short	-2178
+ 258 016c 1DC7     		.short	-14563
+ 259 016e 3CD7     		.short	-10436
+ 260 0170 D326     		.short	9939
+ 261 0172 F236     		.short	14066
+ 262 0174 9106     		.short	1681
+ 263 0176 B016     		.short	5808
+ 264 0178 5766     		.short	26199
+ 265 017a 7676     		.short	30326
+ 266 017c 1546     		.short	17941
+ 267 017e 3456     		.short	22068
+ 268 0180 4CD9     		.short	-9908
+ 269 0182 6DC9     		.short	-13971
+ 270 0184 0EF9     		.short	-1778
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 7
+
+
+ 271 0186 2FE9     		.short	-5841
+ 272 0188 C899     		.short	-26168
+ 273 018a E989     		.short	-30231
+ 274 018c 8AB9     		.short	-18038
+ 275 018e ABA9     		.short	-22101
+ 276 0190 4458     		.short	22596
+ 277 0192 6548     		.short	18533
+ 278 0194 0678     		.short	30726
+ 279 0196 2768     		.short	26663
+ 280 0198 C018     		.short	6336
+ 281 019a E108     		.short	2273
+ 282 019c 8238     		.short	14466
+ 283 019e A328     		.short	10403
+ 284 01a0 7DCB     		.short	-13443
+ 285 01a2 5CDB     		.short	-9380
+ 286 01a4 3FEB     		.short	-5313
+ 287 01a6 1EFB     		.short	-1250
+ 288 01a8 F98B     		.short	-29703
+ 289 01aa D89B     		.short	-25640
+ 290 01ac BBAB     		.short	-21573
+ 291 01ae 9ABB     		.short	-17510
+ 292 01b0 754A     		.short	19061
+ 293 01b2 545A     		.short	23124
+ 294 01b4 376A     		.short	27191
+ 295 01b6 167A     		.short	31254
+ 296 01b8 F10A     		.short	2801
+ 297 01ba D01A     		.short	6864
+ 298 01bc B32A     		.short	10931
+ 299 01be 923A     		.short	14994
+ 300 01c0 2EFD     		.short	-722
+ 301 01c2 0FED     		.short	-4849
+ 302 01c4 6CDD     		.short	-8852
+ 303 01c6 4DCD     		.short	-12979
+ 304 01c8 AABD     		.short	-16982
+ 305 01ca 8BAD     		.short	-21109
+ 306 01cc E89D     		.short	-25112
+ 307 01ce C98D     		.short	-29239
+ 308 01d0 267C     		.short	31782
+ 309 01d2 076C     		.short	27655
+ 310 01d4 645C     		.short	23652
+ 311 01d6 454C     		.short	19525
+ 312 01d8 A23C     		.short	15522
+ 313 01da 832C     		.short	11395
+ 314 01dc E01C     		.short	7392
+ 315 01de C10C     		.short	3265
+ 316 01e0 1FEF     		.short	-4321
+ 317 01e2 3EFF     		.short	-194
+ 318 01e4 5DCF     		.short	-12451
+ 319 01e6 7CDF     		.short	-8324
+ 320 01e8 9BAF     		.short	-20581
+ 321 01ea BABF     		.short	-16454
+ 322 01ec D98F     		.short	-28711
+ 323 01ee F89F     		.short	-24584
+ 324 01f0 176E     		.short	28183
+ 325 01f2 367E     		.short	32310
+ 326 01f4 554E     		.short	20053
+ 327 01f6 745E     		.short	24180
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 8
+
+
+ 328 01f8 932E     		.short	11923
+ 329 01fa B23E     		.short	16050
+ 330 01fc D10E     		.short	3793
+ 331 01fe F01E     		.short	7920
+ 332              		.text
+ 333              	.Letext0:
+ 334              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 335              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 crc16.c
+C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s:18     .text.calc_crc16:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s:25     .text.calc_crc16:00000000 calc_crc16
+C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s:65     .text.calc_crc16:00000020 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s:75     .data.crc16_ccitt_table:00000000 crc16_ccitt_table
+C:\Users\LuckyE\AppData\Local\Temp\cc0mtNW9.s:71     .data.crc16_ccitt_table:00000000 $d
+
+NO UNDEFINED SYMBOLS

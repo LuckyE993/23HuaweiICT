@@ -1,0 +1,258 @@
+# 基于WiFi LwM2M协议的智慧农业案例
+
+## 1. 基于WiFi LwM2M协议的智慧农业案例概述
+
+本文档将介绍如何使用BearPi-IoT_Std的完成基于WiFi LwM2M协议的智慧农业实验。
+
+## 2. 实验准备
+- 开发板：小熊派开发板（WIFI8266通信扩展板、E53_IA1案例扩展板等）
+- IoT平台：华为云账号（需完成实名认证）
+## 3. 硬件连接
+连接好E53_IA1案例扩展板和WIFI8266通信扩展板，将**串口选择开关拨到MCU模式**，并用USB线将开发板与电脑连接，如下图所示。
+
+<table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/WIFI.png" /></td></tr></tbody></table>
+
+## 4. 创建产品
+
+某一类具有相同能力或特征的设备的集合称为一款产品。除了设备实体，产品还包含 该类设备在物联网能力建设中产生的产品信息、产品模型（Profile）、插件、测试报告 等资源。
+
+- 使用华为云账号，登录[设备接入](https://console.huaweicloud.com/iotdm/?region=cn-north-4#/dm-portal/home)，选择页面左侧的产品，单击右上角下拉框，选择新建产品所属的资源空间。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/图片15.png" /></td></tr></tbody></table>
+
+- 单击右上角的“创建产品”，创建一个基于LwM2M/CoAP协议的产品，填写参数后，单击“立即创建”，在跳出页面中点击“查看详情”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/创建产品.png" /></td></tr></tbody></table>
+
+## 5. Profile定义
+- 在“模型定义”页面下，单击“自定义模型”，配置产品的服务。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/自定义模型.png" /></td></tr></tbody></table>
+
+### 5.1 新增服务名称Agriculture
+
+- 填写Agriculture服务相关信息后，单击“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/添加Agriculture服务.png" /></td></tr></tbody></table>
+
+- 在“Agriculture”的列表下点击“添加属性”填写“Temperature”，“Humidity”，“luminance”相关信息，单击“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/Temperature属性.png" /></td></tr></tbody></table>
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/Humidity属性.png" /></td></tr></tbody></table>
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/luminance属性.png" /></td></tr></tbody></table>
+
+- 在“Agriculture”的列表下点击“添加命令”填写Agriculture_Control_Light相关信息
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/新增Agriculture_Control_Light命令.png" /></td></tr></tbody></table>
+
+- 在“新增命令”里点击“新增输入参数”填写相关信息，再单击“确定”。
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/新增Light参数.png" /></td></tr></tbody></table>
+
+- 在“新增命令”里点击“新增响应参数”填写相关信息，再单击“确认”，最后在“新增命令”里点“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/新增Light_State参数.png" /></td></tr></tbody></table>
+
+- 在“Agriculture”的列表下点击“添加命令”填写Agriculture_Control_Motor相关信息
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/新增Agriculture_Control_Motor命令.png" /></td></tr></tbody></table>
+
+- 在“新增命令”里点击“新增输入参数”填写相关信息，再单击“确定”。
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/新增Motor参数.png" /></td></tr></tbody></table>
+
+- 在“新增命令”里点击“新增响应参数”填写相关信息，再单击“确认”，最后在“新增命令”里点“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/新增Motor_State参数.png" /></td></tr></tbody></table>
+
+## 6. 编解码插件开发 
+### 6.1 新增消息Agriculture。
+- 在产品详情插件开发页面，选择“图形化开发”，单击“图形化开发”。
+
+   <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/插件开发.png" /></td></tr></tbody></table>
+
+- 在“在线开发插件”区域，单击“新增消息”。
+
+   <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/新增消息.png" /></td></tr></tbody></table>
+
+- 新增消息：
+
+    消息名：Agriculture
+    
+    消息类型：数据上报
+    
+    添加响应字段：否
+    
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/新增Agriculture消息.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”，在“添加字段”界面，勾选“标记为地址域”，然后单击“确认”，添加地址域字段messageId。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片18.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”，填写Temperature相关信息，然后单击“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片25.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”，填写Humidity相关信息，然后单击“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片48.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”，填写Luminance相关信息，然后单击“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片50.png" /></td></tr></tbody></table>
+
+
+- 在“新增消息”界面，单击“确认”，完成消息Agriculture的配置。
+
+
+### 6.2 新增消息Agriculture_Control_Light。
+
+- 新增消息：
+
+    消息名：Agriculture_Control_Light
+    
+    消息类型：命令下发
+    
+    添加响应字段：是
+    
+    
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片64.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”， 在“添加字段”界面，勾选“标记为地址域”，然后单击“确认”，添加地址域字段messageId。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片66.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”，在“添加字段”界面，勾选“标记为 响应标识字段”，然后单击“确认”，添加响应标识字段 mid。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片67.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”，填写Light相关信息，然后单击“完成”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片23.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加响应字段” 
+- 在“添加字段”界面，勾选“标记为地址域”，然后单击“确认”，添加地址域字段 messageId。
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片69.png" /></td></tr></tbody></table>
+- 在“添加字段”界面，勾选“标记为响应标识字段”，然后单击“确认”，添加响应标识字段 mid。 
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片77.png" /></td></tr></tbody></table>
+- 在“添加字段”界面，勾选“标记为命令执行状态字段”，然后单击“确认”，添加命令执行状态字段 errcode。
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片78.png" /></td></tr></tbody></table>
+
+
+- 在“新增消息”界面，单击“添加响应字段”，填写Light_State相关信息，单击“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片79.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“确认”，完成消息 Agriculture_Control_Light 的配置。
+
+### 6.2 新增消息Agriculture_Control_Motor。
+
+- 新增消息：
+
+    消息名：Agriculture_Control_Motor
+    
+    消息类型：命令下发
+    
+    添加响应字段：是
+    
+    
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片82.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”， 在“添加字段”界面，勾选“标记为地址域”，然后单击“确认”，添加地址域字段messageId。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片90.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”，在“添加字段”界面，勾选“标记为 响应标识字段”，然后单击“确认”，添加响应标识字段 mid。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片84.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加字段”，填写Motor相关信息，然后单击“完成”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片2.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“添加响应字段”，在“添加字段”界面，勾选“标记为地址域”，然后单击“确认”，添加地址域字段 messageId。
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片92.png" /></td></tr></tbody></table>
+- 在“添加字段”界面，勾选“标记为响应标识字段”，然后单击“确认”，添加响应标识字段 mid。 
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片93.png" /></td></tr></tbody></table>
+- 在“添加字段”界面，勾选“标记为命令执行状态字段”，然后单击“确认”，添加命令执行状态字段 errcode。
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片94.png" /></td></tr></tbody></table>
+
+
+- 在“新增消息”界面，单击“添加响应字段”，填写Motor_State相关信息，单击“确认”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片24.png" /></td></tr></tbody></table>
+
+- 在“新增消息”界面，单击“确认”，完成消息 Agriculture_Control_Motor 的配置。
+### 6.3 字段映射
+- 拖动右侧“产品模型”区域的属性字段、命令字段和响应字段，与数据上报消息、命令下发消息和命令响应消息的相应字段建立映射关系。
+
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片95.png" /></td></tr></tbody></table>
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片96.png" /></td></tr></tbody></table>
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片97.png" /></td></tr></tbody></table>
+
+- 单击“保存”，并在插件保存成功后单击“部署”，将编解码插件部署到物联网平台
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/BearPi-IoT_Agriculture/图片102.png" /></td></tr></tbody></table>
+## 7. 设备开发
+### 7.1 程序编译
+
+1. 进入编译目录
+
+```
+cd targets/STM32L431_BearPi
+```
+2. 拷贝工程配置
+
+```
+cp Demos/oc_wifi_lwm2m_agriculture/defaults.sdkconfig .config
+```
+3. 生成iot_config.h
+
+    ```
+    start genconfig.exe
+    ```
+4. 修targets/STM32L431_BearPi/iot_config.h
+
+    - 将iot_config.h中的CONFIG_ESP8266_SSID、CONFIG_ESP8266_PWD修改为所要连接的wifi热点的账号密码；
+    - 将CONFIG_APP_ENDPOIINT_ID改为不与别人冲突的字符串，作为“设备标识码”，用于平台注册设备。
+
+        <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/设置wifi_lwm2m的iot_config.png" /></td></tr></tbody></table>
+
+5. 编译工程
+
+    ```
+    make clean
+    make -j8
+    ```
+
+### 7.2 烧录程序
+
+1. 在编译目录下输入
+
+    ```
+    make download
+    ```
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/openocd烧录.png" /></td></tr></tbody></table>
+
+## 8. 业务调试
+
+1. 注册设备
+
+    - 点击华为云IoT平台页面左侧的“设备”→“所有设备”，点击右上角“注册设备”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/注册设备_1.png" /></td></tr></tbody></table>
+
+    - 选择所属资源空间及产品，设备标识码填写iot_config.h中CONFIG_APP_ENDPOIINT_ID设置的信息，点击“确定”。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/注册设备.png" /></td></tr></tbody></table>
+
+2. 示例代码编译烧录代码后，按下开发板的RESET按键，可通过串口助手查看日志，平台上的设备显示为在线状态。
+
+    <table><tbody><tr><td><img src="../../../../docs/device-dev/figures/设备在线.png" /></td></tr></tbody></table>
+
+3. 点击设备右侧的“查看”，进入设备详情页面，可看到上报的数据。
+
+4. 在华为云平台设备详情页，单击“命令”，选择**异步命令下发**，选中创建的命令属性，单击“确定”，即可发送下发命令控制设备。

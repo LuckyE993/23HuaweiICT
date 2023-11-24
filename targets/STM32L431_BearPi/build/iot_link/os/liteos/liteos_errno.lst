@@ -1,0 +1,172 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"liteos_errno.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.task_errno,"ax",%progbits
+  18              		.align	1
+  19              		.global	task_errno
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	task_errno:
+  26              	.LFB287:
+  27              		.file 1 "../../iot_link/os/liteos/liteos_errno.c"
+   1:../../iot_link/os/liteos/liteos_errno.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/liteos_errno.c ****  * Copyright (c) <2013-2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/liteos_errno.c ****  * All rights reserved.
+   4:../../iot_link/os/liteos/liteos_errno.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/liteos_errno.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/liteos_errno.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/liteos_errno.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/liteos_errno.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/liteos_errno.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/liteos_errno.c ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/liteos_errno.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/liteos_errno.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/liteos_errno.c ****  * permission.
+  14:../../iot_link/os/liteos/liteos_errno.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/liteos_errno.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/liteos_errno.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/liteos_errno.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/liteos_errno.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/liteos_errno.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/liteos_errno.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/liteos_errno.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/liteos_errno.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/liteos_errno.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/liteos_errno.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/liteos_errno.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/liteos_errno.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/liteos_errno.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/liteos_errno.c ****  * ===============================================
+  29:../../iot_link/os/liteos/liteos_errno.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/liteos_errno.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/liteos_errno.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s 			page 2
+
+
+  32:../../iot_link/os/liteos/liteos_errno.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/liteos_errno.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/liteos_errno.c **** 
+  35:../../iot_link/os/liteos/liteos_errno.c **** /* Includes -----------------------------------------------------------------*/
+  36:../../iot_link/os/liteos/liteos_errno.c **** 
+  37:../../iot_link/os/liteos/liteos_errno.c **** #include "los_config.h"
+  38:../../iot_link/os/liteos/liteos_errno.c **** #include "los_task.h"
+  39:../../iot_link/os/liteos/liteos_errno.c **** #include "los_printf.h"
+  40:../../iot_link/os/liteos/liteos_errno.c **** 
+  41:../../iot_link/os/liteos/liteos_errno.c **** 
+  42:../../iot_link/os/liteos/liteos_errno.c **** /* Typedefs -----------------------------------------------------------------*/
+  43:../../iot_link/os/liteos/liteos_errno.c **** 
+  44:../../iot_link/os/liteos/liteos_errno.c **** typedef struct TaskReent
+  45:../../iot_link/os/liteos/liteos_errno.c **** {
+  46:../../iot_link/os/liteos/liteos_errno.c ****     int errno;
+  47:../../iot_link/os/liteos/liteos_errno.c **** } TaskReent;
+  48:../../iot_link/os/liteos/liteos_errno.c **** 
+  49:../../iot_link/os/liteos/liteos_errno.c **** 
+  50:../../iot_link/os/liteos/liteos_errno.c **** /* Local variables ----------------------------------------------------------*/
+  51:../../iot_link/os/liteos/liteos_errno.c **** 
+  52:../../iot_link/os/liteos/liteos_errno.c **** static TaskReent g_task_reent[LOSCFG_BASE_CORE_TSK_LIMIT + 1];
+  53:../../iot_link/os/liteos/liteos_errno.c **** 
+  54:../../iot_link/os/liteos/liteos_errno.c **** 
+  55:../../iot_link/os/liteos/liteos_errno.c **** /* Public functions ---------------------------------------------------------*/
+  56:../../iot_link/os/liteos/liteos_errno.c **** 
+  57:../../iot_link/os/liteos/liteos_errno.c **** int *task_errno(void)
+  58:../../iot_link/os/liteos/liteos_errno.c **** {
+  28              		.loc 1 58 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  59:../../iot_link/os/liteos/liteos_errno.c ****     UINT32 taskid = LOS_CurTaskIDGet();
+  37              		.loc 1 59 0
+  38 0002 FFF7FEFF 		bl	LOS_CurTaskIDGet
+  39              	.LVL0:
+  40 0006 034B     		ldr	r3, .L4
+  60:../../iot_link/os/liteos/liteos_errno.c **** 
+  61:../../iot_link/os/liteos/liteos_errno.c ****     if (taskid <= LOSCFG_BASE_CORE_TSK_LIMIT)
+  41              		.loc 1 61 0
+  42 0008 0F28     		cmp	r0, #15
+  62:../../iot_link/os/liteos/liteos_errno.c ****     {
+  63:../../iot_link/os/liteos/liteos_errno.c ****         return &g_task_reent[taskid].errno;
+  43              		.loc 1 63 0
+  44 000a 94BF     		ite	ls
+  45 000c 03EB8000 		addls	r0, r3, r0, lsl #2
+  46              	.LVL1:
+  64:../../iot_link/os/liteos/liteos_errno.c ****     }
+  65:../../iot_link/os/liteos/liteos_errno.c ****     else
+  66:../../iot_link/os/liteos/liteos_errno.c ****     {
+  67:../../iot_link/os/liteos/liteos_errno.c ****         PRINT_WARN("TaskID[%d] is invalid\n", taskid);
+  68:../../iot_link/os/liteos/liteos_errno.c ****         return &g_task_reent[0].errno;
+  47              		.loc 1 68 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s 			page 3
+
+
+  48 0010 1846     		movhi	r0, r3
+  69:../../iot_link/os/liteos/liteos_errno.c ****     }
+  70:../../iot_link/os/liteos/liteos_errno.c **** }
+  49              		.loc 1 70 0
+  50 0012 08BD     		pop	{r3, pc}
+  51              	.L5:
+  52              		.align	2
+  53              	.L4:
+  54 0014 00000000 		.word	.LANCHOR0
+  55              		.cfi_endproc
+  56              	.LFE287:
+  58              		.section	.bss.g_task_reent,"aw",%nobits
+  59              		.align	2
+  60              		.set	.LANCHOR0,. + 0
+  63              	g_task_reent:
+  64 0000 00000000 		.space	64
+  64      00000000 
+  64      00000000 
+  64      00000000 
+  64      00000000 
+  65              		.text
+  66              	.Letext0:
+  67              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+  68              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+  69              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+  70              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+  71              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+  72              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+  73              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+  74              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+  75              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+  76              		.file 11 "../../iot_link/os/liteos/include/los_config.h"
+  77              		.file 12 "../../iot_link/os/liteos/include/los_err.h"
+  78              		.file 13 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+  79              		.file 14 "../../iot_link/os/liteos/include/los_tick.h"
+  80              		.file 15 "../../iot_link/os/liteos/include/los_task.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 liteos_errno.c
+C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s:18     .text.task_errno:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s:25     .text.task_errno:00000000 task_errno
+C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s:54     .text.task_errno:00000014 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s:59     .bss.g_task_reent:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cc5dmGCB.s:63     .bss.g_task_reent:00000000 g_task_reent
+
+UNDEFINED SYMBOLS
+LOS_CurTaskIDGet

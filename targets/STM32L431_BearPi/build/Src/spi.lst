@@ -1,0 +1,1161 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"spi.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MX_SPI1_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	MX_SPI1_Init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	MX_SPI1_Init:
+  26              	.LFB287:
+  27              		.file 1 "Src/spi.c"
+   1:Src/spi.c     **** /**
+   2:Src/spi.c     ****   ******************************************************************************
+   3:Src/spi.c     ****   * @file    spi.c
+   4:Src/spi.c     ****   * @brief   This file provides code for the configuration
+   5:Src/spi.c     ****   *          of the SPI instances.
+   6:Src/spi.c     ****   ******************************************************************************
+   7:Src/spi.c     ****   * @attention
+   8:Src/spi.c     ****   *
+   9:Src/spi.c     ****   * <h2><center>&copy; Copyright (c) 2022 STMicroelectronics.
+  10:Src/spi.c     ****   * All rights reserved.</center></h2>
+  11:Src/spi.c     ****   *
+  12:Src/spi.c     ****   * This software component is licensed by ST under BSD 3-Clause license,
+  13:Src/spi.c     ****   * the "License"; You may not use this file except in compliance with the
+  14:Src/spi.c     ****   * License. You may obtain a copy of the License at:
+  15:Src/spi.c     ****   *                        opensource.org/licenses/BSD-3-Clause
+  16:Src/spi.c     ****   *
+  17:Src/spi.c     ****   ******************************************************************************
+  18:Src/spi.c     ****   */
+  19:Src/spi.c     **** 
+  20:Src/spi.c     **** /* Includes ------------------------------------------------------------------*/
+  21:Src/spi.c     **** #include "spi.h"
+  22:Src/spi.c     **** 
+  23:Src/spi.c     **** /* USER CODE BEGIN 0 */
+  24:Src/spi.c     **** 
+  25:Src/spi.c     **** /* USER CODE END 0 */
+  26:Src/spi.c     **** 
+  27:Src/spi.c     **** SPI_HandleTypeDef hspi1;
+  28:Src/spi.c     **** SPI_HandleTypeDef hspi2;
+  29:Src/spi.c     **** SPI_HandleTypeDef hspi3;
+  30:Src/spi.c     **** 
+  31:Src/spi.c     **** /* SPI1 init function */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 2
+
+
+  32:Src/spi.c     **** void MX_SPI1_Init(void)
+  33:Src/spi.c     **** {
+  28              		.loc 1 33 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  34:Src/spi.c     **** 
+  35:Src/spi.c     ****   /* USER CODE BEGIN SPI1_Init 0 */
+  36:Src/spi.c     **** 
+  37:Src/spi.c     ****   /* USER CODE END SPI1_Init 0 */
+  38:Src/spi.c     **** 
+  39:Src/spi.c     ****   /* USER CODE BEGIN SPI1_Init 1 */
+  40:Src/spi.c     **** 
+  41:Src/spi.c     ****   /* USER CODE END SPI1_Init 1 */
+  42:Src/spi.c     ****   hspi1.Instance = SPI1;
+  32              		.loc 1 42 0
+  33 0000 1048     		ldr	r0, .L3
+  43:Src/spi.c     ****   hspi1.Init.Mode = SPI_MODE_MASTER;
+  34              		.loc 1 43 0
+  35 0002 114A     		ldr	r2, .L3+4
+  33:Src/spi.c     **** 
+  36              		.loc 1 33 0
+  37 0004 08B5     		push	{r3, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 8
+  40              		.cfi_offset 3, -8
+  41              		.cfi_offset 14, -4
+  42              		.loc 1 43 0
+  43 0006 4FF48273 		mov	r3, #260
+  44 000a C0E90023 		strd	r2, r3, [r0]
+  44:Src/spi.c     ****   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  45:Src/spi.c     ****   hspi1.Init.DataSize = SPI_DATASIZE_4BIT;
+  45              		.loc 1 45 0
+  46 000e 0023     		movs	r3, #0
+  47 0010 4FF44072 		mov	r2, #768
+  48 0014 C0E90232 		strd	r3, r2, [r0, #8]
+  46:Src/spi.c     ****   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  47:Src/spi.c     ****   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  48:Src/spi.c     ****   hspi1.Init.NSS = SPI_NSS_HARD_INPUT;
+  49:Src/spi.c     ****   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  50:Src/spi.c     ****   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  51:Src/spi.c     ****   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  52:Src/spi.c     ****   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  53:Src/spi.c     ****   hspi1.Init.CRCPolynomial = 7;
+  49              		.loc 1 53 0
+  50 0018 0722     		movs	r2, #7
+  47:Src/spi.c     ****   hspi1.Init.NSS = SPI_NSS_HARD_INPUT;
+  51              		.loc 1 47 0
+  52 001a C0E90433 		strd	r3, r3, [r0, #16]
+  49:Src/spi.c     ****   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  53              		.loc 1 49 0
+  54 001e C0E90633 		strd	r3, r3, [r0, #24]
+  51:Src/spi.c     ****   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  55              		.loc 1 51 0
+  56 0022 C0E90833 		strd	r3, r3, [r0, #32]
+  52:Src/spi.c     ****   hspi1.Init.CRCPolynomial = 7;
+  57              		.loc 1 52 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 3
+
+
+  58 0026 8362     		str	r3, [r0, #40]
+  54:Src/spi.c     ****   hspi1.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+  59              		.loc 1 54 0
+  60 0028 C0E90B23 		strd	r2, r3, [r0, #44]
+  55:Src/spi.c     ****   hspi1.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+  61              		.loc 1 55 0
+  62 002c 0823     		movs	r3, #8
+  63 002e 4363     		str	r3, [r0, #52]
+  56:Src/spi.c     ****   if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  64              		.loc 1 56 0
+  65 0030 FFF7FEFF 		bl	HAL_SPI_Init
+  66              	.LVL0:
+  67 0034 28B1     		cbz	r0, .L1
+  57:Src/spi.c     ****   {
+  58:Src/spi.c     ****     Error_Handler();
+  68              		.loc 1 58 0
+  69 0036 3A21     		movs	r1, #58
+  70 0038 0448     		ldr	r0, .L3+8
+  59:Src/spi.c     ****   }
+  60:Src/spi.c     ****   /* USER CODE BEGIN SPI1_Init 2 */
+  61:Src/spi.c     **** 
+  62:Src/spi.c     ****   /* USER CODE END SPI1_Init 2 */
+  63:Src/spi.c     **** 
+  64:Src/spi.c     **** }
+  71              		.loc 1 64 0
+  72 003a BDE80840 		pop	{r3, lr}
+  73              	.LCFI1:
+  74              		.cfi_remember_state
+  75              		.cfi_restore 14
+  76              		.cfi_restore 3
+  77              		.cfi_def_cfa_offset 0
+  58:Src/spi.c     ****   }
+  78              		.loc 1 58 0
+  79 003e FFF7FEBF 		b	_Error_Handler
+  80              	.LVL1:
+  81              	.L1:
+  82              	.LCFI2:
+  83              		.cfi_restore_state
+  84              		.loc 1 64 0
+  85 0042 08BD     		pop	{r3, pc}
+  86              	.L4:
+  87              		.align	2
+  88              	.L3:
+  89 0044 00000000 		.word	hspi1
+  90 0048 00300140 		.word	1073819648
+  91 004c 00000000 		.word	.LC0
+  92              		.cfi_endproc
+  93              	.LFE287:
+  95              		.section	.text.MX_SPI2_Init,"ax",%progbits
+  96              		.align	1
+  97              		.global	MX_SPI2_Init
+  98              		.syntax unified
+  99              		.thumb
+ 100              		.thumb_func
+ 101              		.fpu fpv4-sp-d16
+ 103              	MX_SPI2_Init:
+ 104              	.LFB288:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 4
+
+
+  65:Src/spi.c     **** /* SPI2 init function */
+  66:Src/spi.c     **** void MX_SPI2_Init(void)
+  67:Src/spi.c     **** {
+ 105              		.loc 1 67 0
+ 106              		.cfi_startproc
+ 107              		@ args = 0, pretend = 0, frame = 0
+ 108              		@ frame_needed = 0, uses_anonymous_args = 0
+  68:Src/spi.c     **** 
+  69:Src/spi.c     ****   /* USER CODE BEGIN SPI2_Init 0 */
+  70:Src/spi.c     **** 
+  71:Src/spi.c     ****   /* USER CODE END SPI2_Init 0 */
+  72:Src/spi.c     **** 
+  73:Src/spi.c     ****   /* USER CODE BEGIN SPI2_Init 1 */
+  74:Src/spi.c     **** 
+  75:Src/spi.c     ****   /* USER CODE END SPI2_Init 1 */
+  76:Src/spi.c     ****   hspi2.Instance = SPI2;
+ 109              		.loc 1 76 0
+ 110 0000 1248     		ldr	r0, .L7
+  77:Src/spi.c     ****   hspi2.Init.Mode = SPI_MODE_MASTER;
+ 111              		.loc 1 77 0
+ 112 0002 134A     		ldr	r2, .L7+4
+  67:Src/spi.c     **** 
+ 113              		.loc 1 67 0
+ 114 0004 08B5     		push	{r3, lr}
+ 115              	.LCFI3:
+ 116              		.cfi_def_cfa_offset 8
+ 117              		.cfi_offset 3, -8
+ 118              		.cfi_offset 14, -4
+ 119              		.loc 1 77 0
+ 120 0006 4FF48273 		mov	r3, #260
+ 121 000a C0E90023 		strd	r2, r3, [r0]
+  78:Src/spi.c     ****   hspi2.Init.Direction = SPI_DIRECTION_2LINES;
+  79:Src/spi.c     ****   hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
+ 122              		.loc 1 79 0
+ 123 000e 0023     		movs	r3, #0
+ 124 0010 4FF4E062 		mov	r2, #1792
+ 125 0014 C0E90232 		strd	r3, r2, [r0, #8]
+  80:Src/spi.c     ****   hspi2.Init.CLKPolarity = SPI_POLARITY_HIGH;
+  81:Src/spi.c     ****   hspi2.Init.CLKPhase = SPI_PHASE_2EDGE;
+ 126              		.loc 1 81 0
+ 127 0018 0221     		movs	r1, #2
+ 128 001a 0122     		movs	r2, #1
+ 129 001c C0E90412 		strd	r1, r2, [r0, #16]
+  82:Src/spi.c     ****   hspi2.Init.NSS = SPI_NSS_SOFT;
+ 130              		.loc 1 82 0
+ 131 0020 4FF40072 		mov	r2, #512
+  83:Src/spi.c     ****   hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+ 132              		.loc 1 83 0
+ 133 0024 C0E90623 		strd	r2, r3, [r0, #24]
+  84:Src/spi.c     ****   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  85:Src/spi.c     ****   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
+  86:Src/spi.c     ****   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  87:Src/spi.c     ****   hspi2.Init.CRCPolynomial = 7;
+ 134              		.loc 1 87 0
+ 135 0028 0722     		movs	r2, #7
+  85:Src/spi.c     ****   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+ 136              		.loc 1 85 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 5
+
+
+ 137 002a C0E90833 		strd	r3, r3, [r0, #32]
+  86:Src/spi.c     ****   hspi2.Init.CRCPolynomial = 7;
+ 138              		.loc 1 86 0
+ 139 002e 8362     		str	r3, [r0, #40]
+  88:Src/spi.c     ****   hspi2.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+ 140              		.loc 1 88 0
+ 141 0030 C0E90B23 		strd	r2, r3, [r0, #44]
+  89:Src/spi.c     ****   hspi2.Init.NSSPMode = SPI_NSS_PULSE_DISABLE;
+ 142              		.loc 1 89 0
+ 143 0034 4363     		str	r3, [r0, #52]
+  90:Src/spi.c     ****   if (HAL_SPI_Init(&hspi2) != HAL_OK)
+ 144              		.loc 1 90 0
+ 145 0036 FFF7FEFF 		bl	HAL_SPI_Init
+ 146              	.LVL2:
+ 147 003a 28B1     		cbz	r0, .L5
+  91:Src/spi.c     ****   {
+  92:Src/spi.c     ****     Error_Handler();
+ 148              		.loc 1 92 0
+ 149 003c 5C21     		movs	r1, #92
+ 150 003e 0548     		ldr	r0, .L7+8
+  93:Src/spi.c     ****   }
+  94:Src/spi.c     ****   /* USER CODE BEGIN SPI2_Init 2 */
+  95:Src/spi.c     **** 
+  96:Src/spi.c     ****   /* USER CODE END SPI2_Init 2 */
+  97:Src/spi.c     **** 
+  98:Src/spi.c     **** }
+ 151              		.loc 1 98 0
+ 152 0040 BDE80840 		pop	{r3, lr}
+ 153              	.LCFI4:
+ 154              		.cfi_remember_state
+ 155              		.cfi_restore 14
+ 156              		.cfi_restore 3
+ 157              		.cfi_def_cfa_offset 0
+  92:Src/spi.c     ****   }
+ 158              		.loc 1 92 0
+ 159 0044 FFF7FEBF 		b	_Error_Handler
+ 160              	.LVL3:
+ 161              	.L5:
+ 162              	.LCFI5:
+ 163              		.cfi_restore_state
+ 164              		.loc 1 98 0
+ 165 0048 08BD     		pop	{r3, pc}
+ 166              	.L8:
+ 167 004a 00BF     		.align	2
+ 168              	.L7:
+ 169 004c 00000000 		.word	hspi2
+ 170 0050 00380040 		.word	1073756160
+ 171 0054 00000000 		.word	.LC0
+ 172              		.cfi_endproc
+ 173              	.LFE288:
+ 175              		.section	.text.MX_SPI3_Init,"ax",%progbits
+ 176              		.align	1
+ 177              		.global	MX_SPI3_Init
+ 178              		.syntax unified
+ 179              		.thumb
+ 180              		.thumb_func
+ 181              		.fpu fpv4-sp-d16
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 6
+
+
+ 183              	MX_SPI3_Init:
+ 184              	.LFB289:
+  99:Src/spi.c     **** /* SPI3 init function */
+ 100:Src/spi.c     **** void MX_SPI3_Init(void)
+ 101:Src/spi.c     **** {
+ 185              		.loc 1 101 0
+ 186              		.cfi_startproc
+ 187              		@ args = 0, pretend = 0, frame = 0
+ 188              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102:Src/spi.c     **** 
+ 103:Src/spi.c     ****   /* USER CODE BEGIN SPI3_Init 0 */
+ 104:Src/spi.c     **** 
+ 105:Src/spi.c     ****   /* USER CODE END SPI3_Init 0 */
+ 106:Src/spi.c     **** 
+ 107:Src/spi.c     ****   /* USER CODE BEGIN SPI3_Init 1 */
+ 108:Src/spi.c     **** 
+ 109:Src/spi.c     ****   /* USER CODE END SPI3_Init 1 */
+ 110:Src/spi.c     ****   hspi3.Instance = SPI3;
+ 189              		.loc 1 110 0
+ 190 0000 1048     		ldr	r0, .L11
+ 111:Src/spi.c     ****   hspi3.Init.Mode = SPI_MODE_MASTER;
+ 191              		.loc 1 111 0
+ 192 0002 114A     		ldr	r2, .L11+4
+ 101:Src/spi.c     **** 
+ 193              		.loc 1 101 0
+ 194 0004 08B5     		push	{r3, lr}
+ 195              	.LCFI6:
+ 196              		.cfi_def_cfa_offset 8
+ 197              		.cfi_offset 3, -8
+ 198              		.cfi_offset 14, -4
+ 199              		.loc 1 111 0
+ 200 0006 4FF48273 		mov	r3, #260
+ 201 000a C0E90023 		strd	r2, r3, [r0]
+ 112:Src/spi.c     ****   hspi3.Init.Direction = SPI_DIRECTION_2LINES;
+ 113:Src/spi.c     ****   hspi3.Init.DataSize = SPI_DATASIZE_4BIT;
+ 202              		.loc 1 113 0
+ 203 000e 0023     		movs	r3, #0
+ 204 0010 4FF44072 		mov	r2, #768
+ 205 0014 C0E90232 		strd	r3, r2, [r0, #8]
+ 114:Src/spi.c     ****   hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
+ 115:Src/spi.c     ****   hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
+ 116:Src/spi.c     ****   hspi3.Init.NSS = SPI_NSS_HARD_INPUT;
+ 117:Src/spi.c     ****   hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+ 118:Src/spi.c     ****   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
+ 119:Src/spi.c     ****   hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
+ 120:Src/spi.c     ****   hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+ 121:Src/spi.c     ****   hspi3.Init.CRCPolynomial = 7;
+ 206              		.loc 1 121 0
+ 207 0018 0722     		movs	r2, #7
+ 115:Src/spi.c     ****   hspi3.Init.NSS = SPI_NSS_HARD_INPUT;
+ 208              		.loc 1 115 0
+ 209 001a C0E90433 		strd	r3, r3, [r0, #16]
+ 117:Src/spi.c     ****   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
+ 210              		.loc 1 117 0
+ 211 001e C0E90633 		strd	r3, r3, [r0, #24]
+ 119:Src/spi.c     ****   hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+ 212              		.loc 1 119 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 7
+
+
+ 213 0022 C0E90833 		strd	r3, r3, [r0, #32]
+ 120:Src/spi.c     ****   hspi3.Init.CRCPolynomial = 7;
+ 214              		.loc 1 120 0
+ 215 0026 8362     		str	r3, [r0, #40]
+ 122:Src/spi.c     ****   hspi3.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
+ 216              		.loc 1 122 0
+ 217 0028 C0E90B23 		strd	r2, r3, [r0, #44]
+ 123:Src/spi.c     ****   hspi3.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+ 218              		.loc 1 123 0
+ 219 002c 0823     		movs	r3, #8
+ 220 002e 4363     		str	r3, [r0, #52]
+ 124:Src/spi.c     ****   if (HAL_SPI_Init(&hspi3) != HAL_OK)
+ 221              		.loc 1 124 0
+ 222 0030 FFF7FEFF 		bl	HAL_SPI_Init
+ 223              	.LVL4:
+ 224 0034 28B1     		cbz	r0, .L9
+ 125:Src/spi.c     ****   {
+ 126:Src/spi.c     ****     Error_Handler();
+ 225              		.loc 1 126 0
+ 226 0036 7E21     		movs	r1, #126
+ 227 0038 0448     		ldr	r0, .L11+8
+ 127:Src/spi.c     ****   }
+ 128:Src/spi.c     ****   /* USER CODE BEGIN SPI3_Init 2 */
+ 129:Src/spi.c     **** 
+ 130:Src/spi.c     ****   /* USER CODE END SPI3_Init 2 */
+ 131:Src/spi.c     **** 
+ 132:Src/spi.c     **** }
+ 228              		.loc 1 132 0
+ 229 003a BDE80840 		pop	{r3, lr}
+ 230              	.LCFI7:
+ 231              		.cfi_remember_state
+ 232              		.cfi_restore 14
+ 233              		.cfi_restore 3
+ 234              		.cfi_def_cfa_offset 0
+ 126:Src/spi.c     ****   }
+ 235              		.loc 1 126 0
+ 236 003e FFF7FEBF 		b	_Error_Handler
+ 237              	.LVL5:
+ 238              	.L9:
+ 239              	.LCFI8:
+ 240              		.cfi_restore_state
+ 241              		.loc 1 132 0
+ 242 0042 08BD     		pop	{r3, pc}
+ 243              	.L12:
+ 244              		.align	2
+ 245              	.L11:
+ 246 0044 00000000 		.word	hspi3
+ 247 0048 003C0040 		.word	1073757184
+ 248 004c 00000000 		.word	.LC0
+ 249              		.cfi_endproc
+ 250              	.LFE289:
+ 252              		.section	.text.HAL_SPI_MspInit,"ax",%progbits
+ 253              		.align	1
+ 254              		.global	HAL_SPI_MspInit
+ 255              		.syntax unified
+ 256              		.thumb
+ 257              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 8
+
+
+ 258              		.fpu fpv4-sp-d16
+ 260              	HAL_SPI_MspInit:
+ 261              	.LFB290:
+ 133:Src/spi.c     **** 
+ 134:Src/spi.c     **** void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
+ 135:Src/spi.c     **** {
+ 262              		.loc 1 135 0
+ 263              		.cfi_startproc
+ 264              		@ args = 0, pretend = 0, frame = 56
+ 265              		@ frame_needed = 0, uses_anonymous_args = 0
+ 266              	.LVL6:
+ 267 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 268              	.LCFI9:
+ 269              		.cfi_def_cfa_offset 20
+ 270              		.cfi_offset 4, -20
+ 271              		.cfi_offset 5, -16
+ 272              		.cfi_offset 6, -12
+ 273              		.cfi_offset 7, -8
+ 274              		.cfi_offset 14, -4
+ 275 0002 0446     		mov	r4, r0
+ 276 0004 8FB0     		sub	sp, sp, #60
+ 277              	.LCFI10:
+ 278              		.cfi_def_cfa_offset 80
+ 136:Src/spi.c     **** 
+ 137:Src/spi.c     ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
+ 279              		.loc 1 137 0
+ 280 0006 1422     		movs	r2, #20
+ 281 0008 0021     		movs	r1, #0
+ 282 000a 09A8     		add	r0, sp, #36
+ 283              	.LVL7:
+ 284 000c FFF7FEFF 		bl	memset
+ 285              	.LVL8:
+ 138:Src/spi.c     ****   if(spiHandle->Instance==SPI1)
+ 286              		.loc 1 138 0
+ 287 0010 2368     		ldr	r3, [r4]
+ 288 0012 514A     		ldr	r2, .L19
+ 289 0014 9342     		cmp	r3, r2
+ 290 0016 22D1     		bne	.L14
+ 291              	.LBB2:
+ 139:Src/spi.c     ****   {
+ 140:Src/spi.c     ****   /* USER CODE BEGIN SPI1_MspInit 0 */
+ 141:Src/spi.c     **** 
+ 142:Src/spi.c     ****   /* USER CODE END SPI1_MspInit 0 */
+ 143:Src/spi.c     ****     /* SPI1 clock enable */
+ 144:Src/spi.c     ****     __HAL_RCC_SPI1_CLK_ENABLE();
+ 292              		.loc 1 144 0
+ 293 0018 504B     		ldr	r3, .L19+4
+ 294 001a 1A6E     		ldr	r2, [r3, #96]
+ 295 001c 42F48052 		orr	r2, r2, #4096
+ 296 0020 1A66     		str	r2, [r3, #96]
+ 297 0022 1A6E     		ldr	r2, [r3, #96]
+ 298 0024 02F48052 		and	r2, r2, #4096
+ 299 0028 0092     		str	r2, [sp]
+ 300 002a 009A     		ldr	r2, [sp]
+ 301              	.LBE2:
+ 302              	.LBB3:
+ 145:Src/spi.c     **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 9
+
+
+ 146:Src/spi.c     ****     __HAL_RCC_GPIOA_CLK_ENABLE();
+ 303              		.loc 1 146 0
+ 304 002c DA6C     		ldr	r2, [r3, #76]
+ 305 002e 42F00102 		orr	r2, r2, #1
+ 306 0032 DA64     		str	r2, [r3, #76]
+ 307 0034 DB6C     		ldr	r3, [r3, #76]
+ 308 0036 03F00103 		and	r3, r3, #1
+ 309 003a 0193     		str	r3, [sp, #4]
+ 310 003c 019B     		ldr	r3, [sp, #4]
+ 311              	.LBE3:
+ 147:Src/spi.c     ****     /**SPI1 GPIO Configuration
+ 148:Src/spi.c     ****     PA1     ------> SPI1_SCK
+ 149:Src/spi.c     ****     PA4     ------> SPI1_NSS
+ 150:Src/spi.c     ****     PA6     ------> SPI1_MISO
+ 151:Src/spi.c     ****     PA12     ------> SPI1_MOSI
+ 152:Src/spi.c     ****     */
+ 153:Src/spi.c     ****     GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_4|GPIO_PIN_6|GPIO_PIN_12;
+ 154:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 312              		.loc 1 154 0
+ 313 003e 41F25202 		movw	r2, #4178
+ 314 0042 0223     		movs	r3, #2
+ 155:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 156:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 157:Src/spi.c     ****     GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
+ 315              		.loc 1 157 0
+ 316 0044 0321     		movs	r1, #3
+ 154:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 317              		.loc 1 154 0
+ 318 0046 CDE90923 		strd	r2, r3, [sp, #36]
+ 319              		.loc 1 157 0
+ 320 004a 0523     		movs	r3, #5
+ 321 004c CDE90C13 		strd	r1, r3, [sp, #48]
+ 158:Src/spi.c     ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 322              		.loc 1 158 0
+ 323 0050 4FF09040 		mov	r0, #1207959552
+ 324 0054 09A9     		add	r1, sp, #36
+ 325              	.LVL9:
+ 326              	.L17:
+ 159:Src/spi.c     **** 
+ 160:Src/spi.c     ****   /* USER CODE BEGIN SPI1_MspInit 1 */
+ 161:Src/spi.c     **** 
+ 162:Src/spi.c     ****   /* USER CODE END SPI1_MspInit 1 */
+ 163:Src/spi.c     ****   }
+ 164:Src/spi.c     ****   else if(spiHandle->Instance==SPI2)
+ 165:Src/spi.c     ****   {
+ 166:Src/spi.c     ****   /* USER CODE BEGIN SPI2_MspInit 0 */
+ 167:Src/spi.c     **** 
+ 168:Src/spi.c     ****   /* USER CODE END SPI2_MspInit 0 */
+ 169:Src/spi.c     ****     /* SPI2 clock enable */
+ 170:Src/spi.c     ****     __HAL_RCC_SPI2_CLK_ENABLE();
+ 171:Src/spi.c     **** 
+ 172:Src/spi.c     ****     __HAL_RCC_GPIOC_CLK_ENABLE();
+ 173:Src/spi.c     ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+ 174:Src/spi.c     ****     /**SPI2 GPIO Configuration
+ 175:Src/spi.c     ****     PC3     ------> SPI2_MOSI
+ 176:Src/spi.c     ****     PB13     ------> SPI2_SCK
+ 177:Src/spi.c     ****     */
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 10
+
+
+ 178:Src/spi.c     ****     GPIO_InitStruct.Pin = GPIO_PIN_3;
+ 179:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 180:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 181:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 182:Src/spi.c     ****     GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
+ 183:Src/spi.c     ****     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+ 184:Src/spi.c     **** 
+ 185:Src/spi.c     ****     GPIO_InitStruct.Pin = GPIO_PIN_13;
+ 186:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 187:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 188:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 189:Src/spi.c     ****     GPIO_InitStruct.Alternate = GPIO_AF5_SPI2;
+ 190:Src/spi.c     ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 191:Src/spi.c     **** 
+ 192:Src/spi.c     ****   /* USER CODE BEGIN SPI2_MspInit 1 */
+ 193:Src/spi.c     **** 
+ 194:Src/spi.c     ****   /* USER CODE END SPI2_MspInit 1 */
+ 195:Src/spi.c     ****   }
+ 196:Src/spi.c     ****   else if(spiHandle->Instance==SPI3)
+ 197:Src/spi.c     ****   {
+ 198:Src/spi.c     ****   /* USER CODE BEGIN SPI3_MspInit 0 */
+ 199:Src/spi.c     **** 
+ 200:Src/spi.c     ****   /* USER CODE END SPI3_MspInit 0 */
+ 201:Src/spi.c     ****     /* SPI3 clock enable */
+ 202:Src/spi.c     ****     __HAL_RCC_SPI3_CLK_ENABLE();
+ 203:Src/spi.c     **** 
+ 204:Src/spi.c     ****     __HAL_RCC_GPIOA_CLK_ENABLE();
+ 205:Src/spi.c     ****     __HAL_RCC_GPIOC_CLK_ENABLE();
+ 206:Src/spi.c     ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+ 207:Src/spi.c     ****     /**SPI3 GPIO Configuration
+ 208:Src/spi.c     ****     PA15 (JTDI)     ------> SPI3_NSS
+ 209:Src/spi.c     ****     PC10     ------> SPI3_SCK
+ 210:Src/spi.c     ****     PC11     ------> SPI3_MISO
+ 211:Src/spi.c     ****     PB5     ------> SPI3_MOSI
+ 212:Src/spi.c     ****     */
+ 213:Src/spi.c     ****     GPIO_InitStruct.Pin = GPIO_PIN_15;
+ 214:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 215:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 216:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 217:Src/spi.c     ****     GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
+ 218:Src/spi.c     ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 219:Src/spi.c     **** 
+ 220:Src/spi.c     ****     GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
+ 221:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 222:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 223:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 224:Src/spi.c     ****     GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
+ 225:Src/spi.c     ****     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+ 226:Src/spi.c     **** 
+ 227:Src/spi.c     ****     GPIO_InitStruct.Pin = GPIO_PIN_5;
+ 228:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 229:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 230:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 231:Src/spi.c     ****     GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
+ 232:Src/spi.c     ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 327              		.loc 1 232 0
+ 328 0056 FFF7FEFF 		bl	HAL_GPIO_Init
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 11
+
+
+ 329              	.LVL10:
+ 330              	.L13:
+ 233:Src/spi.c     **** 
+ 234:Src/spi.c     ****   /* USER CODE BEGIN SPI3_MspInit 1 */
+ 235:Src/spi.c     **** 
+ 236:Src/spi.c     ****   /* USER CODE END SPI3_MspInit 1 */
+ 237:Src/spi.c     ****   }
+ 238:Src/spi.c     **** }
+ 331              		.loc 1 238 0
+ 332 005a 0FB0     		add	sp, sp, #60
+ 333              	.LCFI11:
+ 334              		.cfi_remember_state
+ 335              		.cfi_def_cfa_offset 20
+ 336              		@ sp needed
+ 337 005c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 338              	.LVL11:
+ 339              	.L14:
+ 340              	.LCFI12:
+ 341              		.cfi_restore_state
+ 164:Src/spi.c     ****   {
+ 342              		.loc 1 164 0
+ 343 005e 404A     		ldr	r2, .L19+8
+ 344 0060 9342     		cmp	r3, r2
+ 345 0062 32D1     		bne	.L16
+ 346              	.LBB4:
+ 170:Src/spi.c     **** 
+ 347              		.loc 1 170 0
+ 348 0064 3D4B     		ldr	r3, .L19+4
+ 349              	.LBE4:
+ 183:Src/spi.c     **** 
+ 350              		.loc 1 183 0
+ 351 0066 3F48     		ldr	r0, .L19+12
+ 352              	.LBB5:
+ 170:Src/spi.c     **** 
+ 353              		.loc 1 170 0
+ 354 0068 9A6D     		ldr	r2, [r3, #88]
+ 355 006a 42F48042 		orr	r2, r2, #16384
+ 356 006e 9A65     		str	r2, [r3, #88]
+ 357 0070 9A6D     		ldr	r2, [r3, #88]
+ 358 0072 02F48042 		and	r2, r2, #16384
+ 359 0076 0292     		str	r2, [sp, #8]
+ 360 0078 029A     		ldr	r2, [sp, #8]
+ 361              	.LBE5:
+ 362              	.LBB6:
+ 172:Src/spi.c     ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+ 363              		.loc 1 172 0
+ 364 007a DA6C     		ldr	r2, [r3, #76]
+ 365 007c 42F00402 		orr	r2, r2, #4
+ 366 0080 DA64     		str	r2, [r3, #76]
+ 367 0082 DA6C     		ldr	r2, [r3, #76]
+ 368 0084 02F00402 		and	r2, r2, #4
+ 369 0088 0392     		str	r2, [sp, #12]
+ 370 008a 039A     		ldr	r2, [sp, #12]
+ 371              	.LBE6:
+ 372              	.LBB7:
+ 173:Src/spi.c     ****     /**SPI2 GPIO Configuration
+ 373              		.loc 1 173 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 12
+
+
+ 374 008c DA6C     		ldr	r2, [r3, #76]
+ 375 008e 42F00202 		orr	r2, r2, #2
+ 376 0092 DA64     		str	r2, [r3, #76]
+ 377 0094 DB6C     		ldr	r3, [r3, #76]
+ 378 0096 03F00203 		and	r3, r3, #2
+ 379 009a 0493     		str	r3, [sp, #16]
+ 380 009c 049B     		ldr	r3, [sp, #16]
+ 381              	.LBE7:
+ 179:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 382              		.loc 1 179 0
+ 383 009e 0226     		movs	r6, #2
+ 384 00a0 0823     		movs	r3, #8
+ 182:Src/spi.c     ****     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+ 385              		.loc 1 182 0
+ 386 00a2 0325     		movs	r5, #3
+ 387 00a4 0524     		movs	r4, #5
+ 388              	.LVL12:
+ 183:Src/spi.c     **** 
+ 389              		.loc 1 183 0
+ 390 00a6 09A9     		add	r1, sp, #36
+ 179:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 391              		.loc 1 179 0
+ 392 00a8 CDE90936 		strd	r3, r6, [sp, #36]
+ 182:Src/spi.c     ****     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+ 393              		.loc 1 182 0
+ 394 00ac CDE90C54 		strd	r5, r4, [sp, #48]
+ 183:Src/spi.c     **** 
+ 395              		.loc 1 183 0
+ 396 00b0 FFF7FEFF 		bl	HAL_GPIO_Init
+ 397              	.LVL13:
+ 185:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 398              		.loc 1 185 0
+ 399 00b4 4FF40053 		mov	r3, #8192
+ 186:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 400              		.loc 1 186 0
+ 401 00b8 CDE90936 		strd	r3, r6, [sp, #36]
+ 187:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 402              		.loc 1 187 0
+ 403 00bc 0023     		movs	r3, #0
+ 404 00be 0B93     		str	r3, [sp, #44]
+ 405              	.L18:
+ 231:Src/spi.c     ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 406              		.loc 1 231 0
+ 407 00c0 CDE90C54 		strd	r5, r4, [sp, #48]
+ 232:Src/spi.c     **** 
+ 408              		.loc 1 232 0
+ 409 00c4 09A9     		add	r1, sp, #36
+ 410 00c6 2848     		ldr	r0, .L19+16
+ 411 00c8 C5E7     		b	.L17
+ 412              	.LVL14:
+ 413              	.L16:
+ 196:Src/spi.c     ****   {
+ 414              		.loc 1 196 0
+ 415 00ca 284A     		ldr	r2, .L19+20
+ 416 00cc 9342     		cmp	r3, r2
+ 417 00ce C4D1     		bne	.L13
+ 418              	.LBB8:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 13
+
+
+ 202:Src/spi.c     **** 
+ 419              		.loc 1 202 0
+ 420 00d0 224B     		ldr	r3, .L19+4
+ 421 00d2 9A6D     		ldr	r2, [r3, #88]
+ 422 00d4 42F40042 		orr	r2, r2, #32768
+ 423 00d8 9A65     		str	r2, [r3, #88]
+ 424 00da 9A6D     		ldr	r2, [r3, #88]
+ 425 00dc 02F40042 		and	r2, r2, #32768
+ 426 00e0 0592     		str	r2, [sp, #20]
+ 427 00e2 059A     		ldr	r2, [sp, #20]
+ 428              	.LBE8:
+ 429              	.LBB9:
+ 204:Src/spi.c     ****     __HAL_RCC_GPIOC_CLK_ENABLE();
+ 430              		.loc 1 204 0
+ 431 00e4 DA6C     		ldr	r2, [r3, #76]
+ 432 00e6 42F00102 		orr	r2, r2, #1
+ 433 00ea DA64     		str	r2, [r3, #76]
+ 434 00ec DA6C     		ldr	r2, [r3, #76]
+ 435 00ee 02F00102 		and	r2, r2, #1
+ 436 00f2 0692     		str	r2, [sp, #24]
+ 437 00f4 069A     		ldr	r2, [sp, #24]
+ 438              	.LBE9:
+ 439              	.LBB10:
+ 205:Src/spi.c     ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+ 440              		.loc 1 205 0
+ 441 00f6 DA6C     		ldr	r2, [r3, #76]
+ 442 00f8 42F00402 		orr	r2, r2, #4
+ 443 00fc DA64     		str	r2, [r3, #76]
+ 444 00fe DA6C     		ldr	r2, [r3, #76]
+ 445 0100 02F00402 		and	r2, r2, #4
+ 446 0104 0792     		str	r2, [sp, #28]
+ 447 0106 079A     		ldr	r2, [sp, #28]
+ 448              	.LBE10:
+ 449              	.LBB11:
+ 206:Src/spi.c     ****     /**SPI3 GPIO Configuration
+ 450              		.loc 1 206 0
+ 451 0108 DA6C     		ldr	r2, [r3, #76]
+ 452 010a 42F00202 		orr	r2, r2, #2
+ 453 010e DA64     		str	r2, [r3, #76]
+ 454 0110 DB6C     		ldr	r3, [r3, #76]
+ 455 0112 03F00203 		and	r3, r3, #2
+ 456 0116 0893     		str	r3, [sp, #32]
+ 457              	.LBE11:
+ 214:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 458              		.loc 1 214 0
+ 459 0118 0226     		movs	r6, #2
+ 460              	.LBB12:
+ 206:Src/spi.c     ****     /**SPI3 GPIO Configuration
+ 461              		.loc 1 206 0
+ 462 011a 089B     		ldr	r3, [sp, #32]
+ 463              	.LBE12:
+ 217:Src/spi.c     ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 464              		.loc 1 217 0
+ 465 011c 0325     		movs	r5, #3
+ 214:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 466              		.loc 1 214 0
+ 467 011e 4FF40043 		mov	r3, #32768
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 14
+
+
+ 217:Src/spi.c     ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 468              		.loc 1 217 0
+ 469 0122 0624     		movs	r4, #6
+ 470              	.LVL15:
+ 218:Src/spi.c     **** 
+ 471              		.loc 1 218 0
+ 472 0124 09A9     		add	r1, sp, #36
+ 473 0126 4FF09040 		mov	r0, #1207959552
+ 214:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 474              		.loc 1 214 0
+ 475 012a CDE90936 		strd	r3, r6, [sp, #36]
+ 222:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 476              		.loc 1 222 0
+ 477 012e 0027     		movs	r7, #0
+ 217:Src/spi.c     ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 478              		.loc 1 217 0
+ 479 0130 CDE90C54 		strd	r5, r4, [sp, #48]
+ 218:Src/spi.c     **** 
+ 480              		.loc 1 218 0
+ 481 0134 FFF7FEFF 		bl	HAL_GPIO_Init
+ 482              	.LVL16:
+ 220:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 483              		.loc 1 220 0
+ 484 0138 4FF44063 		mov	r3, #3072
+ 225:Src/spi.c     **** 
+ 485              		.loc 1 225 0
+ 486 013c 09A9     		add	r1, sp, #36
+ 487 013e 0948     		ldr	r0, .L19+12
+ 224:Src/spi.c     ****     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+ 488              		.loc 1 224 0
+ 489 0140 0D94     		str	r4, [sp, #52]
+ 221:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 490              		.loc 1 221 0
+ 491 0142 CDE90936 		strd	r3, r6, [sp, #36]
+ 223:Src/spi.c     ****     GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
+ 492              		.loc 1 223 0
+ 493 0146 CDE90B75 		strd	r7, r5, [sp, #44]
+ 225:Src/spi.c     **** 
+ 494              		.loc 1 225 0
+ 495 014a FFF7FEFF 		bl	HAL_GPIO_Init
+ 496              	.LVL17:
+ 227:Src/spi.c     ****     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 497              		.loc 1 227 0
+ 498 014e 2023     		movs	r3, #32
+ 228:Src/spi.c     ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 499              		.loc 1 228 0
+ 500 0150 CDE90936 		strd	r3, r6, [sp, #36]
+ 229:Src/spi.c     ****     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+ 501              		.loc 1 229 0
+ 502 0154 0B97     		str	r7, [sp, #44]
+ 503 0156 B3E7     		b	.L18
+ 504              	.L20:
+ 505              		.align	2
+ 506              	.L19:
+ 507 0158 00300140 		.word	1073819648
+ 508 015c 00100240 		.word	1073876992
+ 509 0160 00380040 		.word	1073756160
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 15
+
+
+ 510 0164 00080048 		.word	1207961600
+ 511 0168 00040048 		.word	1207960576
+ 512 016c 003C0040 		.word	1073757184
+ 513              		.cfi_endproc
+ 514              	.LFE290:
+ 516              		.section	.text.HAL_SPI_MspDeInit,"ax",%progbits
+ 517              		.align	1
+ 518              		.global	HAL_SPI_MspDeInit
+ 519              		.syntax unified
+ 520              		.thumb
+ 521              		.thumb_func
+ 522              		.fpu fpv4-sp-d16
+ 524              	HAL_SPI_MspDeInit:
+ 525              	.LFB291:
+ 239:Src/spi.c     **** 
+ 240:Src/spi.c     **** void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
+ 241:Src/spi.c     **** {
+ 526              		.loc 1 241 0
+ 527              		.cfi_startproc
+ 528              		@ args = 0, pretend = 0, frame = 0
+ 529              		@ frame_needed = 0, uses_anonymous_args = 0
+ 530              	.LVL18:
+ 531 0000 08B5     		push	{r3, lr}
+ 532              	.LCFI13:
+ 533              		.cfi_def_cfa_offset 8
+ 534              		.cfi_offset 3, -8
+ 535              		.cfi_offset 14, -4
+ 242:Src/spi.c     **** 
+ 243:Src/spi.c     ****   if(spiHandle->Instance==SPI1)
+ 536              		.loc 1 243 0
+ 537 0002 1D4A     		ldr	r2, .L27
+ 538 0004 0368     		ldr	r3, [r0]
+ 539 0006 9342     		cmp	r3, r2
+ 540 0008 0DD1     		bne	.L22
+ 244:Src/spi.c     ****   {
+ 245:Src/spi.c     ****   /* USER CODE BEGIN SPI1_MspDeInit 0 */
+ 246:Src/spi.c     **** 
+ 247:Src/spi.c     ****   /* USER CODE END SPI1_MspDeInit 0 */
+ 248:Src/spi.c     ****     /* Peripheral clock disable */
+ 249:Src/spi.c     ****     __HAL_RCC_SPI1_CLK_DISABLE();
+ 541              		.loc 1 249 0
+ 542 000a 02F56042 		add	r2, r2, #57344
+ 250:Src/spi.c     **** 
+ 251:Src/spi.c     ****     /**SPI1 GPIO Configuration
+ 252:Src/spi.c     ****     PA1     ------> SPI1_SCK
+ 253:Src/spi.c     ****     PA4     ------> SPI1_NSS
+ 254:Src/spi.c     ****     PA6     ------> SPI1_MISO
+ 255:Src/spi.c     ****     PA12     ------> SPI1_MOSI
+ 256:Src/spi.c     ****     */
+ 257:Src/spi.c     ****     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_1|GPIO_PIN_4|GPIO_PIN_6|GPIO_PIN_12);
+ 543              		.loc 1 257 0
+ 544 000e 41F25201 		movw	r1, #4178
+ 249:Src/spi.c     **** 
+ 545              		.loc 1 249 0
+ 546 0012 136E     		ldr	r3, [r2, #96]
+ 547 0014 23F48053 		bic	r3, r3, #4096
+ 548 0018 1366     		str	r3, [r2, #96]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 16
+
+
+ 549              		.loc 1 257 0
+ 550 001a 4FF09040 		mov	r0, #1207959552
+ 551              	.LVL19:
+ 552              	.L25:
+ 258:Src/spi.c     **** 
+ 259:Src/spi.c     ****   /* USER CODE BEGIN SPI1_MspDeInit 1 */
+ 260:Src/spi.c     **** 
+ 261:Src/spi.c     ****   /* USER CODE END SPI1_MspDeInit 1 */
+ 262:Src/spi.c     ****   }
+ 263:Src/spi.c     ****   else if(spiHandle->Instance==SPI2)
+ 264:Src/spi.c     ****   {
+ 265:Src/spi.c     ****   /* USER CODE BEGIN SPI2_MspDeInit 0 */
+ 266:Src/spi.c     **** 
+ 267:Src/spi.c     ****   /* USER CODE END SPI2_MspDeInit 0 */
+ 268:Src/spi.c     ****     /* Peripheral clock disable */
+ 269:Src/spi.c     ****     __HAL_RCC_SPI2_CLK_DISABLE();
+ 270:Src/spi.c     **** 
+ 271:Src/spi.c     ****     /**SPI2 GPIO Configuration
+ 272:Src/spi.c     ****     PC3     ------> SPI2_MOSI
+ 273:Src/spi.c     ****     PB13     ------> SPI2_SCK
+ 274:Src/spi.c     ****     */
+ 275:Src/spi.c     ****     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_3);
+ 276:Src/spi.c     **** 
+ 277:Src/spi.c     ****     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_13);
+ 278:Src/spi.c     **** 
+ 279:Src/spi.c     ****   /* USER CODE BEGIN SPI2_MspDeInit 1 */
+ 280:Src/spi.c     **** 
+ 281:Src/spi.c     ****   /* USER CODE END SPI2_MspDeInit 1 */
+ 282:Src/spi.c     ****   }
+ 283:Src/spi.c     ****   else if(spiHandle->Instance==SPI3)
+ 284:Src/spi.c     ****   {
+ 285:Src/spi.c     ****   /* USER CODE BEGIN SPI3_MspDeInit 0 */
+ 286:Src/spi.c     **** 
+ 287:Src/spi.c     ****   /* USER CODE END SPI3_MspDeInit 0 */
+ 288:Src/spi.c     ****     /* Peripheral clock disable */
+ 289:Src/spi.c     ****     __HAL_RCC_SPI3_CLK_DISABLE();
+ 290:Src/spi.c     **** 
+ 291:Src/spi.c     ****     /**SPI3 GPIO Configuration
+ 292:Src/spi.c     ****     PA15 (JTDI)     ------> SPI3_NSS
+ 293:Src/spi.c     ****     PC10     ------> SPI3_SCK
+ 294:Src/spi.c     ****     PC11     ------> SPI3_MISO
+ 295:Src/spi.c     ****     PB5     ------> SPI3_MOSI
+ 296:Src/spi.c     ****     */
+ 297:Src/spi.c     ****     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_15);
+ 298:Src/spi.c     **** 
+ 299:Src/spi.c     ****     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_10|GPIO_PIN_11);
+ 300:Src/spi.c     **** 
+ 301:Src/spi.c     ****     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_5);
+ 302:Src/spi.c     **** 
+ 303:Src/spi.c     ****   /* USER CODE BEGIN SPI3_MspDeInit 1 */
+ 304:Src/spi.c     **** 
+ 305:Src/spi.c     ****   /* USER CODE END SPI3_MspDeInit 1 */
+ 306:Src/spi.c     ****   }
+ 307:Src/spi.c     **** }
+ 553              		.loc 1 307 0
+ 554 001e BDE80840 		pop	{r3, lr}
+ 555              	.LCFI14:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 17
+
+
+ 556              		.cfi_remember_state
+ 557              		.cfi_restore 14
+ 558              		.cfi_restore 3
+ 559              		.cfi_def_cfa_offset 0
+ 301:Src/spi.c     **** 
+ 560              		.loc 1 301 0
+ 561 0022 FFF7FEBF 		b	HAL_GPIO_DeInit
+ 562              	.LVL20:
+ 563              	.L22:
+ 564              	.LCFI15:
+ 565              		.cfi_restore_state
+ 263:Src/spi.c     ****   {
+ 566              		.loc 1 263 0
+ 567 0026 154A     		ldr	r2, .L27+4
+ 568 0028 9342     		cmp	r3, r2
+ 569 002a 0DD1     		bne	.L23
+ 269:Src/spi.c     **** 
+ 570              		.loc 1 269 0
+ 571 002c 02F5EC32 		add	r2, r2, #120832
+ 275:Src/spi.c     **** 
+ 572              		.loc 1 275 0
+ 573 0030 0821     		movs	r1, #8
+ 269:Src/spi.c     **** 
+ 574              		.loc 1 269 0
+ 575 0032 936D     		ldr	r3, [r2, #88]
+ 275:Src/spi.c     **** 
+ 576              		.loc 1 275 0
+ 577 0034 1248     		ldr	r0, .L27+8
+ 578              	.LVL21:
+ 269:Src/spi.c     **** 
+ 579              		.loc 1 269 0
+ 580 0036 23F48043 		bic	r3, r3, #16384
+ 581 003a 9365     		str	r3, [r2, #88]
+ 275:Src/spi.c     **** 
+ 582              		.loc 1 275 0
+ 583 003c FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 584              	.LVL22:
+ 277:Src/spi.c     **** 
+ 585              		.loc 1 277 0
+ 586 0040 4FF40051 		mov	r1, #8192
+ 587              	.L26:
+ 301:Src/spi.c     **** 
+ 588              		.loc 1 301 0
+ 589 0044 0F48     		ldr	r0, .L27+12
+ 590 0046 EAE7     		b	.L25
+ 591              	.LVL23:
+ 592              	.L23:
+ 283:Src/spi.c     ****   {
+ 593              		.loc 1 283 0
+ 594 0048 0F4A     		ldr	r2, .L27+16
+ 595 004a 9342     		cmp	r3, r2
+ 596 004c 12D1     		bne	.L21
+ 289:Src/spi.c     **** 
+ 597              		.loc 1 289 0
+ 598 004e 02F5EA32 		add	r2, r2, #119808
+ 297:Src/spi.c     **** 
+ 599              		.loc 1 297 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 18
+
+
+ 600 0052 4FF40041 		mov	r1, #32768
+ 289:Src/spi.c     **** 
+ 601              		.loc 1 289 0
+ 602 0056 936D     		ldr	r3, [r2, #88]
+ 603 0058 23F40043 		bic	r3, r3, #32768
+ 604 005c 9365     		str	r3, [r2, #88]
+ 297:Src/spi.c     **** 
+ 605              		.loc 1 297 0
+ 606 005e 4FF09040 		mov	r0, #1207959552
+ 607              	.LVL24:
+ 608 0062 FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 609              	.LVL25:
+ 299:Src/spi.c     **** 
+ 610              		.loc 1 299 0
+ 611 0066 4FF44061 		mov	r1, #3072
+ 612 006a 0548     		ldr	r0, .L27+8
+ 613 006c FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 614              	.LVL26:
+ 301:Src/spi.c     **** 
+ 615              		.loc 1 301 0
+ 616 0070 2021     		movs	r1, #32
+ 617 0072 E7E7     		b	.L26
+ 618              	.LVL27:
+ 619              	.L21:
+ 620              		.loc 1 307 0
+ 621 0074 08BD     		pop	{r3, pc}
+ 622              	.L28:
+ 623 0076 00BF     		.align	2
+ 624              	.L27:
+ 625 0078 00300140 		.word	1073819648
+ 626 007c 00380040 		.word	1073756160
+ 627 0080 00080048 		.word	1207961600
+ 628 0084 00040048 		.word	1207960576
+ 629 0088 003C0040 		.word	1073757184
+ 630              		.cfi_endproc
+ 631              	.LFE291:
+ 633              		.section	.text.SPI2_WriteByte,"ax",%progbits
+ 634              		.align	1
+ 635              		.global	SPI2_WriteByte
+ 636              		.syntax unified
+ 637              		.thumb
+ 638              		.thumb_func
+ 639              		.fpu fpv4-sp-d16
+ 641              	SPI2_WriteByte:
+ 642              	.LFB292:
+ 308:Src/spi.c     **** 
+ 309:Src/spi.c     **** /* USER CODE BEGIN 1 */
+ 310:Src/spi.c     **** uint8_t SPI2_WriteByte(uint8_t* data, uint16_t size)
+ 311:Src/spi.c     **** {
+ 643              		.loc 1 311 0
+ 644              		.cfi_startproc
+ 645              		@ args = 0, pretend = 0, frame = 0
+ 646              		@ frame_needed = 0, uses_anonymous_args = 0
+ 647              		@ link register save eliminated.
+ 648              	.LVL28:
+ 312:Src/spi.c     ****  return  HAL_SPI_Transmit(&hspi2, data, size, 0xff);
+ 649              		.loc 1 312 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 19
+
+
+ 650 0000 0A46     		mov	r2, r1
+ 651 0002 FF23     		movs	r3, #255
+ 652 0004 0146     		mov	r1, r0
+ 653              	.LVL29:
+ 654 0006 0148     		ldr	r0, .L30
+ 655              	.LVL30:
+ 656 0008 FFF7FEBF 		b	HAL_SPI_Transmit
+ 657              	.LVL31:
+ 658              	.L31:
+ 659              		.align	2
+ 660              	.L30:
+ 661 000c 00000000 		.word	hspi2
+ 662              		.cfi_endproc
+ 663              	.LFE292:
+ 665              		.comm	hspi3,100,4
+ 666              		.comm	hspi2,100,4
+ 667              		.comm	hspi1,100,4
+ 668              		.section	.rodata.MX_SPI1_Init.str1.1,"aMS",%progbits,1
+ 669              	.LC0:
+ 670 0000 5372632F 		.ascii	"Src/spi.c\000"
+ 670      7370692E 
+ 670      6300
+ 671              		.text
+ 672              	.Letext0:
+ 673              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 674              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 675              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 676              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 677              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 678              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 679              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 680              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 681              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 682              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l43
+ 683              		.file 12 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 684              		.file 13 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 685              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 686              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h"
+ 687              		.file 16 "../../iot_link/os/liteos/include/los_config.h"
+ 688              		.file 17 "../../iot_link/os/liteos/include/los_err.h"
+ 689              		.file 18 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 690              		.file 19 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/spi.h"
+ 691              		.file 20 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/main.h"
+ 692              		.file 21 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 spi.c
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:18     .text.MX_SPI1_Init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:25     .text.MX_SPI1_Init:00000000 MX_SPI1_Init
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:89     .text.MX_SPI1_Init:00000044 $d
+                            *COM*:00000064 hspi1
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:96     .text.MX_SPI2_Init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:103    .text.MX_SPI2_Init:00000000 MX_SPI2_Init
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:169    .text.MX_SPI2_Init:0000004c $d
+                            *COM*:00000064 hspi2
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:176    .text.MX_SPI3_Init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:183    .text.MX_SPI3_Init:00000000 MX_SPI3_Init
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:246    .text.MX_SPI3_Init:00000044 $d
+                            *COM*:00000064 hspi3
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:253    .text.HAL_SPI_MspInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:260    .text.HAL_SPI_MspInit:00000000 HAL_SPI_MspInit
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:507    .text.HAL_SPI_MspInit:00000158 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:517    .text.HAL_SPI_MspDeInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:524    .text.HAL_SPI_MspDeInit:00000000 HAL_SPI_MspDeInit
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:625    .text.HAL_SPI_MspDeInit:00000078 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:634    .text.SPI2_WriteByte:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:641    .text.SPI2_WriteByte:00000000 SPI2_WriteByte
+C:\Users\LuckyE\AppData\Local\Temp\ccnsaJdt.s:661    .text.SPI2_WriteByte:0000000c $d
+
+UNDEFINED SYMBOLS
+HAL_SPI_Init
+_Error_Handler
+memset
+HAL_GPIO_Init
+HAL_GPIO_DeInit
+HAL_SPI_Transmit

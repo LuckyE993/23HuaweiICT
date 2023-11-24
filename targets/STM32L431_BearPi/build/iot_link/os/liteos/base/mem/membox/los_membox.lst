@@ -1,0 +1,776 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"los_membox.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.LOS_MemboxInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	LOS_MemboxInit
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	LOS_MemboxInit:
+  26              	.LFB288:
+  27              		.file 1 "../../iot_link/os/liteos/base/mem/membox/los_membox.c"
+   1:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * All rights reserved.
+   4:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * permission.
+  14:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * ===============================================
+  29:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 2
+
+
+  32:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  35:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #include "los_typedef.h"
+  36:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #include "los_hwi.h"
+  37:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #include "los_membox.ph"
+  38:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  39:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #if (LOSCFG_PLATFORM_EXC == YES)
+  40:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #include "los_memcheck.ph"
+  41:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #endif
+  42:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  43:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #ifdef __cplusplus
+  44:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #if __cplusplus
+  45:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** extern "C" {
+  46:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #endif /* __cplusplus */
+  47:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #endif /* __cplusplus */
+  48:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  49:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /**
+  50:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * The address of the static memory pool must be aligned to the boundary of 4.
+  51:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  */
+  52:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_BOXMEM_BASE_ALIGN  4
+  53:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define IS_BOXMEM_ALIGNED(value, alignSize)  (0 == (((UINT32)(value)) & ((UINT32)(alignSize - 1))))
+  54:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  55:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /**
+  56:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * Get the address of the next memory node in the static memory pool.
+  57:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  */
+  58:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_MEMBOX_NODE_NEXT(addr, uwBlkSize)  (LOS_MEMBOX_NODE *)((UINT8 *)(addr) + (uwBlkSize))
+  59:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  60:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /**
+  61:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * The magic word of the memory box.
+  62:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  */
+  63:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #ifdef LOS_MEMBOX_MAGIC_CHECK
+  64:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_MEMBOX_MAGIC              0xa55a5aa5
+  65:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_MEMBOX_SET_MAGIC(addr)    *((UINT32 *)(addr)) = OS_MEMBOX_MAGIC
+  66:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_MEMBOX_CHECK_MAGIC(addr)  ((*((UINT32 *)(addr)) == OS_MEMBOX_MAGIC) ? LOS_OK: LOS_NOK)
+  67:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #else
+  68:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_MEMBOX_SET_MAGIC(addr)
+  69:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_MEMBOX_CHECK_MAGIC(addr)  LOS_OK
+  70:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #endif
+  71:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  72:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /**
+  73:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  * Get the address of memory block according to the magic word information.
+  74:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  */
+  75:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_MEMBOX_USER_ADDR(addr)  ((VOID *)((UINT8 *)(addr) + LOS_MEMBOX_MAGIC_SIZE))
+  76:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #define OS_MEMBOX_NODE_ADDR(addr)  ((LOS_MEMBOX_NODE *)((UINT8 *)(addr) - LOS_MEMBOX_MAGIC_SIZE))
+  77:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  78:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  79:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /*****************************************************************************
+  80:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Function : osCheckBoxMem
+  81:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Description : Check whether the memory block is valid
+  82:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Input       : pstBoxInfo  --- Pointer to the memory pool
+  83:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****                pstNode     --- Pointer to the memory block that will be checked
+  84:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Output      : None
+  85:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Return      : LOS_OK - OK, LOS_NOK - Error
+  86:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** *****************************************************************************/
+  87:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** LITE_OS_SEC_TEXT static INLINE UINT32 osCheckBoxMem(const LOS_MEMBOX_INFO *pstBoxInfo, const VOID *
+  88:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 3
+
+
+  89:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     UINT32 uwOffSet;
+  90:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  91:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if (pstBoxInfo->uwBlkSize == 0)
+  92:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+  93:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return LOS_NOK;
+  94:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+  95:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  96:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     uwOffSet = (UINT32)pstNode - (UINT32)(pstBoxInfo + 1);
+  97:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if ((uwOffSet % pstBoxInfo->uwBlkSize) != 0)
+  98:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+  99:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return LOS_NOK;
+ 100:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 101:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 102:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if ((uwOffSet / pstBoxInfo->uwBlkSize) >= pstBoxInfo->uwBlkNum)
+ 103:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 104:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return LOS_NOK;
+ 105:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 106:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 107:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     return OS_MEMBOX_CHECK_MAGIC(pstNode);
+ 108:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** }
+ 109:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 110:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /*****************************************************************************
+ 111:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Function : LOS_MemboxInit
+ 112:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Description : Initialize Static Memory pool
+ 113:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Input       : pBoxMem    --- Pointer to the memory pool
+ 114:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****                uwBoxSize  --- Size of the memory pool
+ 115:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****                uwBlkSize  --- Size of the memory block
+ 116:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Output      : None
+ 117:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Return      : LOS_OK - OK, LOS_NOK - Error
+ 118:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** *****************************************************************************/
+ 119:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** LITE_OS_SEC_TEXT_INIT UINT32 LOS_MemboxInit(VOID *pBoxMem, UINT32 uwBoxSize, UINT32 uwBlkSize)
+ 120:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** {
+  28              		.loc 1 120 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 3, -24
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+  41              		.cfi_offset 14, -4
+  42              		.loc 1 120 0
+  43 0002 0C46     		mov	r4, r1
+  44 0004 1546     		mov	r5, r2
+ 121:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pBoxMem;
+ 122:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     LOS_MEMBOX_NODE *pstNode = NULL;
+ 123:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     UINT32 i;
+ 124:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     UINTPTR uvIntSave;
+ 125:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 126:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if (pBoxMem == NULL || uwBlkSize == 0 || uwBoxSize < sizeof(LOS_MEMBOX_INFO))
+  45              		.loc 1 126 0
+  46 0006 0646     		mov	r6, r0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 4
+
+
+  47 0008 A8B1     		cbz	r0, .L9
+  48              		.loc 1 126 0 is_stmt 0 discriminator 1
+  49 000a A2B1     		cbz	r2, .L9
+  50              		.loc 1 126 0 discriminator 2
+  51 000c 0F29     		cmp	r1, #15
+  52 000e 12D9     		bls	.L9
+ 127:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 128:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return LOS_NOK;
+ 129:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 130:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 131:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if (!IS_BOXMEM_ALIGNED(pBoxMem, OS_BOXMEM_BASE_ALIGN))
+  53              		.loc 1 131 0 is_stmt 1
+  54 0010 10F00307 		ands	r7, r0, #3
+  55 0014 0FD1     		bne	.L9
+ 132:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 133:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return LOS_NOK;
+ 134:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 135:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 136:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     uvIntSave = LOS_IntLock();
+  56              		.loc 1 136 0
+  57 0016 FFF7FEFF 		bl	LOS_IntLock
+  58              	.LVL1:
+ 137:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 138:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     /*
+ 139:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****      * The node size is aligned to the next 4 boundary.
+ 140:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****      * Memory that is not enough for one node size in the memory pool will be ignored.
+ 141:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****      */
+ 142:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstBoxInfo->uwBlkSize = LOS_MEMBOX_ALIGNED(uwBlkSize + LOS_MEMBOX_MAGIC_SIZE);
+  59              		.loc 1 142 0
+  60 001a E91D     		adds	r1, r5, #7
+  61 001c 21F00302 		bic	r2, r1, #3
+ 136:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+  62              		.loc 1 136 0
+  63 0020 8446     		mov	ip, r0
+  64              	.LVL2:
+ 143:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstBoxInfo->uwBlkNum = (uwBoxSize - sizeof(LOS_MEMBOX_INFO)) / pstBoxInfo->uwBlkSize;
+  65              		.loc 1 143 0
+  66 0022 A4F11001 		sub	r1, r4, #16
+ 142:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstBoxInfo->uwBlkNum = (uwBoxSize - sizeof(LOS_MEMBOX_INFO)) / pstBoxInfo->uwBlkSize;
+  67              		.loc 1 142 0
+  68 0026 3260     		str	r2, [r6]
+  69              		.loc 1 143 0
+  70 0028 B1FBF2F1 		udiv	r1, r1, r2
+ 144:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstBoxInfo->uwBlkCnt = 0;
+  71              		.loc 1 144 0
+  72 002c C6E90117 		strd	r1, r7, [r6, #4]
+ 145:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 146:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if (pstBoxInfo->uwBlkNum == 0)
+  73              		.loc 1 146 0
+  74 0030 19B9     		cbnz	r1, .L3
+ 147:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 148:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         LOS_IntRestore(uvIntSave);
+  75              		.loc 1 148 0
+  76 0032 FFF7FEFF 		bl	LOS_IntRestore
+  77              	.LVL3:
+  78              	.L9:
+ 128:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 5
+
+
+  79              		.loc 1 128 0
+  80 0036 0120     		movs	r0, #1
+  81 0038 0FE0     		b	.L1
+  82              	.LVL4:
+  83              	.L3:
+ 149:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return LOS_NOK;
+ 150:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 151:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 152:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstNode = (LOS_MEMBOX_NODE *)(pstBoxInfo + 1);
+  84              		.loc 1 152 0
+  85 003a 06F11005 		add	r5, r6, #16
+  86              	.LVL5:
+ 153:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstBoxInfo->stFreeList.pstNext = pstNode;
+  87              		.loc 1 153 0
+  88 003e F560     		str	r5, [r6, #12]
+  89              	.LVL6:
+ 152:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstBoxInfo->stFreeList.pstNext = pstNode;
+  90              		.loc 1 152 0
+  91 0040 2846     		mov	r0, r5
+  92              	.LVL7:
+ 154:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 155:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     for (i = 0; i < pstBoxInfo->uwBlkNum - 1; ++i)
+  93              		.loc 1 155 0
+  94 0042 3B46     		mov	r3, r7
+  95 0044 0139     		subs	r1, r1, #1
+ 156:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 157:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstNode->pstNext = OS_MEMBOX_NODE_NEXT(pstNode, pstBoxInfo->uwBlkSize);
+  96              		.loc 1 157 0
+  97 0046 5442     		negs	r4, r2
+  98              	.LVL8:
+  99              	.L4:
+ 155:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 100              		.loc 1 155 0 discriminator 1
+ 101 0048 9942     		cmp	r1, r3
+ 102 004a 07D8     		bhi	.L5
+ 158:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstNode = pstNode->pstNext;
+ 159:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 160:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstNode->pstNext = (LOS_MEMBOX_NODE *)NULL;  /* The last node */
+ 103              		.loc 1 160 0
+ 104 004c 5143     		muls	r1, r2, r1
+ 105 004e 0024     		movs	r4, #0
+ 161:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 162:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #if ((LOSCFG_PLATFORM_EXC == YES) && (LOSCFG_SAVE_EXC_INFO == YES))
+ 163:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     osMemInfoUpdate(pBoxMem, uwBoxSize, MEM_MANG_MEMBOX);
+ 164:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** #endif
+ 165:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 166:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     (VOID)LOS_IntRestore(uvIntSave);
+ 106              		.loc 1 166 0
+ 107 0050 6046     		mov	r0, ip
+ 108              	.LVL9:
+ 160:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 109              		.loc 1 160 0
+ 110 0052 6C50     		str	r4, [r5, r1]
+ 111              		.loc 1 166 0
+ 112 0054 FFF7FEFF 		bl	LOS_IntRestore
+ 113              	.LVL10:
+ 167:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 6
+
+
+ 168:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     return LOS_OK;
+ 114              		.loc 1 168 0
+ 115 0058 2046     		mov	r0, r4
+ 116              	.L1:
+ 169:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** }
+ 117              		.loc 1 169 0
+ 118 005a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 119              	.LVL11:
+ 120              	.L5:
+ 157:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstNode = pstNode->pstNext;
+ 121              		.loc 1 157 0 discriminator 3
+ 122 005c 1044     		add	r0, r0, r2
+ 123              	.LVL12:
+ 155:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 124              		.loc 1 155 0 discriminator 3
+ 125 005e 0133     		adds	r3, r3, #1
+ 126              	.LVL13:
+ 157:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstNode = pstNode->pstNext;
+ 127              		.loc 1 157 0 discriminator 3
+ 128 0060 0051     		str	r0, [r0, r4]
+ 129              	.LVL14:
+ 130 0062 F1E7     		b	.L4
+ 131              		.cfi_endproc
+ 132              	.LFE288:
+ 134              		.section	.text.LOS_MemboxAlloc,"ax",%progbits
+ 135              		.align	1
+ 136              		.global	LOS_MemboxAlloc
+ 137              		.syntax unified
+ 138              		.thumb
+ 139              		.thumb_func
+ 140              		.fpu fpv4-sp-d16
+ 142              	LOS_MemboxAlloc:
+ 143              	.LFB289:
+ 170:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 171:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /*****************************************************************************
+ 172:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Function : LOS_MemboxAlloc
+ 173:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Description : Allocate Memory block from Static Memory pool
+ 174:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Input       : pBoxMem  --- Pointer to memory pool
+ 175:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Output      : None
+ 176:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Return      : Pointer to allocated memory block
+ 177:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** *****************************************************************************/
+ 178:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** LITE_OS_SEC_TEXT VOID *LOS_MemboxAlloc(VOID *pBoxMem)
+ 179:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** {
+ 144              		.loc 1 179 0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148              	.LVL15:
+ 149 0000 38B5     		push	{r3, r4, r5, lr}
+ 150              	.LCFI1:
+ 151              		.cfi_def_cfa_offset 16
+ 152              		.cfi_offset 3, -16
+ 153              		.cfi_offset 4, -12
+ 154              		.cfi_offset 5, -8
+ 155              		.cfi_offset 14, -4
+ 180:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pBoxMem;
+ 181:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     LOS_MEMBOX_NODE *pstNode = NULL;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 7
+
+
+ 182:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     LOS_MEMBOX_NODE *pRet = NULL;
+ 183:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     UINTPTR uvIntSave;
+ 184:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 185:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if (pBoxMem == NULL)
+ 156              		.loc 1 185 0
+ 157 0002 0546     		mov	r5, r0
+ 158 0004 08B9     		cbnz	r0, .L11
+ 159              	.LVL16:
+ 160              	.L14:
+ 186:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 187:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return NULL;
+ 161              		.loc 1 187 0
+ 162 0006 0020     		movs	r0, #0
+ 163              	.L10:
+ 188:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 189:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 190:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     uvIntSave = LOS_IntLock();
+ 191:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 192:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     pstNode = &pstBoxInfo->stFreeList;
+ 193:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if (pstNode->pstNext != NULL)
+ 194:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 195:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pRet = pstNode->pstNext;
+ 196:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstNode->pstNext = pRet->pstNext;
+ 197:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         OS_MEMBOX_SET_MAGIC(pRet);
+ 198:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstBoxInfo->uwBlkCnt++;
+ 199:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 200:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 201:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     (VOID)LOS_IntRestore(uvIntSave);
+ 202:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 203:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     return pRet == NULL ? NULL : OS_MEMBOX_USER_ADDR(pRet);
+ 204:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** }
+ 164              		.loc 1 204 0
+ 165 0008 38BD     		pop	{r3, r4, r5, pc}
+ 166              	.LVL17:
+ 167              	.L11:
+ 190:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 168              		.loc 1 190 0
+ 169 000a FFF7FEFF 		bl	LOS_IntLock
+ 170              	.LVL18:
+ 193:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 171              		.loc 1 193 0
+ 172 000e EC68     		ldr	r4, [r5, #12]
+ 173 0010 34B1     		cbz	r4, .L13
+ 174              	.LVL19:
+ 196:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         OS_MEMBOX_SET_MAGIC(pRet);
+ 175              		.loc 1 196 0
+ 176 0012 2368     		ldr	r3, [r4]
+ 177 0014 EB60     		str	r3, [r5, #12]
+ 197:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstBoxInfo->uwBlkCnt++;
+ 178              		.loc 1 197 0
+ 179 0016 054B     		ldr	r3, .L21
+ 180 0018 2360     		str	r3, [r4]
+ 198:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 181              		.loc 1 198 0
+ 182 001a AB68     		ldr	r3, [r5, #8]
+ 183 001c 0133     		adds	r3, r3, #1
+ 184 001e AB60     		str	r3, [r5, #8]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 8
+
+
+ 185              	.LVL20:
+ 186              	.L13:
+ 201:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 187              		.loc 1 201 0
+ 188 0020 FFF7FEFF 		bl	LOS_IntRestore
+ 189              	.LVL21:
+ 203:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** }
+ 190              		.loc 1 203 0
+ 191 0024 002C     		cmp	r4, #0
+ 192 0026 EED0     		beq	.L14
+ 203:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** }
+ 193              		.loc 1 203 0 is_stmt 0 discriminator 1
+ 194 0028 201D     		adds	r0, r4, #4
+ 195 002a EDE7     		b	.L10
+ 196              	.L22:
+ 197              		.align	2
+ 198              	.L21:
+ 199 002c A55A5AA5 		.word	-1520805211
+ 200              		.cfi_endproc
+ 201              	.LFE289:
+ 203              		.section	.text.LOS_MemboxFree,"ax",%progbits
+ 204              		.align	1
+ 205              		.global	LOS_MemboxFree
+ 206              		.syntax unified
+ 207              		.thumb
+ 208              		.thumb_func
+ 209              		.fpu fpv4-sp-d16
+ 211              	LOS_MemboxFree:
+ 212              	.LFB290:
+ 205:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 206:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /*****************************************************************************
+ 207:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Function : LOS_MemboxFree
+ 208:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Description : Free Memory block and return it to Static Memory pool
+ 209:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Input       : pBoxMem  --- Pointer to memory pool
+ 210:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****                pBox     --- Pointer to memory block to free
+ 211:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Output      : None
+ 212:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Return      : LOS_OK - OK, LOS_NOK - Error
+ 213:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** *****************************************************************************/
+ 214:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** LITE_OS_SEC_TEXT UINT32 LOS_MemboxFree(VOID *pBoxMem, VOID *pBox)
+ 215:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** {
+ 213              		.loc 1 215 0 is_stmt 1
+ 214              		.cfi_startproc
+ 215              		@ args = 0, pretend = 0, frame = 0
+ 216              		@ frame_needed = 0, uses_anonymous_args = 0
+ 217              	.LVL22:
+ 218 0000 70B5     		push	{r4, r5, r6, lr}
+ 219              	.LCFI2:
+ 220              		.cfi_def_cfa_offset 16
+ 221              		.cfi_offset 4, -16
+ 222              		.cfi_offset 5, -12
+ 223              		.cfi_offset 6, -8
+ 224              		.cfi_offset 14, -4
+ 225              		.loc 1 215 0
+ 226 0002 0E46     		mov	r6, r1
+ 216:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pBoxMem;
+ 217:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     UINT32 uwRet = LOS_NOK;
+ 218:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     UINTPTR uvIntSave;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 9
+
+
+ 219:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 220:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if (pBoxMem == NULL || pBox == NULL)
+ 227              		.loc 1 220 0
+ 228 0004 0546     		mov	r5, r0
+ 229 0006 10B3     		cbz	r0, .L27
+ 230              		.loc 1 220 0 is_stmt 0 discriminator 1
+ 231 0008 09B3     		cbz	r1, .L27
+ 221:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 222:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return LOS_NOK;
+ 223:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 224:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 225:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     uvIntSave = LOS_IntLock();
+ 232              		.loc 1 225 0 is_stmt 1
+ 233 000a FFF7FEFF 		bl	LOS_IntLock
+ 234              	.LVL23:
+ 235              	.LBB5:
+ 236              	.LBB6:
+ 237              	.LBB7:
+  91:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 238              		.loc 1 91 0
+ 239 000e 2C68     		ldr	r4, [r5]
+ 240 0010 DCB1     		cbz	r4, .L31
+ 241              	.LBE7:
+ 242              	.LBE6:
+ 226:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 227:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     do
+ 228:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 229:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         LOS_MEMBOX_NODE *pstNode = OS_MEMBOX_NODE_ADDR(pBox);
+ 243              		.loc 1 229 0
+ 244 0012 321F     		subs	r2, r6, #4
+ 245              	.LVL24:
+ 246              	.LBB9:
+ 247              	.LBB8:
+  96:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if ((uwOffSet % pstBoxInfo->uwBlkSize) != 0)
+ 248              		.loc 1 96 0
+ 249 0014 05F11003 		add	r3, r5, #16
+ 250 0018 D31A     		subs	r3, r2, r3
+ 251              	.LVL25:
+  97:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 252              		.loc 1 97 0
+ 253 001a B3FBF4F1 		udiv	r1, r3, r4
+ 254 001e 04FB1134 		mls	r4, r4, r1, r3
+ 255 0022 94B9     		cbnz	r4, .L31
+ 102:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 256              		.loc 1 102 0
+ 257 0024 6B68     		ldr	r3, [r5, #4]
+ 258              	.LVL26:
+ 259 0026 9942     		cmp	r1, r3
+ 260 0028 0FD2     		bcs	.L31
+ 261              	.LVL27:
+ 262              	.LBE8:
+ 263              	.LBE9:
+ 230:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 231:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         if (osCheckBoxMem(pstBoxInfo, pstNode) != LOS_OK)
+ 264              		.loc 1 231 0
+ 265 002a 56F8041C 		ldr	r1, [r6, #-4]
+ 266 002e 094B     		ldr	r3, .L32
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 10
+
+
+ 267 0030 9942     		cmp	r1, r3
+ 268 0032 0AD1     		bne	.L31
+ 232:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         {
+ 233:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****             break;
+ 234:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         }
+ 235:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 236:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstNode->pstNext = pstBoxInfo->stFreeList.pstNext;
+ 269              		.loc 1 236 0
+ 270 0034 EB68     		ldr	r3, [r5, #12]
+ 271 0036 46F8043C 		str	r3, [r6, #-4]
+ 237:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstBoxInfo->stFreeList.pstNext = pstNode;
+ 238:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstBoxInfo->uwBlkCnt--;
+ 272              		.loc 1 238 0
+ 273 003a AB68     		ldr	r3, [r5, #8]
+ 237:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         pstBoxInfo->stFreeList.pstNext = pstNode;
+ 274              		.loc 1 237 0
+ 275 003c EA60     		str	r2, [r5, #12]
+ 276              		.loc 1 238 0
+ 277 003e 013B     		subs	r3, r3, #1
+ 278 0040 AB60     		str	r3, [r5, #8]
+ 279              	.LVL28:
+ 280              	.L25:
+ 281              	.LBE5:
+ 239:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         uwRet = LOS_OK;
+ 240:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     } while (0);
+ 241:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 242:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     (VOID)LOS_IntRestore(uvIntSave);
+ 282              		.loc 1 242 0
+ 283 0042 FFF7FEFF 		bl	LOS_IntRestore
+ 284              	.LVL29:
+ 285              	.L23:
+ 243:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 244:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     return uwRet;
+ 245:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** }
+ 286              		.loc 1 245 0
+ 287 0046 2046     		mov	r0, r4
+ 288 0048 70BD     		pop	{r4, r5, r6, pc}
+ 289              	.LVL30:
+ 290              	.L31:
+ 217:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     UINTPTR uvIntSave;
+ 291              		.loc 1 217 0
+ 292 004a 0124     		movs	r4, #1
+ 293 004c F9E7     		b	.L25
+ 294              	.LVL31:
+ 295              	.L27:
+ 222:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 296              		.loc 1 222 0
+ 297 004e 0124     		movs	r4, #1
+ 298 0050 F9E7     		b	.L23
+ 299              	.L33:
+ 300 0052 00BF     		.align	2
+ 301              	.L32:
+ 302 0054 A55A5AA5 		.word	-1520805211
+ 303              		.cfi_endproc
+ 304              	.LFE290:
+ 306              		.section	.text.LOS_MemboxClr,"ax",%progbits
+ 307              		.align	1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 11
+
+
+ 308              		.global	LOS_MemboxClr
+ 309              		.syntax unified
+ 310              		.thumb
+ 311              		.thumb_func
+ 312              		.fpu fpv4-sp-d16
+ 314              	LOS_MemboxClr:
+ 315              	.LFB291:
+ 246:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 247:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /*****************************************************************************
+ 248:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Function : LOS_MemboxClr
+ 249:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Description : Clear the memory block
+ 250:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Input       : pBoxMem  --- Pointer to memory pool
+ 251:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****                pBox     --- Pointer to memory block to clear
+ 252:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Output      : None
+ 253:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Return      : None
+ 254:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** *****************************************************************************/
+ 255:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** LITE_OS_SEC_TEXT_MINOR VOID LOS_MemboxClr(VOID *pBoxMem, VOID *pBox)
+ 256:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** {
+ 316              		.loc 1 256 0
+ 317              		.cfi_startproc
+ 318              		@ args = 0, pretend = 0, frame = 0
+ 319              		@ frame_needed = 0, uses_anonymous_args = 0
+ 320              		@ link register save eliminated.
+ 321              	.LVL32:
+ 322              		.loc 1 256 0
+ 323 0000 0B46     		mov	r3, r1
+ 257:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pBoxMem;
+ 258:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 259:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if (pBoxMem == NULL || pBox == NULL)
+ 324              		.loc 1 259 0
+ 325 0002 30B1     		cbz	r0, .L34
+ 326              		.loc 1 259 0 is_stmt 0 discriminator 1
+ 327 0004 29B1     		cbz	r1, .L34
+ 260:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 261:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return;
+ 262:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 263:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 264:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     memset(pBox, 0, pstBoxInfo->uwBlkSize - LOS_MEMBOX_MAGIC_SIZE);
+ 328              		.loc 1 264 0 is_stmt 1
+ 329 0006 0268     		ldr	r2, [r0]
+ 330 0008 0021     		movs	r1, #0
+ 331              	.LVL33:
+ 332 000a 043A     		subs	r2, r2, #4
+ 333 000c 1846     		mov	r0, r3
+ 334              	.LVL34:
+ 335 000e FFF7FEBF 		b	memset
+ 336              	.LVL35:
+ 337              	.L34:
+ 265:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** }
+ 338              		.loc 1 265 0
+ 339 0012 7047     		bx	lr
+ 340              		.cfi_endproc
+ 341              	.LFE291:
+ 343              		.section	.text.LOS_MemboxStatisticsGet,"ax",%progbits
+ 344              		.align	1
+ 345              		.global	LOS_MemboxStatisticsGet
+ 346              		.syntax unified
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 12
+
+
+ 347              		.thumb
+ 348              		.thumb_func
+ 349              		.fpu fpv4-sp-d16
+ 351              	LOS_MemboxStatisticsGet:
+ 352              	.LFB292:
+ 266:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 267:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** /*****************************************************************************
+ 268:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Function : LOS_MemboxStatisticsGet
+ 269:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Description : Get information about membox
+ 270:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Input       : pBoxMem     --- Pointer to the calculate membox
+ 271:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Output      : puwMaxBlk   --- Record the total number of membox
+ 272:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****                puwBlkCnt   --- Record the number of the allocated blocks of membox
+ 273:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****                puwBlkSize  --- Record the block size of membox
+ 274:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****  Return      : LOS_OK - OK, LOS_NOK - Error
+ 275:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** *****************************************************************************/
+ 276:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** LITE_OS_SEC_TEXT_MINOR UINT32 LOS_MemboxStatisticsGet(VOID *pBoxMem, UINT32 *puwMaxBlk, UINT32 *puw
+ 277:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** {
+ 353              		.loc 1 277 0
+ 354              		.cfi_startproc
+ 355              		@ args = 0, pretend = 0, frame = 0
+ 356              		@ frame_needed = 0, uses_anonymous_args = 0
+ 357              	.LVL36:
+ 358 0000 10B5     		push	{r4, lr}
+ 359              	.LCFI3:
+ 360              		.cfi_def_cfa_offset 8
+ 361              		.cfi_offset 4, -8
+ 362              		.cfi_offset 14, -4
+ 278:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     if ((NULL == pBoxMem) || (NULL == puwMaxBlk) || (NULL == puwBlkCnt) || (NULL == puwBlkSize))
+ 363              		.loc 1 278 0
+ 364 0002 50B1     		cbz	r0, .L47
+ 365              		.loc 1 278 0 is_stmt 0 discriminator 1
+ 366 0004 49B1     		cbz	r1, .L47
+ 367              		.loc 1 278 0 discriminator 2
+ 368 0006 42B1     		cbz	r2, .L47
+ 369              		.loc 1 278 0 discriminator 3
+ 370 0008 3BB1     		cbz	r3, .L47
+ 279:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     {
+ 280:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****         return LOS_NOK;
+ 281:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 282:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 283:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     *puwMaxBlk = ((LOS_MEMBOX_INFO *)pBoxMem)->uwBlkNum;    /* Total number of blocks */
+ 371              		.loc 1 283 0 is_stmt 1
+ 372 000a 4468     		ldr	r4, [r0, #4]
+ 373 000c 0C60     		str	r4, [r1]
+ 284:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     *puwBlkCnt = ((LOS_MEMBOX_INFO *)pBoxMem)->uwBlkCnt;    /* The number of allocated blocks */
+ 374              		.loc 1 284 0
+ 375 000e 8168     		ldr	r1, [r0, #8]
+ 376              	.LVL37:
+ 377 0010 1160     		str	r1, [r2]
+ 285:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     *puwBlkSize = ((LOS_MEMBOX_INFO *)pBoxMem)->uwBlkSize;  /* Block size */
+ 378              		.loc 1 285 0
+ 379 0012 0268     		ldr	r2, [r0]
+ 380              	.LVL38:
+ 381 0014 1A60     		str	r2, [r3]
+ 286:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** 
+ 287:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     return LOS_OK;
+ 382              		.loc 1 287 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 13
+
+
+ 383 0016 0020     		movs	r0, #0
+ 384              	.LVL39:
+ 385              	.L42:
+ 288:../../iot_link/os/liteos/base/mem/membox/los_membox.c **** }
+ 386              		.loc 1 288 0
+ 387 0018 10BD     		pop	{r4, pc}
+ 388              	.LVL40:
+ 389              	.L47:
+ 280:../../iot_link/os/liteos/base/mem/membox/los_membox.c ****     }
+ 390              		.loc 1 280 0
+ 391 001a 0120     		movs	r0, #1
+ 392              	.LVL41:
+ 393 001c FCE7     		b	.L42
+ 394              		.cfi_endproc
+ 395              	.LFE292:
+ 397              		.text
+ 398              	.Letext0:
+ 399              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 400              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 401              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 402              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 403              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 404              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 405              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 406              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 407              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 408              		.file 11 "../../iot_link/os/liteos/include/los_config.h"
+ 409              		.file 12 "../../iot_link/os/liteos/include/los_err.h"
+ 410              		.file 13 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 411              		.file 14 "../../iot_link/os/liteos/include/los_membox.h"
+ 412              		.file 15 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s 			page 14
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 los_membox.c
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:18     .text.LOS_MemboxInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:25     .text.LOS_MemboxInit:00000000 LOS_MemboxInit
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:135    .text.LOS_MemboxAlloc:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:142    .text.LOS_MemboxAlloc:00000000 LOS_MemboxAlloc
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:199    .text.LOS_MemboxAlloc:0000002c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:204    .text.LOS_MemboxFree:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:211    .text.LOS_MemboxFree:00000000 LOS_MemboxFree
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:302    .text.LOS_MemboxFree:00000054 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:307    .text.LOS_MemboxClr:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:314    .text.LOS_MemboxClr:00000000 LOS_MemboxClr
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:344    .text.LOS_MemboxStatisticsGet:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccQuliNr.s:351    .text.LOS_MemboxStatisticsGet:00000000 LOS_MemboxStatisticsGet
+
+UNDEFINED SYMBOLS
+LOS_IntLock
+LOS_IntRestore
+memset

@@ -1,0 +1,731 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"los_priqueue.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.osPriqueueInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	osPriqueueInit
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	osPriqueueInit:
+  26              	.LFB287:
+  27              		.file 1 "../../iot_link/os/liteos/base/core/los_priqueue.c"
+   1:../../iot_link/os/liteos/base/core/los_priqueue.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * All rights reserved.
+   4:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * permission.
+  14:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/base/core/los_priqueue.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/base/core/los_priqueue.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * ===============================================
+  29:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 2
+
+
+  32:../../iot_link/os/liteos/base/core/los_priqueue.c ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/base/core/los_priqueue.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  35:../../iot_link/os/liteos/base/core/los_priqueue.c **** #include "los_priqueue.inc"
+  36:../../iot_link/os/liteos/base/core/los_priqueue.c **** #include "los_base.ph"
+  37:../../iot_link/os/liteos/base/core/los_priqueue.c **** #include "los_task.ph"
+  38:../../iot_link/os/liteos/base/core/los_priqueue.c **** #include "los_memory.h"
+  39:../../iot_link/os/liteos/base/core/los_priqueue.c **** #include "los_compiler.h"
+  40:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  41:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  42:../../iot_link/os/liteos/base/core/los_priqueue.c **** LITE_OS_SEC_BSS LOS_DL_LIST *g_pstLosPriorityQueueList;
+  43:../../iot_link/os/liteos/base/core/los_priqueue.c **** static LITE_OS_SEC_BSS UINT32 g_uwPriQueueBitmap = 0;
+  44:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  45:../../iot_link/os/liteos/base/core/los_priqueue.c **** #define PRIQUEUE_PRIOR0_BIT                     (UINT32)0x80000000
+  46:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  47:../../iot_link/os/liteos/base/core/los_priqueue.c **** LITE_OS_SEC_TEXT VOID osPriqueueInit(VOID)
+  48:../../iot_link/os/liteos/base/core/los_priqueue.c **** {
+  28              		.loc 1 48 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 08B5     		push	{r3, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 3, -8
+  37              		.cfi_offset 14, -4
+  49:../../iot_link/os/liteos/base/core/los_priqueue.c ****     UINT32 uwPri = 0;
+  50:../../iot_link/os/liteos/base/core/los_priqueue.c ****     UINT32 uwSize = 0;
+  51:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  52:../../iot_link/os/liteos/base/core/los_priqueue.c ****     uwSize = OS_PRIORITY_QUEUE_PRIORITYNUM * sizeof(LOS_DL_LIST);
+  53:../../iot_link/os/liteos/base/core/los_priqueue.c ****     g_pstLosPriorityQueueList = (LOS_DL_LIST *)LOS_MemAlloc(m_aucSysMem0, uwSize);
+  38              		.loc 1 53 0
+  39 0002 084B     		ldr	r3, .L8
+  40 0004 4FF48071 		mov	r1, #256
+  41 0008 1868     		ldr	r0, [r3]
+  42 000a FFF7FEFF 		bl	LOS_MemAlloc
+  43              	.LVL1:
+  44 000e 064B     		ldr	r3, .L8+4
+  45 0010 1860     		str	r0, [r3]
+  54:../../iot_link/os/liteos/base/core/los_priqueue.c ****     if (NULL == g_pstLosPriorityQueueList)
+  46              		.loc 1 54 0
+  47 0012 30B1     		cbz	r0, .L1
+  48 0014 00F58073 		add	r3, r0, #256
+  49              	.LVL2:
+  50              	.L3:
+  51              	.LBB10:
+  52              	.LBB11:
+  53              		.file 2 "../../iot_link/os/liteos/include/los_list.h"
+   1:../../iot_link/os/liteos/include/los_list.h **** /*----------------------------------------------------------------------------
+   2:../../iot_link/os/liteos/include/los_list.h ****  * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/os/liteos/include/los_list.h ****  * All rights reserved.
+   4:../../iot_link/os/liteos/include/los_list.h ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/os/liteos/include/los_list.h ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/os/liteos/include/los_list.h ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/os/liteos/include/los_list.h ****  * conditions and the following disclaimer.
+   8:../../iot_link/os/liteos/include/los_list.h ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 3
+
+
+   9:../../iot_link/os/liteos/include/los_list.h ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/os/liteos/include/los_list.h ****  * provided with the distribution.
+  11:../../iot_link/os/liteos/include/los_list.h ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/os/liteos/include/los_list.h ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/os/liteos/include/los_list.h ****  * permission.
+  14:../../iot_link/os/liteos/include/los_list.h ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/os/liteos/include/los_list.h ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/os/liteos/include/los_list.h ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/os/liteos/include/los_list.h ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/os/liteos/include/los_list.h ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/os/liteos/include/los_list.h ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/os/liteos/include/los_list.h ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/os/liteos/include/los_list.h ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/os/liteos/include/los_list.h ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/os/liteos/include/los_list.h ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/os/liteos/include/los_list.h ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/os/liteos/include/los_list.h ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/os/liteos/include/los_list.h **** /*----------------------------------------------------------------------------
+  27:../../iot_link/os/liteos/include/los_list.h ****  * Notice of Export Control Law
+  28:../../iot_link/os/liteos/include/los_list.h ****  * ===============================================
+  29:../../iot_link/os/liteos/include/los_list.h ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/os/liteos/include/los_list.h ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/os/liteos/include/los_list.h ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:../../iot_link/os/liteos/include/los_list.h ****  * applicable export control laws and regulations.
+  33:../../iot_link/os/liteos/include/los_list.h ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/os/liteos/include/los_list.h **** 
+  35:../../iot_link/os/liteos/include/los_list.h ****  /** @defgroup los_list Doubly linked list
+  36:../../iot_link/os/liteos/include/los_list.h ****  * @ingroup kernel
+  37:../../iot_link/os/liteos/include/los_list.h ****  */
+  38:../../iot_link/os/liteos/include/los_list.h **** 
+  39:../../iot_link/os/liteos/include/los_list.h **** #ifndef _LOS_LIST_H
+  40:../../iot_link/os/liteos/include/los_list.h **** #define _LOS_LIST_H
+  41:../../iot_link/os/liteos/include/los_list.h **** 
+  42:../../iot_link/os/liteos/include/los_list.h **** #include "los_typedef.h"
+  43:../../iot_link/os/liteos/include/los_list.h **** 
+  44:../../iot_link/os/liteos/include/los_list.h **** #ifdef __cplusplus
+  45:../../iot_link/os/liteos/include/los_list.h **** #if __cplusplus
+  46:../../iot_link/os/liteos/include/los_list.h **** extern "C" {
+  47:../../iot_link/os/liteos/include/los_list.h **** #endif /* __cplusplus */
+  48:../../iot_link/os/liteos/include/los_list.h **** #endif /* __cplusplus */
+  49:../../iot_link/os/liteos/include/los_list.h **** 
+  50:../../iot_link/os/liteos/include/los_list.h **** 
+  51:../../iot_link/os/liteos/include/los_list.h **** /**
+  52:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+  53:../../iot_link/os/liteos/include/los_list.h ****  *Structure of a node in a doubly linked list.
+  54:../../iot_link/os/liteos/include/los_list.h ****  */
+  55:../../iot_link/os/liteos/include/los_list.h **** typedef struct LOS_DL_LIST
+  56:../../iot_link/os/liteos/include/los_list.h **** {
+  57:../../iot_link/os/liteos/include/los_list.h ****     struct LOS_DL_LIST *pstPrev;            /**< Current node's pointer to the previous node*/
+  58:../../iot_link/os/liteos/include/los_list.h ****     struct LOS_DL_LIST *pstNext;            /**< Current node's pointer to the next node*/
+  59:../../iot_link/os/liteos/include/los_list.h **** } LOS_DL_LIST;
+  60:../../iot_link/os/liteos/include/los_list.h **** 
+  61:../../iot_link/os/liteos/include/los_list.h **** /**
+  62:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+  63:../../iot_link/os/liteos/include/los_list.h ****  *@brief Initialize a doubly linked list.
+  64:../../iot_link/os/liteos/include/los_list.h ****  *
+  65:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 4
+
+
+  66:../../iot_link/os/liteos/include/los_list.h ****  *This API is used to initialize a doubly linked list.
+  67:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+  68:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+  69:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameter passed in should be ensured to be a legal pointer.</li>
+  70:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+  71:../../iot_link/os/liteos/include/los_list.h ****  *
+  72:../../iot_link/os/liteos/include/los_list.h ****  *@param pstList    [IN] Node in a doubly linked list.
+  73:../../iot_link/os/liteos/include/los_list.h ****  *
+  74:../../iot_link/os/liteos/include/los_list.h ****  *@retval None.
+  75:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+  76:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+  77:../../iot_link/os/liteos/include/los_list.h ****  *@see
+  78:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+  79:../../iot_link/os/liteos/include/los_list.h ****  */
+  80:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE VOID LOS_ListInit(LOS_DL_LIST *pstList)
+  81:../../iot_link/os/liteos/include/los_list.h **** {
+  82:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstNext = pstList;
+  83:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstPrev = pstList;
+  54              		.loc 2 83 0 discriminator 3
+  55 0018 C0E90000 		strd	r0, r0, [r0]
+  56              	.LVL3:
+  57 001c 0830     		adds	r0, r0, #8
+  58              	.LBE11:
+  59              	.LBE10:
+  55:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+  56:../../iot_link/os/liteos/base/core/los_priqueue.c ****         return;
+  57:../../iot_link/os/liteos/base/core/los_priqueue.c ****     }
+  58:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  59:../../iot_link/os/liteos/base/core/los_priqueue.c ****     for (uwPri = 0; uwPri < OS_PRIORITY_QUEUE_PRIORITYNUM; ++uwPri)
+  60              		.loc 1 59 0 discriminator 3
+  61 001e 9842     		cmp	r0, r3
+  62 0020 FAD1     		bne	.L3
+  63              	.L1:
+  60:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+  61:../../iot_link/os/liteos/base/core/los_priqueue.c ****         LOS_ListInit(&g_pstLosPriorityQueueList[uwPri]);
+  62:../../iot_link/os/liteos/base/core/los_priqueue.c ****     }
+  63:../../iot_link/os/liteos/base/core/los_priqueue.c **** }
+  64              		.loc 1 63 0
+  65 0022 08BD     		pop	{r3, pc}
+  66              	.L9:
+  67              		.align	2
+  68              	.L8:
+  69 0024 00000000 		.word	m_aucSysMem0
+  70 0028 00000000 		.word	g_pstLosPriorityQueueList
+  71              		.cfi_endproc
+  72              	.LFE287:
+  74              		.section	.text.osPriqueueEnqueue,"ax",%progbits
+  75              		.align	1
+  76              		.global	osPriqueueEnqueue
+  77              		.syntax unified
+  78              		.thumb
+  79              		.thumb_func
+  80              		.fpu fpv4-sp-d16
+  82              	osPriqueueEnqueue:
+  83              	.LFB288:
+  64:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  65:../../iot_link/os/liteos/base/core/los_priqueue.c **** LITE_OS_SEC_TEXT VOID osPriqueueEnqueue(LOS_DL_LIST *ptrPQItem, UINT32 uwPri)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 5
+
+
+  66:../../iot_link/os/liteos/base/core/los_priqueue.c **** {
+  84              		.loc 1 66 0
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 0
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+  88              	.LVL4:
+  67:../../iot_link/os/liteos/base/core/los_priqueue.c ****     if (LOS_ListEmpty(&g_pstLosPriorityQueueList[uwPri]))
+  89              		.loc 1 67 0
+  90 0000 0B4B     		ldr	r3, .L12
+  91 0002 1A68     		ldr	r2, [r3]
+  92 0004 02EBC103 		add	r3, r2, r1, lsl #3
+  66:../../iot_link/os/liteos/base/core/los_priqueue.c ****     if (LOS_ListEmpty(&g_pstLosPriorityQueueList[uwPri]))
+  93              		.loc 1 66 0
+  94 0008 30B5     		push	{r4, r5, lr}
+  95              	.LCFI1:
+  96              		.cfi_def_cfa_offset 12
+  97              		.cfi_offset 4, -12
+  98              		.cfi_offset 5, -8
+  99              		.cfi_offset 14, -4
+ 100              		.loc 1 67 0
+ 101 000a 5C68     		ldr	r4, [r3, #4]
+ 102 000c A342     		cmp	r3, r4
+ 103 000e 06D1     		bne	.L11
+  68:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+  69:../../iot_link/os/liteos/base/core/los_priqueue.c ****         g_uwPriQueueBitmap |= (PRIQUEUE_PRIOR0_BIT >> uwPri);
+ 104              		.loc 1 69 0
+ 105 0010 084C     		ldr	r4, .L12+4
+ 106 0012 4FF00043 		mov	r3, #-2147483648
+ 107 0016 2568     		ldr	r5, [r4]
+ 108 0018 CB40     		lsrs	r3, r3, r1
+ 109 001a 2B43     		orrs	r3, r3, r5
+ 110 001c 2360     		str	r3, [r4]
+ 111              	.L11:
+  70:../../iot_link/os/liteos/base/core/los_priqueue.c ****     }
+  71:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  72:../../iot_link/os/liteos/base/core/los_priqueue.c ****     LOS_ListTailInsert(&g_pstLosPriorityQueueList[uwPri], ptrPQItem);
+ 112              		.loc 1 72 0
+ 113 001e 52F83130 		ldr	r3, [r2, r1, lsl #3]
+ 114              	.LVL5:
+ 115              	.LBB18:
+ 116              	.LBB19:
+ 117              	.LBB20:
+  84:../../iot_link/os/liteos/include/los_list.h **** }
+  85:../../iot_link/os/liteos/include/los_list.h **** 
+  86:../../iot_link/os/liteos/include/los_list.h **** /**
+  87:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+  88:../../iot_link/os/liteos/include/los_list.h ****  *@brief Point to the next node pointed to by the current node.
+  89:../../iot_link/os/liteos/include/los_list.h ****  *
+  90:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+  91:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+  92:../../iot_link/os/liteos/include/los_list.h ****  *<li>This API is used to point to the next node pointed to by the current node.</li>
+  93:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+  94:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+  95:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+  96:../../iot_link/os/liteos/include/los_list.h ****  *<li>None.</li>
+  97:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+  98:../../iot_link/os/liteos/include/los_list.h ****  *
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 6
+
+
+  99:../../iot_link/os/liteos/include/los_list.h ****  *@param pstObject  [IN] Node in the doubly linked list.
+ 100:../../iot_link/os/liteos/include/los_list.h ****  *
+ 101:../../iot_link/os/liteos/include/los_list.h ****  *@retval None.
+ 102:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 103:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 104:../../iot_link/os/liteos/include/los_list.h ****  *@see
+ 105:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 106:../../iot_link/os/liteos/include/los_list.h ****  */
+ 107:../../iot_link/os/liteos/include/los_list.h **** #define LOS_DL_LIST_FIRST(pstObject) ((pstObject)->pstNext)
+ 108:../../iot_link/os/liteos/include/los_list.h **** 
+ 109:../../iot_link/os/liteos/include/los_list.h **** /**
+ 110:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+ 111:../../iot_link/os/liteos/include/los_list.h ****  *@brief Insert a new node to a doubly linked list.
+ 112:../../iot_link/os/liteos/include/los_list.h ****  *
+ 113:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+ 114:../../iot_link/os/liteos/include/los_list.h ****  *This API is used to insert a new node to a doubly linked list.
+ 115:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+ 116:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 117:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameters passed in should be ensured to be legal pointers.</li>
+ 118:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 119:../../iot_link/os/liteos/include/los_list.h ****  *
+ 120:../../iot_link/os/liteos/include/los_list.h ****  *@param pstList    [IN]   Doubly linked list where the new node is inserted.
+ 121:../../iot_link/os/liteos/include/los_list.h ****  *@param pstNode    [IN]   New node to be inserted.
+ 122:../../iot_link/os/liteos/include/los_list.h ****  *
+ 123:../../iot_link/os/liteos/include/los_list.h ****  *@retval None
+ 124:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 125:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 126:../../iot_link/os/liteos/include/los_list.h ****  *@see LOS_ListDelete
+ 127:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 128:../../iot_link/os/liteos/include/los_list.h ****  */
+ 129:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE VOID LOS_ListAdd(LOS_DL_LIST *pstList, LOS_DL_LIST *pstNode)
+ 130:../../iot_link/os/liteos/include/los_list.h **** {
+ 131:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstNext = pstList->pstNext;
+ 118              		.loc 2 131 0
+ 119 0022 5A68     		ldr	r2, [r3, #4]
+ 120              	.LVL6:
+ 132:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev = pstList;
+ 121              		.loc 2 132 0
+ 122 0024 C0E90032 		strd	r3, r2, [r0]
+ 133:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstNext->pstPrev = pstNode;
+ 123              		.loc 2 133 0
+ 124 0028 5A68     		ldr	r2, [r3, #4]
+ 125 002a 1060     		str	r0, [r2]
+ 134:../../iot_link/os/liteos/include/los_list.h ****     pstList->pstNext = pstNode;
+ 126              		.loc 2 134 0
+ 127 002c 5860     		str	r0, [r3, #4]
+ 128              	.LVL7:
+ 129              	.LBE20:
+ 130              	.LBE19:
+ 131              	.LBE18:
+  73:../../iot_link/os/liteos/base/core/los_priqueue.c **** }
+ 132              		.loc 1 73 0
+ 133 002e 30BD     		pop	{r4, r5, pc}
+ 134              	.L13:
+ 135              		.align	2
+ 136              	.L12:
+ 137 0030 00000000 		.word	g_pstLosPriorityQueueList
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 7
+
+
+ 138 0034 00000000 		.word	.LANCHOR0
+ 139              		.cfi_endproc
+ 140              	.LFE288:
+ 142              		.section	.text.osPriqueueDequeue,"ax",%progbits
+ 143              		.align	1
+ 144              		.global	osPriqueueDequeue
+ 145              		.syntax unified
+ 146              		.thumb
+ 147              		.thumb_func
+ 148              		.fpu fpv4-sp-d16
+ 150              	osPriqueueDequeue:
+ 151              	.LFB289:
+  74:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  75:../../iot_link/os/liteos/base/core/los_priqueue.c **** LITE_OS_SEC_TEXT VOID osPriqueueDequeue(LOS_DL_LIST *ptrPQItem)
+  76:../../iot_link/os/liteos/base/core/los_priqueue.c **** {
+ 152              		.loc 1 76 0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 0
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156              		@ link register save eliminated.
+ 157              	.LVL8:
+ 158              	.LBB25:
+ 159              	.LBB26:
+ 135:../../iot_link/os/liteos/include/los_list.h **** }
+ 136:../../iot_link/os/liteos/include/los_list.h **** 
+ 137:../../iot_link/os/liteos/include/los_list.h **** /**
+ 138:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+ 139:../../iot_link/os/liteos/include/los_list.h ****  *@brief Insert a node to the tail of a doubly linked list.
+ 140:../../iot_link/os/liteos/include/los_list.h ****  *
+ 141:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+ 142:../../iot_link/os/liteos/include/los_list.h ****  *This API is used to insert a new node to the tail of a doubly linked list.
+ 143:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+ 144:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 145:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameters passed in should be ensured to be legal pointers.</li>
+ 146:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 147:../../iot_link/os/liteos/include/los_list.h ****  *
+ 148:../../iot_link/os/liteos/include/los_list.h ****  *@param pstList     [IN] Doubly linked list where the new node is inserted.
+ 149:../../iot_link/os/liteos/include/los_list.h ****  *@param pstNode     [IN] New node to be inserted.
+ 150:../../iot_link/os/liteos/include/los_list.h ****  *
+ 151:../../iot_link/os/liteos/include/los_list.h ****  *@retval None.
+ 152:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 153:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 154:../../iot_link/os/liteos/include/los_list.h ****  *@see LOS_ListAdd | LOS_ListHeadInsert
+ 155:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 156:../../iot_link/os/liteos/include/los_list.h ****  */
+ 157:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE VOID LOS_ListTailInsert(LOS_DL_LIST *pstList, LOS_DL_LIST *pst
+ 158:../../iot_link/os/liteos/include/los_list.h **** {
+ 159:../../iot_link/os/liteos/include/los_list.h ****     LOS_ListAdd(pstList->pstPrev, pstNode);
+ 160:../../iot_link/os/liteos/include/los_list.h **** }
+ 161:../../iot_link/os/liteos/include/los_list.h **** 
+ 162:../../iot_link/os/liteos/include/los_list.h **** /**
+ 163:../../iot_link/os/liteos/include/los_list.h ****  *@ingroup los_list
+ 164:../../iot_link/os/liteos/include/los_list.h ****  *@brief Delete a specified node from a doubly linked list.
+ 165:../../iot_link/os/liteos/include/los_list.h ****  *
+ 166:../../iot_link/os/liteos/include/los_list.h ****  *@par Description:
+ 167:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 168:../../iot_link/os/liteos/include/los_list.h ****  *<li>This API is used to delete a specified node from a doubly linked list.</li>
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 8
+
+
+ 169:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 170:../../iot_link/os/liteos/include/los_list.h ****  *@attention
+ 171:../../iot_link/os/liteos/include/los_list.h ****  *<ul>
+ 172:../../iot_link/os/liteos/include/los_list.h ****  *<li>The parameter passed in should be ensured to be a legal pointer.</li>
+ 173:../../iot_link/os/liteos/include/los_list.h ****  *</ul>
+ 174:../../iot_link/os/liteos/include/los_list.h ****  *
+ 175:../../iot_link/os/liteos/include/los_list.h ****  *@param pstNode    [IN] Node to be deleted.
+ 176:../../iot_link/os/liteos/include/los_list.h ****  *
+ 177:../../iot_link/os/liteos/include/los_list.h ****  *@retval None.
+ 178:../../iot_link/os/liteos/include/los_list.h ****  *@par Dependency:
+ 179:../../iot_link/os/liteos/include/los_list.h ****  *<ul><li>los_list.h: the header file that contains the API declaration.</li></ul>
+ 180:../../iot_link/os/liteos/include/los_list.h ****  *@see LOS_ListAdd
+ 181:../../iot_link/os/liteos/include/los_list.h ****  *@since Huawei LiteOS V100R001C00
+ 182:../../iot_link/os/liteos/include/los_list.h ****  */
+ 183:../../iot_link/os/liteos/include/los_list.h **** LITE_OS_SEC_ALW_INLINE STATIC_INLINE VOID LOS_ListDelete(LOS_DL_LIST *pstNode)
+ 184:../../iot_link/os/liteos/include/los_list.h **** {
+ 185:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstNext->pstPrev = pstNode->pstPrev;
+ 160              		.loc 2 185 0
+ 161 0000 D0E90023 		ldrd	r2, r3, [r0]
+ 162 0004 1A60     		str	r2, [r3]
+ 186:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev->pstNext = pstNode->pstNext;
+ 163              		.loc 2 186 0
+ 164 0006 0268     		ldr	r2, [r0]
+ 165 0008 5360     		str	r3, [r2, #4]
+ 187:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstNext = (LOS_DL_LIST *)NULL;
+ 166              		.loc 2 187 0
+ 167 000a 0023     		movs	r3, #0
+ 188:../../iot_link/os/liteos/include/los_list.h ****     pstNode->pstPrev = (LOS_DL_LIST *)NULL;
+ 168              		.loc 2 188 0
+ 169 000c C0E90033 		strd	r3, r3, [r0]
+ 170              	.LVL9:
+ 171              	.LBE26:
+ 172              	.LBE25:
+  77:../../iot_link/os/liteos/base/core/los_priqueue.c ****     LOS_TASK_CB *pstRunTsk;
+  78:../../iot_link/os/liteos/base/core/los_priqueue.c ****     LOS_ListDelete(ptrPQItem);
+  79:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  80:../../iot_link/os/liteos/base/core/los_priqueue.c ****     pstRunTsk = LOS_DL_LIST_ENTRY(ptrPQItem, LOS_TASK_CB, stPendList);  /*lint !e413*/
+  81:../../iot_link/os/liteos/base/core/los_priqueue.c ****     if (LOS_ListEmpty(&g_pstLosPriorityQueueList[pstRunTsk->usPriority]))
+ 173              		.loc 1 81 0
+ 174 0010 094B     		ldr	r3, .L16
+ 175 0012 30F8222C 		ldrh	r2, [r0, #-34]
+ 176 0016 1B68     		ldr	r3, [r3]
+ 177 0018 03EBC203 		add	r3, r3, r2, lsl #3
+ 178 001c 5968     		ldr	r1, [r3, #4]
+ 179 001e 8B42     		cmp	r3, r1
+ 180 0020 08D1     		bne	.L14
+  82:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+  83:../../iot_link/os/liteos/base/core/los_priqueue.c ****         g_uwPriQueueBitmap &= (~(PRIQUEUE_PRIOR0_BIT >> pstRunTsk->usPriority));
+ 181              		.loc 1 83 0
+ 182 0022 0649     		ldr	r1, .L16+4
+ 183 0024 4FF00043 		mov	r3, #-2147483648
+ 184 0028 23FA02F2 		lsr	r2, r3, r2
+ 185 002c 0B68     		ldr	r3, [r1]
+ 186 002e 23EA0203 		bic	r3, r3, r2
+ 187 0032 0B60     		str	r3, [r1]
+ 188              	.L14:
+  84:../../iot_link/os/liteos/base/core/los_priqueue.c ****     }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 9
+
+
+  85:../../iot_link/os/liteos/base/core/los_priqueue.c **** }
+ 189              		.loc 1 85 0
+ 190 0034 7047     		bx	lr
+ 191              	.L17:
+ 192 0036 00BF     		.align	2
+ 193              	.L16:
+ 194 0038 00000000 		.word	g_pstLosPriorityQueueList
+ 195 003c 00000000 		.word	.LANCHOR0
+ 196              		.cfi_endproc
+ 197              	.LFE289:
+ 199              		.section	.text.osPriqueueTop,"ax",%progbits
+ 200              		.align	1
+ 201              		.global	osPriqueueTop
+ 202              		.syntax unified
+ 203              		.thumb
+ 204              		.thumb_func
+ 205              		.fpu fpv4-sp-d16
+ 207              	osPriqueueTop:
+ 208              	.LFB290:
+  86:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  87:../../iot_link/os/liteos/base/core/los_priqueue.c **** LITE_OS_SEC_TEXT LOS_DL_LIST *osPriqueueTop(VOID)
+  88:../../iot_link/os/liteos/base/core/los_priqueue.c **** {
+ 209              		.loc 1 88 0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213              		@ link register save eliminated.
+ 214              	.LVL10:
+  89:../../iot_link/os/liteos/base/core/los_priqueue.c ****     UINT32 uwPri = 0;
+  90:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  91:../../iot_link/os/liteos/base/core/los_priqueue.c ****     if (0 != g_uwPriQueueBitmap)
+ 215              		.loc 1 91 0
+ 216 0000 054B     		ldr	r3, .L21
+ 217 0002 1868     		ldr	r0, [r3]
+ 218 0004 30B1     		cbz	r0, .L18
+  92:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+  93:../../iot_link/os/liteos/base/core/los_priqueue.c ****         uwPri = CLZ(g_uwPriQueueBitmap);
+  94:../../iot_link/os/liteos/base/core/los_priqueue.c ****         return LOS_DL_LIST_FIRST(&g_pstLosPriorityQueueList[uwPri]);
+ 219              		.loc 1 94 0
+ 220 0006 054B     		ldr	r3, .L21+4
+ 221 0008 1B68     		ldr	r3, [r3]
+  93:../../iot_link/os/liteos/base/core/los_priqueue.c ****         return LOS_DL_LIST_FIRST(&g_pstLosPriorityQueueList[uwPri]);
+ 222              		.loc 1 93 0
+ 223 000a B0FA80F0 		clz	r0, r0
+ 224              	.LVL11:
+ 225              		.loc 1 94 0
+ 226 000e 03EBC000 		add	r0, r3, r0, lsl #3
+ 227              	.LVL12:
+ 228 0012 4068     		ldr	r0, [r0, #4]
+ 229              	.LVL13:
+ 230              	.L18:
+  95:../../iot_link/os/liteos/base/core/los_priqueue.c ****     }
+  96:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+  97:../../iot_link/os/liteos/base/core/los_priqueue.c ****     return (LOS_DL_LIST *)NULL;
+  98:../../iot_link/os/liteos/base/core/los_priqueue.c **** }
+ 231              		.loc 1 98 0
+ 232 0014 7047     		bx	lr
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 10
+
+
+ 233              	.L22:
+ 234 0016 00BF     		.align	2
+ 235              	.L21:
+ 236 0018 00000000 		.word	.LANCHOR0
+ 237 001c 00000000 		.word	g_pstLosPriorityQueueList
+ 238              		.cfi_endproc
+ 239              	.LFE290:
+ 241              		.section	.text.osPriqueueSize,"ax",%progbits
+ 242              		.align	1
+ 243              		.global	osPriqueueSize
+ 244              		.syntax unified
+ 245              		.thumb
+ 246              		.thumb_func
+ 247              		.fpu fpv4-sp-d16
+ 249              	osPriqueueSize:
+ 250              	.LFB291:
+  99:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+ 100:../../iot_link/os/liteos/base/core/los_priqueue.c **** LITE_OS_SEC_TEXT UINT32 osPriqueueSize(UINT32 uwPri)
+ 101:../../iot_link/os/liteos/base/core/los_priqueue.c **** {
+ 251              		.loc 1 101 0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255              		@ link register save eliminated.
+ 256              	.LVL14:
+ 102:../../iot_link/os/liteos/base/core/los_priqueue.c ****     UINT32      uwItemCnt = 0;
+ 103:../../iot_link/os/liteos/base/core/los_priqueue.c ****     LOS_DL_LIST *pstCurPQNode = (LOS_DL_LIST *)NULL;
+ 104:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+ 105:../../iot_link/os/liteos/base/core/los_priqueue.c ****     LOS_DL_LIST_FOR_EACH(pstCurPQNode, &g_pstLosPriorityQueueList[uwPri])
+ 257              		.loc 1 105 0
+ 258 0000 054B     		ldr	r3, .L26
+ 259 0002 1B68     		ldr	r3, [r3]
+ 260 0004 03EBC003 		add	r3, r3, r0, lsl #3
+ 102:../../iot_link/os/liteos/base/core/los_priqueue.c ****     UINT32      uwItemCnt = 0;
+ 261              		.loc 1 102 0
+ 262 0008 0020     		movs	r0, #0
+ 263              	.LVL15:
+ 264              		.loc 1 105 0
+ 265 000a 5A68     		ldr	r2, [r3, #4]
+ 266              	.LVL16:
+ 267              	.L24:
+ 268              		.loc 1 105 0 is_stmt 0 discriminator 1
+ 269 000c 9342     		cmp	r3, r2
+ 270 000e 00D1     		bne	.L25
+ 106:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+ 107:../../iot_link/os/liteos/base/core/los_priqueue.c ****         ++uwItemCnt;
+ 108:../../iot_link/os/liteos/base/core/los_priqueue.c ****     }
+ 109:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+ 110:../../iot_link/os/liteos/base/core/los_priqueue.c ****     return uwItemCnt;
+ 111:../../iot_link/os/liteos/base/core/los_priqueue.c **** }
+ 271              		.loc 1 111 0 is_stmt 1
+ 272 0010 7047     		bx	lr
+ 273              	.L25:
+ 107:../../iot_link/os/liteos/base/core/los_priqueue.c ****     }
+ 274              		.loc 1 107 0 discriminator 3
+ 275 0012 0130     		adds	r0, r0, #1
+ 276              	.LVL17:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 11
+
+
+ 105:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+ 277              		.loc 1 105 0 discriminator 3
+ 278 0014 5268     		ldr	r2, [r2, #4]
+ 279              	.LVL18:
+ 280 0016 F9E7     		b	.L24
+ 281              	.L27:
+ 282              		.align	2
+ 283              	.L26:
+ 284 0018 00000000 		.word	g_pstLosPriorityQueueList
+ 285              		.cfi_endproc
+ 286              	.LFE291:
+ 288              		.section	.text.osPriqueueTotalSize,"ax",%progbits
+ 289              		.align	1
+ 290              		.global	osPriqueueTotalSize
+ 291              		.syntax unified
+ 292              		.thumb
+ 293              		.thumb_func
+ 294              		.fpu fpv4-sp-d16
+ 296              	osPriqueueTotalSize:
+ 297              	.LFB292:
+ 112:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+ 113:../../iot_link/os/liteos/base/core/los_priqueue.c **** LITE_OS_SEC_TEXT UINT32 osPriqueueTotalSize(VOID)
+ 114:../../iot_link/os/liteos/base/core/los_priqueue.c **** {
+ 298              		.loc 1 114 0
+ 299              		.cfi_startproc
+ 300              		@ args = 0, pretend = 0, frame = 0
+ 301              		@ frame_needed = 0, uses_anonymous_args = 0
+ 302              	.LVL19:
+ 115:../../iot_link/os/liteos/base/core/los_priqueue.c ****     UINT32 uwPri = 0;
+ 116:../../iot_link/os/liteos/base/core/los_priqueue.c ****     UINT32 uwTotalSize = 0;
+ 303              		.loc 1 116 0
+ 304 0000 0021     		movs	r1, #0
+ 114:../../iot_link/os/liteos/base/core/los_priqueue.c ****     UINT32 uwPri = 0;
+ 305              		.loc 1 114 0
+ 306 0002 10B5     		push	{r4, lr}
+ 307              	.LCFI2:
+ 308              		.cfi_def_cfa_offset 8
+ 309              		.cfi_offset 4, -8
+ 310              		.cfi_offset 14, -4
+ 117:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+ 118:../../iot_link/os/liteos/base/core/los_priqueue.c ****     for (uwPri = 0; uwPri < OS_PRIORITY_QUEUE_PRIORITYNUM; ++uwPri)
+ 311              		.loc 1 118 0
+ 312 0004 0C46     		mov	r4, r1
+ 313              	.LVL20:
+ 314              	.L29:
+ 119:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+ 120:../../iot_link/os/liteos/base/core/los_priqueue.c ****         uwTotalSize += osPriqueueSize(uwPri);
+ 315              		.loc 1 120 0 discriminator 3
+ 316 0006 2046     		mov	r0, r4
+ 317 0008 FFF7FEFF 		bl	osPriqueueSize
+ 318              	.LVL21:
+ 118:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+ 319              		.loc 1 118 0 discriminator 3
+ 320 000c 0134     		adds	r4, r4, #1
+ 321              	.LVL22:
+ 322 000e 202C     		cmp	r4, #32
+ 323              		.loc 1 120 0 discriminator 3
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 12
+
+
+ 324 0010 0144     		add	r1, r1, r0
+ 325              	.LVL23:
+ 118:../../iot_link/os/liteos/base/core/los_priqueue.c ****     {
+ 326              		.loc 1 118 0 discriminator 3
+ 327 0012 F8D1     		bne	.L29
+ 121:../../iot_link/os/liteos/base/core/los_priqueue.c ****     }
+ 122:../../iot_link/os/liteos/base/core/los_priqueue.c **** 
+ 123:../../iot_link/os/liteos/base/core/los_priqueue.c ****     return uwTotalSize;
+ 124:../../iot_link/os/liteos/base/core/los_priqueue.c **** }
+ 328              		.loc 1 124 0
+ 329 0014 0846     		mov	r0, r1
+ 330 0016 10BD     		pop	{r4, pc}
+ 331              		.cfi_endproc
+ 332              	.LFE292:
+ 334              		.comm	g_pstLosPriorityQueueList,4,4
+ 335              		.section	.bss.g_uwPriQueueBitmap,"aw",%nobits
+ 336              		.align	2
+ 337              		.set	.LANCHOR0,. + 0
+ 340              	g_uwPriQueueBitmap:
+ 341 0000 00000000 		.space	4
+ 342              		.text
+ 343              	.Letext0:
+ 344              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 345              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 346              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 347              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 348              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 349              		.file 8 "../../iot_link/os/liteos/include/los_typedef.h"
+ 350              		.file 9 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 351              		.file 10 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 352              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 353              		.file 12 "../../iot_link/os/liteos/include/los_config.h"
+ 354              		.file 13 "../../iot_link/os/liteos/include/los_err.h"
+ 355              		.file 14 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 356              		.file 15 "../../iot_link/os/liteos/include/los_tick.h"
+ 357              		.file 16 "../../iot_link/os/liteos/include/los_event.h"
+ 358              		.file 17 "../../iot_link/os/liteos/include/los_task.h"
+ 359              		.file 18 "../../iot_link/os/liteos/base/include/los_task.ph"
+ 360              		.file 19 "../../iot_link/os/liteos/include/los_memory.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 los_priqueue.c
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:18     .text.osPriqueueInit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:25     .text.osPriqueueInit:00000000 osPriqueueInit
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:69     .text.osPriqueueInit:00000024 $d
+                            *COM*:00000004 g_pstLosPriorityQueueList
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:75     .text.osPriqueueEnqueue:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:82     .text.osPriqueueEnqueue:00000000 osPriqueueEnqueue
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:137    .text.osPriqueueEnqueue:00000030 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:143    .text.osPriqueueDequeue:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:150    .text.osPriqueueDequeue:00000000 osPriqueueDequeue
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:194    .text.osPriqueueDequeue:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:200    .text.osPriqueueTop:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:207    .text.osPriqueueTop:00000000 osPriqueueTop
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:236    .text.osPriqueueTop:00000018 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:242    .text.osPriqueueSize:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:249    .text.osPriqueueSize:00000000 osPriqueueSize
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:284    .text.osPriqueueSize:00000018 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:289    .text.osPriqueueTotalSize:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:296    .text.osPriqueueTotalSize:00000000 osPriqueueTotalSize
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:336    .bss.g_uwPriQueueBitmap:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccumskR5.s:340    .bss.g_uwPriQueueBitmap:00000000 g_uwPriQueueBitmap
+
+UNDEFINED SYMBOLS
+LOS_MemAlloc
+m_aucSysMem0

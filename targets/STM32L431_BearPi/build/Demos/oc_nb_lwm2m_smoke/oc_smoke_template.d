@@ -1,0 +1,217 @@
+build/Demos/oc_nb_lwm2m_smoke/oc_smoke_template.d \
+ build/Demos/oc_nb_lwm2m_smoke/oc_smoke_template.o: \
+ Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c \
+ ../../iot_link/os/osal/osal.h ../../iot_link/inc/link_log.h \
+ ../../iot_link/iot_link_config.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/iot_config.h \
+ ../../iot_link/link_misc/link_misc.h ../../iot_link/os/osal/osal_types.h \
+ ../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.h \
+ ../../iot_link/inc/link_endian.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/Inc/hal_qspi_flash.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/E53_SF1/E53_SF1.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4xx_hal_conf.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4xx.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l431xx.h \
+ ../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h \
+ ../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_compiler.h \
+ ../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_stm32l4xx.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_cortex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_adc.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dac.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dac_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_exti.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash_ramfunc.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_qspi.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_sd.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_sdmmc.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
+ ../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/LCD/lcd.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/main.h \
+ ../../iot_link/os/liteos/include/los_base.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/OS_CONFIG/los_builddef.h \
+ ../../iot_link/os/liteos/include/los_compiler.h \
+ ../../iot_link/os/liteos/include/los_typedef.h \
+ ../../iot_link/os/liteos/include/los_config.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/OS_CONFIG/target_config.h \
+ ../../iot_link/os/liteos/include/los_typedef.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/OS_CONFIG/los_printf.h \
+ ../../iot_link/os/liteos/include/los_config.h \
+ ../../iot_link/os/liteos/include/los_list.h \
+ ../../iot_link/os/liteos/include/los_errno.h \
+ ../../iot_link/os/liteos/include/los_err.h \
+ ../../iot_link/os/liteos/include/los_base.h \
+ ../../iot_link/os/liteos/include/los_compiler.h \
+ ../../iot_link/os/liteos/include/los_sys.h \
+ ../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h \
+ ../../iot_link/os/liteos/base/include/los_event.ph \
+ ../../iot_link/os/liteos/include/los_event.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/gpio.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/main.h \
+ D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4xx_it.h \
+ ../../iot_link/inc/stimer.h
+
+../../iot_link/os/osal/osal.h:
+
+../../iot_link/inc/link_log.h:
+
+../../iot_link/iot_link_config.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/iot_config.h:
+
+../../iot_link/link_misc/link_misc.h:
+
+../../iot_link/os/osal/osal_types.h:
+
+../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.h:
+
+../../iot_link/inc/link_endian.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/Inc/hal_qspi_flash.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/E53_SF1/E53_SF1.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4xx_hal_conf.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4xx.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l431xx.h:
+
+../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h:
+
+../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_compiler.h:
+
+../../iot_link/os/liteos/arch/arm/common/cmsis/cmsis_gcc.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_stm32l4xx.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_cortex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_adc.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dac.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dac_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_exti.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash_ramfunc.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_qspi.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_sd.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_sdmmc.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_spi_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
+
+../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/LCD/lcd.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/main.h:
+
+../../iot_link/os/liteos/include/los_base.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/OS_CONFIG/los_builddef.h:
+
+../../iot_link/os/liteos/include/los_compiler.h:
+
+../../iot_link/os/liteos/include/los_typedef.h:
+
+../../iot_link/os/liteos/include/los_config.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/OS_CONFIG/target_config.h:
+
+../../iot_link/os/liteos/include/los_typedef.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/OS_CONFIG/los_printf.h:
+
+../../iot_link/os/liteos/include/los_config.h:
+
+../../iot_link/os/liteos/include/los_list.h:
+
+../../iot_link/os/liteos/include/los_errno.h:
+
+../../iot_link/os/liteos/include/los_err.h:
+
+../../iot_link/os/liteos/include/los_base.h:
+
+../../iot_link/os/liteos/include/los_compiler.h:
+
+../../iot_link/os/liteos/include/los_sys.h:
+
+../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h:
+
+../../iot_link/os/liteos/base/include/los_event.ph:
+
+../../iot_link/os/liteos/include/los_event.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/gpio.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/main.h:
+
+D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4xx_it.h:
+
+../../iot_link/inc/stimer.h:

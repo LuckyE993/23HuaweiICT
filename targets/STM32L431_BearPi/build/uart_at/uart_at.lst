@@ -1,0 +1,1079 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"uart_at.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.uart_at_deinit,"ax",%progbits
+  18              		.align	1
+  19              		.global	uart_at_deinit
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	uart_at_deinit:
+  26              	.LFB289:
+  27              		.file 1 "uart_at/uart_at.c"
+   1:uart_at/uart_at.c **** /*----------------------------------------------------------------------------
+   2:uart_at/uart_at.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:uart_at/uart_at.c ****  * All rights reserved.
+   4:uart_at/uart_at.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:uart_at/uart_at.c ****  * are permitted provided that the following conditions are met:
+   6:uart_at/uart_at.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:uart_at/uart_at.c ****  * conditions and the following disclaimer.
+   8:uart_at/uart_at.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:uart_at/uart_at.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:uart_at/uart_at.c ****  * provided with the distribution.
+  11:uart_at/uart_at.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:uart_at/uart_at.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:uart_at/uart_at.c ****  * permission.
+  14:uart_at/uart_at.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:uart_at/uart_at.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:uart_at/uart_at.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:uart_at/uart_at.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:uart_at/uart_at.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:uart_at/uart_at.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:uart_at/uart_at.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:uart_at/uart_at.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:uart_at/uart_at.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:uart_at/uart_at.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:uart_at/uart_at.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:uart_at/uart_at.c ****  *---------------------------------------------------------------------------*/
+  26:uart_at/uart_at.c **** /*----------------------------------------------------------------------------
+  27:uart_at/uart_at.c ****  * Notice of Export Control Law
+  28:uart_at/uart_at.c ****  * ===============================================
+  29:uart_at/uart_at.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:uart_at/uart_at.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:uart_at/uart_at.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 2
+
+
+  32:uart_at/uart_at.c ****  * applicable export control laws and regulations.
+  33:uart_at/uart_at.c ****  *---------------------------------------------------------------------------*/
+  34:uart_at/uart_at.c **** 
+  35:uart_at/uart_at.c **** #include "usart.h"
+  36:uart_at/uart_at.c **** #include "stm32l4xx.h"
+  37:uart_at/uart_at.c **** #include <stdint.h>
+  38:uart_at/uart_at.c **** #include <stddef.h>
+  39:uart_at/uart_at.c **** #include <osal.h>
+  40:uart_at/uart_at.c **** #include <link_misc.h>
+  41:uart_at/uart_at.c **** #include <driver.h>
+  42:uart_at/uart_at.c **** #include "sys/fcntl.h"
+  43:uart_at/uart_at.c **** #include <iot_link_config.h>
+  44:uart_at/uart_at.c **** 
+  45:uart_at/uart_at.c **** 
+  46:uart_at/uart_at.c **** UART_HandleTypeDef uart_at;
+  47:uart_at/uart_at.c **** static USART_TypeDef*     s_pUSART = LPUART1;
+  48:uart_at/uart_at.c **** static uint32_t           s_uwIRQn = LPUART1_IRQn;
+  49:uart_at/uart_at.c **** 
+  50:uart_at/uart_at.c **** #ifndef CONFIG_UARTAT_RCVMAX
+  51:uart_at/uart_at.c **** #define CONFIG_UARTAT_RCVMAX     1024  //cache a frame
+  52:uart_at/uart_at.c **** #endif
+  53:uart_at/uart_at.c **** 
+  54:uart_at/uart_at.c **** #ifndef CONFIG_UARTAT_BAUDRATE
+  55:uart_at/uart_at.c **** #define CONFIG_UARTAT_BAUDRATE    115200
+  56:uart_at/uart_at.c **** #endif
+  57:uart_at/uart_at.c **** 
+  58:uart_at/uart_at.c **** 
+  59:uart_at/uart_at.c **** #ifndef CONFIG_UARTAT_DEVNAME
+  60:uart_at/uart_at.c **** #define CONFIG_UARTAT_DEVNAME    "atdev"
+  61:uart_at/uart_at.c **** #endif
+  62:uart_at/uart_at.c **** 
+  63:uart_at/uart_at.c **** #define CN_RCVMEM_LEN  CONFIG_UARTAT_RCVMAX
+  64:uart_at/uart_at.c **** 
+  65:uart_at/uart_at.c **** 
+  66:uart_at/uart_at.c **** struct atio_cb
+  67:uart_at/uart_at.c **** {
+  68:uart_at/uart_at.c ****     unsigned short        w_next;    //the next position to be write
+  69:uart_at/uart_at.c ****     osal_semp_t           rcvsync;   //if a frame has been written to the ring, then active it
+  70:uart_at/uart_at.c ****     tag_ring_buffer_t     rcvring;
+  71:uart_at/uart_at.c ****     unsigned char         rcvbuf[CONFIG_UARTAT_RCVMAX];
+  72:uart_at/uart_at.c ****     unsigned char         rcvringmem[CN_RCVMEM_LEN];
+  73:uart_at/uart_at.c ****     //for the debug here
+  74:uart_at/uart_at.c ****     unsigned int          rframeover; //how many times the frame has been over the max length
+  75:uart_at/uart_at.c ****     unsigned int          rframedrop; //how many frame has been droped for memmory
+  76:uart_at/uart_at.c ****     unsigned int          sndlen;     //how many bytes has been sent
+  77:uart_at/uart_at.c ****     unsigned int          rcvlen;     //how many bytes has been received
+  78:uart_at/uart_at.c ****     unsigned int          sndframe;   //how many frame has been sent
+  79:uart_at/uart_at.c ****     unsigned int          rcvframe;   //how many frame has been received
+  80:uart_at/uart_at.c ****     unsigned int          rcvringrst; //how many times the receive ring has been reset
+  81:uart_at/uart_at.c **** };
+  82:uart_at/uart_at.c **** static struct atio_cb   g_atio_cb;
+  83:uart_at/uart_at.c **** 
+  84:uart_at/uart_at.c **** 
+  85:uart_at/uart_at.c **** /*******************************************************************************
+  86:uart_at/uart_at.c **** function     :use this function to deal the uart interrupt
+  87:uart_at/uart_at.c **** parameters   :
+  88:uart_at/uart_at.c **** instruction  :we cached the data in the temp buffer,when the idle interrupt reached,
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 3
+
+
+  89:uart_at/uart_at.c ****               then we write the data and the length to the ring if the ring has enough
+  90:uart_at/uart_at.c ****               space
+  91:uart_at/uart_at.c **** *******************************************************************************/
+  92:uart_at/uart_at.c **** static void atio_irq(void)
+  93:uart_at/uart_at.c **** {
+  94:uart_at/uart_at.c ****     unsigned char  value;
+  95:uart_at/uart_at.c ****     unsigned short ringspace;
+  96:uart_at/uart_at.c ****     if(__HAL_UART_GET_FLAG(&uart_at, UART_FLAG_RXNE) != RESET)
+  97:uart_at/uart_at.c ****     {
+  98:uart_at/uart_at.c ****        value = (uint8_t)(uart_at.Instance->RDR & 0x00FF);
+  99:uart_at/uart_at.c ****        g_atio_cb.rcvlen++;
+ 100:uart_at/uart_at.c ****        if(g_atio_cb.w_next < CONFIG_UARTAT_RCVMAX)
+ 101:uart_at/uart_at.c ****        {
+ 102:uart_at/uart_at.c ****            g_atio_cb.rcvbuf[g_atio_cb.w_next] = value;
+ 103:uart_at/uart_at.c ****            g_atio_cb.w_next++;
+ 104:uart_at/uart_at.c ****        }
+ 105:uart_at/uart_at.c ****        else
+ 106:uart_at/uart_at.c ****        {
+ 107:uart_at/uart_at.c ****             g_atio_cb.rframeover++;
+ 108:uart_at/uart_at.c ****        }
+ 109:uart_at/uart_at.c ****     }
+ 110:uart_at/uart_at.c ****     else if (__HAL_UART_GET_FLAG(&uart_at,UART_FLAG_IDLE) != RESET)
+ 111:uart_at/uart_at.c ****     {
+ 112:uart_at/uart_at.c ****         __HAL_UART_CLEAR_IDLEFLAG(&uart_at);
+ 113:uart_at/uart_at.c ****         ringspace = CN_RCVMEM_LEN - ring_buffer_datalen(&g_atio_cb.rcvring);
+ 114:uart_at/uart_at.c ****         if(ringspace < g_atio_cb.w_next)  //not enough mem
+ 115:uart_at/uart_at.c ****         {
+ 116:uart_at/uart_at.c ****             g_atio_cb.rframedrop++;
+ 117:uart_at/uart_at.c ****         }
+ 118:uart_at/uart_at.c ****         else
+ 119:uart_at/uart_at.c ****         {
+ 120:uart_at/uart_at.c ****             //write data to the ring buffer:len+data format
+ 121:uart_at/uart_at.c ****             ringspace = g_atio_cb.w_next;
+ 122:uart_at/uart_at.c ****             ring_buffer_write(&g_atio_cb.rcvring,(unsigned char *)&ringspace,sizeof(ringspace));
+ 123:uart_at/uart_at.c ****             ring_buffer_write(&g_atio_cb.rcvring,g_atio_cb.rcvbuf,ringspace);
+ 124:uart_at/uart_at.c ****             (void) osal_semp_post(g_atio_cb.rcvsync);
+ 125:uart_at/uart_at.c ****             g_atio_cb.rcvframe++;
+ 126:uart_at/uart_at.c ****         }
+ 127:uart_at/uart_at.c ****         g_atio_cb.w_next=0; //write from the head
+ 128:uart_at/uart_at.c ****     }
+ 129:uart_at/uart_at.c ****     else ///< clear the flags
+ 130:uart_at/uart_at.c ****     {
+ 131:uart_at/uart_at.c ****         __HAL_UART_CLEAR_PEFLAG(&uart_at);
+ 132:uart_at/uart_at.c ****         __HAL_UART_CLEAR_FEFLAG(&uart_at);
+ 133:uart_at/uart_at.c ****         __HAL_UART_CLEAR_NEFLAG(&uart_at);
+ 134:uart_at/uart_at.c ****         __HAL_UART_CLEAR_OREFLAG(&uart_at);
+ 135:uart_at/uart_at.c ****     }
+ 136:uart_at/uart_at.c **** 
+ 137:uart_at/uart_at.c **** 
+ 138:uart_at/uart_at.c **** }
+ 139:uart_at/uart_at.c **** 
+ 140:uart_at/uart_at.c **** /*******************************************************************************
+ 141:uart_at/uart_at.c **** function     :use this function to initialize the uart
+ 142:uart_at/uart_at.c **** parameters   :
+ 143:uart_at/uart_at.c **** instruction  :
+ 144:uart_at/uart_at.c **** *******************************************************************************/
+ 145:uart_at/uart_at.c **** bool_t uart_at_init(void *pri)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 4
+
+
+ 146:uart_at/uart_at.c **** {
+ 147:uart_at/uart_at.c ****     //initialize the at controller
+ 148:uart_at/uart_at.c ****     (void) memset(&g_atio_cb,0,sizeof(g_atio_cb));
+ 149:uart_at/uart_at.c ****     if(false == osal_semp_create(&g_atio_cb.rcvsync,CN_RCVMEM_LEN,0))
+ 150:uart_at/uart_at.c ****     {
+ 151:uart_at/uart_at.c ****         printf("%s:semp create error\n\r",__FUNCTION__);
+ 152:uart_at/uart_at.c ****         goto EXIT_SEMP;
+ 153:uart_at/uart_at.c ****     }
+ 154:uart_at/uart_at.c ****     ring_buffer_init(&g_atio_cb.rcvring,g_atio_cb.rcvringmem,CN_RCVMEM_LEN,0,0);
+ 155:uart_at/uart_at.c **** 
+ 156:uart_at/uart_at.c ****     uart_at.Instance = s_pUSART;
+ 157:uart_at/uart_at.c ****     uart_at.Init.BaudRate = CONFIG_UARTAT_BAUDRATE;
+ 158:uart_at/uart_at.c ****     uart_at.Init.WordLength = UART_WORDLENGTH_8B;
+ 159:uart_at/uart_at.c ****     uart_at.Init.StopBits = UART_STOPBITS_1;
+ 160:uart_at/uart_at.c ****     uart_at.Init.Parity = UART_PARITY_NONE;
+ 161:uart_at/uart_at.c ****     uart_at.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+ 162:uart_at/uart_at.c ****     uart_at.Init.Mode = UART_MODE_TX_RX;
+ 163:uart_at/uart_at.c ****     uart_at.Init.OverSampling = UART_OVERSAMPLING_16;
+ 164:uart_at/uart_at.c ****     if(HAL_UART_Init(&uart_at) != HAL_OK)
+ 165:uart_at/uart_at.c ****     {
+ 166:uart_at/uart_at.c ****         _Error_Handler(__FILE__, __LINE__);
+ 167:uart_at/uart_at.c ****     }
+ 168:uart_at/uart_at.c ****     __HAL_UART_CLEAR_FLAG(&uart_at,UART_FLAG_TC);
+ 169:uart_at/uart_at.c ****     LOS_HwiCreate(s_uwIRQn, 3, 0, atio_irq, 0);
+ 170:uart_at/uart_at.c ****     __HAL_UART_ENABLE_IT(&uart_at, UART_IT_IDLE);
+ 171:uart_at/uart_at.c ****     __HAL_UART_ENABLE_IT(&uart_at, UART_IT_RXNE);
+ 172:uart_at/uart_at.c ****     return true;
+ 173:uart_at/uart_at.c **** 
+ 174:uart_at/uart_at.c **** EXIT_SEMP:
+ 175:uart_at/uart_at.c ****     return false;
+ 176:uart_at/uart_at.c **** }
+ 177:uart_at/uart_at.c **** 
+ 178:uart_at/uart_at.c **** void uart_at_deinit(void *pri)
+ 179:uart_at/uart_at.c **** {
+  28              		.loc 1 179 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+ 180:uart_at/uart_at.c ****     __HAL_UART_DISABLE(&uart_at);
+  34              		.loc 1 180 0
+  35 0000 074B     		ldr	r3, .L2
+  36 0002 1B68     		ldr	r3, [r3]
+  37 0004 1A68     		ldr	r2, [r3]
+  38 0006 22F00102 		bic	r2, r2, #1
+  39 000a 1A60     		str	r2, [r3]
+ 181:uart_at/uart_at.c ****     __HAL_UART_DISABLE_IT(&uart_at, UART_IT_IDLE);
+  40              		.loc 1 181 0
+  41 000c 1A68     		ldr	r2, [r3]
+  42 000e 22F01002 		bic	r2, r2, #16
+  43 0012 1A60     		str	r2, [r3]
+ 182:uart_at/uart_at.c ****     __HAL_UART_DISABLE_IT(&uart_at, UART_IT_RXNE);
+  44              		.loc 1 182 0
+  45 0014 1A68     		ldr	r2, [r3]
+  46 0016 22F02002 		bic	r2, r2, #32
+  47 001a 1A60     		str	r2, [r3]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 5
+
+
+ 183:uart_at/uart_at.c **** }
+  48              		.loc 1 183 0
+  49 001c 7047     		bx	lr
+  50              	.L3:
+  51 001e 00BF     		.align	2
+  52              	.L2:
+  53 0020 00000000 		.word	uart_at
+  54              		.cfi_endproc
+  55              	.LFE289:
+  57              		.section	.text.atio_irq,"ax",%progbits
+  58              		.align	1
+  59              		.syntax unified
+  60              		.thumb
+  61              		.thumb_func
+  62              		.fpu fpv4-sp-d16
+  64              	atio_irq:
+  65              	.LFB287:
+  93:uart_at/uart_at.c ****     unsigned char  value;
+  66              		.loc 1 93 0
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 8
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  96:uart_at/uart_at.c ****     {
+  70              		.loc 1 96 0
+  71 0000 2A4B     		ldr	r3, .L12
+  72 0002 1B68     		ldr	r3, [r3]
+  93:uart_at/uart_at.c ****     unsigned char  value;
+  73              		.loc 1 93 0
+  74 0004 37B5     		push	{r0, r1, r2, r4, r5, lr}
+  75              	.LCFI0:
+  76              		.cfi_def_cfa_offset 24
+  77              		.cfi_offset 4, -12
+  78              		.cfi_offset 5, -8
+  79              		.cfi_offset 14, -4
+  96:uart_at/uart_at.c ****     {
+  80              		.loc 1 96 0
+  81 0006 DA69     		ldr	r2, [r3, #28]
+  82 0008 9106     		lsls	r1, r2, #26
+  83 000a 17D5     		bpl	.L5
+  98:uart_at/uart_at.c ****        g_atio_cb.rcvlen++;
+  84              		.loc 1 98 0
+  85 000c 998C     		ldrh	r1, [r3, #36]
+  99:uart_at/uart_at.c ****        if(g_atio_cb.w_next < CONFIG_UARTAT_RCVMAX)
+  86              		.loc 1 99 0
+  87 000e 284B     		ldr	r3, .L12+4
+  88 0010 41F22400 		movw	r0, #4132
+  98:uart_at/uart_at.c ****        g_atio_cb.rcvlen++;
+  89              		.loc 1 98 0
+  90 0014 89B2     		uxth	r1, r1
+  91              	.LVL1:
+  99:uart_at/uart_at.c ****        if(g_atio_cb.w_next < CONFIG_UARTAT_RCVMAX)
+  92              		.loc 1 99 0
+  93 0016 1A58     		ldr	r2, [r3, r0]
+  94 0018 0132     		adds	r2, r2, #1
+  95 001a 1A50     		str	r2, [r3, r0]
+ 100:uart_at/uart_at.c ****        {
+  96              		.loc 1 100 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 6
+
+
+  97 001c 1A88     		ldrh	r2, [r3]
+  98 001e B2F5006F 		cmp	r2, #2048
+ 107:uart_at/uart_at.c ****        }
+  99              		.loc 1 107 0
+ 100 0022 2BBF     		itete	cs
+ 101 0024 41F21801 		movwcs	r1, #4120
+ 102              	.LVL2:
+ 102:uart_at/uart_at.c ****            g_atio_cb.w_next++;
+ 103              		.loc 1 102 0
+ 104 0028 9818     		addcc	r0, r3, r2
+ 107:uart_at/uart_at.c ****        }
+ 105              		.loc 1 107 0
+ 106 002a 5A58     		ldrcs	r2, [r3, r1]
+  98:uart_at/uart_at.c ****        g_atio_cb.rcvlen++;
+ 107              		.loc 1 98 0
+ 108 002c 0176     		strbcc	r1, [r0, #24]
+ 107:uart_at/uart_at.c ****        }
+ 109              		.loc 1 107 0
+ 110 002e 2BBF     		itete	cs
+ 111 0030 0132     		addcs	r2, r2, #1
+ 103:uart_at/uart_at.c ****        }
+ 112              		.loc 1 103 0
+ 113 0032 0132     		addcc	r2, r2, #1
+ 107:uart_at/uart_at.c ****        }
+ 114              		.loc 1 107 0
+ 115 0034 5A50     		strcs	r2, [r3, r1]
+ 103:uart_at/uart_at.c ****        }
+ 116              		.loc 1 103 0
+ 117 0036 1A80     		strhcc	r2, [r3]	@ movhi
+ 118              	.L4:
+ 138:uart_at/uart_at.c **** 
+ 119              		.loc 1 138 0
+ 120 0038 03B0     		add	sp, sp, #12
+ 121              	.LCFI1:
+ 122              		.cfi_remember_state
+ 123              		.cfi_def_cfa_offset 12
+ 124              		@ sp needed
+ 125 003a 30BD     		pop	{r4, r5, pc}
+ 126              	.L5:
+ 127              	.LCFI2:
+ 128              		.cfi_restore_state
+ 110:uart_at/uart_at.c ****     {
+ 129              		.loc 1 110 0
+ 130 003c DA69     		ldr	r2, [r3, #28]
+ 131 003e D206     		lsls	r2, r2, #27
+ 132 0040 2AD5     		bpl	.L8
+ 113:uart_at/uart_at.c ****         if(ringspace < g_atio_cb.w_next)  //not enough mem
+ 133              		.loc 1 113 0
+ 134 0042 1C4D     		ldr	r5, .L12+8
+ 112:uart_at/uart_at.c ****         ringspace = CN_RCVMEM_LEN - ring_buffer_datalen(&g_atio_cb.rcvring);
+ 135              		.loc 1 112 0
+ 136 0044 1022     		movs	r2, #16
+ 137 0046 1A62     		str	r2, [r3, #32]
+ 113:uart_at/uart_at.c ****         if(ringspace < g_atio_cb.w_next)  //not enough mem
+ 138              		.loc 1 113 0
+ 139 0048 2846     		mov	r0, r5
+ 140 004a FFF7FEFF 		bl	ring_buffer_datalen
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 7
+
+
+ 141              	.LVL3:
+ 114:uart_at/uart_at.c ****         {
+ 142              		.loc 1 114 0
+ 143 004e 35F8083C 		ldrh	r3, [r5, #-8]
+ 113:uart_at/uart_at.c ****         if(ringspace < g_atio_cb.w_next)  //not enough mem
+ 144              		.loc 1 113 0
+ 145 0052 C0F50060 		rsb	r0, r0, #2048
+ 146 0056 80B2     		uxth	r0, r0
+ 114:uart_at/uart_at.c ****         {
+ 147              		.loc 1 114 0
+ 148 0058 9842     		cmp	r0, r3
+ 149 005a A5F10804 		sub	r4, r5, #8
+ 150 005e 07D2     		bcs	.L9
+ 116:uart_at/uart_at.c ****         }
+ 151              		.loc 1 116 0
+ 152 0060 41F21C02 		movw	r2, #4124
+ 153              	.L11:
+ 125:uart_at/uart_at.c ****         }
+ 154              		.loc 1 125 0
+ 155 0064 A358     		ldr	r3, [r4, r2]
+ 156 0066 0133     		adds	r3, r3, #1
+ 157 0068 A350     		str	r3, [r4, r2]
+ 127:uart_at/uart_at.c ****     }
+ 158              		.loc 1 127 0
+ 159 006a 0023     		movs	r3, #0
+ 160 006c 2380     		strh	r3, [r4]	@ movhi
+ 161 006e E3E7     		b	.L4
+ 162              	.L9:
+ 121:uart_at/uart_at.c ****             ring_buffer_write(&g_atio_cb.rcvring,(unsigned char *)&ringspace,sizeof(ringspace));
+ 163              		.loc 1 121 0
+ 164 0070 02A9     		add	r1, sp, #8
+ 122:uart_at/uart_at.c ****             ring_buffer_write(&g_atio_cb.rcvring,g_atio_cb.rcvbuf,ringspace);
+ 165              		.loc 1 122 0
+ 166 0072 0222     		movs	r2, #2
+ 121:uart_at/uart_at.c ****             ring_buffer_write(&g_atio_cb.rcvring,(unsigned char *)&ringspace,sizeof(ringspace));
+ 167              		.loc 1 121 0
+ 168 0074 21F8023D 		strh	r3, [r1, #-2]!	@ movhi
+ 122:uart_at/uart_at.c ****             ring_buffer_write(&g_atio_cb.rcvring,g_atio_cb.rcvbuf,ringspace);
+ 169              		.loc 1 122 0
+ 170 0078 2846     		mov	r0, r5
+ 171 007a FFF7FEFF 		bl	ring_buffer_write
+ 172              	.LVL4:
+ 123:uart_at/uart_at.c ****             (void) osal_semp_post(g_atio_cb.rcvsync);
+ 173              		.loc 1 123 0
+ 174 007e BDF80620 		ldrh	r2, [sp, #6]
+ 175 0082 04F11801 		add	r1, r4, #24
+ 176 0086 2846     		mov	r0, r5
+ 177 0088 FFF7FEFF 		bl	ring_buffer_write
+ 178              	.LVL5:
+ 124:uart_at/uart_at.c ****             g_atio_cb.rcvframe++;
+ 179              		.loc 1 124 0
+ 180 008c 6068     		ldr	r0, [r4, #4]
+ 181 008e FFF7FEFF 		bl	osal_semp_post
+ 182              	.LVL6:
+ 125:uart_at/uart_at.c ****         }
+ 183              		.loc 1 125 0
+ 184 0092 41F22C02 		movw	r2, #4140
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 8
+
+
+ 185 0096 E5E7     		b	.L11
+ 186              	.L8:
+ 131:uart_at/uart_at.c ****         __HAL_UART_CLEAR_FEFLAG(&uart_at);
+ 187              		.loc 1 131 0
+ 188 0098 0122     		movs	r2, #1
+ 189 009a 1A62     		str	r2, [r3, #32]
+ 132:uart_at/uart_at.c ****         __HAL_UART_CLEAR_NEFLAG(&uart_at);
+ 190              		.loc 1 132 0
+ 191 009c 0222     		movs	r2, #2
+ 192 009e 1A62     		str	r2, [r3, #32]
+ 133:uart_at/uart_at.c ****         __HAL_UART_CLEAR_OREFLAG(&uart_at);
+ 193              		.loc 1 133 0
+ 194 00a0 0422     		movs	r2, #4
+ 195 00a2 1A62     		str	r2, [r3, #32]
+ 134:uart_at/uart_at.c ****     }
+ 196              		.loc 1 134 0
+ 197 00a4 0822     		movs	r2, #8
+ 198 00a6 1A62     		str	r2, [r3, #32]
+ 138:uart_at/uart_at.c **** 
+ 199              		.loc 1 138 0
+ 200 00a8 C6E7     		b	.L4
+ 201              	.L13:
+ 202 00aa 00BF     		.align	2
+ 203              	.L12:
+ 204 00ac 00000000 		.word	uart_at
+ 205 00b0 00000000 		.word	g_atio_cb
+ 206 00b4 08000000 		.word	g_atio_cb+8
+ 207              		.cfi_endproc
+ 208              	.LFE287:
+ 210              		.section	.text.__at_write,"ax",%progbits
+ 211              		.align	1
+ 212              		.syntax unified
+ 213              		.thumb
+ 214              		.thumb_func
+ 215              		.fpu fpv4-sp-d16
+ 217              	__at_write:
+ 218              	.LFB293:
+ 184:uart_at/uart_at.c **** 
+ 185:uart_at/uart_at.c **** /*******************************************************************************
+ 186:uart_at/uart_at.c **** function     :use this function to send a frame to the uart
+ 187:uart_at/uart_at.c **** parameters   :
+ 188:uart_at/uart_at.c **** instruction  :
+ 189:uart_at/uart_at.c **** *******************************************************************************/
+ 190:uart_at/uart_at.c **** static ssize_t uart_at_send(const char  *buf, size_t len,uint32_t timeout)
+ 191:uart_at/uart_at.c **** {
+ 192:uart_at/uart_at.c ****     HAL_UART_Transmit(&uart_at,(unsigned char *)buf,len,timeout);
+ 193:uart_at/uart_at.c ****     g_atio_cb.sndlen += len;
+ 194:uart_at/uart_at.c ****     g_atio_cb.sndframe ++;
+ 195:uart_at/uart_at.c **** 
+ 196:uart_at/uart_at.c ****     return len;
+ 197:uart_at/uart_at.c **** }
+ 198:uart_at/uart_at.c **** /*******************************************************************************
+ 199:uart_at/uart_at.c **** function     :use this function to read a frame from the uart
+ 200:uart_at/uart_at.c **** parameters   :
+ 201:uart_at/uart_at.c **** instruction  :
+ 202:uart_at/uart_at.c **** *******************************************************************************/
+ 203:uart_at/uart_at.c **** static ssize_t uart_at_receive(void *buf,size_t len,uint32_t timeout)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 9
+
+
+ 204:uart_at/uart_at.c **** {
+ 205:uart_at/uart_at.c ****     unsigned short cpylen;
+ 206:uart_at/uart_at.c ****     unsigned short framelen;
+ 207:uart_at/uart_at.c ****     unsigned short readlen;
+ 208:uart_at/uart_at.c ****     int32_t ret = 0;
+ 209:uart_at/uart_at.c ****     unsigned int lock;
+ 210:uart_at/uart_at.c ****     if(osal_semp_pend(g_atio_cb.rcvsync,timeout))
+ 211:uart_at/uart_at.c ****     {
+ 212:uart_at/uart_at.c ****         lock = LOS_IntLock();
+ 213:uart_at/uart_at.c ****         readlen = sizeof(framelen);
+ 214:uart_at/uart_at.c ****         cpylen = ring_buffer_read(&g_atio_cb.rcvring,(unsigned char *)&framelen,readlen);
+ 215:uart_at/uart_at.c ****         if(cpylen != readlen)
+ 216:uart_at/uart_at.c ****         {
+ 217:uart_at/uart_at.c ****             ring_buffer_reset(&g_atio_cb.rcvring);  //bad ring format here
+ 218:uart_at/uart_at.c ****             g_atio_cb.rcvringrst++;
+ 219:uart_at/uart_at.c ****         }
+ 220:uart_at/uart_at.c ****         else
+ 221:uart_at/uart_at.c ****         {
+ 222:uart_at/uart_at.c ****             if(framelen > len)
+ 223:uart_at/uart_at.c ****             {
+ 224:uart_at/uart_at.c ****                 ring_buffer_reset(&g_atio_cb.rcvring);  //bad ring format here
+ 225:uart_at/uart_at.c ****                 g_atio_cb.rcvringrst++;
+ 226:uart_at/uart_at.c ****             }
+ 227:uart_at/uart_at.c ****             else
+ 228:uart_at/uart_at.c ****             {
+ 229:uart_at/uart_at.c ****                 readlen = framelen;
+ 230:uart_at/uart_at.c ****                 cpylen = ring_buffer_read(&g_atio_cb.rcvring,(unsigned char *)buf,readlen);
+ 231:uart_at/uart_at.c ****                 if(cpylen != framelen)
+ 232:uart_at/uart_at.c ****                 {
+ 233:uart_at/uart_at.c ****                     ring_buffer_reset(&g_atio_cb.rcvring);  //bad ring format here
+ 234:uart_at/uart_at.c ****                     g_atio_cb.rcvringrst++;
+ 235:uart_at/uart_at.c ****                 }
+ 236:uart_at/uart_at.c ****                 else
+ 237:uart_at/uart_at.c ****                 {
+ 238:uart_at/uart_at.c ****                     ret = cpylen;
+ 239:uart_at/uart_at.c ****                 }
+ 240:uart_at/uart_at.c ****             }
+ 241:uart_at/uart_at.c ****         }
+ 242:uart_at/uart_at.c ****         LOS_IntRestore(lock);
+ 243:uart_at/uart_at.c ****     }
+ 244:uart_at/uart_at.c ****     return ret;
+ 245:uart_at/uart_at.c **** }
+ 246:uart_at/uart_at.c **** 
+ 247:uart_at/uart_at.c **** //make it as the at device here
+ 248:uart_at/uart_at.c **** static ssize_t  __at_read  (void *pri,size_t offset,void *buf,size_t len, uint32_t timeout)
+ 249:uart_at/uart_at.c **** {
+ 250:uart_at/uart_at.c ****     return uart_at_receive(buf,len, timeout);
+ 251:uart_at/uart_at.c **** 
+ 252:uart_at/uart_at.c **** }
+ 253:uart_at/uart_at.c **** static ssize_t  __at_write (void *pri, size_t offset,const void *buf,size_t len,uint32_t timeout)
+ 254:uart_at/uart_at.c **** {
+ 219              		.loc 1 254 0
+ 220              		.cfi_startproc
+ 221              		@ args = 4, pretend = 0, frame = 0
+ 222              		@ frame_needed = 0, uses_anonymous_args = 0
+ 223              	.LVL7:
+ 224 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 10
+
+
+ 225              	.LCFI3:
+ 226              		.cfi_def_cfa_offset 8
+ 227              		.cfi_offset 4, -8
+ 228              		.cfi_offset 14, -4
+ 229              		.loc 1 254 0
+ 230 0002 1C46     		mov	r4, r3
+ 231 0004 1146     		mov	r1, r2
+ 232              	.LVL8:
+ 233              	.LBB4:
+ 234              	.LBB5:
+ 192:uart_at/uart_at.c ****     g_atio_cb.sndlen += len;
+ 235              		.loc 1 192 0
+ 236 0006 029B     		ldr	r3, [sp, #8]
+ 237              	.LVL9:
+ 238 0008 0848     		ldr	r0, .L15
+ 239              	.LVL10:
+ 240 000a A2B2     		uxth	r2, r4
+ 241              	.LVL11:
+ 242 000c FFF7FEFF 		bl	HAL_UART_Transmit
+ 243              	.LVL12:
+ 193:uart_at/uart_at.c ****     g_atio_cb.sndframe ++;
+ 244              		.loc 1 193 0
+ 245 0010 074B     		ldr	r3, .L15+4
+ 246 0012 03F58151 		add	r1, r3, #4128
+ 247              	.LBE5:
+ 248              	.LBE4:
+ 255:uart_at/uart_at.c ****     return uart_at_send(buf, len, timeout);
+ 256:uart_at/uart_at.c **** 
+ 257:uart_at/uart_at.c **** }
+ 249              		.loc 1 257 0
+ 250 0016 2046     		mov	r0, r4
+ 251              	.LBB7:
+ 252              	.LBB6:
+ 193:uart_at/uart_at.c ****     g_atio_cb.sndframe ++;
+ 253              		.loc 1 193 0
+ 254 0018 0A68     		ldr	r2, [r1]
+ 255 001a 2244     		add	r2, r2, r4
+ 256 001c 0A60     		str	r2, [r1]
+ 194:uart_at/uart_at.c **** 
+ 257              		.loc 1 194 0
+ 258 001e 41F22801 		movw	r1, #4136
+ 259 0022 5A58     		ldr	r2, [r3, r1]
+ 260 0024 0132     		adds	r2, r2, #1
+ 261 0026 5A50     		str	r2, [r3, r1]
+ 262              	.LVL13:
+ 263              	.LBE6:
+ 264              	.LBE7:
+ 265              		.loc 1 257 0
+ 266 0028 10BD     		pop	{r4, pc}
+ 267              	.LVL14:
+ 268              	.L16:
+ 269 002a 00BF     		.align	2
+ 270              	.L15:
+ 271 002c 00000000 		.word	uart_at
+ 272 0030 00000000 		.word	g_atio_cb
+ 273              		.cfi_endproc
+ 274              	.LFE293:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 11
+
+
+ 276              		.section	.text.__at_read,"ax",%progbits
+ 277              		.align	1
+ 278              		.syntax unified
+ 279              		.thumb
+ 280              		.thumb_func
+ 281              		.fpu fpv4-sp-d16
+ 283              	__at_read:
+ 284              	.LFB292:
+ 249:uart_at/uart_at.c ****     return uart_at_receive(buf,len, timeout);
+ 285              		.loc 1 249 0
+ 286              		.cfi_startproc
+ 287              		@ args = 4, pretend = 0, frame = 8
+ 288              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289              	.LVL15:
+ 290 0000 2DE9F341 		push	{r0, r1, r4, r5, r6, r7, r8, lr}
+ 291              	.LCFI4:
+ 292              		.cfi_def_cfa_offset 32
+ 293              		.cfi_offset 4, -24
+ 294              		.cfi_offset 5, -20
+ 295              		.cfi_offset 6, -16
+ 296              		.cfi_offset 7, -12
+ 297              		.cfi_offset 8, -8
+ 298              		.cfi_offset 14, -4
+ 299              	.LBB10:
+ 300              	.LBB11:
+ 210:uart_at/uart_at.c ****     {
+ 301              		.loc 1 210 0
+ 302 0004 204C     		ldr	r4, .L25
+ 303 0006 0899     		ldr	r1, [sp, #32]
+ 304              	.LVL16:
+ 305 0008 6068     		ldr	r0, [r4, #4]
+ 306              	.LVL17:
+ 307              	.LBE11:
+ 308              	.LBE10:
+ 249:uart_at/uart_at.c ****     return uart_at_receive(buf,len, timeout);
+ 309              		.loc 1 249 0
+ 310 000a 1746     		mov	r7, r2
+ 311              	.LVL18:
+ 312 000c 9846     		mov	r8, r3
+ 313              	.LVL19:
+ 314              	.LBB14:
+ 315              	.LBB12:
+ 210:uart_at/uart_at.c ****     {
+ 316              		.loc 1 210 0
+ 317 000e FFF7FEFF 		bl	osal_semp_pend
+ 318              	.LVL20:
+ 319 0012 2646     		mov	r6, r4
+ 320 0014 B0B3     		cbz	r0, .L23
+ 212:uart_at/uart_at.c ****         readlen = sizeof(framelen);
+ 321              		.loc 1 212 0
+ 322 0016 FFF7FEFF 		bl	LOS_IntLock
+ 323              	.LVL21:
+ 214:uart_at/uart_at.c ****         if(cpylen != readlen)
+ 324              		.loc 1 214 0
+ 325 001a 0222     		movs	r2, #2
+ 212:uart_at/uart_at.c ****         readlen = sizeof(framelen);
+ 326              		.loc 1 212 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 12
+
+
+ 327 001c 0546     		mov	r5, r0
+ 328              	.LVL22:
+ 214:uart_at/uart_at.c ****         if(cpylen != readlen)
+ 329              		.loc 1 214 0
+ 330 001e 0DF10601 		add	r1, sp, #6
+ 331 0022 04F10800 		add	r0, r4, #8
+ 332              	.LVL23:
+ 333 0026 FFF7FEFF 		bl	ring_buffer_read
+ 334              	.LVL24:
+ 215:uart_at/uart_at.c ****         {
+ 335              		.loc 1 215 0
+ 336 002a 80B2     		uxth	r0, r0
+ 337 002c 0228     		cmp	r0, #2
+ 338 002e 0FD0     		beq	.L19
+ 339              	.L21:
+ 217:uart_at/uart_at.c ****             g_atio_cb.rcvringrst++;
+ 340              		.loc 1 217 0
+ 341 0030 1648     		ldr	r0, .L25+4
+ 342              	.LVL25:
+ 343 0032 FFF7FEFF 		bl	ring_buffer_reset
+ 344              	.LVL26:
+ 218:uart_at/uart_at.c ****         }
+ 345              		.loc 1 218 0
+ 346 0036 41F23002 		movw	r2, #4144
+ 347 003a B358     		ldr	r3, [r6, r2]
+ 348 003c 0133     		adds	r3, r3, #1
+ 349 003e B350     		str	r3, [r6, r2]
+ 350              	.LVL27:
+ 351              	.L24:
+ 208:uart_at/uart_at.c ****     unsigned int lock;
+ 352              		.loc 1 208 0
+ 353 0040 0024     		movs	r4, #0
+ 354              	.LVL28:
+ 355              	.L20:
+ 242:uart_at/uart_at.c ****     }
+ 356              		.loc 1 242 0
+ 357 0042 2846     		mov	r0, r5
+ 358 0044 FFF7FEFF 		bl	LOS_IntRestore
+ 359              	.LVL29:
+ 360              	.L17:
+ 361              	.LBE12:
+ 362              	.LBE14:
+ 252:uart_at/uart_at.c **** static ssize_t  __at_write (void *pri, size_t offset,const void *buf,size_t len,uint32_t timeout)
+ 363              		.loc 1 252 0
+ 364 0048 2046     		mov	r0, r4
+ 365 004a 02B0     		add	sp, sp, #8
+ 366              	.LCFI5:
+ 367              		.cfi_remember_state
+ 368              		.cfi_def_cfa_offset 24
+ 369              		@ sp needed
+ 370 004c BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 371              	.LVL30:
+ 372              	.L19:
+ 373              	.LCFI6:
+ 374              		.cfi_restore_state
+ 375              	.LBB15:
+ 376              	.LBB13:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 13
+
+
+ 222:uart_at/uart_at.c ****             {
+ 377              		.loc 1 222 0
+ 378 0050 BDF80620 		ldrh	r2, [sp, #6]
+ 379 0054 9045     		cmp	r8, r2
+ 380 0056 EBD3     		bcc	.L21
+ 381              	.LVL31:
+ 230:uart_at/uart_at.c ****                 if(cpylen != framelen)
+ 382              		.loc 1 230 0
+ 383 0058 3946     		mov	r1, r7
+ 384 005a 04F10800 		add	r0, r4, #8
+ 385              	.LVL32:
+ 386 005e FFF7FEFF 		bl	ring_buffer_read
+ 387              	.LVL33:
+ 231:uart_at/uart_at.c ****                 {
+ 388              		.loc 1 231 0
+ 389 0062 BDF80620 		ldrh	r2, [sp, #6]
+ 390 0066 83B2     		uxth	r3, r0
+ 391 0068 9A42     		cmp	r2, r3
+ 392 006a 09D0     		beq	.L22
+ 233:uart_at/uart_at.c ****                     g_atio_cb.rcvringrst++;
+ 393              		.loc 1 233 0
+ 394 006c 04F10800 		add	r0, r4, #8
+ 395              	.LVL34:
+ 396 0070 FFF7FEFF 		bl	ring_buffer_reset
+ 397              	.LVL35:
+ 234:uart_at/uart_at.c ****                 }
+ 398              		.loc 1 234 0
+ 399 0074 41F23002 		movw	r2, #4144
+ 400 0078 A358     		ldr	r3, [r4, r2]
+ 401 007a 0133     		adds	r3, r3, #1
+ 402 007c A350     		str	r3, [r4, r2]
+ 403 007e DFE7     		b	.L24
+ 404              	.LVL36:
+ 405              	.L22:
+ 406 0080 84B2     		uxth	r4, r0
+ 407              	.LVL37:
+ 408 0082 DEE7     		b	.L20
+ 409              	.LVL38:
+ 410              	.L23:
+ 208:uart_at/uart_at.c ****     unsigned int lock;
+ 411              		.loc 1 208 0
+ 412 0084 0446     		mov	r4, r0
+ 413              	.LVL39:
+ 414              	.LBE13:
+ 415              	.LBE15:
+ 250:uart_at/uart_at.c **** 
+ 416              		.loc 1 250 0
+ 417 0086 DFE7     		b	.L17
+ 418              	.L26:
+ 419              		.align	2
+ 420              	.L25:
+ 421 0088 00000000 		.word	g_atio_cb
+ 422 008c 08000000 		.word	g_atio_cb+8
+ 423              		.cfi_endproc
+ 424              	.LFE292:
+ 426              		.section	.text.uart_at_init,"ax",%progbits
+ 427              		.align	1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 14
+
+
+ 428              		.global	uart_at_init
+ 429              		.syntax unified
+ 430              		.thumb
+ 431              		.thumb_func
+ 432              		.fpu fpv4-sp-d16
+ 434              	uart_at_init:
+ 435              	.LFB288:
+ 146:uart_at/uart_at.c ****     //initialize the at controller
+ 436              		.loc 1 146 0
+ 437              		.cfi_startproc
+ 438              		@ args = 0, pretend = 0, frame = 0
+ 439              		@ frame_needed = 0, uses_anonymous_args = 0
+ 440              	.LVL40:
+ 441 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 442              	.LCFI7:
+ 443              		.cfi_def_cfa_offset 24
+ 444              		.cfi_offset 4, -12
+ 445              		.cfi_offset 5, -8
+ 446              		.cfi_offset 14, -4
+ 148:uart_at/uart_at.c ****     if(false == osal_semp_create(&g_atio_cb.rcvsync,CN_RCVMEM_LEN,0))
+ 447              		.loc 1 148 0
+ 448 0002 41F23402 		movw	r2, #4148
+ 449 0006 0021     		movs	r1, #0
+ 450 0008 2248     		ldr	r0, .L34
+ 451              	.LVL41:
+ 452 000a FFF7FEFF 		bl	memset
+ 453              	.LVL42:
+ 149:uart_at/uart_at.c ****     {
+ 454              		.loc 1 149 0
+ 455 000e 0022     		movs	r2, #0
+ 456 0010 4FF40061 		mov	r1, #2048
+ 457 0014 2048     		ldr	r0, .L34+4
+ 458 0016 FFF7FEFF 		bl	osal_semp_create
+ 459              	.LVL43:
+ 460 001a 0446     		mov	r4, r0
+ 461 001c 30B9     		cbnz	r0, .L28
+ 151:uart_at/uart_at.c ****         goto EXIT_SEMP;
+ 462              		.loc 1 151 0
+ 463 001e 1F49     		ldr	r1, .L34+8
+ 464 0020 1F48     		ldr	r0, .L34+12
+ 465 0022 FFF7FEFF 		bl	printf
+ 466              	.LVL44:
+ 467              	.LDL1:
+ 468              	.L27:
+ 176:uart_at/uart_at.c **** 
+ 469              		.loc 1 176 0
+ 470 0026 2046     		mov	r0, r4
+ 471 0028 03B0     		add	sp, sp, #12
+ 472              	.LCFI8:
+ 473              		.cfi_remember_state
+ 474              		.cfi_def_cfa_offset 12
+ 475              		@ sp needed
+ 476 002a 30BD     		pop	{r4, r5, pc}
+ 477              	.L28:
+ 478              	.LCFI9:
+ 479              		.cfi_restore_state
+ 480              	.LVL45:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 15
+
+
+ 481              	.LBB18:
+ 482              	.LBB19:
+ 154:uart_at/uart_at.c **** 
+ 483              		.loc 1 154 0
+ 484 002c 1D49     		ldr	r1, .L34+16
+ 156:uart_at/uart_at.c ****     uart_at.Init.BaudRate = CONFIG_UARTAT_BAUDRATE;
+ 485              		.loc 1 156 0
+ 486 002e 1E4C     		ldr	r4, .L34+20
+ 154:uart_at/uart_at.c **** 
+ 487              		.loc 1 154 0
+ 488 0030 0025     		movs	r5, #0
+ 489 0032 2B46     		mov	r3, r5
+ 490 0034 4FF40062 		mov	r2, #2048
+ 491 0038 0095     		str	r5, [sp]
+ 492 003a A1F50160 		sub	r0, r1, #2064
+ 493 003e FFF7FEFF 		bl	ring_buffer_init
+ 494              	.LVL46:
+ 157:uart_at/uart_at.c ****     uart_at.Init.WordLength = UART_WORDLENGTH_8B;
+ 495              		.loc 1 157 0
+ 496 0042 1A4A     		ldr	r2, .L34+24
+ 160:uart_at/uart_at.c ****     uart_at.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+ 497              		.loc 1 160 0
+ 498 0044 2561     		str	r5, [r4, #16]
+ 157:uart_at/uart_at.c ****     uart_at.Init.WordLength = UART_WORDLENGTH_8B;
+ 499              		.loc 1 157 0
+ 500 0046 4FF41653 		mov	r3, #9600
+ 501 004a C4E90023 		strd	r2, r3, [r4]
+ 164:uart_at/uart_at.c ****     {
+ 502              		.loc 1 164 0
+ 503 004e 2046     		mov	r0, r4
+ 162:uart_at/uart_at.c ****     uart_at.Init.OverSampling = UART_OVERSAMPLING_16;
+ 504              		.loc 1 162 0
+ 505 0050 0C23     		movs	r3, #12
+ 159:uart_at/uart_at.c ****     uart_at.Init.Parity = UART_PARITY_NONE;
+ 506              		.loc 1 159 0
+ 507 0052 C4E90255 		strd	r5, r5, [r4, #8]
+ 161:uart_at/uart_at.c ****     uart_at.Init.Mode = UART_MODE_TX_RX;
+ 508              		.loc 1 161 0
+ 509 0056 A561     		str	r5, [r4, #24]
+ 162:uart_at/uart_at.c ****     uart_at.Init.OverSampling = UART_OVERSAMPLING_16;
+ 510              		.loc 1 162 0
+ 511 0058 6361     		str	r3, [r4, #20]
+ 163:uart_at/uart_at.c ****     if(HAL_UART_Init(&uart_at) != HAL_OK)
+ 512              		.loc 1 163 0
+ 513 005a E561     		str	r5, [r4, #28]
+ 164:uart_at/uart_at.c ****     {
+ 514              		.loc 1 164 0
+ 515 005c FFF7FEFF 		bl	HAL_UART_Init
+ 516              	.LVL47:
+ 517 0060 18B1     		cbz	r0, .L30
+ 166:uart_at/uart_at.c ****     }
+ 518              		.loc 1 166 0
+ 519 0062 A621     		movs	r1, #166
+ 520 0064 1248     		ldr	r0, .L34+28
+ 521 0066 FFF7FEFF 		bl	_Error_Handler
+ 522              	.LVL48:
+ 523              	.L30:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 16
+
+
+ 168:uart_at/uart_at.c ****     LOS_HwiCreate(s_uwIRQn, 3, 0, atio_irq, 0);
+ 524              		.loc 1 168 0
+ 525 006a 2368     		ldr	r3, [r4]
+ 526 006c 4022     		movs	r2, #64
+ 527 006e 1A62     		str	r2, [r3, #32]
+ 169:uart_at/uart_at.c ****     __HAL_UART_ENABLE_IT(&uart_at, UART_IT_IDLE);
+ 528              		.loc 1 169 0
+ 529 0070 0022     		movs	r2, #0
+ 530 0072 0092     		str	r2, [sp]
+ 531 0074 0F4B     		ldr	r3, .L34+32
+ 532 0076 0321     		movs	r1, #3
+ 533 0078 4620     		movs	r0, #70
+ 534 007a FFF7FEFF 		bl	LOS_HwiCreate
+ 535              	.LVL49:
+ 170:uart_at/uart_at.c ****     __HAL_UART_ENABLE_IT(&uart_at, UART_IT_RXNE);
+ 536              		.loc 1 170 0
+ 537 007e 2368     		ldr	r3, [r4]
+ 538 0080 1A68     		ldr	r2, [r3]
+ 539 0082 42F01002 		orr	r2, r2, #16
+ 540 0086 1A60     		str	r2, [r3]
+ 171:uart_at/uart_at.c ****     return true;
+ 541              		.loc 1 171 0
+ 542 0088 1A68     		ldr	r2, [r3]
+ 543 008a 42F02002 		orr	r2, r2, #32
+ 544 008e 1A60     		str	r2, [r3]
+ 545              	.LVL50:
+ 546 0090 0124     		movs	r4, #1
+ 547 0092 C8E7     		b	.L27
+ 548              	.L35:
+ 549              		.align	2
+ 550              	.L34:
+ 551 0094 00000000 		.word	g_atio_cb
+ 552 0098 04000000 		.word	g_atio_cb+4
+ 553 009c 00000000 		.word	.LANCHOR0
+ 554 00a0 00000000 		.word	.LC0
+ 555 00a4 18080000 		.word	g_atio_cb+2072
+ 556 00a8 00000000 		.word	uart_at
+ 557 00ac 00800040 		.word	1073774592
+ 558 00b0 17000000 		.word	.LC1
+ 559 00b4 00000000 		.word	atio_irq
+ 560              	.LBE19:
+ 561              	.LBE18:
+ 562              		.cfi_endproc
+ 563              	.LFE288:
+ 565              		.comm	uart_at,120,4
+ 566              		.section	.bss.g_atio_cb,"aw",%nobits
+ 567              		.align	2
+ 570              	g_atio_cb:
+ 571 0000 00000000 		.space	4148
+ 571      00000000 
+ 571      00000000 
+ 571      00000000 
+ 571      00000000 
+ 572              		.section	.rodata.__FUNCTION__.11718,"a",%progbits
+ 573              		.set	.LANCHOR0,. + 0
+ 576              	__FUNCTION__.11718:
+ 577 0000 75617274 		.ascii	"uart_at_init\000"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 17
+
+
+ 577      5F61745F 
+ 577      696E6974 
+ 577      00
+ 578              		.section	.rodata.s_at_op,"a",%progbits
+ 579              		.align	2
+ 582              	s_at_op:
+ 583 0000 00000000 		.space	4
+ 584 0004 00000000 		.word	__at_read
+ 585 0008 00000000 		.word	__at_write
+ 586 000c 00000000 		.space	12
+ 586      00000000 
+ 586      00000000 
+ 587 0018 00000000 		.word	uart_at_init
+ 588 001c 00000000 		.word	uart_at_deinit
+ 589              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 590              	.LC2:
+ 591 0000 61746465 		.ascii	"atdev\000"
+ 591      7600
+ 592              		.section	.rodata.uart_at_init.str1.1,"aMS",%progbits,1
+ 593              	.LC0:
+ 594 0000 25733A73 		.ascii	"%s:semp create error\012\015\000"
+ 594      656D7020 
+ 594      63726561 
+ 594      74652065 
+ 594      72726F72 
+ 595              	.LC1:
+ 596 0017 75617274 		.ascii	"uart_at/uart_at.c\000"
+ 596      5F61742F 
+ 596      75617274 
+ 596      5F61742E 
+ 596      6300
+ 597              		.section	osdriv,"a",%progbits
+ 598              		.align	2
+ 601              	uart_at_driv:
+ 602 0000 00000000 		.word	.LC2
+ 603 0004 00000000 		.word	s_at_op
+ 604 0008 00000000 		.word	0
+ 605 000c 02000000 		.word	2
+ 606              		.text
+ 607              	.Letext0:
+ 608              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 609              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 610              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 611              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 612              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 613              		.file 7 "../../iot_link/os/liteos/include/los_typedef.h"
+ 614              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 615              		.file 9 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 616              		.file 10 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 617              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l43
+ 618              		.file 12 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4x
+ 619              		.file 13 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 620              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 621              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 622              		.file 16 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h"
+ 623              		.file 17 "../../iot_link/os/liteos/include/los_config.h"
+ 624              		.file 18 "../../iot_link/os/liteos/include/los_err.h"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 18
+
+
+ 625              		.file 19 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 626              		.file 20 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/usart.h"
+ 627              		.file 21 "../../iot_link/link_misc/link_misc.h"
+ 628              		.file 22 "../../iot_link/os/osal/osal_types.h"
+ 629              		.file 23 "../../iot_link/driver/driver.h"
+ 630              		.file 24 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 631              		.file 25 "../../iot_link/os/osal/osal.h"
+ 632              		.file 26 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/main.h"
+ 633              		.file 27 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 634              		.file 28 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s 			page 19
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 uart_at.c
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:18     .text.uart_at_deinit:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:25     .text.uart_at_deinit:00000000 uart_at_deinit
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:53     .text.uart_at_deinit:00000020 $d
+                            *COM*:00000078 uart_at
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:58     .text.atio_irq:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:64     .text.atio_irq:00000000 atio_irq
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:204    .text.atio_irq:000000ac $d
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:570    .bss.g_atio_cb:00000000 g_atio_cb
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:211    .text.__at_write:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:217    .text.__at_write:00000000 __at_write
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:271    .text.__at_write:0000002c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:277    .text.__at_read:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:283    .text.__at_read:00000000 __at_read
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:421    .text.__at_read:00000088 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:427    .text.uart_at_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:434    .text.uart_at_init:00000000 uart_at_init
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:551    .text.uart_at_init:00000094 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:567    .bss.g_atio_cb:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:576    .rodata.__FUNCTION__.11718:00000000 __FUNCTION__.11718
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:579    .rodata.s_at_op:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:582    .rodata.s_at_op:00000000 s_at_op
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:598    osdriv:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccuNmPI4.s:601    osdriv:00000000 uart_at_driv
+
+UNDEFINED SYMBOLS
+ring_buffer_datalen
+ring_buffer_write
+osal_semp_post
+HAL_UART_Transmit
+osal_semp_pend
+LOS_IntLock
+ring_buffer_read
+ring_buffer_reset
+LOS_IntRestore
+memset
+osal_semp_create
+printf
+ring_buffer_init
+HAL_UART_Init
+_Error_Handler
+LOS_HwiCreate

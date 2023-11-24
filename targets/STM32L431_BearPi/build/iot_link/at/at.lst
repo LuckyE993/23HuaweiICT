@@ -1,0 +1,2822 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"at.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.print_ascii,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	print_ascii:
+  25              	.LFB3:
+  26              		.file 1 "../../iot_link/at/at.c"
+   1:../../iot_link/at/at.c **** /*----------------------------------------------------------------------------
+   2:../../iot_link/at/at.c ****  * Copyright (c) <2016-2018>, <Huawei Technologies Co., Ltd>
+   3:../../iot_link/at/at.c ****  * All rights reserved.
+   4:../../iot_link/at/at.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:../../iot_link/at/at.c ****  * are permitted provided that the following conditions are met:
+   6:../../iot_link/at/at.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:../../iot_link/at/at.c ****  * conditions and the following disclaimer.
+   8:../../iot_link/at/at.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:../../iot_link/at/at.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:../../iot_link/at/at.c ****  * provided with the distribution.
+  11:../../iot_link/at/at.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:../../iot_link/at/at.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:../../iot_link/at/at.c ****  * permission.
+  14:../../iot_link/at/at.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:../../iot_link/at/at.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:../../iot_link/at/at.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:../../iot_link/at/at.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:../../iot_link/at/at.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:../../iot_link/at/at.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:../../iot_link/at/at.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:../../iot_link/at/at.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:../../iot_link/at/at.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:../../iot_link/at/at.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:../../iot_link/at/at.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:../../iot_link/at/at.c ****  *---------------------------------------------------------------------------*/
+  26:../../iot_link/at/at.c **** /*----------------------------------------------------------------------------
+  27:../../iot_link/at/at.c ****  * Notice of Export Control Law
+  28:../../iot_link/at/at.c ****  * ===============================================
+  29:../../iot_link/at/at.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:../../iot_link/at/at.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:../../iot_link/at/at.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:../../iot_link/at/at.c ****  * applicable export control laws and regulations.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 2
+
+
+  33:../../iot_link/at/at.c ****  *---------------------------------------------------------------------------*/
+  34:../../iot_link/at/at.c **** 
+  35:../../iot_link/at/at.c **** #include <at.h>
+  36:../../iot_link/at/at.c **** #include <stdlib.h>
+  37:../../iot_link/at/at.c **** #include <string.h>
+  38:../../iot_link/at/at.c **** #include <driver.h>
+  39:../../iot_link/at/at.c **** #include <sys/fcntl.h>
+  40:../../iot_link/at/at.c **** #include <ctype.h>
+  41:../../iot_link/at/at.c **** #include <link_log.h>
+  42:../../iot_link/at/at.c **** 
+  43:../../iot_link/at/at.c **** //these defines could be reconfigured at the iot_link_config.h
+  44:../../iot_link/at/at.c **** 
+  45:../../iot_link/at/at.c **** #ifndef CONFIG_AT_DEVNAME
+  46:../../iot_link/at/at.c **** #define CONFIG_AT_DEVNAME              "atdev"
+  47:../../iot_link/at/at.c **** #endif
+  48:../../iot_link/at/at.c **** 
+  49:../../iot_link/at/at.c **** #ifndef CONFIG_AT_OOBTABLEN
+  50:../../iot_link/at/at.c **** #define CONFIG_AT_OOBTABLEN              6              //only allow 6 oob command monitor here,you
+  51:../../iot_link/at/at.c **** #endif
+  52:../../iot_link/at/at.c **** 
+  53:../../iot_link/at/at.c **** #ifndef CONFIG_AT_RECVMAXLEN
+  54:../../iot_link/at/at.c **** #define CONFIG_AT_RECVMAXLEN             2048           //PROSING THAT COULD GET THE MOST REPSLENGT
+  55:../../iot_link/at/at.c **** #endif
+  56:../../iot_link/at/at.c **** 
+  57:../../iot_link/at/at.c **** #ifndef CONFIG_AT_TASKPRIOR
+  58:../../iot_link/at/at.c **** #define CONFIG_AT_TASKPRIOR              3
+  59:../../iot_link/at/at.c **** #endif
+  60:../../iot_link/at/at.c **** 
+  61:../../iot_link/at/at.c **** //at control block here
+  62:../../iot_link/at/at.c **** typedef struct
+  63:../../iot_link/at/at.c **** {
+  64:../../iot_link/at/at.c ****     const void *cmd;               //pointed to the at command
+  65:../../iot_link/at/at.c ****     size_t      cmdlen;            //how many bytes of the command for the command may not be strin
+  66:../../iot_link/at/at.c ****     const char *index;             //used to check if the frame is the response of the command
+  67:../../iot_link/at/at.c ****     const void *respbuf;           //which used to storage the response,supplied by the at command
+  68:../../iot_link/at/at.c ****     size_t      respbuflen;        //index the response buffer length,supplied by the at command
+  69:../../iot_link/at/at.c ****     size_t      respdatalen;       //index how many data in the response buffer, filled by the at e
+  70:../../iot_link/at/at.c ****     osal_semp_t      respsync;     //binary semphore, activated by the at engine,if any response ma
+  71:../../iot_link/at/at.c ****     osal_semp_t      cmdsync;      //used to make the at command sync, binary sempore, only one at 
+  72:../../iot_link/at/at.c ****     osal_mutex_t     cmdlock;      //make the command list atomic
+  73:../../iot_link/at/at.c **** }at_cmd_item;//the member cmd and cmdlen not used yet,will be used for the debug
+  74:../../iot_link/at/at.c **** 
+  75:../../iot_link/at/at.c **** typedef struct
+  76:../../iot_link/at/at.c **** {
+  77:../../iot_link/at/at.c ****     const char *name;     ///< this function used for the oob item name
+  78:../../iot_link/at/at.c ****     fn_at_oob   func;     ///<  the function that will deal the out of band data
+  79:../../iot_link/at/at.c ****     void       *args;     ///<  the function param for the function
+  80:../../iot_link/at/at.c ****     const char *index;    ///<  used to match the out of band data,only compared from the header
+  81:../../iot_link/at/at.c ****     size_t      len;   ///<  used for the index length
+  82:../../iot_link/at/at.c **** }at_oob_item;
+  83:../../iot_link/at/at.c **** 
+  84:../../iot_link/at/at.c **** typedef enum
+  85:../../iot_link/at/at.c **** {
+  86:../../iot_link/at/at.c ****     en_at_debug_none = 0,
+  87:../../iot_link/at/at.c ****     en_at_debug_ascii,
+  88:../../iot_link/at/at.c ****     en_at_debug_hex,
+  89:../../iot_link/at/at.c **** }en_at_rxtx_debugmode;        //FUNCTION USED TO CONTROL THE DEBUG MODE
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 3
+
+
+  90:../../iot_link/at/at.c **** 
+  91:../../iot_link/at/at.c **** typedef struct
+  92:../../iot_link/at/at.c **** {
+  93:../../iot_link/at/at.c ****     const char             *devname;  //we use the device frame work to do this
+  94:../../iot_link/at/at.c ****     los_dev_t               devhandle;//the device handle used 
+  95:../../iot_link/at/at.c **** 
+  96:../../iot_link/at/at.c ****     at_cmd_item             cmd;      //the at command,only one command could be excuted
+  97:../../iot_link/at/at.c ****     at_oob_item             oob[CONFIG_AT_OOBTABLEN];        //storage the out of band dealer
+  98:../../iot_link/at/at.c ****     char                    rcvbuf[CONFIG_AT_RECVMAXLEN];     //used storage one frame,read from th
+  99:../../iot_link/at/at.c ****     unsigned int            rxdebugmode:2;                 //receive debug mode
+ 100:../../iot_link/at/at.c ****     unsigned int            txdebugmode:2;                 //send debug mode
+ 101:../../iot_link/at/at.c **** 
+ 102:../../iot_link/at/at.c ****     int                     streammode;
+ 103:../../iot_link/at/at.c **** }at_cb_t;
+ 104:../../iot_link/at/at.c **** static at_cb_t g_at_cb;   //this is the at controller here
+ 105:../../iot_link/at/at.c **** 
+ 106:../../iot_link/at/at.c **** 
+ 107:../../iot_link/at/at.c **** static void print_ascii(const char *index,const uint8_t *data, int len)
+ 108:../../iot_link/at/at.c **** {
+  27              		.loc 1 108 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 24
+  35              		.cfi_offset 3, -24
+  36              		.cfi_offset 4, -20
+  37              		.cfi_offset 5, -16
+  38              		.cfi_offset 6, -12
+  39              		.cfi_offset 7, -8
+  40              		.cfi_offset 14, -4
+ 109:../../iot_link/at/at.c ****     int i = 0;
+ 110:../../iot_link/at/at.c **** 
+ 111:../../iot_link/at/at.c ****     link_printf("%s:%d bytes:",index,len);
+  41              		.loc 1 111 0
+  42 0002 104C     		ldr	r4, .L4
+ 108:../../iot_link/at/at.c ****     int i = 0;
+  43              		.loc 1 108 0
+  44 0004 0E46     		mov	r6, r1
+  45              		.loc 1 111 0
+  46 0006 0146     		mov	r1, r0
+  47              	.LVL1:
+  48 0008 0F48     		ldr	r0, .L4+4
+  49              	.LVL2:
+ 108:../../iot_link/at/at.c ****     int i = 0;
+  50              		.loc 1 108 0
+  51 000a 1746     		mov	r7, r2
+  52              		.loc 1 111 0
+  53 000c FFF7FEFF 		bl	printf
+  54              	.LVL3:
+  55 0010 2368     		ldr	r3, [r4]
+  56 0012 9868     		ldr	r0, [r3, #8]
+  57 0014 FFF7FEFF 		bl	fflush
+  58              	.LVL4:
+ 112:../../iot_link/at/at.c ****     for( i = 0;i< len;i++)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 4
+
+
+  59              		.loc 1 112 0
+  60 0018 3546     		mov	r5, r6
+  61              	.LVL5:
+  62              	.L2:
+  63              		.loc 1 112 0 is_stmt 0 discriminator 1
+  64 001a AB1B     		subs	r3, r5, r6
+  65 001c 9F42     		cmp	r7, r3
+  66 001e 08DC     		bgt	.L3
+ 113:../../iot_link/at/at.c ****     {
+ 114:../../iot_link/at/at.c ****         link_printf("%c",(char)data[i]);
+ 115:../../iot_link/at/at.c ****     }
+ 116:../../iot_link/at/at.c ****     link_printf("\r\n");
+  67              		.loc 1 116 0 is_stmt 1
+  68 0020 0A48     		ldr	r0, .L4+8
+  69 0022 FFF7FEFF 		bl	puts
+  70              	.LVL6:
+  71 0026 2368     		ldr	r3, [r4]
+  72 0028 9868     		ldr	r0, [r3, #8]
+ 117:../../iot_link/at/at.c ****     return;
+ 118:../../iot_link/at/at.c **** }
+  73              		.loc 1 118 0
+  74 002a BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+  75              	.LCFI1:
+  76              		.cfi_remember_state
+  77              		.cfi_restore 14
+  78              		.cfi_restore 7
+  79              		.cfi_restore 6
+  80              		.cfi_restore 5
+  81              		.cfi_restore 4
+  82              		.cfi_restore 3
+  83              		.cfi_def_cfa_offset 0
+  84              	.LVL7:
+ 116:../../iot_link/at/at.c ****     return;
+  85              		.loc 1 116 0
+  86 002e FFF7FEBF 		b	fflush
+  87              	.LVL8:
+  88              	.L3:
+  89              	.LCFI2:
+  90              		.cfi_restore_state
+ 114:../../iot_link/at/at.c ****     }
+  91              		.loc 1 114 0 discriminator 3
+  92 0032 15F8010B 		ldrb	r0, [r5], #1	@ zero_extendqisi2
+  93              	.LVL9:
+  94 0036 FFF7FEFF 		bl	putchar
+  95              	.LVL10:
+  96 003a 2368     		ldr	r3, [r4]
+  97 003c 9868     		ldr	r0, [r3, #8]
+  98 003e FFF7FEFF 		bl	fflush
+  99              	.LVL11:
+ 100 0042 EAE7     		b	.L2
+ 101              	.L5:
+ 102              		.align	2
+ 103              	.L4:
+ 104 0044 00000000 		.word	_impure_ptr
+ 105 0048 00000000 		.word	.LC0
+ 106 004c 0D000000 		.word	.LC1
+ 107              		.cfi_endproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 5
+
+
+ 108              	.LFE3:
+ 110              		.section	.text.print_hex,"ax",%progbits
+ 111              		.align	1
+ 112              		.syntax unified
+ 113              		.thumb
+ 114              		.thumb_func
+ 115              		.fpu fpv4-sp-d16
+ 117              	print_hex:
+ 118              	.LFB4:
+ 119:../../iot_link/at/at.c **** 
+ 120:../../iot_link/at/at.c **** static void print_hex(const char *index,const uint8_t *data, int len)
+ 121:../../iot_link/at/at.c **** {
+ 119              		.loc 1 121 0
+ 120              		.cfi_startproc
+ 121              		@ args = 0, pretend = 0, frame = 0
+ 122              		@ frame_needed = 0, uses_anonymous_args = 0
+ 123              	.LVL12:
+ 124 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 125              	.LCFI3:
+ 126              		.cfi_def_cfa_offset 24
+ 127              		.cfi_offset 4, -24
+ 128              		.cfi_offset 5, -20
+ 129              		.cfi_offset 6, -16
+ 130              		.cfi_offset 7, -12
+ 131              		.cfi_offset 8, -8
+ 132              		.cfi_offset 14, -4
+ 122:../../iot_link/at/at.c ****     int i = 0;
+ 123:../../iot_link/at/at.c ****     link_printf("%s:%d bytes:",index, len);
+ 133              		.loc 1 123 0
+ 134 0004 114C     		ldr	r4, .L9
+ 124:../../iot_link/at/at.c ****     for(i =0;i<len;i++)
+ 125:../../iot_link/at/at.c ****     {
+ 126:../../iot_link/at/at.c ****         link_printf("%02x ",*((uint8_t *)(data) + i));
+ 135              		.loc 1 126 0
+ 136 0006 DFF85080 		ldr	r8, .L9+12
+ 121:../../iot_link/at/at.c ****     int i = 0;
+ 137              		.loc 1 121 0
+ 138 000a 0E46     		mov	r6, r1
+ 123:../../iot_link/at/at.c ****     for(i =0;i<len;i++)
+ 139              		.loc 1 123 0
+ 140 000c 0146     		mov	r1, r0
+ 141              	.LVL13:
+ 142 000e 1048     		ldr	r0, .L9+4
+ 143              	.LVL14:
+ 121:../../iot_link/at/at.c ****     int i = 0;
+ 144              		.loc 1 121 0
+ 145 0010 1746     		mov	r7, r2
+ 123:../../iot_link/at/at.c ****     for(i =0;i<len;i++)
+ 146              		.loc 1 123 0
+ 147 0012 FFF7FEFF 		bl	printf
+ 148              	.LVL15:
+ 149 0016 2368     		ldr	r3, [r4]
+ 150 0018 9868     		ldr	r0, [r3, #8]
+ 151 001a FFF7FEFF 		bl	fflush
+ 152              	.LVL16:
+ 124:../../iot_link/at/at.c ****     for(i =0;i<len;i++)
+ 153              		.loc 1 124 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 6
+
+
+ 154 001e 3546     		mov	r5, r6
+ 155              	.LVL17:
+ 156              	.L7:
+ 124:../../iot_link/at/at.c ****     for(i =0;i<len;i++)
+ 157              		.loc 1 124 0 is_stmt 0 discriminator 1
+ 158 0020 AB1B     		subs	r3, r5, r6
+ 159 0022 9F42     		cmp	r7, r3
+ 160 0024 08DC     		bgt	.L8
+ 127:../../iot_link/at/at.c ****     }
+ 128:../../iot_link/at/at.c ****     link_printf("\r\n");
+ 161              		.loc 1 128 0 is_stmt 1
+ 162 0026 0B48     		ldr	r0, .L9+8
+ 163 0028 FFF7FEFF 		bl	puts
+ 164              	.LVL18:
+ 165 002c 2368     		ldr	r3, [r4]
+ 129:../../iot_link/at/at.c ****     return;
+ 130:../../iot_link/at/at.c **** }
+ 166              		.loc 1 130 0
+ 167 002e BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 168              	.LCFI4:
+ 169              		.cfi_remember_state
+ 170              		.cfi_restore 14
+ 171              		.cfi_restore 8
+ 172              		.cfi_restore 7
+ 173              		.cfi_restore 6
+ 174              		.cfi_restore 5
+ 175              		.cfi_restore 4
+ 176              		.cfi_def_cfa_offset 0
+ 177              	.LVL19:
+ 128:../../iot_link/at/at.c ****     return;
+ 178              		.loc 1 128 0
+ 179 0032 9868     		ldr	r0, [r3, #8]
+ 180 0034 FFF7FEBF 		b	fflush
+ 181              	.LVL20:
+ 182              	.L8:
+ 183              	.LCFI5:
+ 184              		.cfi_restore_state
+ 126:../../iot_link/at/at.c ****     }
+ 185              		.loc 1 126 0 discriminator 3
+ 186 0038 15F8011B 		ldrb	r1, [r5], #1	@ zero_extendqisi2
+ 187              	.LVL21:
+ 188 003c 4046     		mov	r0, r8
+ 189 003e FFF7FEFF 		bl	printf
+ 190              	.LVL22:
+ 191 0042 2368     		ldr	r3, [r4]
+ 192 0044 9868     		ldr	r0, [r3, #8]
+ 193 0046 FFF7FEFF 		bl	fflush
+ 194              	.LVL23:
+ 195 004a E9E7     		b	.L7
+ 196              	.L10:
+ 197              		.align	2
+ 198              	.L9:
+ 199 004c 00000000 		.word	_impure_ptr
+ 200 0050 00000000 		.word	.LC0
+ 201 0054 0D000000 		.word	.LC1
+ 202 0058 00000000 		.word	.LC2
+ 203              		.cfi_endproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 7
+
+
+ 204              	.LFE4:
+ 206              		.section	.text.shell_atdebug,"ax",%progbits
+ 207              		.align	1
+ 208              		.syntax unified
+ 209              		.thumb
+ 210              		.thumb_func
+ 211              		.fpu fpv4-sp-d16
+ 213              	shell_atdebug:
+ 214              	.LFB19:
+ 131:../../iot_link/at/at.c **** 
+ 132:../../iot_link/at/at.c **** static void print_payload(const char *index,const uint8_t *data, int len,en_at_rxtx_debugmode mode)
+ 133:../../iot_link/at/at.c **** {
+ 134:../../iot_link/at/at.c ****     if(mode == en_at_debug_ascii)
+ 135:../../iot_link/at/at.c ****     {
+ 136:../../iot_link/at/at.c ****         print_ascii(index, data, len);
+ 137:../../iot_link/at/at.c ****     }
+ 138:../../iot_link/at/at.c ****     else if(mode == en_at_debug_hex)
+ 139:../../iot_link/at/at.c ****     {
+ 140:../../iot_link/at/at.c ****         print_hex(index,data, len);
+ 141:../../iot_link/at/at.c ****     }
+ 142:../../iot_link/at/at.c ****     else
+ 143:../../iot_link/at/at.c ****     {
+ 144:../../iot_link/at/at.c **** 
+ 145:../../iot_link/at/at.c ****     }
+ 146:../../iot_link/at/at.c **** }
+ 147:../../iot_link/at/at.c **** //this function used to send the data to the AT channel
+ 148:../../iot_link/at/at.c **** static int __cmd_send(const void *buf,size_t buflen,uint32_t timeout)
+ 149:../../iot_link/at/at.c **** {
+ 150:../../iot_link/at/at.c ****     ssize_t ret = 0;
+ 151:../../iot_link/at/at.c **** 
+ 152:../../iot_link/at/at.c ****     ret = los_dev_write(g_at_cb.devhandle,0,buf,buflen,timeout);
+ 153:../../iot_link/at/at.c ****     if(ret > 0)
+ 154:../../iot_link/at/at.c ****     {
+ 155:../../iot_link/at/at.c ****         print_payload("ATSND",buf, buflen,g_at_cb.txdebugmode);
+ 156:../../iot_link/at/at.c ****         ret = 0;
+ 157:../../iot_link/at/at.c ****     }
+ 158:../../iot_link/at/at.c ****     else
+ 159:../../iot_link/at/at.c ****     {
+ 160:../../iot_link/at/at.c ****         ret = -1;
+ 161:../../iot_link/at/at.c ****     }
+ 162:../../iot_link/at/at.c ****     return ret;
+ 163:../../iot_link/at/at.c **** }
+ 164:../../iot_link/at/at.c **** 
+ 165:../../iot_link/at/at.c **** //this function used to receive data from the AT channel
+ 166:../../iot_link/at/at.c **** static int __resp_rcv(void *buf,size_t buflen,uint32_t timeout)
+ 167:../../iot_link/at/at.c **** {
+ 168:../../iot_link/at/at.c ****     ssize_t ret = 0;
+ 169:../../iot_link/at/at.c **** 
+ 170:../../iot_link/at/at.c ****     ret = los_dev_read(g_at_cb.devhandle,0,buf,buflen,timeout);
+ 171:../../iot_link/at/at.c ****     if(ret > 0)
+ 172:../../iot_link/at/at.c ****     {
+ 173:../../iot_link/at/at.c ****         print_payload("ATRCV",buf, ret,g_at_cb.rxdebugmode);
+ 174:../../iot_link/at/at.c ****     }  
+ 175:../../iot_link/at/at.c ****  
+ 176:../../iot_link/at/at.c ****     return ret;
+ 177:../../iot_link/at/at.c **** }
+ 178:../../iot_link/at/at.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 8
+
+
+ 179:../../iot_link/at/at.c **** //create a command
+ 180:../../iot_link/at/at.c **** static int  __cmd_create(const void *cmdbuf,size_t cmdlen,const char *index,void *respbuf,size_t re
+ 181:../../iot_link/at/at.c **** {
+ 182:../../iot_link/at/at.c ****     int  ret = -1;
+ 183:../../iot_link/at/at.c ****     at_cmd_item *cmd;
+ 184:../../iot_link/at/at.c **** 
+ 185:../../iot_link/at/at.c ****     cmd = &g_at_cb.cmd;
+ 186:../../iot_link/at/at.c ****     if(osal_semp_pend(cmd->cmdsync,timeout))
+ 187:../../iot_link/at/at.c ****     {
+ 188:../../iot_link/at/at.c ****         if(osal_mutex_lock(cmd->cmdlock))
+ 189:../../iot_link/at/at.c ****         {
+ 190:../../iot_link/at/at.c ****             cmd->cmd = cmdbuf;
+ 191:../../iot_link/at/at.c ****             cmd->cmdlen = cmdlen;
+ 192:../../iot_link/at/at.c ****             cmd->index = index;
+ 193:../../iot_link/at/at.c ****             cmd->respbuf = respbuf;
+ 194:../../iot_link/at/at.c ****             cmd->respbuflen = respbuflen;
+ 195:../../iot_link/at/at.c ****             (void) osal_semp_pend(cmd->respsync,0); //used to clear the sync
+ 196:../../iot_link/at/at.c ****             (void) osal_mutex_unlock(cmd->cmdlock);
+ 197:../../iot_link/at/at.c ****         }
+ 198:../../iot_link/at/at.c ****         ret = 0;
+ 199:../../iot_link/at/at.c ****     }
+ 200:../../iot_link/at/at.c ****     return ret;
+ 201:../../iot_link/at/at.c **** }
+ 202:../../iot_link/at/at.c **** 
+ 203:../../iot_link/at/at.c **** //clear the at command here
+ 204:../../iot_link/at/at.c **** static int __cmd_clear(void)
+ 205:../../iot_link/at/at.c **** {
+ 206:../../iot_link/at/at.c ****      at_cmd_item *cmd;
+ 207:../../iot_link/at/at.c **** 
+ 208:../../iot_link/at/at.c ****      cmd = &g_at_cb.cmd;
+ 209:../../iot_link/at/at.c ****      if(osal_mutex_lock(cmd->cmdlock))
+ 210:../../iot_link/at/at.c ****      {
+ 211:../../iot_link/at/at.c ****         cmd->cmd = NULL;
+ 212:../../iot_link/at/at.c ****         cmd->cmdlen = 0;
+ 213:../../iot_link/at/at.c ****         cmd->index = NULL;
+ 214:../../iot_link/at/at.c ****         cmd->respbuf = NULL;
+ 215:../../iot_link/at/at.c ****         cmd->respbuflen = 0;
+ 216:../../iot_link/at/at.c ****         cmd->respdatalen = 0;
+ 217:../../iot_link/at/at.c ****         (void) osal_mutex_unlock(cmd->cmdlock);
+ 218:../../iot_link/at/at.c ****      }
+ 219:../../iot_link/at/at.c ****      (void) osal_semp_post(cmd->cmdsync);
+ 220:../../iot_link/at/at.c ****      return 0;
+ 221:../../iot_link/at/at.c **** }
+ 222:../../iot_link/at/at.c **** 
+ 223:../../iot_link/at/at.c **** //check if the data received is the at command need
+ 224:../../iot_link/at/at.c **** static int  __cmd_match(const void *data,size_t len)
+ 225:../../iot_link/at/at.c **** {
+ 226:../../iot_link/at/at.c ****     int  ret = -1;
+ 227:../../iot_link/at/at.c ****     int  cpylen;
+ 228:../../iot_link/at/at.c ****     at_cmd_item *cmd = NULL;
+ 229:../../iot_link/at/at.c **** 
+ 230:../../iot_link/at/at.c ****     cmd = &g_at_cb.cmd;
+ 231:../../iot_link/at/at.c ****     if(osal_mutex_lock(cmd->cmdlock))
+ 232:../../iot_link/at/at.c ****     {
+ 233:../../iot_link/at/at.c ****         if((NULL != cmd->index)&&(NULL != strstr((const char *)data,cmd->index)))
+ 234:../../iot_link/at/at.c ****         {
+ 235:../../iot_link/at/at.c ****             if(NULL != cmd->respbuf)
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 9
+
+
+ 236:../../iot_link/at/at.c ****             {
+ 237:../../iot_link/at/at.c ****                 cpylen = len > cmd->respbuflen?cmd->respbuflen:len;
+ 238:../../iot_link/at/at.c ****                 (void) memcpy((char *)cmd->respbuf,data,cpylen);
+ 239:../../iot_link/at/at.c ****                 cmd->respdatalen = cpylen;
+ 240:../../iot_link/at/at.c ****             }
+ 241:../../iot_link/at/at.c ****             else
+ 242:../../iot_link/at/at.c ****             {
+ 243:../../iot_link/at/at.c ****                 cmd->respdatalen = len; //tell the command that how many data has been get
+ 244:../../iot_link/at/at.c ****             }
+ 245:../../iot_link/at/at.c ****             (void) osal_semp_post(cmd->respsync);
+ 246:../../iot_link/at/at.c ****             ret = 0;
+ 247:../../iot_link/at/at.c ****         }
+ 248:../../iot_link/at/at.c ****         (void) osal_mutex_unlock(cmd->cmdlock);
+ 249:../../iot_link/at/at.c ****     }
+ 250:../../iot_link/at/at.c ****     return ret;
+ 251:../../iot_link/at/at.c **** }
+ 252:../../iot_link/at/at.c **** 
+ 253:../../iot_link/at/at.c **** //check if any out of band method could deal the data
+ 254:../../iot_link/at/at.c **** static int  __oob_match(void *data,size_t len)
+ 255:../../iot_link/at/at.c **** {
+ 256:../../iot_link/at/at.c ****     int ret = -1;
+ 257:../../iot_link/at/at.c ****     at_oob_item *oob;
+ 258:../../iot_link/at/at.c ****     int i = 0;
+ 259:../../iot_link/at/at.c ****     for(i =0;i<CONFIG_AT_OOBTABLEN;i++)
+ 260:../../iot_link/at/at.c ****     {
+ 261:../../iot_link/at/at.c ****         oob = &g_at_cb.oob[i];
+ 262:../../iot_link/at/at.c ****         if((oob->func != NULL)&&(oob->index != NULL)&&\
+ 263:../../iot_link/at/at.c ****             (0 == memcmp(oob->index,data,oob->len)))
+ 264:../../iot_link/at/at.c ****         {
+ 265:../../iot_link/at/at.c ****             oob->func(oob->args,data,len);
+ 266:../../iot_link/at/at.c ****             ret = 0;
+ 267:../../iot_link/at/at.c ****             break;
+ 268:../../iot_link/at/at.c ****         }
+ 269:../../iot_link/at/at.c ****     }
+ 270:../../iot_link/at/at.c ****     return ret;
+ 271:../../iot_link/at/at.c **** }
+ 272:../../iot_link/at/at.c **** 
+ 273:../../iot_link/at/at.c **** /*******************************************************************************
+ 274:../../iot_link/at/at.c **** function     :this is the  at receiver engine
+ 275:../../iot_link/at/at.c **** parameters   :
+ 276:../../iot_link/at/at.c **** instruction  :this task read the device continousely and blocked by the read function
+ 277:../../iot_link/at/at.c ****               if pass by mode, then pass it to the pass function;else will match the 
+ 278:../../iot_link/at/at.c ****               at command, if not then match the out of band
+ 279:../../iot_link/at/at.c **** *******************************************************************************/
+ 280:../../iot_link/at/at.c **** static int __rcv_task_entry(void *args)
+ 281:../../iot_link/at/at.c **** {
+ 282:../../iot_link/at/at.c ****     int  rcvlen = 0;
+ 283:../../iot_link/at/at.c **** 
+ 284:../../iot_link/at/at.c ****     g_at_cb.devhandle = los_dev_open(g_at_cb.devname,O_RDWR);
+ 285:../../iot_link/at/at.c ****     if(NULL == g_at_cb.devhandle)
+ 286:../../iot_link/at/at.c ****     {
+ 287:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("%s:open %s err\n\r",__FUNCTION__,g_at_cb.devname);
+ 288:../../iot_link/at/at.c ****         return 0;
+ 289:../../iot_link/at/at.c ****     }
+ 290:../../iot_link/at/at.c **** 
+ 291:../../iot_link/at/at.c ****     while(NULL != g_at_cb.devhandle)
+ 292:../../iot_link/at/at.c ****     {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 10
+
+
+ 293:../../iot_link/at/at.c ****     	if (1 == g_at_cb.streammode)  //in stream mode, we need to save previous frames in buffer
+ 294:../../iot_link/at/at.c ****     	{
+ 295:../../iot_link/at/at.c ****             if(rcvlen == 0)
+ 296:../../iot_link/at/at.c ****             {
+ 297:../../iot_link/at/at.c ****                 (void)memset(g_at_cb.rcvbuf,0,CONFIG_AT_RECVMAXLEN);
+ 298:../../iot_link/at/at.c ****             }
+ 299:../../iot_link/at/at.c ****             rcvlen += __resp_rcv(g_at_cb.rcvbuf+ rcvlen,CONFIG_AT_RECVMAXLEN,cn_osal_timeout_foreve
+ 300:../../iot_link/at/at.c ****             if( rcvlen > 0)
+ 301:../../iot_link/at/at.c ****             {
+ 302:../../iot_link/at/at.c ****                 if(0 != __oob_match(g_at_cb.rcvbuf,rcvlen))
+ 303:../../iot_link/at/at.c ****                 {
+ 304:../../iot_link/at/at.c ****                     if(0 == __cmd_match(g_at_cb.rcvbuf,rcvlen))
+ 305:../../iot_link/at/at.c ****                     {
+ 306:../../iot_link/at/at.c ****                         rcvlen = 0;
+ 307:../../iot_link/at/at.c ****                     }
+ 308:../../iot_link/at/at.c ****                 }
+ 309:../../iot_link/at/at.c ****                 else
+ 310:../../iot_link/at/at.c ****                 {
+ 311:../../iot_link/at/at.c ****                     rcvlen = 0;
+ 312:../../iot_link/at/at.c ****                 }
+ 313:../../iot_link/at/at.c ****             }
+ 314:../../iot_link/at/at.c ****     	}
+ 315:../../iot_link/at/at.c ****     	else
+ 316:../../iot_link/at/at.c ****     	{
+ 317:../../iot_link/at/at.c ****     	    (void) memset(g_at_cb.rcvbuf,0,CONFIG_AT_RECVMAXLEN);
+ 318:../../iot_link/at/at.c ****     	    rcvlen = __resp_rcv(g_at_cb.rcvbuf,CONFIG_AT_RECVMAXLEN,cn_osal_timeout_forever);
+ 319:../../iot_link/at/at.c ****     	    if(rcvlen > 0)
+ 320:../../iot_link/at/at.c **** 	        {
+ 321:../../iot_link/at/at.c ****     	        if(0 != __oob_match(g_at_cb.rcvbuf,rcvlen))
+ 322:../../iot_link/at/at.c ****     	        {
+ 323:../../iot_link/at/at.c ****     	            (void)__cmd_match(g_at_cb.rcvbuf,rcvlen);
+ 324:../../iot_link/at/at.c ****     	        }
+ 325:../../iot_link/at/at.c **** 	        }
+ 326:../../iot_link/at/at.c ****         }
+ 327:../../iot_link/at/at.c ****     }
+ 328:../../iot_link/at/at.c **** 
+ 329:../../iot_link/at/at.c ****     return 0;
+ 330:../../iot_link/at/at.c **** }
+ 331:../../iot_link/at/at.c **** 
+ 332:../../iot_link/at/at.c **** /*******************************************************************************
+ 333:../../iot_link/at/at.c **** function     :you could use this function to to enable or disable at stream mode.
+ 334:../../iot_link/at/at.c **** parameters   :mode:1 for stream mode, 0 for dgram mode.
+ 335:../../iot_link/at/at.c **** instruction  :If stream mode is enabled, we can process data from multiple frames.
+ 336:../../iot_link/at/at.c **** 			  mode equals 0 by default.
+ 337:../../iot_link/at/at.c **** *******************************************************************************/
+ 338:../../iot_link/at/at.c **** int at_streammode_set(int mode)
+ 339:../../iot_link/at/at.c **** {
+ 340:../../iot_link/at/at.c **** 	g_at_cb.streammode = mode;
+ 341:../../iot_link/at/at.c **** 	return 0;
+ 342:../../iot_link/at/at.c **** }
+ 343:../../iot_link/at/at.c **** 
+ 344:../../iot_link/at/at.c **** 
+ 345:../../iot_link/at/at.c **** int at_debugclose(void)
+ 346:../../iot_link/at/at.c **** {
+ 347:../../iot_link/at/at.c ****     //for the debug
+ 348:../../iot_link/at/at.c ****     g_at_cb.rxdebugmode = en_at_debug_none;
+ 349:../../iot_link/at/at.c ****     g_at_cb.txdebugmode = en_at_debug_none;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 11
+
+
+ 350:../../iot_link/at/at.c **** 
+ 351:../../iot_link/at/at.c ****     return 0;
+ 352:../../iot_link/at/at.c **** }
+ 353:../../iot_link/at/at.c **** 
+ 354:../../iot_link/at/at.c **** 
+ 355:../../iot_link/at/at.c **** /*******************************************************************************
+ 356:../../iot_link/at/at.c **** function     :this is our at command here,you could send any command as you wish
+ 357:../../iot_link/at/at.c **** parameters   :
+ 358:../../iot_link/at/at.c **** instruction  :only one command could be dealt at one time, for we use the semphore
+ 359:../../iot_link/at/at.c ****               here do the sync;if the respbuf is not NULL,then we will cpoy the 
+ 360:../../iot_link/at/at.c ****               response data to the respbuf as much as the respbuflen permit
+ 361:../../iot_link/at/at.c **** *******************************************************************************/
+ 362:../../iot_link/at/at.c **** int  at_command(const void *cmd,size_t cmdlen,const char *index,void *respbuf,\
+ 363:../../iot_link/at/at.c **** 		        size_t respbuflen,uint32_t timeout)
+ 364:../../iot_link/at/at.c **** {
+ 365:../../iot_link/at/at.c ****     int ret = -1;
+ 366:../../iot_link/at/at.c ****     if(NULL == cmd)
+ 367:../../iot_link/at/at.c ****     {
+ 368:../../iot_link/at/at.c ****         return ret;
+ 369:../../iot_link/at/at.c ****     }
+ 370:../../iot_link/at/at.c ****     if(NULL != index)
+ 371:../../iot_link/at/at.c ****     {
+ 372:../../iot_link/at/at.c ****         ret = __cmd_create(cmd,cmdlen,index,respbuf,respbuflen,timeout);
+ 373:../../iot_link/at/at.c ****         if(0 == ret)
+ 374:../../iot_link/at/at.c ****         {
+ 375:../../iot_link/at/at.c ****             ret = __cmd_send(cmd,cmdlen,timeout);
+ 376:../../iot_link/at/at.c ****             if(0 == ret)
+ 377:../../iot_link/at/at.c ****             {
+ 378:../../iot_link/at/at.c ****                 if(osal_semp_pend(g_at_cb.cmd.respsync,timeout))
+ 379:../../iot_link/at/at.c ****                 {
+ 380:../../iot_link/at/at.c ****                     ret = g_at_cb.cmd.respdatalen;
+ 381:../../iot_link/at/at.c ****                 }
+ 382:../../iot_link/at/at.c ****                 else
+ 383:../../iot_link/at/at.c ****                 {
+ 384:../../iot_link/at/at.c ****                     ret = -1;
+ 385:../../iot_link/at/at.c ****                 }
+ 386:../../iot_link/at/at.c ****             }
+ 387:../../iot_link/at/at.c ****             else
+ 388:../../iot_link/at/at.c ****             {
+ 389:../../iot_link/at/at.c ****                 ret = -1;
+ 390:../../iot_link/at/at.c ****             }
+ 391:../../iot_link/at/at.c **** 
+ 392:../../iot_link/at/at.c ****             (void) __cmd_clear();
+ 393:../../iot_link/at/at.c ****         }
+ 394:../../iot_link/at/at.c **** 
+ 395:../../iot_link/at/at.c ****     }
+ 396:../../iot_link/at/at.c ****     else
+ 397:../../iot_link/at/at.c ****     {
+ 398:../../iot_link/at/at.c ****         ret = __cmd_send(cmd,cmdlen,timeout);
+ 399:../../iot_link/at/at.c ****     }
+ 400:../../iot_link/at/at.c **** 
+ 401:../../iot_link/at/at.c ****     return ret;
+ 402:../../iot_link/at/at.c **** }
+ 403:../../iot_link/at/at.c **** 
+ 404:../../iot_link/at/at.c **** /*******************************************************************************
+ 405:../../iot_link/at/at.c **** function     :you could use this function to register a method to deal the out of band data
+ 406:../../iot_link/at/at.c **** parameters   :
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 12
+
+
+ 407:../../iot_link/at/at.c **** instruction  :as you know, we only check the frame begin,using memcmp, so you must
+ 408:../../iot_link/at/at.c ****               write the header of the frame as the index
+ 409:../../iot_link/at/at.c **** *******************************************************************************/
+ 410:../../iot_link/at/at.c **** int at_oobregister(const char *name,const void *index,size_t len,fn_at_oob func,void *args)
+ 411:../../iot_link/at/at.c **** {
+ 412:../../iot_link/at/at.c ****     int ret = -1;
+ 413:../../iot_link/at/at.c ****     at_oob_item *oob;
+ 414:../../iot_link/at/at.c ****     int i = 0;
+ 415:../../iot_link/at/at.c **** 
+ 416:../../iot_link/at/at.c ****     if((NULL == func)||(NULL == index))
+ 417:../../iot_link/at/at.c ****     {
+ 418:../../iot_link/at/at.c ****         return ret;
+ 419:../../iot_link/at/at.c ****     }
+ 420:../../iot_link/at/at.c **** 
+ 421:../../iot_link/at/at.c ****     for(i =0;i<CONFIG_AT_OOBTABLEN;i++)
+ 422:../../iot_link/at/at.c ****     {
+ 423:../../iot_link/at/at.c ****         oob = &g_at_cb.oob[i];
+ 424:../../iot_link/at/at.c ****         if((oob->func == NULL)&&(oob->index == NULL))
+ 425:../../iot_link/at/at.c ****         {
+ 426:../../iot_link/at/at.c ****             oob->name = name;
+ 427:../../iot_link/at/at.c ****             oob->index = index;
+ 428:../../iot_link/at/at.c ****             oob->len = len;
+ 429:../../iot_link/at/at.c ****             oob->func = func;
+ 430:../../iot_link/at/at.c ****             oob->args = args;
+ 431:../../iot_link/at/at.c ****             ret = 0;
+ 432:../../iot_link/at/at.c ****             break;
+ 433:../../iot_link/at/at.c ****         }
+ 434:../../iot_link/at/at.c ****     }
+ 435:../../iot_link/at/at.c **** 
+ 436:../../iot_link/at/at.c ****     return ret;
+ 437:../../iot_link/at/at.c **** }
+ 438:../../iot_link/at/at.c **** 
+ 439:../../iot_link/at/at.c **** /*******************************************************************************
+ 440:../../iot_link/at/at.c **** function     :this is the  at module initialize function
+ 441:../../iot_link/at/at.c **** parameters   :func_read:which will read a frame from the device
+ 442:../../iot_link/at/at.c ****               func_write:which will be used to write a frame to the device
+ 443:../../iot_link/at/at.c **** instruction  :if you want to use the at frame work, please call this function 
+ 444:../../iot_link/at/at.c ****               please supply the function read and write.the read function must be
+ 445:../../iot_link/at/at.c ****               a block function controlled by timeout
+ 446:../../iot_link/at/at.c **** *******************************************************************************/
+ 447:../../iot_link/at/at.c **** int at_init()
+ 448:../../iot_link/at/at.c **** {
+ 449:../../iot_link/at/at.c ****     int ret = -1;
+ 450:../../iot_link/at/at.c **** 
+ 451:../../iot_link/at/at.c ****     (void) memset(&g_at_cb,0,sizeof(g_at_cb));
+ 452:../../iot_link/at/at.c ****     g_at_cb.devname = CONFIG_AT_DEVNAME;
+ 453:../../iot_link/at/at.c **** 
+ 454:../../iot_link/at/at.c **** 
+ 455:../../iot_link/at/at.c ****     if(false == osal_semp_create(&g_at_cb.cmd.cmdsync,1,1))
+ 456:../../iot_link/at/at.c ****     {
+ 457:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("%s:cmdsync error\n\r",__FUNCTION__);
+ 458:../../iot_link/at/at.c ****         goto EXIT_CMDSYNC;
+ 459:../../iot_link/at/at.c ****     }
+ 460:../../iot_link/at/at.c ****     if(false == osal_semp_create(&g_at_cb.cmd.respsync,1,0))
+ 461:../../iot_link/at/at.c ****     {
+ 462:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("%s:cmdsync error\n\r",__FUNCTION__);
+ 463:../../iot_link/at/at.c ****         goto EXIT_RESPSYNC;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 13
+
+
+ 464:../../iot_link/at/at.c ****     }
+ 465:../../iot_link/at/at.c ****     if(false == osal_mutex_create(&g_at_cb.cmd.cmdlock))
+ 466:../../iot_link/at/at.c ****     {
+ 467:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("%s:cmdlock error\n\r",__FUNCTION__);
+ 468:../../iot_link/at/at.c ****         goto EXIT_CMDLOCK;
+ 469:../../iot_link/at/at.c ****     }
+ 470:../../iot_link/at/at.c **** 
+ 471:../../iot_link/at/at.c ****     if(NULL == osal_task_create("at_rcv",__rcv_task_entry,NULL,0x800,NULL,CONFIG_AT_TASKPRIOR))
+ 472:../../iot_link/at/at.c ****     {
+ 473:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("%s:rcvtask create error\n\r",__FUNCTION__);
+ 474:../../iot_link/at/at.c ****         goto EXIT_RCVTASK;
+ 475:../../iot_link/at/at.c ****     }
+ 476:../../iot_link/at/at.c **** 
+ 477:../../iot_link/at/at.c ****     //for the debug
+ 478:../../iot_link/at/at.c ****     g_at_cb.rxdebugmode = en_at_debug_ascii;
+ 479:../../iot_link/at/at.c ****     g_at_cb.txdebugmode = en_at_debug_ascii;
+ 480:../../iot_link/at/at.c **** 
+ 481:../../iot_link/at/at.c ****     ret = 0;
+ 482:../../iot_link/at/at.c ****     return ret;
+ 483:../../iot_link/at/at.c **** 
+ 484:../../iot_link/at/at.c **** 
+ 485:../../iot_link/at/at.c **** EXIT_RCVTASK:
+ 486:../../iot_link/at/at.c ****     (void) osal_mutex_del(&g_at_cb.cmd.cmdlock);
+ 487:../../iot_link/at/at.c ****     g_at_cb.cmd.cmdlock = cn_mutex_invalid;
+ 488:../../iot_link/at/at.c **** EXIT_CMDLOCK:
+ 489:../../iot_link/at/at.c ****     (void) osal_semp_del(&g_at_cb.cmd.respsync);
+ 490:../../iot_link/at/at.c ****     g_at_cb.cmd.respsync = cn_semp_invalid;
+ 491:../../iot_link/at/at.c **** EXIT_RESPSYNC:
+ 492:../../iot_link/at/at.c ****     (void) osal_semp_del(&g_at_cb.cmd.cmdsync);
+ 493:../../iot_link/at/at.c ****     g_at_cb.cmd.cmdsync = cn_semp_invalid;
+ 494:../../iot_link/at/at.c **** EXIT_CMDSYNC:
+ 495:../../iot_link/at/at.c ****     return ret;
+ 496:../../iot_link/at/at.c **** }
+ 497:../../iot_link/at/at.c **** 
+ 498:../../iot_link/at/at.c **** //////////////////////////////////DEBUG COMMAND FOLLOWING/////////////////////////////////////////
+ 499:../../iot_link/at/at.c **** #ifdef CONFIG_SHELL_ENABLE
+ 500:../../iot_link/at/at.c **** 
+ 501:../../iot_link/at/at.c **** #include <shell.h>
+ 502:../../iot_link/at/at.c **** //use this shell command,you could input at command through the terminal
+ 503:../../iot_link/at/at.c **** static int shell_at(int argc, const char *argv[])
+ 504:../../iot_link/at/at.c **** {
+ 505:../../iot_link/at/at.c ****     #define CN_AT_SHELL_LEN 64
+ 506:../../iot_link/at/at.c ****      
+ 507:../../iot_link/at/at.c ****     char respbuf[CN_AT_SHELL_LEN];
+ 508:../../iot_link/at/at.c ****     unsigned char cmdbuf[CN_AT_SHELL_LEN];
+ 509:../../iot_link/at/at.c ****     
+ 510:../../iot_link/at/at.c ****     const char *index =NULL ;
+ 511:../../iot_link/at/at.c ****     int ret = -1;
+ 512:../../iot_link/at/at.c **** 
+ 513:../../iot_link/at/at.c ****     if((argc !=2)&&(argc != 3))
+ 514:../../iot_link/at/at.c ****     {
+ 515:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("paras error\n\r");
+ 516:../../iot_link/at/at.c ****         return ret;
+ 517:../../iot_link/at/at.c ****     }
+ 518:../../iot_link/at/at.c ****     if(argc == 3)
+ 519:../../iot_link/at/at.c ****     {
+ 520:../../iot_link/at/at.c ****         index = argv[2];
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 14
+
+
+ 521:../../iot_link/at/at.c ****     }
+ 522:../../iot_link/at/at.c ****     
+ 523:../../iot_link/at/at.c **** 
+ 524:../../iot_link/at/at.c ****     (void) (void) memset(respbuf,0,CN_AT_SHELL_LEN);
+ 525:../../iot_link/at/at.c ****     (void) snprintf((char *)cmdbuf,CN_AT_SHELL_LEN,"%s\r\n",argv[1]);
+ 526:../../iot_link/at/at.c **** 
+ 527:../../iot_link/at/at.c ****     ret = at_command(cmdbuf,strlen((const char *)cmdbuf),index,respbuf,CN_AT_SHELL_LEN,1000); //one
+ 528:../../iot_link/at/at.c ****     if(ret == 0)
+ 529:../../iot_link/at/at.c ****     {
+ 530:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("atresponse:%d Bytes:%s\n\r",ret,respbuf);
+ 531:../../iot_link/at/at.c ****     }
+ 532:../../iot_link/at/at.c ****     else
+ 533:../../iot_link/at/at.c ****     {
+ 534:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("atresponse:timeout or error\n\r");
+ 535:../../iot_link/at/at.c ****     }
+ 536:../../iot_link/at/at.c ****     return ret;
+ 537:../../iot_link/at/at.c **** }
+ 538:../../iot_link/at/at.c **** OSSHELL_EXPORT_CMD(shell_at,"atcmd","atcmd atcommand atrespindex");
+ 539:../../iot_link/at/at.c **** 
+ 540:../../iot_link/at/at.c **** //use this function to set the at command display mode:none/ascii/hex
+ 541:../../iot_link/at/at.c **** static int shell_atdebug(int argc,const char *argv[])
+ 542:../../iot_link/at/at.c **** {
+ 215              		.loc 1 542 0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 0
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219              	.LVL24:
+ 543:../../iot_link/at/at.c ****     en_at_rxtx_debugmode mode = en_at_debug_none;
+ 544:../../iot_link/at/at.c ****     if(argc != 3)
+ 220              		.loc 1 544 0
+ 221 0000 0328     		cmp	r0, #3
+ 542:../../iot_link/at/at.c ****     en_at_rxtx_debugmode mode = en_at_debug_none;
+ 222              		.loc 1 542 0
+ 223 0002 38B5     		push	{r3, r4, r5, lr}
+ 224              	.LCFI6:
+ 225              		.cfi_def_cfa_offset 16
+ 226              		.cfi_offset 3, -16
+ 227              		.cfi_offset 4, -12
+ 228              		.cfi_offset 5, -8
+ 229              		.cfi_offset 14, -4
+ 542:../../iot_link/at/at.c ****     en_at_rxtx_debugmode mode = en_at_debug_none;
+ 230              		.loc 1 542 0
+ 231 0004 0D46     		mov	r5, r1
+ 232              		.loc 1 544 0
+ 233 0006 17D0     		beq	.L12
+ 545:../../iot_link/at/at.c ****     {
+ 546:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("paras error\n\r");
+ 234              		.loc 1 546 0
+ 235 0008 FFF7FEFF 		bl	link_log_level_get
+ 236              	.LVL25:
+ 237 000c 0128     		cmp	r0, #1
+ 238 000e 10D8     		bhi	.L17
+ 239              		.loc 1 546 0 is_stmt 0 discriminator 1
+ 240 0010 0120     		movs	r0, #1
+ 241 0012 FFF7FEFF 		bl	link_log_level_name
+ 242              	.LVL26:
+ 243 0016 0446     		mov	r4, r0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 15
+
+
+ 244 0018 FFF7FEFF 		bl	osal_sys_time
+ 245              	.LVL27:
+ 246 001c 354B     		ldr	r3, .L24
+ 247 001e 0246     		mov	r2, r0
+ 248 0020 2146     		mov	r1, r4
+ 249 0022 3548     		ldr	r0, .L24+4
+ 250 0024 FFF7FEFF 		bl	printf
+ 251              	.LVL28:
+ 252 0028 344B     		ldr	r3, .L24+8
+ 253 002a 1B68     		ldr	r3, [r3]
+ 254 002c 9868     		ldr	r0, [r3, #8]
+ 255 002e FFF7FEFF 		bl	fflush
+ 256              	.LVL29:
+ 257              	.L17:
+ 547:../../iot_link/at/at.c ****         return -1;
+ 258              		.loc 1 547 0 is_stmt 1
+ 259 0032 4FF0FF30 		mov	r0, #-1
+ 260 0036 35E0     		b	.L11
+ 261              	.LVL30:
+ 262              	.L12:
+ 263              	.LBB4:
+ 264              	.LBB5:
+ 548:../../iot_link/at/at.c ****     }
+ 549:../../iot_link/at/at.c **** 
+ 550:../../iot_link/at/at.c ****     if(0 == strcmp(argv[2],"none"))
+ 265              		.loc 1 550 0
+ 266 0038 8C68     		ldr	r4, [r1, #8]
+ 267 003a 3149     		ldr	r1, .L24+12
+ 268              	.LVL31:
+ 269 003c 2046     		mov	r0, r4
+ 270              	.LVL32:
+ 271 003e FFF7FEFF 		bl	strcmp
+ 272              	.LVL33:
+ 273 0042 08B3     		cbz	r0, .L18
+ 551:../../iot_link/at/at.c ****     {
+ 552:../../iot_link/at/at.c ****         mode = en_at_debug_none;
+ 553:../../iot_link/at/at.c ****     }
+ 554:../../iot_link/at/at.c ****     else if(0 == strcmp(argv[2],"ascii"))
+ 274              		.loc 1 554 0
+ 275 0044 2F49     		ldr	r1, .L24+16
+ 276 0046 2046     		mov	r0, r4
+ 277 0048 FFF7FEFF 		bl	strcmp
+ 278              	.LVL34:
+ 279 004c 58B3     		cbz	r0, .L19
+ 555:../../iot_link/at/at.c ****     {
+ 556:../../iot_link/at/at.c ****         mode = en_at_debug_ascii;
+ 557:../../iot_link/at/at.c ****     }
+ 558:../../iot_link/at/at.c ****     else if(0 == strcmp(argv[2],"hex"))
+ 280              		.loc 1 558 0
+ 281 004e 2E49     		ldr	r1, .L24+20
+ 282 0050 2046     		mov	r0, r4
+ 283 0052 FFF7FEFF 		bl	strcmp
+ 284              	.LVL35:
+ 285 0056 40B3     		cbz	r0, .L20
+ 559:../../iot_link/at/at.c ****     {
+ 560:../../iot_link/at/at.c ****         mode = en_at_debug_hex;
+ 561:../../iot_link/at/at.c ****     }
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 16
+
+
+ 562:../../iot_link/at/at.c ****     else
+ 563:../../iot_link/at/at.c ****     {
+ 564:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("mode set error\n\r");
+ 286              		.loc 1 564 0
+ 287 0058 FFF7FEFF 		bl	link_log_level_get
+ 288              	.LVL36:
+ 289 005c 0128     		cmp	r0, #1
+ 290 005e 10D8     		bhi	.L21
+ 291 0060 0120     		movs	r0, #1
+ 292 0062 FFF7FEFF 		bl	link_log_level_name
+ 293              	.LVL37:
+ 294 0066 0446     		mov	r4, r0
+ 295 0068 FFF7FEFF 		bl	osal_sys_time
+ 296              	.LVL38:
+ 297 006c 214B     		ldr	r3, .L24
+ 298 006e 0246     		mov	r2, r0
+ 299 0070 2146     		mov	r1, r4
+ 300 0072 2648     		ldr	r0, .L24+24
+ 301 0074 FFF7FEFF 		bl	printf
+ 302              	.LVL39:
+ 303 0078 204B     		ldr	r3, .L24+8
+ 304 007a 1B68     		ldr	r3, [r3]
+ 305 007c 9868     		ldr	r0, [r3, #8]
+ 306 007e FFF7FEFF 		bl	fflush
+ 307              	.LVL40:
+ 308              	.L21:
+ 565:../../iot_link/at/at.c ****         return -2;
+ 309              		.loc 1 565 0
+ 310 0082 6FF00100 		mvn	r0, #1
+ 311 0086 0DE0     		b	.L11
+ 312              	.L18:
+ 552:../../iot_link/at/at.c ****     }
+ 313              		.loc 1 552 0
+ 314 0088 0446     		mov	r4, r0
+ 315              	.L14:
+ 316              	.LVL41:
+ 566:../../iot_link/at/at.c ****     }
+ 567:../../iot_link/at/at.c **** 
+ 568:../../iot_link/at/at.c ****     if(0 == strcmp(argv[1],"rx"))
+ 317              		.loc 1 568 0
+ 318 008a 6D68     		ldr	r5, [r5, #4]
+ 319              	.LVL42:
+ 320 008c 2049     		ldr	r1, .L24+28
+ 321 008e 2846     		mov	r0, r5
+ 322 0090 FFF7FEFF 		bl	strcmp
+ 323              	.LVL43:
+ 324 0094 58B9     		cbnz	r0, .L15
+ 569:../../iot_link/at/at.c ****     {
+ 570:../../iot_link/at/at.c ****         g_at_cb.rxdebugmode = (unsigned int) mode;
+ 325              		.loc 1 570 0
+ 326 0096 1F4B     		ldr	r3, .L24+32
+ 327 0098 93F8A424 		ldrb	r2, [r3, #1188]	@ zero_extendqisi2
+ 328 009c 64F30102 		bfi	r2, r4, #0, #2
+ 329              	.L23:
+ 571:../../iot_link/at/at.c ****     }
+ 572:../../iot_link/at/at.c ****     else if(0 == strcmp(argv[1],"tx"))
+ 573:../../iot_link/at/at.c ****     {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 17
+
+
+ 574:../../iot_link/at/at.c ****         g_at_cb.txdebugmode = (unsigned int ) mode;
+ 330              		.loc 1 574 0
+ 331 00a0 83F8A424 		strb	r2, [r3, #1188]
+ 332              	.LVL44:
+ 333              	.L11:
+ 334              	.LBE5:
+ 335              	.LBE4:
+ 575:../../iot_link/at/at.c ****     }
+ 576:../../iot_link/at/at.c ****     else
+ 577:../../iot_link/at/at.c ****     {
+ 578:../../iot_link/at/at.c ****         LINK_LOG_DEBUG("type set error\n\r");
+ 579:../../iot_link/at/at.c ****         return -3;
+ 580:../../iot_link/at/at.c ****     }
+ 581:../../iot_link/at/at.c **** 
+ 582:../../iot_link/at/at.c ****     return 0;
+ 583:../../iot_link/at/at.c **** }
+ 336              		.loc 1 583 0
+ 337 00a4 38BD     		pop	{r3, r4, r5, pc}
+ 338              	.LVL45:
+ 339              	.L19:
+ 340              	.LBB7:
+ 341              	.LBB6:
+ 556:../../iot_link/at/at.c ****     }
+ 342              		.loc 1 556 0
+ 343 00a6 0124     		movs	r4, #1
+ 344 00a8 EFE7     		b	.L14
+ 345              	.L20:
+ 560:../../iot_link/at/at.c ****     }
+ 346              		.loc 1 560 0
+ 347 00aa 0224     		movs	r4, #2
+ 348 00ac EDE7     		b	.L14
+ 349              	.LVL46:
+ 350              	.L15:
+ 572:../../iot_link/at/at.c ****     {
+ 351              		.loc 1 572 0
+ 352 00ae 1A49     		ldr	r1, .L24+36
+ 353 00b0 2846     		mov	r0, r5
+ 354 00b2 FFF7FEFF 		bl	strcmp
+ 355              	.LVL47:
+ 356 00b6 28B9     		cbnz	r0, .L16
+ 574:../../iot_link/at/at.c ****     }
+ 357              		.loc 1 574 0
+ 358 00b8 164B     		ldr	r3, .L24+32
+ 359 00ba 93F8A424 		ldrb	r2, [r3, #1188]	@ zero_extendqisi2
+ 360 00be 64F38302 		bfi	r2, r4, #2, #2
+ 361 00c2 EDE7     		b	.L23
+ 362              	.L16:
+ 578:../../iot_link/at/at.c ****         return -3;
+ 363              		.loc 1 578 0
+ 364 00c4 FFF7FEFF 		bl	link_log_level_get
+ 365              	.LVL48:
+ 366 00c8 0128     		cmp	r0, #1
+ 367 00ca 10D8     		bhi	.L22
+ 368 00cc 0120     		movs	r0, #1
+ 369 00ce FFF7FEFF 		bl	link_log_level_name
+ 370              	.LVL49:
+ 371 00d2 0446     		mov	r4, r0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 18
+
+
+ 372              	.LVL50:
+ 373 00d4 FFF7FEFF 		bl	osal_sys_time
+ 374              	.LVL51:
+ 375 00d8 064B     		ldr	r3, .L24
+ 376 00da 0246     		mov	r2, r0
+ 377 00dc 2146     		mov	r1, r4
+ 378 00de 0F48     		ldr	r0, .L24+40
+ 379 00e0 FFF7FEFF 		bl	printf
+ 380              	.LVL52:
+ 381 00e4 054B     		ldr	r3, .L24+8
+ 382 00e6 1B68     		ldr	r3, [r3]
+ 383 00e8 9868     		ldr	r0, [r3, #8]
+ 384 00ea FFF7FEFF 		bl	fflush
+ 385              	.LVL53:
+ 386              	.L22:
+ 579:../../iot_link/at/at.c ****     }
+ 387              		.loc 1 579 0
+ 388 00ee 6FF00200 		mvn	r0, #2
+ 389 00f2 D7E7     		b	.L11
+ 390              	.L25:
+ 391              		.align	2
+ 392              	.L24:
+ 393 00f4 00000000 		.word	.LANCHOR0
+ 394 00f8 00000000 		.word	.LC3
+ 395 00fc 00000000 		.word	_impure_ptr
+ 396 0100 1D000000 		.word	.LC4
+ 397 0104 22000000 		.word	.LC5
+ 398 0108 28000000 		.word	.LC6
+ 399 010c 2C000000 		.word	.LC7
+ 400 0110 4C000000 		.word	.LC8
+ 401 0114 00000000 		.word	.LANCHOR1
+ 402 0118 4F000000 		.word	.LC9
+ 403 011c 52000000 		.word	.LC10
+ 404              	.LBE6:
+ 405              	.LBE7:
+ 406              		.cfi_endproc
+ 407              	.LFE19:
+ 409              		.section	.text.__cmd_match.constprop.4,"ax",%progbits
+ 410              		.align	1
+ 411              		.syntax unified
+ 412              		.thumb
+ 413              		.thumb_func
+ 414              		.fpu fpv4-sp-d16
+ 416              	__cmd_match.constprop.4:
+ 417              	.LFB26:
+ 224:../../iot_link/at/at.c **** {
+ 418              		.loc 1 224 0
+ 419              		.cfi_startproc
+ 420              		@ args = 0, pretend = 0, frame = 0
+ 421              		@ frame_needed = 0, uses_anonymous_args = 0
+ 422              	.LVL54:
+ 423 0000 38B5     		push	{r3, r4, r5, lr}
+ 424              	.LCFI7:
+ 425              		.cfi_def_cfa_offset 16
+ 426              		.cfi_offset 3, -16
+ 427              		.cfi_offset 4, -12
+ 428              		.cfi_offset 5, -8
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 19
+
+
+ 429              		.cfi_offset 14, -4
+ 231:../../iot_link/at/at.c ****     {
+ 430              		.loc 1 231 0
+ 431 0002 144C     		ldr	r4, .L34
+ 224:../../iot_link/at/at.c **** {
+ 432              		.loc 1 224 0
+ 433 0004 0546     		mov	r5, r0
+ 231:../../iot_link/at/at.c ****     {
+ 434              		.loc 1 231 0
+ 435 0006 A06A     		ldr	r0, [r4, #40]
+ 436              	.LVL55:
+ 437 0008 FFF7FEFF 		bl	osal_mutex_lock
+ 438              	.LVL56:
+ 439 000c F0B1     		cbz	r0, .L31
+ 233:../../iot_link/at/at.c ****         {
+ 440              		.loc 1 233 0
+ 441 000e 2169     		ldr	r1, [r4, #16]
+ 442 0010 C9B1     		cbz	r1, .L33
+ 443 0012 04F1A400 		add	r0, r4, #164
+ 444 0016 FFF7FEFF 		bl	strstr
+ 445              	.LVL57:
+ 446 001a A0B1     		cbz	r0, .L33
+ 235:../../iot_link/at/at.c ****             {
+ 447              		.loc 1 235 0
+ 448 001c 6069     		ldr	r0, [r4, #20]
+ 449 001e 40B1     		cbz	r0, .L29
+ 237:../../iot_link/at/at.c ****                 (void) memcpy((char *)cmd->respbuf,data,cpylen);
+ 450              		.loc 1 237 0
+ 451 0020 A369     		ldr	r3, [r4, #24]
+ 452 0022 9D42     		cmp	r5, r3
+ 453 0024 28BF     		it	cs
+ 454 0026 1D46     		movcs	r5, r3
+ 455              	.LVL58:
+ 238:../../iot_link/at/at.c ****                 cmd->respdatalen = cpylen;
+ 456              		.loc 1 238 0
+ 457 0028 2A46     		mov	r2, r5
+ 458 002a 04F1A401 		add	r1, r4, #164
+ 459 002e FFF7FEFF 		bl	memcpy
+ 460              	.LVL59:
+ 461              	.L29:
+ 245:../../iot_link/at/at.c ****             ret = 0;
+ 462              		.loc 1 245 0
+ 463 0032 206A     		ldr	r0, [r4, #32]
+ 243:../../iot_link/at/at.c ****             }
+ 464              		.loc 1 243 0
+ 465 0034 E561     		str	r5, [r4, #28]
+ 245:../../iot_link/at/at.c ****             ret = 0;
+ 466              		.loc 1 245 0
+ 467 0036 FFF7FEFF 		bl	osal_semp_post
+ 468              	.LVL60:
+ 246:../../iot_link/at/at.c ****         }
+ 469              		.loc 1 246 0
+ 470 003a 0025     		movs	r5, #0
+ 471              	.LVL61:
+ 472              	.L28:
+ 248:../../iot_link/at/at.c ****     }
+ 473              		.loc 1 248 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 20
+
+
+ 474 003c A06A     		ldr	r0, [r4, #40]
+ 475 003e FFF7FEFF 		bl	osal_mutex_unlock
+ 476              	.LVL62:
+ 477              	.L26:
+ 251:../../iot_link/at/at.c **** 
+ 478              		.loc 1 251 0
+ 479 0042 2846     		mov	r0, r5
+ 480 0044 38BD     		pop	{r3, r4, r5, pc}
+ 481              	.LVL63:
+ 482              	.L33:
+ 226:../../iot_link/at/at.c ****     int  cpylen;
+ 483              		.loc 1 226 0
+ 484 0046 4FF0FF35 		mov	r5, #-1
+ 485              	.LVL64:
+ 486 004a F7E7     		b	.L28
+ 487              	.LVL65:
+ 488              	.L31:
+ 489 004c 4FF0FF35 		mov	r5, #-1
+ 490              	.LVL66:
+ 491 0050 F7E7     		b	.L26
+ 492              	.L35:
+ 493 0052 00BF     		.align	2
+ 494              	.L34:
+ 495 0054 00000000 		.word	.LANCHOR1
+ 496              		.cfi_endproc
+ 497              	.LFE26:
+ 499              		.section	.text.__oob_match.constprop.5,"ax",%progbits
+ 500              		.align	1
+ 501              		.syntax unified
+ 502              		.thumb
+ 503              		.thumb_func
+ 504              		.fpu fpv4-sp-d16
+ 506              	__oob_match.constprop.5:
+ 507              	.LFB25:
+ 254:../../iot_link/at/at.c **** {
+ 508              		.loc 1 254 0
+ 509              		.cfi_startproc
+ 510              		@ args = 0, pretend = 0, frame = 0
+ 511              		@ frame_needed = 0, uses_anonymous_args = 0
+ 512              	.LVL67:
+ 513 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 514              	.LCFI8:
+ 515              		.cfi_def_cfa_offset 32
+ 516              		.cfi_offset 4, -32
+ 517              		.cfi_offset 5, -28
+ 518              		.cfi_offset 6, -24
+ 519              		.cfi_offset 7, -20
+ 520              		.cfi_offset 8, -16
+ 521              		.cfi_offset 9, -12
+ 522              		.cfi_offset 10, -8
+ 523              		.cfi_offset 14, -4
+ 524 0004 104C     		ldr	r4, .L47
+ 254:../../iot_link/at/at.c **** {
+ 525              		.loc 1 254 0
+ 526 0006 8046     		mov	r8, r0
+ 259:../../iot_link/at/at.c ****     {
+ 527              		.loc 1 259 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 21
+
+
+ 528 0008 0025     		movs	r5, #0
+ 529 000a A146     		mov	r9, r4
+ 263:../../iot_link/at/at.c ****         {
+ 530              		.loc 1 263 0
+ 531 000c 04F1A40A 		add	r10, r4, #164
+ 532              	.LVL68:
+ 533              	.L39:
+ 262:../../iot_link/at/at.c ****             (0 == memcmp(oob->index,data,oob->len)))
+ 534              		.loc 1 262 0
+ 535 0010 276B     		ldr	r7, [r4, #48]
+ 536 0012 8FB1     		cbz	r7, .L37
+ 537 0014 A06B     		ldr	r0, [r4, #56]
+ 538 0016 78B1     		cbz	r0, .L37
+ 263:../../iot_link/at/at.c ****         {
+ 539              		.loc 1 263 0
+ 540 0018 E26B     		ldr	r2, [r4, #60]
+ 541 001a 5146     		mov	r1, r10
+ 542 001c FFF7FEFF 		bl	memcmp
+ 543              	.LVL69:
+ 262:../../iot_link/at/at.c ****             (0 == memcmp(oob->index,data,oob->len)))
+ 544              		.loc 1 262 0
+ 545 0020 0646     		mov	r6, r0
+ 546 0022 48B9     		cbnz	r0, .L37
+ 265:../../iot_link/at/at.c ****             ret = 0;
+ 547              		.loc 1 265 0
+ 548 0024 1423     		movs	r3, #20
+ 549 0026 03FB0595 		mla	r5, r3, r5, r9
+ 550              	.LVL70:
+ 551 002a 4246     		mov	r2, r8
+ 552 002c 0749     		ldr	r1, .L47+4
+ 553 002e 686B     		ldr	r0, [r5, #52]
+ 554 0030 B847     		blx	r7
+ 555              	.LVL71:
+ 556              	.L36:
+ 271:../../iot_link/at/at.c **** 
+ 557              		.loc 1 271 0
+ 558 0032 3046     		mov	r0, r6
+ 559 0034 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 560              	.LVL72:
+ 561              	.L37:
+ 259:../../iot_link/at/at.c ****     {
+ 562              		.loc 1 259 0
+ 563 0038 0135     		adds	r5, r5, #1
+ 564              	.LVL73:
+ 565 003a 062D     		cmp	r5, #6
+ 566 003c 04F11404 		add	r4, r4, #20
+ 567 0040 E6D1     		bne	.L39
+ 256:../../iot_link/at/at.c ****     at_oob_item *oob;
+ 568              		.loc 1 256 0
+ 569 0042 4FF0FF36 		mov	r6, #-1
+ 570              	.LVL74:
+ 571 0046 F4E7     		b	.L36
+ 572              	.L48:
+ 573              		.align	2
+ 574              	.L47:
+ 575 0048 00000000 		.word	.LANCHOR1
+ 576 004c A4000000 		.word	.LANCHOR1+164
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 22
+
+
+ 577              		.cfi_endproc
+ 578              	.LFE25:
+ 580              		.section	.text.__resp_rcv.constprop.6,"ax",%progbits
+ 581              		.align	1
+ 582              		.syntax unified
+ 583              		.thumb
+ 584              		.thumb_func
+ 585              		.fpu fpv4-sp-d16
+ 587              	__resp_rcv.constprop.6:
+ 588              	.LFB24:
+ 166:../../iot_link/at/at.c **** {
+ 589              		.loc 1 166 0
+ 590              		.cfi_startproc
+ 591              		@ args = 0, pretend = 0, frame = 0
+ 592              		@ frame_needed = 0, uses_anonymous_args = 0
+ 593              	.LVL75:
+ 594 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 595              	.LCFI9:
+ 596              		.cfi_def_cfa_offset 24
+ 597              		.cfi_offset 4, -16
+ 598              		.cfi_offset 5, -12
+ 599              		.cfi_offset 6, -8
+ 600              		.cfi_offset 14, -4
+ 170:../../iot_link/at/at.c ****     if(ret > 0)
+ 601              		.loc 1 170 0
+ 602 0002 124E     		ldr	r6, .L52
+ 603 0004 4FF0FF33 		mov	r3, #-1
+ 604 0008 0093     		str	r3, [sp]
+ 605 000a 0246     		mov	r2, r0
+ 166:../../iot_link/at/at.c **** {
+ 606              		.loc 1 166 0
+ 607 000c 0546     		mov	r5, r0
+ 170:../../iot_link/at/at.c ****     if(ret > 0)
+ 608              		.loc 1 170 0
+ 609 000e 4FF48063 		mov	r3, #1024
+ 610 0012 0021     		movs	r1, #0
+ 611 0014 7068     		ldr	r0, [r6, #4]
+ 612              	.LVL76:
+ 613 0016 FFF7FEFF 		bl	los_dev_read
+ 614              	.LVL77:
+ 171:../../iot_link/at/at.c ****     {
+ 615              		.loc 1 171 0
+ 616 001a 041E     		subs	r4, r0, #0
+ 617 001c 0ADD     		ble	.L49
+ 173:../../iot_link/at/at.c ****     }  
+ 618              		.loc 1 173 0
+ 619 001e 96F8A434 		ldrb	r3, [r6, #1188]	@ zero_extendqisi2
+ 620 0022 03F00303 		and	r3, r3, #3
+ 621              	.LVL78:
+ 622              	.LBB10:
+ 623              	.LBB11:
+ 134:../../iot_link/at/at.c ****     {
+ 624              		.loc 1 134 0
+ 625 0026 012B     		cmp	r3, #1
+ 626 0028 07D1     		bne	.L51
+ 136:../../iot_link/at/at.c ****     }
+ 627              		.loc 1 136 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 23
+
+
+ 628 002a 2246     		mov	r2, r4
+ 629 002c 2946     		mov	r1, r5
+ 630 002e 0848     		ldr	r0, .L52+4
+ 631              	.LVL79:
+ 632 0030 FFF7FEFF 		bl	print_ascii
+ 633              	.LVL80:
+ 634              	.L49:
+ 635              	.LBE11:
+ 636              	.LBE10:
+ 177:../../iot_link/at/at.c **** 
+ 637              		.loc 1 177 0
+ 638 0034 2046     		mov	r0, r4
+ 639 0036 02B0     		add	sp, sp, #8
+ 640              	.LCFI10:
+ 641              		.cfi_remember_state
+ 642              		.cfi_def_cfa_offset 16
+ 643              		@ sp needed
+ 644 0038 70BD     		pop	{r4, r5, r6, pc}
+ 645              	.LVL81:
+ 646              	.L51:
+ 647              	.LCFI11:
+ 648              		.cfi_restore_state
+ 649              	.LBB13:
+ 650              	.LBB12:
+ 138:../../iot_link/at/at.c ****     {
+ 651              		.loc 1 138 0
+ 652 003a 022B     		cmp	r3, #2
+ 653 003c FAD1     		bne	.L49
+ 140:../../iot_link/at/at.c ****     }
+ 654              		.loc 1 140 0
+ 655 003e 2246     		mov	r2, r4
+ 656 0040 2946     		mov	r1, r5
+ 657 0042 0348     		ldr	r0, .L52+4
+ 658              	.LVL82:
+ 659 0044 FFF7FEFF 		bl	print_hex
+ 660              	.LVL83:
+ 661 0048 F4E7     		b	.L49
+ 662              	.L53:
+ 663 004a 00BF     		.align	2
+ 664              	.L52:
+ 665 004c 00000000 		.word	.LANCHOR1
+ 666 0050 00000000 		.word	.LC11
+ 667              	.LBE12:
+ 668              	.LBE13:
+ 669              		.cfi_endproc
+ 670              	.LFE24:
+ 672              		.section	.text.__rcv_task_entry,"ax",%progbits
+ 673              		.align	1
+ 674              		.syntax unified
+ 675              		.thumb
+ 676              		.thumb_func
+ 677              		.fpu fpv4-sp-d16
+ 679              	__rcv_task_entry:
+ 680              	.LFB12:
+ 281:../../iot_link/at/at.c ****     int  rcvlen = 0;
+ 681              		.loc 1 281 0
+ 682              		.cfi_startproc
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 24
+
+
+ 683              		@ args = 0, pretend = 0, frame = 0
+ 684              		@ frame_needed = 0, uses_anonymous_args = 0
+ 685              	.LVL84:
+ 686 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 687              	.LCFI12:
+ 688              		.cfi_def_cfa_offset 24
+ 689              		.cfi_offset 4, -16
+ 690              		.cfi_offset 5, -12
+ 691              		.cfi_offset 6, -8
+ 692              		.cfi_offset 14, -4
+ 284:../../iot_link/at/at.c ****     if(NULL == g_at_cb.devhandle)
+ 693              		.loc 1 284 0
+ 694 0002 2C4C     		ldr	r4, .L71
+ 695 0004 0221     		movs	r1, #2
+ 696 0006 2068     		ldr	r0, [r4]
+ 697              	.LVL85:
+ 698 0008 FFF7FEFF 		bl	los_dev_open
+ 699              	.LVL86:
+ 700 000c 2646     		mov	r6, r4
+ 701 000e 6060     		str	r0, [r4, #4]
+ 285:../../iot_link/at/at.c ****     {
+ 702              		.loc 1 285 0
+ 703 0010 0028     		cmp	r0, #0
+ 704 0012 4BD1     		bne	.L64
+ 287:../../iot_link/at/at.c ****         return 0;
+ 705              		.loc 1 287 0
+ 706 0014 FFF7FEFF 		bl	link_log_level_get
+ 707              	.LVL87:
+ 708 0018 0128     		cmp	r0, #1
+ 709 001a 13D8     		bhi	.L57
+ 287:../../iot_link/at/at.c ****         return 0;
+ 710              		.loc 1 287 0 is_stmt 0 discriminator 1
+ 711 001c 0120     		movs	r0, #1
+ 712 001e FFF7FEFF 		bl	link_log_level_name
+ 713              	.LVL88:
+ 714 0022 0546     		mov	r5, r0
+ 715 0024 FFF7FEFF 		bl	osal_sys_time
+ 716              	.LVL89:
+ 717 0028 234B     		ldr	r3, .L71+4
+ 718 002a 2268     		ldr	r2, [r4]
+ 719 002c 2946     		mov	r1, r5
+ 720 002e CDE90032 		strd	r3, r2, [sp]
+ 721 0032 0246     		mov	r2, r0
+ 722 0034 2148     		ldr	r0, .L71+8
+ 723 0036 FFF7FEFF 		bl	printf
+ 724              	.LVL90:
+ 725 003a 214B     		ldr	r3, .L71+12
+ 726 003c 1B68     		ldr	r3, [r3]
+ 727 003e 9868     		ldr	r0, [r3, #8]
+ 728 0040 FFF7FEFF 		bl	fflush
+ 729              	.LVL91:
+ 730              	.L57:
+ 330:../../iot_link/at/at.c **** 
+ 731              		.loc 1 330 0 is_stmt 1
+ 732 0044 0020     		movs	r0, #0
+ 733 0046 02B0     		add	sp, sp, #8
+ 734              	.LCFI13:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 25
+
+
+ 735              		.cfi_remember_state
+ 736              		.cfi_def_cfa_offset 16
+ 737              		@ sp needed
+ 738 0048 70BD     		pop	{r4, r5, r6, pc}
+ 739              	.LVL92:
+ 740              	.L62:
+ 741              	.LCFI14:
+ 742              		.cfi_restore_state
+ 743              	.LBB16:
+ 744              	.LBB17:
+ 293:../../iot_link/at/at.c ****     	{
+ 745              		.loc 1 293 0
+ 746 004a D6F8A834 		ldr	r3, [r6, #1192]
+ 747 004e 012B     		cmp	r3, #1
+ 748 0050 19D1     		bne	.L58
+ 295:../../iot_link/at/at.c ****             {
+ 749              		.loc 1 295 0
+ 750 0052 2CB9     		cbnz	r4, .L59
+ 297:../../iot_link/at/at.c ****             }
+ 751              		.loc 1 297 0
+ 752 0054 4FF48062 		mov	r2, #1024
+ 753 0058 2146     		mov	r1, r4
+ 754 005a 2846     		mov	r0, r5
+ 755 005c FFF7FEFF 		bl	memset
+ 756              	.LVL93:
+ 757              	.L59:
+ 299:../../iot_link/at/at.c ****             if( rcvlen > 0)
+ 758              		.loc 1 299 0
+ 759 0060 2819     		adds	r0, r5, r4
+ 760 0062 FFF7FEFF 		bl	__resp_rcv.constprop.6
+ 761              	.LVL94:
+ 762 0066 0444     		add	r4, r4, r0
+ 763              	.LVL95:
+ 300:../../iot_link/at/at.c ****             {
+ 764              		.loc 1 300 0
+ 765 0068 002C     		cmp	r4, #0
+ 766 006a 08DD     		ble	.L55
+ 302:../../iot_link/at/at.c ****                 {
+ 767              		.loc 1 302 0
+ 768 006c 2046     		mov	r0, r4
+ 769 006e FFF7FEFF 		bl	__oob_match.constprop.5
+ 770              	.LVL96:
+ 771 0072 18B1     		cbz	r0, .L61
+ 304:../../iot_link/at/at.c ****                     {
+ 772              		.loc 1 304 0
+ 773 0074 2046     		mov	r0, r4
+ 774 0076 FFF7FEFF 		bl	__cmd_match.constprop.4
+ 775              	.LVL97:
+ 776 007a 00B9     		cbnz	r0, .L55
+ 777              	.L61:
+ 778              	.LVL98:
+ 306:../../iot_link/at/at.c ****                     }
+ 779              		.loc 1 306 0
+ 780 007c 0024     		movs	r4, #0
+ 781              	.LVL99:
+ 782              	.L55:
+ 291:../../iot_link/at/at.c ****     {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 26
+
+
+ 783              		.loc 1 291 0
+ 784 007e 7368     		ldr	r3, [r6, #4]
+ 785 0080 002B     		cmp	r3, #0
+ 786 0082 E2D1     		bne	.L62
+ 787 0084 DEE7     		b	.L57
+ 788              	.L58:
+ 317:../../iot_link/at/at.c ****     	    rcvlen = __resp_rcv(g_at_cb.rcvbuf,CONFIG_AT_RECVMAXLEN,cn_osal_timeout_forever);
+ 789              		.loc 1 317 0
+ 790 0086 4FF48062 		mov	r2, #1024
+ 791 008a 0021     		movs	r1, #0
+ 792 008c 2846     		mov	r0, r5
+ 793 008e FFF7FEFF 		bl	memset
+ 794              	.LVL100:
+ 318:../../iot_link/at/at.c ****     	    if(rcvlen > 0)
+ 795              		.loc 1 318 0
+ 796 0092 2846     		mov	r0, r5
+ 797 0094 FFF7FEFF 		bl	__resp_rcv.constprop.6
+ 798              	.LVL101:
+ 319:../../iot_link/at/at.c **** 	        {
+ 799              		.loc 1 319 0
+ 800 0098 041E     		subs	r4, r0, #0
+ 801 009a F0DD     		ble	.L55
+ 321:../../iot_link/at/at.c ****     	        {
+ 802              		.loc 1 321 0
+ 803 009c FFF7FEFF 		bl	__oob_match.constprop.5
+ 804              	.LVL102:
+ 805 00a0 0028     		cmp	r0, #0
+ 806 00a2 ECD0     		beq	.L55
+ 323:../../iot_link/at/at.c ****     	        }
+ 807              		.loc 1 323 0
+ 808 00a4 2046     		mov	r0, r4
+ 809 00a6 FFF7FEFF 		bl	__cmd_match.constprop.4
+ 810              	.LVL103:
+ 811 00aa E8E7     		b	.L55
+ 812              	.LVL104:
+ 813              	.L64:
+ 282:../../iot_link/at/at.c **** 
+ 814              		.loc 1 282 0
+ 815 00ac 0024     		movs	r4, #0
+ 816 00ae 06F1A405 		add	r5, r6, #164
+ 817 00b2 E4E7     		b	.L55
+ 818              	.L72:
+ 819              		.align	2
+ 820              	.L71:
+ 821 00b4 00000000 		.word	.LANCHOR1
+ 822 00b8 00000000 		.word	.LANCHOR2
+ 823 00bc 00000000 		.word	.LC12
+ 824 00c0 00000000 		.word	_impure_ptr
+ 825              	.LBE17:
+ 826              	.LBE16:
+ 827              		.cfi_endproc
+ 828              	.LFE12:
+ 830              		.section	.text.__cmd_send,"ax",%progbits
+ 831              		.align	1
+ 832              		.syntax unified
+ 833              		.thumb
+ 834              		.thumb_func
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 27
+
+
+ 835              		.fpu fpv4-sp-d16
+ 837              	__cmd_send:
+ 838              	.LFB6:
+ 149:../../iot_link/at/at.c ****     ssize_t ret = 0;
+ 839              		.loc 1 149 0
+ 840              		.cfi_startproc
+ 841              		@ args = 0, pretend = 0, frame = 0
+ 842              		@ frame_needed = 0, uses_anonymous_args = 0
+ 843              	.LVL105:
+ 844 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 845              	.LCFI15:
+ 846              		.cfi_def_cfa_offset 24
+ 847              		.cfi_offset 4, -16
+ 848              		.cfi_offset 5, -12
+ 849              		.cfi_offset 6, -8
+ 850              		.cfi_offset 14, -4
+ 152:../../iot_link/at/at.c ****     if(ret > 0)
+ 851              		.loc 1 152 0
+ 852 0002 124E     		ldr	r6, .L78
+ 853 0004 0092     		str	r2, [sp]
+ 854 0006 0B46     		mov	r3, r1
+ 855 0008 0246     		mov	r2, r0
+ 856              	.LVL106:
+ 149:../../iot_link/at/at.c ****     ssize_t ret = 0;
+ 857              		.loc 1 149 0
+ 858 000a 0446     		mov	r4, r0
+ 859 000c 0D46     		mov	r5, r1
+ 152:../../iot_link/at/at.c ****     if(ret > 0)
+ 860              		.loc 1 152 0
+ 861 000e 7068     		ldr	r0, [r6, #4]
+ 862              	.LVL107:
+ 863 0010 0021     		movs	r1, #0
+ 864              	.LVL108:
+ 865 0012 FFF7FEFF 		bl	los_dev_write
+ 866              	.LVL109:
+ 153:../../iot_link/at/at.c ****     {
+ 867              		.loc 1 153 0
+ 868 0016 0028     		cmp	r0, #0
+ 869 0018 14DD     		ble	.L76
+ 155:../../iot_link/at/at.c ****         ret = 0;
+ 870              		.loc 1 155 0
+ 871 001a 96F8A434 		ldrb	r3, [r6, #1188]	@ zero_extendqisi2
+ 872 001e C3F38103 		ubfx	r3, r3, #2, #2
+ 873              	.LVL110:
+ 874              	.LBB20:
+ 875              	.LBB21:
+ 134:../../iot_link/at/at.c ****     {
+ 876              		.loc 1 134 0
+ 877 0022 012B     		cmp	r3, #1
+ 878 0024 06D1     		bne	.L75
+ 136:../../iot_link/at/at.c ****     }
+ 879              		.loc 1 136 0
+ 880 0026 2A46     		mov	r2, r5
+ 881 0028 2146     		mov	r1, r4
+ 882 002a 0948     		ldr	r0, .L78+4
+ 883              	.LVL111:
+ 884 002c FFF7FEFF 		bl	print_ascii
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 28
+
+
+ 885              	.LVL112:
+ 886              	.L77:
+ 887              	.LBE21:
+ 888              	.LBE20:
+ 156:../../iot_link/at/at.c ****     }
+ 889              		.loc 1 156 0
+ 890 0030 0020     		movs	r0, #0
+ 891              	.LVL113:
+ 162:../../iot_link/at/at.c **** }
+ 892              		.loc 1 162 0
+ 893 0032 09E0     		b	.L73
+ 894              	.LVL114:
+ 895              	.L75:
+ 896              	.LBB23:
+ 897              	.LBB22:
+ 138:../../iot_link/at/at.c ****     {
+ 898              		.loc 1 138 0
+ 899 0034 022B     		cmp	r3, #2
+ 900 0036 FBD1     		bne	.L77
+ 140:../../iot_link/at/at.c ****     }
+ 901              		.loc 1 140 0
+ 902 0038 2A46     		mov	r2, r5
+ 903 003a 2146     		mov	r1, r4
+ 904 003c 0448     		ldr	r0, .L78+4
+ 905              	.LVL115:
+ 906 003e FFF7FEFF 		bl	print_hex
+ 907              	.LVL116:
+ 908 0042 F5E7     		b	.L77
+ 909              	.LVL117:
+ 910              	.L76:
+ 911              	.LBE22:
+ 912              	.LBE23:
+ 160:../../iot_link/at/at.c ****     }
+ 913              		.loc 1 160 0
+ 914 0044 4FF0FF30 		mov	r0, #-1
+ 915              	.LVL118:
+ 916              	.L73:
+ 163:../../iot_link/at/at.c **** 
+ 917              		.loc 1 163 0
+ 918 0048 02B0     		add	sp, sp, #8
+ 919              	.LCFI16:
+ 920              		.cfi_def_cfa_offset 16
+ 921              		@ sp needed
+ 922 004a 70BD     		pop	{r4, r5, r6, pc}
+ 923              	.LVL119:
+ 924              	.L79:
+ 925              		.align	2
+ 926              	.L78:
+ 927 004c 00000000 		.word	.LANCHOR1
+ 928 0050 00000000 		.word	.LC13
+ 929              		.cfi_endproc
+ 930              	.LFE6:
+ 932              		.section	.text.at_streammode_set,"ax",%progbits
+ 933              		.align	1
+ 934              		.global	at_streammode_set
+ 935              		.syntax unified
+ 936              		.thumb
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 29
+
+
+ 937              		.thumb_func
+ 938              		.fpu fpv4-sp-d16
+ 940              	at_streammode_set:
+ 941              	.LFB13:
+ 339:../../iot_link/at/at.c **** 	g_at_cb.streammode = mode;
+ 942              		.loc 1 339 0
+ 943              		.cfi_startproc
+ 944              		@ args = 0, pretend = 0, frame = 0
+ 945              		@ frame_needed = 0, uses_anonymous_args = 0
+ 946              		@ link register save eliminated.
+ 947              	.LVL120:
+ 340:../../iot_link/at/at.c **** 	return 0;
+ 948              		.loc 1 340 0
+ 949 0000 024B     		ldr	r3, .L81
+ 950 0002 C3F8A804 		str	r0, [r3, #1192]
+ 342:../../iot_link/at/at.c **** 
+ 951              		.loc 1 342 0
+ 952 0006 0020     		movs	r0, #0
+ 953              	.LVL121:
+ 954 0008 7047     		bx	lr
+ 955              	.L82:
+ 956 000a 00BF     		.align	2
+ 957              	.L81:
+ 958 000c 00000000 		.word	.LANCHOR1
+ 959              		.cfi_endproc
+ 960              	.LFE13:
+ 962              		.section	.text.at_debugclose,"ax",%progbits
+ 963              		.align	1
+ 964              		.global	at_debugclose
+ 965              		.syntax unified
+ 966              		.thumb
+ 967              		.thumb_func
+ 968              		.fpu fpv4-sp-d16
+ 970              	at_debugclose:
+ 971              	.LFB14:
+ 346:../../iot_link/at/at.c ****     //for the debug
+ 972              		.loc 1 346 0
+ 973              		.cfi_startproc
+ 974              		@ args = 0, pretend = 0, frame = 0
+ 975              		@ frame_needed = 0, uses_anonymous_args = 0
+ 976              		@ link register save eliminated.
+ 348:../../iot_link/at/at.c ****     g_at_cb.txdebugmode = en_at_debug_none;
+ 977              		.loc 1 348 0
+ 978 0000 054A     		ldr	r2, .L84
+ 979 0002 92F8A434 		ldrb	r3, [r2, #1188]	@ zero_extendqisi2
+ 349:../../iot_link/at/at.c **** 
+ 980              		.loc 1 349 0
+ 981 0006 03F0FC03 		and	r3, r3, #252
+ 982 000a 6FF38303 		bfc	r3, #2, #2
+ 983 000e 82F8A434 		strb	r3, [r2, #1188]
+ 352:../../iot_link/at/at.c **** 
+ 984              		.loc 1 352 0
+ 985 0012 0020     		movs	r0, #0
+ 986 0014 7047     		bx	lr
+ 987              	.L85:
+ 988 0016 00BF     		.align	2
+ 989              	.L84:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 30
+
+
+ 990 0018 00000000 		.word	.LANCHOR1
+ 991              		.cfi_endproc
+ 992              	.LFE14:
+ 994              		.section	.text.at_command,"ax",%progbits
+ 995              		.align	1
+ 996              		.global	at_command
+ 997              		.syntax unified
+ 998              		.thumb
+ 999              		.thumb_func
+ 1000              		.fpu fpv4-sp-d16
+ 1002              	at_command:
+ 1003              	.LFB15:
+ 364:../../iot_link/at/at.c ****     int ret = -1;
+ 1004              		.loc 1 364 0
+ 1005              		.cfi_startproc
+ 1006              		@ args = 8, pretend = 0, frame = 0
+ 1007              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1008              	.LVL122:
+ 1009 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 1010              	.LCFI17:
+ 1011              		.cfi_def_cfa_offset 32
+ 1012              		.cfi_offset 4, -32
+ 1013              		.cfi_offset 5, -28
+ 1014              		.cfi_offset 6, -24
+ 1015              		.cfi_offset 7, -20
+ 1016              		.cfi_offset 8, -16
+ 1017              		.cfi_offset 9, -12
+ 1018              		.cfi_offset 10, -8
+ 1019              		.cfi_offset 14, -4
+ 364:../../iot_link/at/at.c ****     int ret = -1;
+ 1020              		.loc 1 364 0
+ 1021 0004 0F46     		mov	r7, r1
+ 1022 0006 9046     		mov	r8, r2
+ 1023 0008 9A46     		mov	r10, r3
+ 1024              	.LVL123:
+ 1025 000a DDE90895 		ldrd	r9, r5, [sp, #32]
+ 366:../../iot_link/at/at.c ****     {
+ 1026              		.loc 1 366 0
+ 1027 000e 0646     		mov	r6, r0
+ 1028 0010 20B9     		cbnz	r0, .L87
+ 1029              	.LVL124:
+ 1030              	.L90:
+ 368:../../iot_link/at/at.c ****     }
+ 1031              		.loc 1 368 0
+ 1032 0012 4FF0FF35 		mov	r5, #-1
+ 1033              	.LVL125:
+ 1034              	.L86:
+ 402:../../iot_link/at/at.c **** 
+ 1035              		.loc 1 402 0
+ 1036 0016 2846     		mov	r0, r5
+ 1037 0018 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1038              	.LVL126:
+ 1039              	.L87:
+ 370:../../iot_link/at/at.c ****     {
+ 1040              		.loc 1 370 0
+ 1041 001c 002A     		cmp	r2, #0
+ 1042 001e 39D0     		beq	.L89
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 31
+
+
+ 1043              	.LVL127:
+ 1044              	.LBB30:
+ 1045              	.LBB31:
+ 186:../../iot_link/at/at.c ****     {
+ 1046              		.loc 1 186 0
+ 1047 0020 1F4C     		ldr	r4, .L108
+ 1048 0022 2946     		mov	r1, r5
+ 1049              	.LVL128:
+ 1050 0024 606A     		ldr	r0, [r4, #36]
+ 1051              	.LVL129:
+ 1052 0026 FFF7FEFF 		bl	osal_semp_pend
+ 1053              	.LVL130:
+ 1054 002a 0028     		cmp	r0, #0
+ 1055 002c F1D0     		beq	.L90
+ 188:../../iot_link/at/at.c ****         {
+ 1056              		.loc 1 188 0
+ 1057 002e A06A     		ldr	r0, [r4, #40]
+ 1058 0030 FFF7FEFF 		bl	osal_mutex_lock
+ 1059              	.LVL131:
+ 1060 0034 60B1     		cbz	r0, .L91
+ 195:../../iot_link/at/at.c ****             (void) osal_mutex_unlock(cmd->cmdlock);
+ 1061              		.loc 1 195 0
+ 1062 0036 0021     		movs	r1, #0
+ 1063 0038 206A     		ldr	r0, [r4, #32]
+ 194:../../iot_link/at/at.c ****             (void) osal_semp_pend(cmd->respsync,0); //used to clear the sync
+ 1064              		.loc 1 194 0
+ 1065 003a C4F81890 		str	r9, [r4, #24]
+ 191:../../iot_link/at/at.c ****             cmd->index = index;
+ 1066              		.loc 1 191 0
+ 1067 003e C4E90267 		strd	r6, r7, [r4, #8]
+ 193:../../iot_link/at/at.c ****             cmd->respbuflen = respbuflen;
+ 1068              		.loc 1 193 0
+ 1069 0042 C4E9048A 		strd	r8, r10, [r4, #16]
+ 195:../../iot_link/at/at.c ****             (void) osal_mutex_unlock(cmd->cmdlock);
+ 1070              		.loc 1 195 0
+ 1071 0046 FFF7FEFF 		bl	osal_semp_pend
+ 1072              	.LVL132:
+ 196:../../iot_link/at/at.c ****         }
+ 1073              		.loc 1 196 0
+ 1074 004a A06A     		ldr	r0, [r4, #40]
+ 1075 004c FFF7FEFF 		bl	osal_mutex_unlock
+ 1076              	.LVL133:
+ 1077              	.L91:
+ 1078              	.LBE31:
+ 1079              	.LBE30:
+ 1080              	.LBB32:
+ 1081              	.LBB33:
+ 375:../../iot_link/at/at.c ****             if(0 == ret)
+ 1082              		.loc 1 375 0
+ 1083 0050 2A46     		mov	r2, r5
+ 1084 0052 3946     		mov	r1, r7
+ 1085 0054 3046     		mov	r0, r6
+ 1086 0056 FFF7FEFF 		bl	__cmd_send
+ 1087              	.LVL134:
+ 376:../../iot_link/at/at.c ****             {
+ 1088              		.loc 1 376 0
+ 1089 005a 98B1     		cbz	r0, .L92
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 32
+
+
+ 1090              	.LVL135:
+ 1091              	.L94:
+ 389:../../iot_link/at/at.c ****             }
+ 1092              		.loc 1 389 0
+ 1093 005c 4FF0FF35 		mov	r5, #-1
+ 1094              	.LVL136:
+ 1095              	.L93:
+ 1096              	.LBB34:
+ 1097              	.LBB35:
+ 209:../../iot_link/at/at.c ****      {
+ 1098              		.loc 1 209 0
+ 1099 0060 A06A     		ldr	r0, [r4, #40]
+ 1100 0062 FFF7FEFF 		bl	osal_mutex_lock
+ 1101              	.LVL137:
+ 1102 0066 48B1     		cbz	r0, .L95
+ 211:../../iot_link/at/at.c ****         cmd->cmdlen = 0;
+ 1103              		.loc 1 211 0
+ 1104 0068 0023     		movs	r3, #0
+ 217:../../iot_link/at/at.c ****      }
+ 1105              		.loc 1 217 0
+ 1106 006a A06A     		ldr	r0, [r4, #40]
+ 212:../../iot_link/at/at.c ****         cmd->index = NULL;
+ 1107              		.loc 1 212 0
+ 1108 006c C4E90233 		strd	r3, r3, [r4, #8]
+ 214:../../iot_link/at/at.c ****         cmd->respbuflen = 0;
+ 1109              		.loc 1 214 0
+ 1110 0070 C4E90433 		strd	r3, r3, [r4, #16]
+ 216:../../iot_link/at/at.c ****         (void) osal_mutex_unlock(cmd->cmdlock);
+ 1111              		.loc 1 216 0
+ 1112 0074 C4E90633 		strd	r3, r3, [r4, #24]
+ 217:../../iot_link/at/at.c ****      }
+ 1113              		.loc 1 217 0
+ 1114 0078 FFF7FEFF 		bl	osal_mutex_unlock
+ 1115              	.LVL138:
+ 1116              	.L95:
+ 219:../../iot_link/at/at.c ****      return 0;
+ 1117              		.loc 1 219 0
+ 1118 007c 606A     		ldr	r0, [r4, #36]
+ 1119 007e FFF7FEFF 		bl	osal_semp_post
+ 1120              	.LVL139:
+ 1121 0082 C8E7     		b	.L86
+ 1122              	.LVL140:
+ 1123              	.L92:
+ 1124              	.LBE35:
+ 1125              	.LBE34:
+ 378:../../iot_link/at/at.c ****                 {
+ 1126              		.loc 1 378 0
+ 1127 0084 2946     		mov	r1, r5
+ 1128 0086 206A     		ldr	r0, [r4, #32]
+ 1129              	.LVL141:
+ 1130 0088 FFF7FEFF 		bl	osal_semp_pend
+ 1131              	.LVL142:
+ 1132 008c 0028     		cmp	r0, #0
+ 1133 008e E5D0     		beq	.L94
+ 380:../../iot_link/at/at.c ****                 }
+ 1134              		.loc 1 380 0
+ 1135 0090 E569     		ldr	r5, [r4, #28]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 33
+
+
+ 1136              	.LVL143:
+ 1137 0092 E5E7     		b	.L93
+ 1138              	.LVL144:
+ 1139              	.L89:
+ 1140              	.LBE33:
+ 1141              	.LBE32:
+ 398:../../iot_link/at/at.c ****     }
+ 1142              		.loc 1 398 0
+ 1143 0094 2A46     		mov	r2, r5
+ 1144              	.LVL145:
+ 402:../../iot_link/at/at.c **** 
+ 1145              		.loc 1 402 0
+ 1146 0096 BDE8F047 		pop	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 1147              	.LCFI18:
+ 1148              		.cfi_restore 14
+ 1149              		.cfi_restore 10
+ 1150              		.cfi_restore 9
+ 1151              		.cfi_restore 8
+ 1152              		.cfi_restore 7
+ 1153              		.cfi_restore 6
+ 1154              		.cfi_restore 5
+ 1155              		.cfi_restore 4
+ 1156              		.cfi_def_cfa_offset 0
+ 1157              	.LVL146:
+ 398:../../iot_link/at/at.c ****     }
+ 1158              		.loc 1 398 0
+ 1159 009a FFF7FEBF 		b	__cmd_send
+ 1160              	.LVL147:
+ 1161              	.L109:
+ 1162 009e 00BF     		.align	2
+ 1163              	.L108:
+ 1164 00a0 00000000 		.word	.LANCHOR1
+ 1165              		.cfi_endproc
+ 1166              	.LFE15:
+ 1168              		.section	.text.shell_at,"ax",%progbits
+ 1169              		.align	1
+ 1170              		.syntax unified
+ 1171              		.thumb
+ 1172              		.thumb_func
+ 1173              		.fpu fpv4-sp-d16
+ 1175              	shell_at:
+ 1176              	.LFB18:
+ 504:../../iot_link/at/at.c ****     #define CN_AT_SHELL_LEN 64
+ 1177              		.loc 1 504 0
+ 1178              		.cfi_startproc
+ 1179              		@ args = 0, pretend = 0, frame = 128
+ 1180              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1181              	.LVL148:
+ 1182 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1183              	.LCFI19:
+ 1184              		.cfi_def_cfa_offset 20
+ 1185              		.cfi_offset 4, -20
+ 1186              		.cfi_offset 5, -16
+ 1187              		.cfi_offset 6, -12
+ 1188              		.cfi_offset 7, -8
+ 1189              		.cfi_offset 14, -4
+ 513:../../iot_link/at/at.c ****     {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 34
+
+
+ 1190              		.loc 1 513 0
+ 1191 0002 831E     		subs	r3, r0, #2
+ 1192 0004 012B     		cmp	r3, #1
+ 504:../../iot_link/at/at.c ****     #define CN_AT_SHELL_LEN 64
+ 1193              		.loc 1 504 0
+ 1194 0006 A3B0     		sub	sp, sp, #140
+ 1195              	.LCFI20:
+ 1196              		.cfi_def_cfa_offset 160
+ 504:../../iot_link/at/at.c ****     #define CN_AT_SHELL_LEN 64
+ 1197              		.loc 1 504 0
+ 1198 0008 0F46     		mov	r7, r1
+ 513:../../iot_link/at/at.c ****     {
+ 1199              		.loc 1 513 0
+ 1200 000a 17D9     		bls	.L111
+ 515:../../iot_link/at/at.c ****         return ret;
+ 1201              		.loc 1 515 0
+ 1202 000c FFF7FEFF 		bl	link_log_level_get
+ 1203              	.LVL149:
+ 1204 0010 0128     		cmp	r0, #1
+ 1205 0012 10D8     		bhi	.L118
+ 515:../../iot_link/at/at.c ****         return ret;
+ 1206              		.loc 1 515 0 is_stmt 0 discriminator 1
+ 1207 0014 0120     		movs	r0, #1
+ 1208 0016 FFF7FEFF 		bl	link_log_level_name
+ 1209              	.LVL150:
+ 1210 001a 0446     		mov	r4, r0
+ 1211 001c FFF7FEFF 		bl	osal_sys_time
+ 1212              	.LVL151:
+ 1213 0020 2D4B     		ldr	r3, .L121
+ 1214 0022 0246     		mov	r2, r0
+ 1215 0024 2146     		mov	r1, r4
+ 1216 0026 2D48     		ldr	r0, .L121+4
+ 1217 0028 FFF7FEFF 		bl	printf
+ 1218              	.LVL152:
+ 1219 002c 2C4B     		ldr	r3, .L121+8
+ 1220 002e 1B68     		ldr	r3, [r3]
+ 1221 0030 9868     		ldr	r0, [r3, #8]
+ 1222 0032 FFF7FEFF 		bl	fflush
+ 1223              	.LVL153:
+ 1224              	.L118:
+ 516:../../iot_link/at/at.c ****     }
+ 1225              		.loc 1 516 0 is_stmt 1
+ 1226 0036 4FF0FF34 		mov	r4, #-1
+ 1227 003a 39E0     		b	.L110
+ 1228              	.LVL154:
+ 1229              	.L111:
+ 1230              	.LBB38:
+ 1231              	.LBB39:
+ 518:../../iot_link/at/at.c ****     {
+ 1232              		.loc 1 518 0
+ 1233 003c 0328     		cmp	r0, #3
+ 524:../../iot_link/at/at.c ****     (void) snprintf((char *)cmdbuf,CN_AT_SHELL_LEN,"%s\r\n",argv[1]);
+ 1234              		.loc 1 524 0
+ 1235 003e 4FF04004 		mov	r4, #64
+ 1236 0042 02AD     		add	r5, sp, #8
+ 520:../../iot_link/at/at.c ****     }
+ 1237              		.loc 1 520 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 35
+
+
+ 1238 0044 08BF     		it	eq
+ 1239 0046 8E68     		ldreq	r6, [r1, #8]
+ 1240              	.LVL155:
+ 524:../../iot_link/at/at.c ****     (void) snprintf((char *)cmdbuf,CN_AT_SHELL_LEN,"%s\r\n",argv[1]);
+ 1241              		.loc 1 524 0
+ 1242 0048 2246     		mov	r2, r4
+ 1243 004a 4FF00001 		mov	r1, #0
+ 1244              	.LVL156:
+ 1245 004e 2846     		mov	r0, r5
+ 1246              	.LVL157:
+ 510:../../iot_link/at/at.c ****     int ret = -1;
+ 1247              		.loc 1 510 0
+ 1248 0050 18BF     		it	ne
+ 1249 0052 0026     		movne	r6, #0
+ 1250              	.LVL158:
+ 524:../../iot_link/at/at.c ****     (void) snprintf((char *)cmdbuf,CN_AT_SHELL_LEN,"%s\r\n",argv[1]);
+ 1251              		.loc 1 524 0
+ 1252 0054 FFF7FEFF 		bl	memset
+ 1253              	.LVL159:
+ 525:../../iot_link/at/at.c **** 
+ 1254              		.loc 1 525 0
+ 1255 0058 2146     		mov	r1, r4
+ 1256 005a 7B68     		ldr	r3, [r7, #4]
+ 1257 005c 214A     		ldr	r2, .L121+12
+ 1258 005e 12A8     		add	r0, sp, #72
+ 1259 0060 FFF7FEFF 		bl	snprintf
+ 1260              	.LVL160:
+ 527:../../iot_link/at/at.c ****     if(ret == 0)
+ 1261              		.loc 1 527 0
+ 1262 0064 12A8     		add	r0, sp, #72
+ 1263 0066 FFF7FEFF 		bl	strlen
+ 1264              	.LVL161:
+ 1265 006a 4FF47A73 		mov	r3, #1000
+ 1266 006e CDE90043 		strd	r4, r3, [sp]
+ 1267 0072 0146     		mov	r1, r0
+ 1268 0074 2B46     		mov	r3, r5
+ 1269 0076 3246     		mov	r2, r6
+ 1270 0078 12A8     		add	r0, sp, #72
+ 1271 007a FFF7FEFF 		bl	at_command
+ 1272              	.LVL162:
+ 528:../../iot_link/at/at.c ****     {
+ 1273              		.loc 1 528 0
+ 1274 007e 0446     		mov	r4, r0
+ 1275 0080 C8B9     		cbnz	r0, .L114
+ 530:../../iot_link/at/at.c ****     }
+ 1276              		.loc 1 530 0
+ 1277 0082 FFF7FEFF 		bl	link_log_level_get
+ 1278              	.LVL163:
+ 1279 0086 0128     		cmp	r0, #1
+ 1280 0088 12D8     		bhi	.L110
+ 1281 008a 0120     		movs	r0, #1
+ 1282 008c FFF7FEFF 		bl	link_log_level_name
+ 1283              	.LVL164:
+ 1284 0090 0646     		mov	r6, r0
+ 1285              	.LVL165:
+ 1286 0092 FFF7FEFF 		bl	osal_sys_time
+ 1287              	.LVL166:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 36
+
+
+ 1288 0096 CDE90045 		strd	r4, r5, [sp]
+ 1289 009a 0246     		mov	r2, r0
+ 1290 009c 0E4B     		ldr	r3, .L121
+ 1291 009e 1248     		ldr	r0, .L121+16
+ 1292 00a0 3146     		mov	r1, r6
+ 1293 00a2 FFF7FEFF 		bl	printf
+ 1294              	.LVL167:
+ 1295              	.L120:
+ 534:../../iot_link/at/at.c ****     }
+ 1296              		.loc 1 534 0
+ 1297 00a6 0E4B     		ldr	r3, .L121+8
+ 1298 00a8 1B68     		ldr	r3, [r3]
+ 1299 00aa 9868     		ldr	r0, [r3, #8]
+ 1300 00ac FFF7FEFF 		bl	fflush
+ 1301              	.LVL168:
+ 1302              	.L110:
+ 1303              	.LBE39:
+ 1304              	.LBE38:
+ 537:../../iot_link/at/at.c **** OSSHELL_EXPORT_CMD(shell_at,"atcmd","atcmd atcommand atrespindex");
+ 1305              		.loc 1 537 0
+ 1306 00b0 2046     		mov	r0, r4
+ 1307 00b2 23B0     		add	sp, sp, #140
+ 1308              	.LCFI21:
+ 1309              		.cfi_remember_state
+ 1310              		.cfi_def_cfa_offset 20
+ 1311              		@ sp needed
+ 1312 00b4 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1313              	.LVL169:
+ 1314              	.L114:
+ 1315              	.LCFI22:
+ 1316              		.cfi_restore_state
+ 1317              	.LBB41:
+ 1318              	.LBB40:
+ 534:../../iot_link/at/at.c ****     }
+ 1319              		.loc 1 534 0
+ 1320 00b6 FFF7FEFF 		bl	link_log_level_get
+ 1321              	.LVL170:
+ 1322 00ba 0128     		cmp	r0, #1
+ 1323 00bc F8D8     		bhi	.L110
+ 1324 00be 0120     		movs	r0, #1
+ 1325 00c0 FFF7FEFF 		bl	link_log_level_name
+ 1326              	.LVL171:
+ 1327 00c4 0546     		mov	r5, r0
+ 1328 00c6 FFF7FEFF 		bl	osal_sys_time
+ 1329              	.LVL172:
+ 1330 00ca 034B     		ldr	r3, .L121
+ 1331 00cc 0246     		mov	r2, r0
+ 1332 00ce 2946     		mov	r1, r5
+ 1333 00d0 0648     		ldr	r0, .L121+20
+ 1334 00d2 FFF7FEFF 		bl	printf
+ 1335              	.LVL173:
+ 1336 00d6 E6E7     		b	.L120
+ 1337              	.L122:
+ 1338              		.align	2
+ 1339              	.L121:
+ 1340 00d8 00000000 		.word	.LANCHOR3
+ 1341 00dc 00000000 		.word	.LC3
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 37
+
+
+ 1342 00e0 00000000 		.word	_impure_ptr
+ 1343 00e4 00000000 		.word	.LC14
+ 1344 00e8 05000000 		.word	.LC15
+ 1345 00ec 2D000000 		.word	.LC16
+ 1346              	.LBE40:
+ 1347              	.LBE41:
+ 1348              		.cfi_endproc
+ 1349              	.LFE18:
+ 1351              		.section	.text.at_oobregister,"ax",%progbits
+ 1352              		.align	1
+ 1353              		.global	at_oobregister
+ 1354              		.syntax unified
+ 1355              		.thumb
+ 1356              		.thumb_func
+ 1357              		.fpu fpv4-sp-d16
+ 1359              	at_oobregister:
+ 1360              	.LFB16:
+ 411:../../iot_link/at/at.c ****     int ret = -1;
+ 1361              		.loc 1 411 0
+ 1362              		.cfi_startproc
+ 1363              		@ args = 4, pretend = 0, frame = 0
+ 1364              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1365              	.LVL174:
+ 1366 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1367              	.LCFI23:
+ 1368              		.cfi_def_cfa_offset 20
+ 1369              		.cfi_offset 4, -20
+ 1370              		.cfi_offset 5, -16
+ 1371              		.cfi_offset 6, -12
+ 1372              		.cfi_offset 7, -8
+ 1373              		.cfi_offset 14, -4
+ 416:../../iot_link/at/at.c ****     {
+ 1374              		.loc 1 416 0
+ 1375 0002 ABB1     		cbz	r3, .L128
+ 416:../../iot_link/at/at.c ****     {
+ 1376              		.loc 1 416 0 is_stmt 0 discriminator 1
+ 1377 0004 A1B1     		cbz	r1, .L128
+ 1378 0006 0C4F     		ldr	r7, .L130
+ 421:../../iot_link/at/at.c ****     {
+ 1379              		.loc 1 421 0 is_stmt 1
+ 1380 0008 0026     		movs	r6, #0
+ 1381 000a 4FF0140C 		mov	ip, #20
+ 1382              	.LVL175:
+ 1383              	.L126:
+ 1384 000e 0CFB0675 		mla	r5, ip, r6, r7
+ 424:../../iot_link/at/at.c ****         {
+ 1385              		.loc 1 424 0
+ 1386 0012 2C6B     		ldr	r4, [r5, #48]
+ 1387 0014 4CB9     		cbnz	r4, .L125
+ 424:../../iot_link/at/at.c ****         {
+ 1388              		.loc 1 424 0 is_stmt 0 discriminator 1
+ 1389 0016 AC6B     		ldr	r4, [r5, #56]
+ 1390 0018 3CB9     		cbnz	r4, .L125
+ 428:../../iot_link/at/at.c ****             oob->func = func;
+ 1391              		.loc 1 428 0 is_stmt 1
+ 1392 001a C5E90E12 		strd	r1, r2, [r5, #56]
+ 429:../../iot_link/at/at.c ****             oob->args = args;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 38
+
+
+ 1393              		.loc 1 429 0
+ 1394 001e 2B63     		str	r3, [r5, #48]
+ 430:../../iot_link/at/at.c ****             ret = 0;
+ 1395              		.loc 1 430 0
+ 1396 0020 059B     		ldr	r3, [sp, #20]
+ 1397              	.LVL176:
+ 426:../../iot_link/at/at.c ****             oob->index = index;
+ 1398              		.loc 1 426 0
+ 1399 0022 E862     		str	r0, [r5, #44]
+ 430:../../iot_link/at/at.c ****             ret = 0;
+ 1400              		.loc 1 430 0
+ 1401 0024 6B63     		str	r3, [r5, #52]
+ 1402              	.LVL177:
+ 431:../../iot_link/at/at.c ****             break;
+ 1403              		.loc 1 431 0
+ 1404 0026 2046     		mov	r0, r4
+ 1405              	.LVL178:
+ 1406              	.L123:
+ 437:../../iot_link/at/at.c **** 
+ 1407              		.loc 1 437 0
+ 1408 0028 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1409              	.LVL179:
+ 1410              	.L125:
+ 421:../../iot_link/at/at.c ****     {
+ 1411              		.loc 1 421 0 discriminator 2
+ 1412 002a 0136     		adds	r6, r6, #1
+ 1413              	.LVL180:
+ 1414 002c 062E     		cmp	r6, #6
+ 1415 002e EED1     		bne	.L126
+ 1416              	.LVL181:
+ 1417              	.L128:
+ 418:../../iot_link/at/at.c ****     }
+ 1418              		.loc 1 418 0
+ 1419 0030 4FF0FF30 		mov	r0, #-1
+ 1420              	.LVL182:
+ 1421 0034 F8E7     		b	.L123
+ 1422              	.L131:
+ 1423 0036 00BF     		.align	2
+ 1424              	.L130:
+ 1425 0038 00000000 		.word	.LANCHOR1
+ 1426              		.cfi_endproc
+ 1427              	.LFE16:
+ 1429              		.section	.text.at_init,"ax",%progbits
+ 1430              		.align	1
+ 1431              		.global	at_init
+ 1432              		.syntax unified
+ 1433              		.thumb
+ 1434              		.thumb_func
+ 1435              		.fpu fpv4-sp-d16
+ 1437              	at_init:
+ 1438              	.LFB17:
+ 448:../../iot_link/at/at.c ****     int ret = -1;
+ 1439              		.loc 1 448 0
+ 1440              		.cfi_startproc
+ 1441              		@ args = 0, pretend = 0, frame = 0
+ 1442              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1443              	.LVL183:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 39
+
+
+ 1444 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 1445              	.LCFI24:
+ 1446              		.cfi_def_cfa_offset 24
+ 1447              		.cfi_offset 4, -16
+ 1448              		.cfi_offset 5, -12
+ 1449              		.cfi_offset 6, -8
+ 1450              		.cfi_offset 14, -4
+ 451:../../iot_link/at/at.c ****     g_at_cb.devname = CONFIG_AT_DEVNAME;
+ 1451              		.loc 1 451 0
+ 1452 0002 524E     		ldr	r6, .L142
+ 1453 0004 40F2AC42 		movw	r2, #1196
+ 1454 0008 0021     		movs	r1, #0
+ 1455 000a 3046     		mov	r0, r6
+ 1456 000c FFF7FEFF 		bl	memset
+ 1457              	.LVL184:
+ 452:../../iot_link/at/at.c **** 
+ 1458              		.loc 1 452 0
+ 1459 0010 3046     		mov	r0, r6
+ 1460 0012 4F4B     		ldr	r3, .L142+4
+ 1461 0014 40F8243B 		str	r3, [r0], #36
+ 455:../../iot_link/at/at.c ****     {
+ 1462              		.loc 1 455 0
+ 1463 0018 0122     		movs	r2, #1
+ 1464 001a 1146     		mov	r1, r2
+ 1465 001c FFF7FEFF 		bl	osal_semp_create
+ 1466              	.LVL185:
+ 1467 0020 3546     		mov	r5, r6
+ 1468 0022 C0B9     		cbnz	r0, .L133
+ 457:../../iot_link/at/at.c ****         goto EXIT_CMDSYNC;
+ 1469              		.loc 1 457 0
+ 1470 0024 FFF7FEFF 		bl	link_log_level_get
+ 1471              	.LVL186:
+ 1472 0028 0128     		cmp	r0, #1
+ 1473 002a 11D8     		bhi	.L141
+ 457:../../iot_link/at/at.c ****         goto EXIT_CMDSYNC;
+ 1474              		.loc 1 457 0 is_stmt 0 discriminator 1
+ 1475 002c 0120     		movs	r0, #1
+ 1476 002e FFF7FEFF 		bl	link_log_level_name
+ 1477              	.LVL187:
+ 1478 0032 0446     		mov	r4, r0
+ 1479 0034 FFF7FEFF 		bl	osal_sys_time
+ 1480              	.LVL188:
+ 1481 0038 464B     		ldr	r3, .L142+8
+ 1482 003a 0093     		str	r3, [sp]
+ 1483 003c 0246     		mov	r2, r0
+ 1484 003e 2146     		mov	r1, r4
+ 1485 0040 4548     		ldr	r0, .L142+12
+ 1486 0042 FFF7FEFF 		bl	printf
+ 1487              	.LVL189:
+ 1488 0046 454B     		ldr	r3, .L142+16
+ 1489 0048 1B68     		ldr	r3, [r3]
+ 1490 004a 9868     		ldr	r0, [r3, #8]
+ 1491 004c FFF7FEFF 		bl	fflush
+ 1492              	.LVL190:
+ 1493              	.L141:
+ 495:../../iot_link/at/at.c **** }
+ 1494              		.loc 1 495 0 is_stmt 1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 40
+
+
+ 1495 0050 4FF0FF30 		mov	r0, #-1
+ 1496 0054 78E0     		b	.L132
+ 1497              	.L133:
+ 460:../../iot_link/at/at.c ****     {
+ 1498              		.loc 1 460 0
+ 1499 0056 0022     		movs	r2, #0
+ 1500 0058 0121     		movs	r1, #1
+ 1501 005a 06F12000 		add	r0, r6, #32
+ 1502 005e FFF7FEFF 		bl	osal_semp_create
+ 1503              	.LVL191:
+ 1504 0062 E0B9     		cbnz	r0, .L135
+ 462:../../iot_link/at/at.c ****         goto EXIT_RESPSYNC;
+ 1505              		.loc 1 462 0
+ 1506 0064 FFF7FEFF 		bl	link_log_level_get
+ 1507              	.LVL192:
+ 1508 0068 0128     		cmp	r0, #1
+ 1509 006a 11D8     		bhi	.L136
+ 462:../../iot_link/at/at.c ****         goto EXIT_RESPSYNC;
+ 1510              		.loc 1 462 0 is_stmt 0 discriminator 1
+ 1511 006c 0120     		movs	r0, #1
+ 1512 006e FFF7FEFF 		bl	link_log_level_name
+ 1513              	.LVL193:
+ 1514 0072 0446     		mov	r4, r0
+ 1515 0074 FFF7FEFF 		bl	osal_sys_time
+ 1516              	.LVL194:
+ 1517 0078 364B     		ldr	r3, .L142+8
+ 1518 007a 0093     		str	r3, [sp]
+ 1519 007c 0246     		mov	r2, r0
+ 1520 007e 2146     		mov	r1, r4
+ 1521 0080 3548     		ldr	r0, .L142+12
+ 1522 0082 FFF7FEFF 		bl	printf
+ 1523              	.LVL195:
+ 1524 0086 354B     		ldr	r3, .L142+16
+ 1525 0088 1B68     		ldr	r3, [r3]
+ 1526 008a 9868     		ldr	r0, [r3, #8]
+ 1527 008c FFF7FEFF 		bl	fflush
+ 1528              	.LVL196:
+ 1529              	.L136:
+ 492:../../iot_link/at/at.c ****     g_at_cb.cmd.cmdsync = cn_semp_invalid;
+ 1530              		.loc 1 492 0 is_stmt 1
+ 1531 0090 3348     		ldr	r0, .L142+20
+ 1532 0092 FFF7FEFF 		bl	osal_semp_del
+ 1533              	.LVL197:
+ 493:../../iot_link/at/at.c **** EXIT_CMDSYNC:
+ 1534              		.loc 1 493 0
+ 1535 0096 4FF0FF30 		mov	r0, #-1
+ 1536 009a 6862     		str	r0, [r5, #36]
+ 1537 009c 54E0     		b	.L132
+ 1538              	.L135:
+ 465:../../iot_link/at/at.c ****     {
+ 1539              		.loc 1 465 0
+ 1540 009e 06F12800 		add	r0, r6, #40
+ 1541 00a2 FFF7FEFF 		bl	osal_mutex_create
+ 1542              	.LVL198:
+ 1543 00a6 E0B9     		cbnz	r0, .L137
+ 467:../../iot_link/at/at.c ****         goto EXIT_CMDLOCK;
+ 1544              		.loc 1 467 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 41
+
+
+ 1545 00a8 FFF7FEFF 		bl	link_log_level_get
+ 1546              	.LVL199:
+ 1547 00ac 0128     		cmp	r0, #1
+ 1548 00ae 11D8     		bhi	.L138
+ 467:../../iot_link/at/at.c ****         goto EXIT_CMDLOCK;
+ 1549              		.loc 1 467 0 is_stmt 0 discriminator 1
+ 1550 00b0 0120     		movs	r0, #1
+ 1551 00b2 FFF7FEFF 		bl	link_log_level_name
+ 1552              	.LVL200:
+ 1553 00b6 0446     		mov	r4, r0
+ 1554 00b8 FFF7FEFF 		bl	osal_sys_time
+ 1555              	.LVL201:
+ 1556 00bc 254B     		ldr	r3, .L142+8
+ 1557 00be 0093     		str	r3, [sp]
+ 1558 00c0 0246     		mov	r2, r0
+ 1559 00c2 2146     		mov	r1, r4
+ 1560 00c4 2748     		ldr	r0, .L142+24
+ 1561 00c6 FFF7FEFF 		bl	printf
+ 1562              	.LVL202:
+ 1563 00ca 244B     		ldr	r3, .L142+16
+ 1564 00cc 1B68     		ldr	r3, [r3]
+ 1565 00ce 9868     		ldr	r0, [r3, #8]
+ 1566 00d0 FFF7FEFF 		bl	fflush
+ 1567              	.LVL203:
+ 1568              	.L138:
+ 489:../../iot_link/at/at.c ****     g_at_cb.cmd.respsync = cn_semp_invalid;
+ 1569              		.loc 1 489 0 is_stmt 1
+ 1570 00d4 2448     		ldr	r0, .L142+28
+ 1571 00d6 FFF7FEFF 		bl	osal_semp_del
+ 1572              	.LVL204:
+ 490:../../iot_link/at/at.c **** EXIT_RESPSYNC:
+ 1573              		.loc 1 490 0
+ 1574 00da 4FF0FF33 		mov	r3, #-1
+ 1575 00de 2B62     		str	r3, [r5, #32]
+ 1576 00e0 D6E7     		b	.L136
+ 1577              	.L137:
+ 471:../../iot_link/at/at.c ****     {
+ 1578              		.loc 1 471 0
+ 1579 00e2 0024     		movs	r4, #0
+ 1580 00e4 0A23     		movs	r3, #10
+ 1581 00e6 CDE90043 		strd	r4, r3, [sp]
+ 1582 00ea 2246     		mov	r2, r4
+ 1583 00ec 4FF40063 		mov	r3, #2048
+ 1584 00f0 1E49     		ldr	r1, .L142+32
+ 1585 00f2 1F48     		ldr	r0, .L142+36
+ 1586 00f4 FFF7FEFF 		bl	osal_task_create
+ 1587              	.LVL205:
+ 1588 00f8 E0B9     		cbnz	r0, .L139
+ 473:../../iot_link/at/at.c ****         goto EXIT_RCVTASK;
+ 1589              		.loc 1 473 0
+ 1590 00fa FFF7FEFF 		bl	link_log_level_get
+ 1591              	.LVL206:
+ 1592 00fe 0128     		cmp	r0, #1
+ 1593 0100 11D8     		bhi	.L140
+ 473:../../iot_link/at/at.c ****         goto EXIT_RCVTASK;
+ 1594              		.loc 1 473 0 is_stmt 0 discriminator 1
+ 1595 0102 0120     		movs	r0, #1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 42
+
+
+ 1596 0104 FFF7FEFF 		bl	link_log_level_name
+ 1597              	.LVL207:
+ 1598 0108 0446     		mov	r4, r0
+ 1599 010a FFF7FEFF 		bl	osal_sys_time
+ 1600              	.LVL208:
+ 1601 010e 114B     		ldr	r3, .L142+8
+ 1602 0110 0093     		str	r3, [sp]
+ 1603 0112 0246     		mov	r2, r0
+ 1604 0114 2146     		mov	r1, r4
+ 1605 0116 1748     		ldr	r0, .L142+40
+ 1606 0118 FFF7FEFF 		bl	printf
+ 1607              	.LVL209:
+ 1608 011c 0F4B     		ldr	r3, .L142+16
+ 1609 011e 1B68     		ldr	r3, [r3]
+ 1610 0120 9868     		ldr	r0, [r3, #8]
+ 1611 0122 FFF7FEFF 		bl	fflush
+ 1612              	.LVL210:
+ 1613              	.L140:
+ 486:../../iot_link/at/at.c ****     g_at_cb.cmd.cmdlock = cn_mutex_invalid;
+ 1614              		.loc 1 486 0 is_stmt 1
+ 1615 0126 1448     		ldr	r0, .L142+44
+ 1616 0128 FFF7FEFF 		bl	osal_mutex_del
+ 1617              	.LVL211:
+ 487:../../iot_link/at/at.c **** EXIT_CMDLOCK:
+ 1618              		.loc 1 487 0
+ 1619 012c 4FF0FF33 		mov	r3, #-1
+ 1620 0130 AB62     		str	r3, [r5, #40]
+ 1621 0132 CFE7     		b	.L138
+ 1622              	.L139:
+ 478:../../iot_link/at/at.c ****     g_at_cb.txdebugmode = en_at_debug_ascii;
+ 1623              		.loc 1 478 0
+ 1624 0134 96F8A434 		ldrb	r3, [r6, #1188]	@ zero_extendqisi2
+ 1625 0138 0122     		movs	r2, #1
+ 1626 013a 62F30103 		bfi	r3, r2, #0, #2
+ 479:../../iot_link/at/at.c **** 
+ 1627              		.loc 1 479 0
+ 1628 013e 62F38303 		bfi	r3, r2, #2, #2
+ 1629 0142 86F8A434 		strb	r3, [r6, #1188]
+ 1630              	.LVL212:
+ 482:../../iot_link/at/at.c **** 
+ 1631              		.loc 1 482 0
+ 1632 0146 2046     		mov	r0, r4
+ 1633              	.LVL213:
+ 1634              	.L132:
+ 496:../../iot_link/at/at.c **** 
+ 1635              		.loc 1 496 0
+ 1636 0148 02B0     		add	sp, sp, #8
+ 1637              	.LCFI25:
+ 1638              		.cfi_def_cfa_offset 16
+ 1639              		@ sp needed
+ 1640 014a 70BD     		pop	{r4, r5, r6, pc}
+ 1641              	.L143:
+ 1642              		.align	2
+ 1643              	.L142:
+ 1644 014c 00000000 		.word	.LANCHOR1
+ 1645 0150 00000000 		.word	.LC17
+ 1646 0154 00000000 		.word	.LANCHOR4
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 43
+
+
+ 1647 0158 06000000 		.word	.LC18
+ 1648 015c 00000000 		.word	_impure_ptr
+ 1649 0160 24000000 		.word	.LANCHOR1+36
+ 1650 0164 28000000 		.word	.LC19
+ 1651 0168 20000000 		.word	.LANCHOR1+32
+ 1652 016c 00000000 		.word	__rcv_task_entry
+ 1653 0170 4A000000 		.word	.LC20
+ 1654 0174 51000000 		.word	.LC21
+ 1655 0178 28000000 		.word	.LANCHOR1+40
+ 1656              		.cfi_endproc
+ 1657              	.LFE17:
+ 1659              		.section	.bss.g_at_cb,"aw",%nobits
+ 1660              		.align	2
+ 1661              		.set	.LANCHOR1,. + 0
+ 1664              	g_at_cb:
+ 1665 0000 00000000 		.space	1196
+ 1665      00000000 
+ 1665      00000000 
+ 1665      00000000 
+ 1665      00000000 
+ 1666              		.section	.rodata.__FUNCTION__.7694,"a",%progbits
+ 1667              		.set	.LANCHOR2,. + 0
+ 1670              	__FUNCTION__.7694:
+ 1671 0000 5F5F7263 		.ascii	"__rcv_task_entry\000"
+ 1671      765F7461 
+ 1671      736B5F65 
+ 1671      6E747279 
+ 1671      00
+ 1672              		.section	.rodata.__FUNCTION__.7729,"a",%progbits
+ 1673              		.set	.LANCHOR4,. + 0
+ 1676              	__FUNCTION__.7729:
+ 1677 0000 61745F69 		.ascii	"at_init\000"
+ 1677      6E697400 
+ 1678              		.section	.rodata.__FUNCTION__.7757,"a",%progbits
+ 1679              		.set	.LANCHOR3,. + 0
+ 1682              	__FUNCTION__.7757:
+ 1683 0000 7368656C 		.ascii	"shell_at\000"
+ 1683      6C5F6174 
+ 1683      00
+ 1684              		.section	.rodata.__FUNCTION__.7764,"a",%progbits
+ 1685              		.set	.LANCHOR0,. + 0
+ 1688              	__FUNCTION__.7764:
+ 1689 0000 7368656C 		.ascii	"shell_atdebug\000"
+ 1689      6C5F6174 
+ 1689      64656275 
+ 1689      6700
+ 1690              		.section	.rodata.__cmd_send.str1.1,"aMS",%progbits,1
+ 1691              	.LC13:
+ 1692 0000 4154534E 		.ascii	"ATSND\000"
+ 1692      4400
+ 1693              		.section	.rodata.__rcv_task_entry.str1.1,"aMS",%progbits,1
+ 1694              	.LC12:
+ 1695 0000 5B25735D 		.ascii	"[%s][%u][%s] %s:open %s err\012\015\015\012\000"
+ 1695      5B25755D 
+ 1695      5B25735D 
+ 1695      2025733A 
+ 1695      6F70656E 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 44
+
+
+ 1696              		.section	.rodata.__resp_rcv.constprop.6.str1.1,"aMS",%progbits,1
+ 1697              	.LC11:
+ 1698 0000 41545243 		.ascii	"ATRCV\000"
+ 1698      5600
+ 1699              		.section	.rodata.at_init.str1.1,"aMS",%progbits,1
+ 1700              	.LC17:
+ 1701 0000 61746465 		.ascii	"atdev\000"
+ 1701      7600
+ 1702              	.LC18:
+ 1703 0006 5B25735D 		.ascii	"[%s][%u][%s] %s:cmdsync error\012\015\015\012\000"
+ 1703      5B25755D 
+ 1703      5B25735D 
+ 1703      2025733A 
+ 1703      636D6473 
+ 1704              	.LC19:
+ 1705 0028 5B25735D 		.ascii	"[%s][%u][%s] %s:cmdlock error\012\015\015\012\000"
+ 1705      5B25755D 
+ 1705      5B25735D 
+ 1705      2025733A 
+ 1705      636D646C 
+ 1706              	.LC20:
+ 1707 004a 61745F72 		.ascii	"at_rcv\000"
+ 1707      637600
+ 1708              	.LC21:
+ 1709 0051 5B25735D 		.ascii	"[%s][%u][%s] %s:rcvtask create error\012\015\015\012"
+ 1709      5B25755D 
+ 1709      5B25735D 
+ 1709      2025733A 
+ 1709      72637674 
+ 1710 0079 00       		.ascii	"\000"
+ 1711              		.section	.rodata.print_ascii.str1.1,"aMS",%progbits,1
+ 1712              	.LC0:
+ 1713 0000 25733A25 		.ascii	"%s:%d bytes:\000"
+ 1713      64206279 
+ 1713      7465733A 
+ 1713      00
+ 1714              	.LC1:
+ 1715 000d 0D00     		.ascii	"\015\000"
+ 1716              		.section	.rodata.print_hex.str1.1,"aMS",%progbits,1
+ 1717              	.LC2:
+ 1718 0000 25303278 		.ascii	"%02x \000"
+ 1718      2000
+ 1719              		.section	.rodata.shell_at.str1.1,"aMS",%progbits,1
+ 1720              	.LC14:
+ 1721 0000 25730D0A 		.ascii	"%s\015\012\000"
+ 1721      00
+ 1722              	.LC15:
+ 1723 0005 5B25735D 		.ascii	"[%s][%u][%s] atresponse:%d Bytes:%s\012\015\015\012"
+ 1723      5B25755D 
+ 1723      5B25735D 
+ 1723      20617472 
+ 1723      6573706F 
+ 1724 002c 00       		.ascii	"\000"
+ 1725              	.LC16:
+ 1726 002d 5B25735D 		.ascii	"[%s][%u][%s] atresponse:timeout or error\012\015\015"
+ 1726      5B25755D 
+ 1726      5B25735D 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 45
+
+
+ 1726      20617472 
+ 1726      6573706F 
+ 1727 0058 0A00     		.ascii	"\012\000"
+ 1728              		.section	.rodata.shell_atdebug.str1.1,"aMS",%progbits,1
+ 1729              	.LC3:
+ 1730 0000 5B25735D 		.ascii	"[%s][%u][%s] paras error\012\015\015\012\000"
+ 1730      5B25755D 
+ 1730      5B25735D 
+ 1730      20706172 
+ 1730      61732065 
+ 1731              	.LC4:
+ 1732 001d 6E6F6E65 		.ascii	"none\000"
+ 1732      00
+ 1733              	.LC5:
+ 1734 0022 61736369 		.ascii	"ascii\000"
+ 1734      6900
+ 1735              	.LC6:
+ 1736 0028 68657800 		.ascii	"hex\000"
+ 1737              	.LC7:
+ 1738 002c 5B25735D 		.ascii	"[%s][%u][%s] mode set error\012\015\015\012\000"
+ 1738      5B25755D 
+ 1738      5B25735D 
+ 1738      206D6F64 
+ 1738      65207365 
+ 1739              	.LC8:
+ 1740 004c 727800   		.ascii	"rx\000"
+ 1741              	.LC9:
+ 1742 004f 747800   		.ascii	"tx\000"
+ 1743              	.LC10:
+ 1744 0052 5B25735D 		.ascii	"[%s][%u][%s] type set error\012\015\015\012\000"
+ 1744      5B25755D 
+ 1744      5B25735D 
+ 1744      20747970 
+ 1744      65207365 
+ 1745              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 1746              	.LC22:
+ 1747 0000 61746465 		.ascii	"atdebug\000"
+ 1747      62756700 
+ 1748              	.LC23:
+ 1749 0008 61746465 		.ascii	"atdebug rx/tx none/ascii/hex\000"
+ 1749      62756720 
+ 1749      72782F74 
+ 1749      78206E6F 
+ 1749      6E652F61 
+ 1750              	.LC24:
+ 1751 0025 6174636D 		.ascii	"atcmd\000"
+ 1751      6400
+ 1752              	.LC25:
+ 1753 002b 6174636D 		.ascii	"atcmd atcommand atrespindex\000"
+ 1753      64206174 
+ 1753      636F6D6D 
+ 1753      616E6420 
+ 1753      61747265 
+ 1754              		.section	oshell,"a",%progbits
+ 1755              		.align	2
+ 1758              	__oshell_shell_atdebug:
+ 1759 0000 00000000 		.word	.LC22
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 46
+
+
+ 1760 0004 08000000 		.word	.LC23
+ 1761 0008 00000000 		.word	shell_atdebug
+ 1762 000c 0000     		.short	0
+ 1763 000e 0400     		.short	4
+ 1766              	__oshell_shell_at:
+ 1767 0010 25000000 		.word	.LC24
+ 1768 0014 2B000000 		.word	.LC25
+ 1769 0018 00000000 		.word	shell_at
+ 1770 001c 0000     		.short	0
+ 1771 001e 0400     		.short	4
+ 1772              		.text
+ 1773              	.Letext0:
+ 1774              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1775              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1776              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 1777              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1778              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1779              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1780              		.file 8 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1781              		.file 9 "../../iot_link/os/osal/osal_types.h"
+ 1782              		.file 10 "../../iot_link/at/at.h"
+ 1783              		.file 11 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1784              		.file 12 "../../iot_link/driver/driver.h"
+ 1785              		.file 13 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1786              		.file 14 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1787              		.file 15 "../../iot_link/inc/link_log.h"
+ 1788              		.file 16 "../../iot_link/inc/shell.h"
+ 1789              		.file 17 "../../iot_link/os/osal/osal.h"
+ 1790              		.file 18 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1791              		.file 19 "<built-in>"
+ 1792              		.file 20 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 47
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 at.c
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:18     .text.print_ascii:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:24     .text.print_ascii:00000000 print_ascii
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:104    .text.print_ascii:00000044 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:111    .text.print_hex:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:117    .text.print_hex:00000000 print_hex
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:199    .text.print_hex:0000004c $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:207    .text.shell_atdebug:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:213    .text.shell_atdebug:00000000 shell_atdebug
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:393    .text.shell_atdebug:000000f4 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:410    .text.__cmd_match.constprop.4:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:416    .text.__cmd_match.constprop.4:00000000 __cmd_match.constprop.4
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:495    .text.__cmd_match.constprop.4:00000054 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:500    .text.__oob_match.constprop.5:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:506    .text.__oob_match.constprop.5:00000000 __oob_match.constprop.5
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:575    .text.__oob_match.constprop.5:00000048 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:581    .text.__resp_rcv.constprop.6:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:587    .text.__resp_rcv.constprop.6:00000000 __resp_rcv.constprop.6
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:665    .text.__resp_rcv.constprop.6:0000004c $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:673    .text.__rcv_task_entry:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:679    .text.__rcv_task_entry:00000000 __rcv_task_entry
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:821    .text.__rcv_task_entry:000000b4 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:831    .text.__cmd_send:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:837    .text.__cmd_send:00000000 __cmd_send
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:927    .text.__cmd_send:0000004c $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:933    .text.at_streammode_set:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:940    .text.at_streammode_set:00000000 at_streammode_set
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:958    .text.at_streammode_set:0000000c $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:963    .text.at_debugclose:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:970    .text.at_debugclose:00000000 at_debugclose
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:990    .text.at_debugclose:00000018 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:995    .text.at_command:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1002   .text.at_command:00000000 at_command
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1164   .text.at_command:000000a0 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1169   .text.shell_at:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1175   .text.shell_at:00000000 shell_at
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1340   .text.shell_at:000000d8 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1352   .text.at_oobregister:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1359   .text.at_oobregister:00000000 at_oobregister
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1425   .text.at_oobregister:00000038 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1430   .text.at_init:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1437   .text.at_init:00000000 at_init
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1644   .text.at_init:0000014c $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1660   .bss.g_at_cb:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1664   .bss.g_at_cb:00000000 g_at_cb
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1670   .rodata.__FUNCTION__.7694:00000000 __FUNCTION__.7694
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1676   .rodata.__FUNCTION__.7729:00000000 __FUNCTION__.7729
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1682   .rodata.__FUNCTION__.7757:00000000 __FUNCTION__.7757
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1688   .rodata.__FUNCTION__.7764:00000000 __FUNCTION__.7764
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1755   oshell:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1758   oshell:00000000 __oshell_shell_atdebug
+C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s:1766   oshell:00000010 __oshell_shell_at
+
+UNDEFINED SYMBOLS
+printf
+fflush
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\cckjjmEk.s 			page 48
+
+
+puts
+putchar
+_impure_ptr
+link_log_level_get
+link_log_level_name
+osal_sys_time
+strcmp
+osal_mutex_lock
+strstr
+memcpy
+osal_semp_post
+osal_mutex_unlock
+memcmp
+los_dev_read
+los_dev_open
+memset
+los_dev_write
+osal_semp_pend
+snprintf
+strlen
+osal_semp_create
+osal_semp_del
+osal_mutex_create
+osal_task_create
+osal_mutex_del

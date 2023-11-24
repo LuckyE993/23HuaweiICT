@@ -1,0 +1,1753 @@
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"oc_smoke_template.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.BeepControl,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	BeepControl:
+  25              	.LFB293:
+  26              		.file 1 "Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c"
+   1:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         /*----------------------------------------------------------------------------
+   2:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * Copyright (c) <2018>, <Huawei Technologies Co., Ltd>
+   3:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * All rights reserved.
+   4:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * Redistribution and use in source and binary forms, with or without modification,
+   5:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * are permitted provided that the following conditions are met:
+   6:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * 1. Redistributions of source code must retain the above copyright notice, this list of
+   7:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * conditions and the following disclaimer.
+   8:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
+   9:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * of conditions and the following disclaimer in the documentation and/or other materials
+  10:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * provided with the distribution.
+  11:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * 3. Neither the name of the copyright holder nor the names of its contributors may be used
+  12:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * to endorse or promote products derived from this software without specific prior written
+  13:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * permission.
+  14:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  15:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  16:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  17:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+  18:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  19:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  20:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  21:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  22:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  23:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  24:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  25:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  *---------------------------------------------------------------------------*/
+  26:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** /*----------------------------------------------------------------------------
+  27:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * Notice of Export Control Law
+  28:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * ===============================================
+  29:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
+  30:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
+  31:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
+  32:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  * applicable export control laws and regulations.
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 2
+
+
+  33:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  *---------------------------------------------------------------------------*/
+  34:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** /**
+  35:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  *  DATE                AUTHOR      INSTRUCTION
+  36:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  *  2019-05-14 17:21  zhangqianfu  The first version
+  37:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  *
+  38:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****  */
+  39:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <stdint.h>
+  40:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <stddef.h>
+  41:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <string.h>
+  42:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+  43:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <osal.h>
+  44:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <oc_lwm2m_al.h>
+  45:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <link_endian.h>
+  46:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include "hal_qspi_flash.h"
+  47:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include "E53_SF1.h"
+  48:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include "lcd.h"
+  49:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include "main.h"
+  50:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <gpio.h>
+  51:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <stm32l4xx_it.h>
+  52:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+  53:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #ifndef CONFIG_APP_SERVERIP
+  54:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #define CONFIG_APP_SERVERIP       "986b5e9238.st1.iotda-coaps.cn-north-4.myhuaweicloud.com"
+  55:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #endif
+  56:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #ifndef CONFIG_APP_SERVERPORT
+  57:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #define CONFIG_APP_SERVERPORT     "5683"
+  58:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #endif
+  59:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+  60:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #ifndef CONFIG_APP_ENDPOIINT_ID
+  61:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #define CONFIG_APP_ENDPOIINT_ID      "BearPi_0001"
+  62:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #endif
+  63:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+  64:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef unsigned char int8u;
+  65:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef char int8s;
+  66:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef unsigned short int16u;
+  67:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef short int16s;
+  68:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef unsigned char int24u;
+  69:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef char int24s;
+  70:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef int int32s;
+  71:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef char string;
+  72:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef char array;
+  73:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef char varstring;
+  74:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef char variant;
+  75:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+  76:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #define cn_app_Smoke 0x2
+  77:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #define cn_app_Smoke_Control_Beep 0x5
+  78:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #define cn_app_response_Smoke_Control_Beep 0x6
+  79:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #define cn_app_Threshold 0x9
+  80:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #pragma pack(1)
+  81:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef struct
+  82:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+  83:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int8u messageId;
+  84:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int16u Smoke_Value;
+  85:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** } tag_app_Smoke;
+  86:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+  87:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef struct
+  88:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+  89:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int8u messageId;
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 3
+
+
+  90:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int16u mid;
+  91:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int8u errcode;
+  92:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int8u Beep_State;
+  93:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** } tag_app_Response_Smoke_Control_Beep;
+  94:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+  95:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef struct
+  96:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+  97:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int8u messageId;
+  98:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int16u mid;
+  99:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     string Beep[3];
+ 100:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** } tag_app_Smoke_Control_Beep;
+ 101:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** typedef struct
+ 102:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+ 103:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int8u messageId;
+ 104:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int16u Threshold;
+ 105:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** } tag_app_Threshold;
+ 106:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #pragma pack()
+ 107:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 108:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 109:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** float ppm;
+ 110:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 111:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 112:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** //if your command is very fast,please use a queue here--TODO
+ 113:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #define cn_app_rcv_buf_len 128
+ 114:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static int             s_rcv_buffer[cn_app_rcv_buf_len];
+ 115:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static int             s_rcv_datalen;
+ 116:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static osal_semp_t     s_rcv_sync;
+ 117:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** //PowerOFF Save data
+ 118:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** uint16_t BeepCount = 0;
+ 119:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** bool_t BeepStatus = OFF;
+ 120:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** bool_t SmokeOverThreshold = false; 
+ 121:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** bool_t BeepEnable = ON;
+ 122:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** bool_t BeepCloudControl = true;
+ 123:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** uint16_t SmokeThreshold = 20;
+ 124:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** bool_t LogoFlag = true;
+ 125:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** bool_t StatusFlag = true;
+ 126:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 127:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 128:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** //use this function to push all the message to the buffer
+ 129:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static int app_msg_deal(void *usr_data, en_oc_lwm2m_msg_t type, void *data, int len)
+ 130:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+ 131:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     unsigned char *msg;
+ 132:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     msg = data;
+ 133:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int ret = -1;
+ 134:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 135:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     if(len <= cn_app_rcv_buf_len)
+ 136:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 137:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         if (msg[0] == 0xaa && msg[1] == 0xaa)
+ 138:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ 139:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             printf("OC respond message received! \n\r");
+ 140:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             return ret;
+ 141:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         }
+ 142:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         memcpy(s_rcv_buffer,msg,len);
+ 143:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         s_rcv_datalen = len;
+ 144:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 145:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         (void) osal_semp_post(s_rcv_sync);
+ 146:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 4
+
+
+ 147:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         ret = 0;
+ 148:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 149:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 150:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     return ret;
+ 151:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** }
+ 152:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 153:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 154:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static int app_cmd_task_entry()
+ 155:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+ 156:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int ret = -1;
+ 157:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     tag_app_Response_Smoke_Control_Beep Response_Smoke_Control_Beep;
+ 158:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     tag_app_Smoke_Control_Beep *Smoke_Control_Beep;
+ 159:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int8_t msgid;
+ 160:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 161:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     while(1)
+ 162:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 163:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         if(osal_semp_pend(s_rcv_sync,cn_osal_timeout_forever))
+ 164:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ 165:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             msgid = s_rcv_buffer[0] & 0x000000FF;
+ 166:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             switch (msgid)
+ 167:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 168:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                  case cn_app_Smoke_Control_Beep:
+ 169:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     Smoke_Control_Beep = (tag_app_Smoke_Control_Beep *)s_rcv_buffer;
+ 170:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     printf("Smoke_Control_Beep:msgid:%d mid:%d", Smoke_Control_Beep->messageId, nto
+ 171:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     /********** code area for cmd from IoT cloud  **********/
+ 172:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     if (Smoke_Control_Beep->Beep[0] == 'O' && Smoke_Control_Beep->Beep[1] == 'N')
+ 173:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     {
+ 174:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         E53_SF1_Beep_Set(ON);
+ 175:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         E53_SF1_LED_Set(ON);
+ 176:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         BeepCloudControl = true;
+ 177:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         BeepStatus = ON;
+ 178:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.messageId = cn_app_response_Smoke_Control_Beep;
+ 179:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.mid = Smoke_Control_Beep->mid;
+ 180:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.errcode = 0;
+ 181:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.Beep_State = 1;
+ 182:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         oc_lwm2m_report((char *)&Response_Smoke_Control_Beep,sizeof(Response_Smoke_
+ 183:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     }
+ 184:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     if (Smoke_Control_Beep->Beep[0] == 'O' && Smoke_Control_Beep->Beep[1] == 'F' &&
+ 185:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     {
+ 186:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         E53_SF1_Beep_Set(OFF);
+ 187:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         E53_SF1_LED_Set(OFF);
+ 188:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         BeepStatus = OFF;
+ 189:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         BeepCloudControl = false;
+ 190:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.messageId = cn_app_response_Smoke_Control_Beep;
+ 191:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.mid = Smoke_Control_Beep->mid;
+ 192:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.errcode = 0;
+ 193:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.Beep_State = 0;
+ 194:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         oc_lwm2m_report((char *)&Response_Smoke_Control_Beep,sizeof(Response_Smoke_
+ 195:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     }
+ 196:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     /********** code area end  **********/
+ 197:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     break;
+ 198:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 default:
+ 199:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     break;
+ 200:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             }
+ 201:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         }
+ 202:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 203:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 5
+
+
+ 204:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     return ret;
+ 205:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** }
+ 206:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 207:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static int app_report_task_entry()
+ 208:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+ 209:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int ret = -1;
+ 210:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 211:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_config_param_t      oc_param;
+ 212:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     tag_app_Smoke Smoke;
+ 213:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     tag_app_Threshold Thres;
+ 214:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     (void) memset(&oc_param,0,sizeof(oc_param));
+ 215:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 216:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_param.app_server.address = CONFIG_APP_SERVERIP;
+ 217:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_param.app_server.port = CONFIG_APP_SERVERPORT;
+ 218:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_param.app_server.ep_id = CONFIG_APP_ENDPOIINT_ID;
+ 219:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_param.boot_mode = en_oc_boot_strap_mode_factory;
+ 220:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_param.rcv_func = app_msg_deal;
+ 221:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 222:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     ret = oc_lwm2m_config(&oc_param);
+ 223:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     if (0 != ret)
+ 224:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 225:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         return ret;
+ 226:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 227:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 228:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     while(1) //--TODO ,you could add your own code here
+ 229:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 230:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Smoke.messageId = cn_app_Smoke;
+ 231:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Smoke.Smoke_Value = htons((int)ppm);
+ 232:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         oc_lwm2m_report( (char *)&Smoke, sizeof(Smoke), 1000);
+ 233:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Thres.messageId=cn_app_Threshold;
+ 234:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Thres.Threshold=htons(SmokeThreshold);
+ 235:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         oc_lwm2m_report( (char *)&Thres, sizeof(Thres),1000);
+ 236:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         osal_task_sleep(2*1000);
+ 237:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 238:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     return ret;
+ 239:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** }
+ 240:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 241:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static void key_scan()
+ 242:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+ 243:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 244:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 245:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     while(1)
+ 246:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 247:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         if(HAL_GPIO_ReadPin(KEY1_GPIO_Port,KEY1_Pin)==GPIO_PIN_RESET)
+ 248:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 249:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         
+ 250:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         BeepCount = 0;
+ 251:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         hal_spi_flash_erase_write(&BeepCount,sizeof(BeepCount),0);
+ 252:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_SET);
+ 253:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         while (HAL_GPIO_ReadPin(KEY1_GPIO_Port,KEY1_Pin)==GPIO_PIN_RESET);
+ 254:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 255:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 256:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     if(HAL_GPIO_ReadPin(KEY2_GPIO_Port,KEY2_Pin)==GPIO_PIN_RESET)
+ 257:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 258:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         BeepEnable = !BeepEnable;
+ 259:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         if(BeepEnable)
+ 260:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 6
+
+
+ 261:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             LogoFlag = 1;
+ 262:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         }
+ 263:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         
+ 264:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_RESET);
+ 265:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         while (HAL_GPIO_ReadPin(KEY2_GPIO_Port,KEY2_Pin)==GPIO_PIN_RESET);
+ 266:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         
+ 267:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         
+ 268:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 269:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         osal_task_sleep(2*50);
+ 270:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 271:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** }
+ 272:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 273:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** void Information_show(void)
+ 274:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+ 275:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     lcd_show_chinese(75,10,1,32,3,1); //"姓名"
+ 276:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     lcd_show_chinese(10,50,2,32,4,1);//"烟雾浓度"
+ 277:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     //LCD_ShowString(10, 85, 180, 16, 32, "Threshold:");
+ 278:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     lcd_show_chinese(10,85,0,32,2,1);//"烟雾浓度"
+ 279:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_ShowString(10, 120, 190, 16, 32, "Beep Enable :");
+ 280:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_ShowString(10, 160, 190, 16, 32, "Beep Count:");
+ 281:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_ShowString(10, 200, 190, 16, 32, "Beep State:");
+ 282:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 283:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 284:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** }
+ 285:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 286:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static int app_collect_task_entry()
+ 287:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+ 288:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 289:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 290:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     osal_task_sleep(1*1000);
+ 291:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_Init();
+ 292:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_Clear(BLACK);
+ 293:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     Information_show();
+ 294:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 295:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     while (1)
+ 296:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 297:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         E53_SF1_Read_Data(&ppm);
+ 298:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****        
+ 299:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(150, 50,(int)ppm, 5, 32);//烟雾浓度ppm
+ 300:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(175, 85, SmokeThreshold, 3, 32); 
+ 301:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(200, 120, BeepEnable, 1, 32);
+ 302:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(185, 160, BeepCount, 3, 32);
+ 303:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(185, 200, BeepStatus, 1, 32);
+ 304:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         if(BeepEnable==1)
+ 305:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ 306:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             if((int)ppm>SmokeThreshold && LogoFlag==1)
+ 307:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 308:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LogoFlag = 0;
+ 309:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 SmokeOverThreshold = 1; ///
+ 310:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 BeepCount++;
+ 311:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 hal_spi_flash_erase_write(&BeepCount,sizeof(BeepCount),0);
+ 312:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LCD_Clear(WHITE);
+ 313:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LCD_Show_Image(0,0,240,236);
+ 314:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 osal_task_sleep(2*1000);
+ 315:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 316:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LCD_Clear(BLACK);
+ 317:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 Information_show();
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 7
+
+
+ 318:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             }
+ 319:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             if(!((int)ppm>SmokeThreshold))
+ 320:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 321:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LogoFlag = 1;
+ 322:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 SmokeOverThreshold = 0;
+ 323:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             }
+ 324:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****              
+ 325:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         }
+ 326:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 327:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         osal_task_sleep(2*50);
+ 328:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 329:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 330:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     return 0;
+ 331:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** }
+ 332:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 333:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** static int BeepControl(void)
+ 334:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+  27              		.loc 1 334 0
+  28              		.cfi_startproc
+  29              		@ Volatile: function does not return.
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+ 335:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 336:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     while (1)
+ 337:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 338:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         
+ 339:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         if(BeepEnable&&SmokeOverThreshold&&BeepCloudControl)
+  37              		.loc 1 339 0
+  38 0002 0F4D     		ldr	r5, .L15
+  39 0004 0F4C     		ldr	r4, .L15+4
+  40 0006 104E     		ldr	r6, .L15+8
+  41              	.L4:
+  42 0008 2B68     		ldr	r3, [r5]
+  43 000a 83B1     		cbz	r3, .L2
+  44              		.loc 1 339 0 is_stmt 0 discriminator 1
+  45 000c 3368     		ldr	r3, [r6]
+  46 000e 73B1     		cbz	r3, .L2
+  47              		.loc 1 339 0 discriminator 2
+  48 0010 0E4B     		ldr	r3, .L15+12
+  49 0012 1B68     		ldr	r3, [r3]
+  50 0014 5BB1     		cbz	r3, .L2
+ 340:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 341:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 E53_SF1_Beep_Set(ON);
+  51              		.loc 1 341 0 is_stmt 1
+  52 0016 0120     		movs	r0, #1
+  53 0018 FFF7FEFF 		bl	E53_SF1_Beep_Set
+  54              	.LVL0:
+ 342:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 E53_SF1_LED_Set(ON);
+  55              		.loc 1 342 0
+  56 001c 0120     		movs	r0, #1
+  57 001e FFF7FEFF 		bl	E53_SF1_LED_Set
+  58              	.LVL1:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 8
+
+
+ 343:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 BeepStatus = ON;
+  59              		.loc 1 343 0
+  60 0022 0123     		movs	r3, #1
+  61              	.L14:
+ 344:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 
+ 345:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             }
+ 346:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         else 
+ 347:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 348:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 349:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 E53_SF1_Beep_Set(OFF);
+ 350:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 E53_SF1_LED_Set(OFF);
+ 351:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 BeepStatus = OFF;
+ 352:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 
+ 353:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             }
+ 354:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 355:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         osal_task_sleep(1*250);
+  62              		.loc 1 355 0
+  63 0024 FA20     		movs	r0, #250
+ 351:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 
+  64              		.loc 1 351 0
+  65 0026 2360     		str	r3, [r4]
+  66              		.loc 1 355 0
+  67 0028 FFF7FEFF 		bl	osal_task_sleep
+  68              	.LVL2:
+ 339:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+  69              		.loc 1 339 0
+  70 002c ECE7     		b	.L4
+  71              	.L2:
+ 349:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 E53_SF1_LED_Set(OFF);
+  72              		.loc 1 349 0
+  73 002e 0020     		movs	r0, #0
+  74 0030 FFF7FEFF 		bl	E53_SF1_Beep_Set
+  75              	.LVL3:
+ 350:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 BeepStatus = OFF;
+  76              		.loc 1 350 0
+  77 0034 0020     		movs	r0, #0
+  78 0036 FFF7FEFF 		bl	E53_SF1_LED_Set
+  79              	.LVL4:
+ 351:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 
+  80              		.loc 1 351 0
+  81 003a 0023     		movs	r3, #0
+  82 003c F2E7     		b	.L14
+  83              	.L16:
+  84 003e 00BF     		.align	2
+  85              	.L15:
+  86 0040 00000000 		.word	.LANCHOR0
+  87 0044 00000000 		.word	.LANCHOR3
+  88 0048 00000000 		.word	.LANCHOR1
+  89 004c 00000000 		.word	.LANCHOR2
+  90              		.cfi_endproc
+  91              	.LFE293:
+  93              		.section	.text.key_scan,"ax",%progbits
+  94              		.align	1
+  95              		.syntax unified
+  96              		.thumb
+  97              		.thumb_func
+  98              		.fpu fpv4-sp-d16
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 9
+
+
+ 100              	key_scan:
+ 101              	.LFB290:
+ 242:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 102              		.loc 1 242 0
+ 103              		.cfi_startproc
+ 104              		@ Volatile: function does not return.
+ 105              		@ args = 0, pretend = 0, frame = 0
+ 106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 107 0000 08B5     		push	{r3, lr}
+ 108              	.LCFI1:
+ 109              		.cfi_def_cfa_offset 8
+ 110              		.cfi_offset 3, -8
+ 111              		.cfi_offset 14, -4
+ 247:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 112              		.loc 1 247 0
+ 113 0002 1D4C     		ldr	r4, .L28
+ 250:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         hal_spi_flash_erase_write(&BeepCount,sizeof(BeepCount),0);
+ 114              		.loc 1 250 0
+ 115 0004 1D4E     		ldr	r6, .L28+4
+ 252:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         while (HAL_GPIO_ReadPin(KEY1_GPIO_Port,KEY1_Pin)==GPIO_PIN_RESET);
+ 116              		.loc 1 252 0
+ 117 0006 1E4D     		ldr	r5, .L28+8
+ 118              	.L23:
+ 247:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 119              		.loc 1 247 0
+ 120 0008 0421     		movs	r1, #4
+ 121 000a 2046     		mov	r0, r4
+ 122 000c FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 123              	.LVL5:
+ 124 0010 0246     		mov	r2, r0
+ 125 0012 80B9     		cbnz	r0, .L18
+ 250:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         hal_spi_flash_erase_write(&BeepCount,sizeof(BeepCount),0);
+ 126              		.loc 1 250 0
+ 127 0014 3080     		strh	r0, [r6]	@ movhi
+ 251:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         HAL_GPIO_WritePin(LED_GPIO_Port,LED_Pin,GPIO_PIN_SET);
+ 128              		.loc 1 251 0
+ 129 0016 0221     		movs	r1, #2
+ 130 0018 1848     		ldr	r0, .L28+4
+ 131 001a FFF7FEFF 		bl	hal_spi_flash_erase_write
+ 132              	.LVL6:
+ 252:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         while (HAL_GPIO_ReadPin(KEY1_GPIO_Port,KEY1_Pin)==GPIO_PIN_RESET);
+ 133              		.loc 1 252 0
+ 134 001e 0122     		movs	r2, #1
+ 135 0020 4FF40051 		mov	r1, #8192
+ 136 0024 2846     		mov	r0, r5
+ 137 0026 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 138              	.LVL7:
+ 139              	.L19:
+ 253:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 140              		.loc 1 253 0 discriminator 1
+ 141 002a 0421     		movs	r1, #4
+ 142 002c 2046     		mov	r0, r4
+ 143 002e FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 144              	.LVL8:
+ 145 0032 0028     		cmp	r0, #0
+ 146 0034 F9D0     		beq	.L19
+ 147              	.L18:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 10
+
+
+ 256:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 148              		.loc 1 256 0
+ 149 0036 0821     		movs	r1, #8
+ 150 0038 2046     		mov	r0, r4
+ 151 003a FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 152              	.LVL9:
+ 153 003e B0B9     		cbnz	r0, .L20
+ 258:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         if(BeepEnable)
+ 154              		.loc 1 258 0
+ 155 0040 104B     		ldr	r3, .L28+12
+ 156 0042 1A68     		ldr	r2, [r3]
+ 157 0044 002A     		cmp	r2, #0
+ 158 0046 0CBF     		ite	eq
+ 159 0048 0122     		moveq	r2, #1
+ 160 004a 0022     		movne	r2, #0
+ 161 004c 1A60     		str	r2, [r3]
+ 261:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         }
+ 162              		.loc 1 261 0
+ 163 004e 02BF     		ittt	eq
+ 164 0050 0D4B     		ldreq	r3, .L28+16
+ 165 0052 0122     		moveq	r2, #1
+ 166 0054 1A60     		streq	r2, [r3]
+ 264:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         while (HAL_GPIO_ReadPin(KEY2_GPIO_Port,KEY2_Pin)==GPIO_PIN_RESET);
+ 167              		.loc 1 264 0
+ 168 0056 4FF40051 		mov	r1, #8192
+ 169 005a 0022     		movs	r2, #0
+ 170 005c 2846     		mov	r0, r5
+ 171 005e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 172              	.LVL10:
+ 173              	.L22:
+ 265:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         
+ 174              		.loc 1 265 0 discriminator 1
+ 175 0062 0821     		movs	r1, #8
+ 176 0064 2046     		mov	r0, r4
+ 177 0066 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 178              	.LVL11:
+ 179 006a 0028     		cmp	r0, #0
+ 180 006c F9D0     		beq	.L22
+ 181              	.L20:
+ 269:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 182              		.loc 1 269 0
+ 183 006e 6420     		movs	r0, #100
+ 184 0070 FFF7FEFF 		bl	osal_task_sleep
+ 185              	.LVL12:
+ 247:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 186              		.loc 1 247 0
+ 187 0074 C8E7     		b	.L23
+ 188              	.L29:
+ 189 0076 00BF     		.align	2
+ 190              	.L28:
+ 191 0078 00040048 		.word	1207960576
+ 192 007c 00000000 		.word	.LANCHOR4
+ 193 0080 00080048 		.word	1207961600
+ 194 0084 00000000 		.word	.LANCHOR0
+ 195 0088 00000000 		.word	.LANCHOR5
+ 196              		.cfi_endproc
+ 197              	.LFE290:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 11
+
+
+ 199              		.section	.text.app_cmd_task_entry,"ax",%progbits
+ 200              		.align	1
+ 201              		.syntax unified
+ 202              		.thumb
+ 203              		.thumb_func
+ 204              		.fpu fpv4-sp-d16
+ 206              	app_cmd_task_entry:
+ 207              	.LFB288:
+ 155:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int ret = -1;
+ 208              		.loc 1 155 0
+ 209              		.cfi_startproc
+ 210              		@ args = 0, pretend = 0, frame = 8
+ 211              		@ frame_needed = 0, uses_anonymous_args = 0
+ 212              	.LVL13:
+ 213 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 214              	.LCFI2:
+ 215              		.cfi_def_cfa_offset 24
+ 216              		.cfi_offset 4, -16
+ 217              		.cfi_offset 5, -12
+ 218              		.cfi_offset 6, -8
+ 219              		.cfi_offset 14, -4
+ 163:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ 220              		.loc 1 163 0
+ 221 0002 2F4E     		ldr	r6, .L39
+ 165:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             switch (msgid)
+ 222              		.loc 1 165 0
+ 223 0004 2F4C     		ldr	r4, .L39+4
+ 224              	.L31:
+ 163:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ 225              		.loc 1 163 0
+ 226 0006 3068     		ldr	r0, [r6]
+ 227 0008 4FF0FF31 		mov	r1, #-1
+ 228 000c FFF7FEFF 		bl	osal_semp_pend
+ 229              	.LVL14:
+ 230 0010 0028     		cmp	r0, #0
+ 231 0012 F8D0     		beq	.L31
+ 232              	.LVL15:
+ 166:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 233              		.loc 1 166 0
+ 234 0014 94F90050 		ldrsb	r5, [r4]
+ 235 0018 052D     		cmp	r5, #5
+ 236 001a F4D1     		bne	.L31
+ 237              	.LVL16:
+ 170:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     /********** code area for cmd from IoT cloud  **********/
+ 238              		.loc 1 170 0
+ 239 001c B4F80120 		ldrh	r2, [r4, #1]	@ unaligned
+ 240 0020 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 241 0022 2948     		ldr	r0, .L39+8
+ 242 0024 52BA     		rev16	r2, r2
+ 243 0026 92B2     		uxth	r2, r2
+ 244 0028 FFF7FEFF 		bl	printf
+ 245              	.LVL17:
+ 172:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     {
+ 246              		.loc 1 172 0
+ 247 002c E378     		ldrb	r3, [r4, #3]	@ zero_extendqisi2
+ 248 002e 4F2B     		cmp	r3, #79
+ 249 0030 1FD1     		bne	.L35
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 12
+
+
+ 172:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     {
+ 250              		.loc 1 172 0 is_stmt 0 discriminator 1
+ 251 0032 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ 252 0034 4E2B     		cmp	r3, #78
+ 253 0036 1CD1     		bne	.L35
+ 174:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         E53_SF1_LED_Set(ON);
+ 254              		.loc 1 174 0 is_stmt 1
+ 255 0038 0120     		movs	r0, #1
+ 256 003a FFF7FEFF 		bl	E53_SF1_Beep_Set
+ 257              	.LVL18:
+ 175:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         BeepCloudControl = true;
+ 258              		.loc 1 175 0
+ 259 003e 0120     		movs	r0, #1
+ 260 0040 FFF7FEFF 		bl	E53_SF1_LED_Set
+ 261              	.LVL19:
+ 176:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         BeepStatus = ON;
+ 262              		.loc 1 176 0
+ 263 0044 214A     		ldr	r2, .L39+12
+ 264 0046 0123     		movs	r3, #1
+ 265 0048 1360     		str	r3, [r2]
+ 177:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.messageId = cn_app_response_Smoke_Control_Beep;
+ 266              		.loc 1 177 0
+ 267 004a 214A     		ldr	r2, .L39+16
+ 181:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         oc_lwm2m_report((char *)&Response_Smoke_Control_Beep,sizeof(Response_Smoke_
+ 268              		.loc 1 181 0
+ 269 004c 8DF80430 		strb	r3, [sp, #4]
+ 177:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.messageId = cn_app_response_Smoke_Control_Beep;
+ 270              		.loc 1 177 0
+ 271 0050 1360     		str	r3, [r2]
+ 178:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.mid = Smoke_Control_Beep->mid;
+ 272              		.loc 1 178 0
+ 273 0052 0622     		movs	r2, #6
+ 274 0054 8DF80020 		strb	r2, [sp]
+ 179:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.errcode = 0;
+ 275              		.loc 1 179 0
+ 276 0058 B4F80120 		ldrh	r2, [r4, #1]	@ unaligned
+ 277 005c ADF80120 		strh	r2, [sp, #1]	@ unaligned
+ 180:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.Beep_State = 1;
+ 278              		.loc 1 180 0
+ 279 0060 0022     		movs	r2, #0
+ 280 0062 8DF80320 		strb	r2, [sp, #3]
+ 182:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     }
+ 281              		.loc 1 182 0
+ 282 0066 2946     		mov	r1, r5
+ 283 0068 4FF47A72 		mov	r2, #1000
+ 284 006c 6846     		mov	r0, sp
+ 285 006e FFF7FEFF 		bl	oc_lwm2m_report
+ 286              	.LVL20:
+ 287              	.L35:
+ 184:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     {
+ 288              		.loc 1 184 0
+ 289 0072 E378     		ldrb	r3, [r4, #3]	@ zero_extendqisi2
+ 290 0074 4F2B     		cmp	r3, #79
+ 291 0076 C6D1     		bne	.L31
+ 184:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     {
+ 292              		.loc 1 184 0 is_stmt 0 discriminator 1
+ 293 0078 2379     		ldrb	r3, [r4, #4]	@ zero_extendqisi2
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 13
+
+
+ 294 007a 462B     		cmp	r3, #70
+ 295 007c C3D1     		bne	.L31
+ 184:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     {
+ 296              		.loc 1 184 0 discriminator 2
+ 297 007e 6379     		ldrb	r3, [r4, #5]	@ zero_extendqisi2
+ 298 0080 462B     		cmp	r3, #70
+ 299 0082 C0D1     		bne	.L31
+ 186:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         E53_SF1_LED_Set(OFF);
+ 300              		.loc 1 186 0 is_stmt 1
+ 301 0084 0020     		movs	r0, #0
+ 302 0086 FFF7FEFF 		bl	E53_SF1_Beep_Set
+ 303              	.LVL21:
+ 187:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         BeepStatus = OFF;
+ 304              		.loc 1 187 0
+ 305 008a 0020     		movs	r0, #0
+ 306 008c FFF7FEFF 		bl	E53_SF1_LED_Set
+ 307              	.LVL22:
+ 188:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         BeepCloudControl = false;
+ 308              		.loc 1 188 0
+ 309 0090 0F4A     		ldr	r2, .L39+16
+ 310 0092 0023     		movs	r3, #0
+ 311 0094 1360     		str	r3, [r2]
+ 189:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.messageId = cn_app_response_Smoke_Control_Beep;
+ 312              		.loc 1 189 0
+ 313 0096 0D4A     		ldr	r2, .L39+12
+ 192:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.Beep_State = 0;
+ 314              		.loc 1 192 0
+ 315 0098 8DF80330 		strb	r3, [sp, #3]
+ 189:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.messageId = cn_app_response_Smoke_Control_Beep;
+ 316              		.loc 1 189 0
+ 317 009c 1360     		str	r3, [r2]
+ 190:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.mid = Smoke_Control_Beep->mid;
+ 318              		.loc 1 190 0
+ 319 009e 0622     		movs	r2, #6
+ 320 00a0 8DF80020 		strb	r2, [sp]
+ 191:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         Response_Smoke_Control_Beep.errcode = 0;
+ 321              		.loc 1 191 0
+ 322 00a4 B4F80120 		ldrh	r2, [r4, #1]	@ unaligned
+ 323 00a8 ADF80120 		strh	r2, [sp, #1]	@ unaligned
+ 194:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     }
+ 324              		.loc 1 194 0
+ 325 00ac 0521     		movs	r1, #5
+ 326 00ae 4FF47A72 		mov	r2, #1000
+ 327 00b2 6846     		mov	r0, sp
+ 193:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                         oc_lwm2m_report((char *)&Response_Smoke_Control_Beep,sizeof(Response_Smoke_
+ 328              		.loc 1 193 0
+ 329 00b4 8DF80430 		strb	r3, [sp, #4]
+ 194:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                     }
+ 330              		.loc 1 194 0
+ 331 00b8 FFF7FEFF 		bl	oc_lwm2m_report
+ 332              	.LVL23:
+ 333 00bc A3E7     		b	.L31
+ 334              	.L40:
+ 335 00be 00BF     		.align	2
+ 336              	.L39:
+ 337 00c0 00000000 		.word	.LANCHOR6
+ 338 00c4 00000000 		.word	.LANCHOR7
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 14
+
+
+ 339 00c8 00000000 		.word	.LC0
+ 340 00cc 00000000 		.word	.LANCHOR2
+ 341 00d0 00000000 		.word	.LANCHOR3
+ 342              		.cfi_endproc
+ 343              	.LFE288:
+ 345              		.section	.text.app_msg_deal,"ax",%progbits
+ 346              		.align	1
+ 347              		.syntax unified
+ 348              		.thumb
+ 349              		.thumb_func
+ 350              		.fpu fpv4-sp-d16
+ 352              	app_msg_deal:
+ 353              	.LFB287:
+ 130:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     unsigned char *msg;
+ 354              		.loc 1 130 0
+ 355              		.cfi_startproc
+ 356              		@ args = 0, pretend = 0, frame = 0
+ 357              		@ frame_needed = 0, uses_anonymous_args = 0
+ 358              	.LVL24:
+ 135:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 359              		.loc 1 135 0
+ 360 0000 802B     		cmp	r3, #128
+ 130:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     unsigned char *msg;
+ 361              		.loc 1 130 0
+ 362 0002 08B5     		push	{r3, lr}
+ 363              	.LCFI3:
+ 364              		.cfi_def_cfa_offset 8
+ 365              		.cfi_offset 3, -8
+ 366              		.cfi_offset 14, -4
+ 130:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     unsigned char *msg;
+ 367              		.loc 1 130 0
+ 368 0004 1146     		mov	r1, r2
+ 369              	.LVL25:
+ 135:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 370              		.loc 1 135 0
+ 371 0006 08DC     		bgt	.L44
+ 137:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ 372              		.loc 1 137 0
+ 373 0008 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 374              	.LVL26:
+ 375 000a AA2A     		cmp	r2, #170
+ 376 000c 08D1     		bne	.L43
+ 137:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ 377              		.loc 1 137 0 is_stmt 0 discriminator 1
+ 378 000e 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 379 0010 AA2A     		cmp	r2, #170
+ 380 0012 05D1     		bne	.L43
+ 139:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             return ret;
+ 381              		.loc 1 139 0 is_stmt 1
+ 382 0014 0748     		ldr	r0, .L45
+ 383              	.LVL27:
+ 384 0016 FFF7FEFF 		bl	printf
+ 385              	.LVL28:
+ 386              	.L44:
+ 133:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 387              		.loc 1 133 0
+ 388 001a 4FF0FF30 		mov	r0, #-1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 15
+
+
+ 389 001e 08E0     		b	.L41
+ 390              	.LVL29:
+ 391              	.L43:
+ 142:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         s_rcv_datalen = len;
+ 392              		.loc 1 142 0
+ 393 0020 1A46     		mov	r2, r3
+ 394 0022 0548     		ldr	r0, .L45+4
+ 395              	.LVL30:
+ 396 0024 FFF7FEFF 		bl	memcpy
+ 397              	.LVL31:
+ 145:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 398              		.loc 1 145 0
+ 399 0028 044B     		ldr	r3, .L45+8
+ 400 002a 1868     		ldr	r0, [r3]
+ 401 002c FFF7FEFF 		bl	osal_semp_post
+ 402              	.LVL32:
+ 147:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 403              		.loc 1 147 0
+ 404 0030 0020     		movs	r0, #0
+ 405              	.LVL33:
+ 406              	.L41:
+ 151:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 407              		.loc 1 151 0
+ 408 0032 08BD     		pop	{r3, pc}
+ 409              	.L46:
+ 410              		.align	2
+ 411              	.L45:
+ 412 0034 00000000 		.word	.LC1
+ 413 0038 00000000 		.word	.LANCHOR7
+ 414 003c 00000000 		.word	.LANCHOR6
+ 415              		.cfi_endproc
+ 416              	.LFE287:
+ 418              		.section	.text.app_report_task_entry,"ax",%progbits
+ 419              		.align	1
+ 420              		.syntax unified
+ 421              		.thumb
+ 422              		.thumb_func
+ 423              		.fpu fpv4-sp-d16
+ 425              	app_report_task_entry:
+ 426              	.LFB289:
+ 208:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     int ret = -1;
+ 427              		.loc 1 208 0
+ 428              		.cfi_startproc
+ 429              		@ args = 0, pretend = 0, frame = 72
+ 430              		@ frame_needed = 0, uses_anonymous_args = 0
+ 431              	.LVL34:
+ 432 0000 10B5     		push	{r4, lr}
+ 433              	.LCFI4:
+ 434              		.cfi_def_cfa_offset 8
+ 435              		.cfi_offset 4, -8
+ 436              		.cfi_offset 14, -4
+ 437 0002 92B0     		sub	sp, sp, #72
+ 438              	.LCFI5:
+ 439              		.cfi_def_cfa_offset 80
+ 214:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 440              		.loc 1 214 0
+ 441 0004 3C22     		movs	r2, #60
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 16
+
+
+ 442 0006 0021     		movs	r1, #0
+ 443 0008 03A8     		add	r0, sp, #12
+ 444 000a FFF7FEFF 		bl	memset
+ 445              	.LVL35:
+ 216:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_param.app_server.port = CONFIG_APP_SERVERPORT;
+ 446              		.loc 1 216 0
+ 447 000e 1B4B     		ldr	r3, .L51
+ 448 0010 0B93     		str	r3, [sp, #44]
+ 217:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_param.app_server.ep_id = CONFIG_APP_ENDPOIINT_ID;
+ 449              		.loc 1 217 0
+ 450 0012 1B4B     		ldr	r3, .L51+4
+ 451 0014 0C93     		str	r3, [sp, #48]
+ 218:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     oc_param.boot_mode = en_oc_boot_strap_mode_factory;
+ 452              		.loc 1 218 0
+ 453 0016 1B4B     		ldr	r3, .L51+8
+ 454 0018 0A93     		str	r3, [sp, #40]
+ 222:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     if (0 != ret)
+ 455              		.loc 1 222 0
+ 456 001a 03A8     		add	r0, sp, #12
+ 220:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 457              		.loc 1 220 0
+ 458 001c 1A4B     		ldr	r3, .L51+12
+ 459 001e 1093     		str	r3, [sp, #64]
+ 222:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     if (0 != ret)
+ 460              		.loc 1 222 0
+ 461 0020 FFF7FEFF 		bl	oc_lwm2m_config
+ 462              	.LVL36:
+ 223:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     {
+ 463              		.loc 1 223 0
+ 464 0024 38BB     		cbnz	r0, .L50
+ 465              	.LBB4:
+ 466              	.LBB5:
+ 231:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         oc_lwm2m_report( (char *)&Smoke, sizeof(Smoke), 1000);
+ 467              		.loc 1 231 0
+ 468 0026 194C     		ldr	r4, .L51+16
+ 469              	.LVL37:
+ 470              	.L48:
+ 471 0028 D4ED007A 		vldr.32	s15, [r4]
+ 472 002c FDEEE77A 		vcvt.s32.f32	s15, s15
+ 230:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Smoke.Smoke_Value = htons((int)ppm);
+ 473              		.loc 1 230 0
+ 474 0030 0223     		movs	r3, #2
+ 475 0032 8DF80430 		strb	r3, [sp, #4]
+ 231:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         oc_lwm2m_report( (char *)&Smoke, sizeof(Smoke), 1000);
+ 476              		.loc 1 231 0
+ 477 0036 17EE903A 		vmov	r3, s15	@ int
+ 232:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Thres.messageId=cn_app_Threshold;
+ 478              		.loc 1 232 0
+ 479 003a 4FF47A72 		mov	r2, #1000
+ 231:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         oc_lwm2m_report( (char *)&Smoke, sizeof(Smoke), 1000);
+ 480              		.loc 1 231 0
+ 481 003e 5BBA     		rev16	r3, r3
+ 232:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Thres.messageId=cn_app_Threshold;
+ 482              		.loc 1 232 0
+ 483 0040 0321     		movs	r1, #3
+ 484 0042 01A8     		add	r0, sp, #4
+ 231:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         oc_lwm2m_report( (char *)&Smoke, sizeof(Smoke), 1000);
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 17
+
+
+ 485              		.loc 1 231 0
+ 486 0044 ADF80530 		strh	r3, [sp, #5]	@ unaligned
+ 232:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Thres.messageId=cn_app_Threshold;
+ 487              		.loc 1 232 0
+ 488 0048 FFF7FEFF 		bl	oc_lwm2m_report
+ 489              	.LVL38:
+ 233:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         Thres.Threshold=htons(SmokeThreshold);
+ 490              		.loc 1 233 0
+ 491 004c 0923     		movs	r3, #9
+ 492 004e 8DF80830 		strb	r3, [sp, #8]
+ 234:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         oc_lwm2m_report( (char *)&Thres, sizeof(Thres),1000);
+ 493              		.loc 1 234 0
+ 494 0052 0F4B     		ldr	r3, .L51+20
+ 495 0054 1A88     		ldrh	r2, [r3]
+ 496 0056 1302     		lsls	r3, r2, #8
+ 497 0058 43EA1223 		orr	r3, r3, r2, lsr #8
+ 235:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         osal_task_sleep(2*1000);
+ 498              		.loc 1 235 0
+ 499 005c 0321     		movs	r1, #3
+ 500 005e 4FF47A72 		mov	r2, #1000
+ 501 0062 02A8     		add	r0, sp, #8
+ 234:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         oc_lwm2m_report( (char *)&Thres, sizeof(Thres),1000);
+ 502              		.loc 1 234 0
+ 503 0064 ADF80930 		strh	r3, [sp, #9]	@ unaligned
+ 235:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         osal_task_sleep(2*1000);
+ 504              		.loc 1 235 0
+ 505 0068 FFF7FEFF 		bl	oc_lwm2m_report
+ 506              	.LVL39:
+ 236:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 507              		.loc 1 236 0
+ 508 006c 4FF4FA60 		mov	r0, #2000
+ 509 0070 FFF7FEFF 		bl	osal_task_sleep
+ 510              	.LVL40:
+ 511 0074 D8E7     		b	.L48
+ 512              	.LVL41:
+ 513              	.L50:
+ 514              	.LBE5:
+ 515              	.LBE4:
+ 239:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 516              		.loc 1 239 0
+ 517 0076 12B0     		add	sp, sp, #72
+ 518              	.LCFI6:
+ 519              		.cfi_def_cfa_offset 8
+ 520              		@ sp needed
+ 521 0078 10BD     		pop	{r4, pc}
+ 522              	.L52:
+ 523 007a 00BF     		.align	2
+ 524              	.L51:
+ 525 007c 00000000 		.word	.LC2
+ 526 0080 38000000 		.word	.LC3
+ 527 0084 3D000000 		.word	.LC4
+ 528 0088 00000000 		.word	app_msg_deal
+ 529 008c 00000000 		.word	ppm
+ 530 0090 00000000 		.word	.LANCHOR8
+ 531              		.cfi_endproc
+ 532              	.LFE289:
+ 534              		.section	.text.Information_show,"ax",%progbits
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 18
+
+
+ 535              		.align	1
+ 536              		.global	Information_show
+ 537              		.syntax unified
+ 538              		.thumb
+ 539              		.thumb_func
+ 540              		.fpu fpv4-sp-d16
+ 542              	Information_show:
+ 543              	.LFB291:
+ 274:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     lcd_show_chinese(75,10,1,32,3,1); //"姓名"
+ 544              		.loc 1 274 0
+ 545              		.cfi_startproc
+ 546              		@ args = 0, pretend = 0, frame = 0
+ 547              		@ frame_needed = 0, uses_anonymous_args = 0
+ 548 0000 13B5     		push	{r0, r1, r4, lr}
+ 549              	.LCFI7:
+ 550              		.cfi_def_cfa_offset 16
+ 551              		.cfi_offset 4, -8
+ 552              		.cfi_offset 14, -4
+ 275:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     lcd_show_chinese(10,50,2,32,4,1);//"烟雾浓度"
+ 553              		.loc 1 275 0
+ 554 0002 0323     		movs	r3, #3
+ 555 0004 0124     		movs	r4, #1
+ 556 0006 CDE90034 		strd	r3, r4, [sp]
+ 557 000a 2246     		mov	r2, r4
+ 558 000c 2023     		movs	r3, #32
+ 559 000e 0A21     		movs	r1, #10
+ 560 0010 4B20     		movs	r0, #75
+ 561 0012 FFF7FEFF 		bl	lcd_show_chinese
+ 562              	.LVL42:
+ 276:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     //LCD_ShowString(10, 85, 180, 16, 32, "Threshold:");
+ 563              		.loc 1 276 0
+ 564 0016 0423     		movs	r3, #4
+ 565 0018 0194     		str	r4, [sp, #4]
+ 566 001a 0093     		str	r3, [sp]
+ 567 001c 0222     		movs	r2, #2
+ 568 001e 2023     		movs	r3, #32
+ 569 0020 3221     		movs	r1, #50
+ 570 0022 0A20     		movs	r0, #10
+ 571 0024 FFF7FEFF 		bl	lcd_show_chinese
+ 572              	.LVL43:
+ 278:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_ShowString(10, 120, 190, 16, 32, "Beep Enable :");
+ 573              		.loc 1 278 0
+ 574 0028 0223     		movs	r3, #2
+ 575 002a 0194     		str	r4, [sp, #4]
+ 576 002c 0093     		str	r3, [sp]
+ 577 002e 0022     		movs	r2, #0
+ 578 0030 2023     		movs	r3, #32
+ 579 0032 5521     		movs	r1, #85
+ 580 0034 0A20     		movs	r0, #10
+ 581 0036 FFF7FEFF 		bl	lcd_show_chinese
+ 582              	.LVL44:
+ 279:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_ShowString(10, 160, 190, 16, 32, "Beep Count:");
+ 583              		.loc 1 279 0
+ 584 003a 2024     		movs	r4, #32
+ 585 003c 0E4B     		ldr	r3, .L54
+ 586 003e 0193     		str	r3, [sp, #4]
+ 587 0040 0094     		str	r4, [sp]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 19
+
+
+ 588 0042 1023     		movs	r3, #16
+ 589 0044 BE22     		movs	r2, #190
+ 590 0046 7821     		movs	r1, #120
+ 591 0048 0A20     		movs	r0, #10
+ 592 004a FFF7FEFF 		bl	LCD_ShowString
+ 593              	.LVL45:
+ 280:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_ShowString(10, 200, 190, 16, 32, "Beep State:");
+ 594              		.loc 1 280 0
+ 595 004e 0B4B     		ldr	r3, .L54+4
+ 596 0050 BE22     		movs	r2, #190
+ 597 0052 CDE90043 		strd	r4, r3, [sp]
+ 598 0056 A021     		movs	r1, #160
+ 599 0058 1023     		movs	r3, #16
+ 600 005a 0A20     		movs	r0, #10
+ 601 005c FFF7FEFF 		bl	LCD_ShowString
+ 602              	.LVL46:
+ 281:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 603              		.loc 1 281 0
+ 604 0060 074B     		ldr	r3, .L54+8
+ 605 0062 BE22     		movs	r2, #190
+ 606 0064 CDE90043 		strd	r4, r3, [sp]
+ 607 0068 C821     		movs	r1, #200
+ 608 006a 1023     		movs	r3, #16
+ 609 006c 0A20     		movs	r0, #10
+ 610 006e FFF7FEFF 		bl	LCD_ShowString
+ 611              	.LVL47:
+ 284:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 612              		.loc 1 284 0
+ 613 0072 02B0     		add	sp, sp, #8
+ 614              	.LCFI8:
+ 615              		.cfi_def_cfa_offset 8
+ 616              		@ sp needed
+ 617 0074 10BD     		pop	{r4, pc}
+ 618              	.L55:
+ 619 0076 00BF     		.align	2
+ 620              	.L54:
+ 621 0078 00000000 		.word	.LC5
+ 622 007c 0E000000 		.word	.LC6
+ 623 0080 1A000000 		.word	.LC7
+ 624              		.cfi_endproc
+ 625              	.LFE291:
+ 627              		.section	.text.app_collect_task_entry,"ax",%progbits
+ 628              		.align	1
+ 629              		.syntax unified
+ 630              		.thumb
+ 631              		.thumb_func
+ 632              		.fpu fpv4-sp-d16
+ 634              	app_collect_task_entry:
+ 635              	.LFB292:
+ 287:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 636              		.loc 1 287 0
+ 637              		.cfi_startproc
+ 638              		@ Volatile: function does not return.
+ 639              		@ args = 0, pretend = 0, frame = 0
+ 640              		@ frame_needed = 0, uses_anonymous_args = 0
+ 641 0000 83B5     		push	{r0, r1, r7, lr}
+ 642              	.LCFI9:
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 20
+
+
+ 643              		.cfi_def_cfa_offset 16
+ 644              		.cfi_offset 7, -8
+ 645              		.cfi_offset 14, -4
+ 290:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_Init();
+ 646              		.loc 1 290 0
+ 647 0002 4FF47A70 		mov	r0, #1000
+ 648 0006 FFF7FEFF 		bl	osal_task_sleep
+ 649              	.LVL48:
+ 291:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     LCD_Clear(BLACK);
+ 650              		.loc 1 291 0
+ 651 000a FFF7FEFF 		bl	LCD_Init
+ 652              	.LVL49:
+ 292:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     Information_show();
+ 653              		.loc 1 292 0
+ 654 000e 0020     		movs	r0, #0
+ 655 0010 FFF7FEFF 		bl	LCD_Clear
+ 656              	.LVL50:
+ 300:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(200, 120, BeepEnable, 1, 32);
+ 657              		.loc 1 300 0
+ 658 0014 3C4F     		ldr	r7, .L62
+ 297:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****        
+ 659              		.loc 1 297 0
+ 660 0016 3D4E     		ldr	r6, .L62+4
+ 293:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     
+ 661              		.loc 1 293 0
+ 662 0018 FFF7FEFF 		bl	Information_show
+ 663              	.LVL51:
+ 664 001c B846     		mov	r8, r7
+ 665              	.L61:
+ 297:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****        
+ 666              		.loc 1 297 0
+ 667 001e 3B48     		ldr	r0, .L62+4
+ 301:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(185, 160, BeepCount, 3, 32);
+ 668              		.loc 1 301 0
+ 669 0020 DFF8FC90 		ldr	r9, .L62+24
+ 302:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(185, 200, BeepStatus, 1, 32);
+ 670              		.loc 1 302 0
+ 671 0024 3A4D     		ldr	r5, .L62+8
+ 297:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****        
+ 672              		.loc 1 297 0
+ 673 0026 FFF7FEFF 		bl	E53_SF1_Read_Data
+ 674              	.LVL52:
+ 299:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(175, 85, SmokeThreshold, 3, 32); 
+ 675              		.loc 1 299 0
+ 676 002a D6ED007A 		vldr.32	s15, [r6]
+ 677 002e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 678 0032 2024     		movs	r4, #32
+ 679 0034 17EE902A 		vmov	r2, s15	@ int
+ 680 0038 0523     		movs	r3, #5
+ 681 003a 3221     		movs	r1, #50
+ 682 003c 9620     		movs	r0, #150
+ 683 003e 0094     		str	r4, [sp]
+ 684 0040 FFF7FEFF 		bl	LCD_ShowNum
+ 685              	.LVL53:
+ 300:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(200, 120, BeepEnable, 1, 32);
+ 686              		.loc 1 300 0
+ 687 0044 3A88     		ldrh	r2, [r7]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 21
+
+
+ 688 0046 0094     		str	r4, [sp]
+ 689 0048 0323     		movs	r3, #3
+ 690 004a 5521     		movs	r1, #85
+ 691 004c AF20     		movs	r0, #175
+ 692 004e FFF7FEFF 		bl	LCD_ShowNum
+ 693              	.LVL54:
+ 301:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(185, 160, BeepCount, 3, 32);
+ 694              		.loc 1 301 0
+ 695 0052 0123     		movs	r3, #1
+ 696 0054 D9F80020 		ldr	r2, [r9]
+ 697 0058 0094     		str	r4, [sp]
+ 698 005a 7821     		movs	r1, #120
+ 699 005c C820     		movs	r0, #200
+ 700 005e FFF7FEFF 		bl	LCD_ShowNum
+ 701              	.LVL55:
+ 302:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         LCD_ShowNum(185, 200, BeepStatus, 1, 32);
+ 702              		.loc 1 302 0
+ 703 0062 2A88     		ldrh	r2, [r5]
+ 704 0064 0094     		str	r4, [sp]
+ 705 0066 0323     		movs	r3, #3
+ 706 0068 A021     		movs	r1, #160
+ 707 006a B920     		movs	r0, #185
+ 708 006c FFF7FEFF 		bl	LCD_ShowNum
+ 709              	.LVL56:
+ 303:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         if(BeepEnable==1)
+ 710              		.loc 1 303 0
+ 711 0070 284A     		ldr	r2, .L62+12
+ 712 0072 0094     		str	r4, [sp]
+ 713 0074 0123     		movs	r3, #1
+ 714 0076 1268     		ldr	r2, [r2]
+ 715 0078 C821     		movs	r1, #200
+ 716 007a B920     		movs	r0, #185
+ 717 007c FFF7FEFF 		bl	LCD_ShowNum
+ 718              	.LVL57:
+ 304:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****         {
+ 719              		.loc 1 304 0
+ 720 0080 D9F80030 		ldr	r3, [r9]
+ 721 0084 012B     		cmp	r3, #1
+ 722 0086 3BD1     		bne	.L58
+ 306:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 723              		.loc 1 306 0
+ 724 0088 D6ED007A 		vldr.32	s15, [r6]
+ 725 008c 3B88     		ldrh	r3, [r7]
+ 726 008e FDEEE77A 		vcvt.s32.f32	s15, s15
+ 727 0092 17EE902A 		vmov	r2, s15	@ int
+ 728 0096 9A42     		cmp	r2, r3
+ 729 0098 22DD     		ble	.L59
+ 306:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 730              		.loc 1 306 0 is_stmt 0 discriminator 1
+ 731 009a 1F4A     		ldr	r2, .L62+16
+ 732 009c 1368     		ldr	r3, [r2]
+ 733 009e 012B     		cmp	r3, #1
+ 734 00a0 1ED1     		bne	.L59
+ 308:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 SmokeOverThreshold = 1; ///
+ 735              		.loc 1 308 0 is_stmt 1
+ 736 00a2 0024     		movs	r4, #0
+ 737 00a4 1460     		str	r4, [r2]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 22
+
+
+ 309:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 BeepCount++;
+ 738              		.loc 1 309 0
+ 739 00a6 1D4A     		ldr	r2, .L62+20
+ 740 00a8 1360     		str	r3, [r2]
+ 310:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 hal_spi_flash_erase_write(&BeepCount,sizeof(BeepCount),0);
+ 741              		.loc 1 310 0
+ 742 00aa 2B88     		ldrh	r3, [r5]
+ 311:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LCD_Clear(WHITE);
+ 743              		.loc 1 311 0
+ 744 00ac 2246     		mov	r2, r4
+ 310:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 hal_spi_flash_erase_write(&BeepCount,sizeof(BeepCount),0);
+ 745              		.loc 1 310 0
+ 746 00ae 0133     		adds	r3, r3, #1
+ 311:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LCD_Clear(WHITE);
+ 747              		.loc 1 311 0
+ 748 00b0 0221     		movs	r1, #2
+ 749 00b2 2846     		mov	r0, r5
+ 310:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 hal_spi_flash_erase_write(&BeepCount,sizeof(BeepCount),0);
+ 750              		.loc 1 310 0
+ 751 00b4 2B80     		strh	r3, [r5]	@ movhi
+ 311:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LCD_Clear(WHITE);
+ 752              		.loc 1 311 0
+ 753 00b6 FFF7FEFF 		bl	hal_spi_flash_erase_write
+ 754              	.LVL58:
+ 312:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 LCD_Show_Image(0,0,240,236);
+ 755              		.loc 1 312 0
+ 756 00ba 4FF6FF70 		movw	r0, #65535
+ 757 00be FFF7FEFF 		bl	LCD_Clear
+ 758              	.LVL59:
+ 313:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 osal_task_sleep(2*1000);
+ 759              		.loc 1 313 0
+ 760 00c2 EC23     		movs	r3, #236
+ 761 00c4 F022     		movs	r2, #240
+ 762 00c6 2146     		mov	r1, r4
+ 763 00c8 2046     		mov	r0, r4
+ 764 00ca FFF7FEFF 		bl	LCD_Show_Image
+ 765              	.LVL60:
+ 314:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 766              		.loc 1 314 0
+ 767 00ce 4FF4FA60 		mov	r0, #2000
+ 768 00d2 FFF7FEFF 		bl	osal_task_sleep
+ 769              	.LVL61:
+ 316:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 Information_show();
+ 770              		.loc 1 316 0
+ 771 00d6 2046     		mov	r0, r4
+ 772 00d8 FFF7FEFF 		bl	LCD_Clear
+ 773              	.LVL62:
+ 317:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             }
+ 774              		.loc 1 317 0
+ 775 00dc FFF7FEFF 		bl	Information_show
+ 776              	.LVL63:
+ 777              	.L59:
+ 319:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             {
+ 778              		.loc 1 319 0
+ 779 00e0 D6ED007A 		vldr.32	s15, [r6]
+ 780 00e4 B8F80030 		ldrh	r3, [r8]
+ 781 00e8 FDEEE77A 		vcvt.s32.f32	s15, s15
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 23
+
+
+ 782 00ec 17EE902A 		vmov	r2, s15	@ int
+ 783 00f0 9A42     		cmp	r2, r3
+ 784 00f2 05DC     		bgt	.L58
+ 321:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****                 SmokeOverThreshold = 0;
+ 785              		.loc 1 321 0
+ 786 00f4 084B     		ldr	r3, .L62+16
+ 787 00f6 0122     		movs	r2, #1
+ 788 00f8 1A60     		str	r2, [r3]
+ 322:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****             }
+ 789              		.loc 1 322 0
+ 790 00fa 084B     		ldr	r3, .L62+20
+ 791 00fc 0022     		movs	r2, #0
+ 792 00fe 1A60     		str	r2, [r3]
+ 793              	.L58:
+ 327:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 794              		.loc 1 327 0
+ 795 0100 6420     		movs	r0, #100
+ 796 0102 FFF7FEFF 		bl	osal_task_sleep
+ 797              	.LVL64:
+ 297:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****        
+ 798              		.loc 1 297 0
+ 799 0106 8AE7     		b	.L61
+ 800              	.L63:
+ 801              		.align	2
+ 802              	.L62:
+ 803 0108 00000000 		.word	.LANCHOR8
+ 804 010c 00000000 		.word	ppm
+ 805 0110 00000000 		.word	.LANCHOR4
+ 806 0114 00000000 		.word	.LANCHOR3
+ 807 0118 00000000 		.word	.LANCHOR5
+ 808 011c 00000000 		.word	.LANCHOR1
+ 809 0120 00000000 		.word	.LANCHOR0
+ 810              		.cfi_endproc
+ 811              	.LFE292:
+ 813              		.section	.text.standard_app_demo_main,"ax",%progbits
+ 814              		.align	1
+ 815              		.global	standard_app_demo_main
+ 816              		.syntax unified
+ 817              		.thumb
+ 818              		.thumb_func
+ 819              		.fpu fpv4-sp-d16
+ 821              	standard_app_demo_main:
+ 822              	.LFB294:
+ 356:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****           
+ 357:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     }
+ 358:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     return 0;
+ 359:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** }
+ 360:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 361:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 362:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** #include <stimer.h>
+ 363:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 364:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** int standard_app_demo_main()
+ 365:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** {
+ 823              		.loc 1 365 0
+ 824              		.cfi_startproc
+ 825              		@ args = 0, pretend = 0, frame = 0
+ 826              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 24
+
+
+ 827 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 828              	.LCFI10:
+ 829              		.cfi_def_cfa_offset 24
+ 830              		.cfi_offset 4, -12
+ 831              		.cfi_offset 5, -8
+ 832              		.cfi_offset 14, -4
+ 366:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     //LCD_Clear(BLACK);
+ 367:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     //POINT_COLOR = GREEN;
+ 368:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     E53_SF1_Init();
+ 833              		.loc 1 368 0
+ 834 0002 FFF7FEFF 		bl	E53_SF1_Init
+ 835              	.LVL65:
+ 369:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     MX_GPIO_Init();
+ 836              		.loc 1 369 0
+ 837 0006 FFF7FEFF 		bl	MX_GPIO_Init
+ 838              	.LVL66:
+ 370:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     HAL_TIM_PWM_Start(&htim16, TIM_CHANNEL_1);
+ 839              		.loc 1 370 0
+ 840 000a 0021     		movs	r1, #0
+ 841 000c 1F48     		ldr	r0, .L65
+ 842 000e FFF7FEFF 		bl	HAL_TIM_PWM_Start
+ 843              	.LVL67:
+ 371:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     hal_spi_flash_read(&BeepCount,sizeof(BeepCount),0);
+ 844              		.loc 1 371 0
+ 845 0012 0022     		movs	r2, #0
+ 846 0014 0221     		movs	r1, #2
+ 847 0016 1E48     		ldr	r0, .L65+4
+ 372:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     osal_semp_create(&s_rcv_sync,1,0);
+ 373:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 374:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     osal_task_create("app_collect",app_collect_task_entry,NULL,0x1000,NULL,3);
+ 848              		.loc 1 374 0
+ 849 0018 0024     		movs	r4, #0
+ 371:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     hal_spi_flash_read(&BeepCount,sizeof(BeepCount),0);
+ 850              		.loc 1 371 0
+ 851 001a FFF7FEFF 		bl	hal_spi_flash_read
+ 852              	.LVL68:
+ 853              		.loc 1 374 0
+ 854 001e 0325     		movs	r5, #3
+ 372:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     osal_semp_create(&s_rcv_sync,1,0);
+ 855              		.loc 1 372 0
+ 856 0020 0022     		movs	r2, #0
+ 857 0022 0121     		movs	r1, #1
+ 858 0024 1B48     		ldr	r0, .L65+8
+ 859 0026 FFF7FEFF 		bl	osal_semp_create
+ 860              	.LVL69:
+ 861              		.loc 1 374 0
+ 862 002a 2246     		mov	r2, r4
+ 863 002c CDE90045 		strd	r4, r5, [sp]
+ 864 0030 4FF48053 		mov	r3, #4096
+ 865 0034 1849     		ldr	r1, .L65+12
+ 866 0036 1948     		ldr	r0, .L65+16
+ 867 0038 FFF7FEFF 		bl	osal_task_create
+ 868              	.LVL70:
+ 375:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     osal_task_create("app_report",app_report_task_entry,NULL,0x1000,NULL,2);
+ 869              		.loc 1 375 0
+ 870 003c 0223     		movs	r3, #2
+ 871 003e CDE90043 		strd	r4, r3, [sp]
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 25
+
+
+ 872 0042 2246     		mov	r2, r4
+ 873 0044 4FF48053 		mov	r3, #4096
+ 874 0048 1549     		ldr	r1, .L65+20
+ 875 004a 1648     		ldr	r0, .L65+24
+ 876 004c FFF7FEFF 		bl	osal_task_create
+ 877              	.LVL71:
+ 376:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     osal_task_create("app_command",app_cmd_task_entry,NULL,0x1000,NULL,3);
+ 878              		.loc 1 376 0
+ 879 0050 2246     		mov	r2, r4
+ 880 0052 CDE90045 		strd	r4, r5, [sp]
+ 881 0056 4FF48053 		mov	r3, #4096
+ 882 005a 1349     		ldr	r1, .L65+28
+ 883 005c 1348     		ldr	r0, .L65+32
+ 884 005e FFF7FEFF 		bl	osal_task_create
+ 885              	.LVL72:
+ 377:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     osal_task_create("app_keyscan",key_scan,NULL,0x1000,NULL,3);
+ 886              		.loc 1 377 0
+ 887 0062 2246     		mov	r2, r4
+ 888 0064 CDE90045 		strd	r4, r5, [sp]
+ 889 0068 4FF48053 		mov	r3, #4096
+ 890 006c 1049     		ldr	r1, .L65+36
+ 891 006e 1148     		ldr	r0, .L65+40
+ 892 0070 FFF7FEFF 		bl	osal_task_create
+ 893              	.LVL73:
+ 378:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     osal_task_create("app_beepcontrol",BeepControl,NULL,0x1000,NULL,3);
+ 894              		.loc 1 378 0
+ 895 0074 CDE90045 		strd	r4, r5, [sp]
+ 896 0078 4FF48053 		mov	r3, #4096
+ 897 007c 2246     		mov	r2, r4
+ 898 007e 0E49     		ldr	r1, .L65+44
+ 899 0080 0E48     		ldr	r0, .L65+48
+ 900 0082 FFF7FEFF 		bl	osal_task_create
+ 901              	.LVL74:
+ 379:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** 
+ 380:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c ****     return 0;
+ 381:Demos/oc_nb_lwm2m_smoke/oc_smoke_template.c **** }
+ 902              		.loc 1 381 0
+ 903 0086 2046     		mov	r0, r4
+ 904 0088 03B0     		add	sp, sp, #12
+ 905              	.LCFI11:
+ 906              		.cfi_def_cfa_offset 12
+ 907              		@ sp needed
+ 908 008a 30BD     		pop	{r4, r5, pc}
+ 909              	.L66:
+ 910              		.align	2
+ 911              	.L65:
+ 912 008c 00000000 		.word	htim16
+ 913 0090 00000000 		.word	.LANCHOR4
+ 914 0094 00000000 		.word	.LANCHOR6
+ 915 0098 00000000 		.word	app_collect_task_entry
+ 916 009c 00000000 		.word	.LC8
+ 917 00a0 00000000 		.word	app_report_task_entry
+ 918 00a4 0C000000 		.word	.LC9
+ 919 00a8 00000000 		.word	app_cmd_task_entry
+ 920 00ac 17000000 		.word	.LC10
+ 921 00b0 00000000 		.word	key_scan
+ 922 00b4 23000000 		.word	.LC11
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 26
+
+
+ 923 00b8 00000000 		.word	BeepControl
+ 924 00bc 2F000000 		.word	.LC12
+ 925              		.cfi_endproc
+ 926              	.LFE294:
+ 928              		.global	StatusFlag
+ 929              		.global	LogoFlag
+ 930              		.global	SmokeThreshold
+ 931              		.global	BeepCloudControl
+ 932              		.global	BeepEnable
+ 933              		.global	SmokeOverThreshold
+ 934              		.global	BeepStatus
+ 935              		.global	BeepCount
+ 936              		.comm	ppm,4,4
+ 937              		.section	.bss.BeepCount,"aw",%nobits
+ 938              		.align	1
+ 939              		.set	.LANCHOR4,. + 0
+ 942              	BeepCount:
+ 943 0000 0000     		.space	2
+ 944              		.section	.bss.BeepStatus,"aw",%nobits
+ 945              		.align	2
+ 946              		.set	.LANCHOR3,. + 0
+ 949              	BeepStatus:
+ 950 0000 00000000 		.space	4
+ 951              		.section	.bss.SmokeOverThreshold,"aw",%nobits
+ 952              		.align	2
+ 953              		.set	.LANCHOR1,. + 0
+ 956              	SmokeOverThreshold:
+ 957 0000 00000000 		.space	4
+ 958              		.section	.bss.s_rcv_buffer,"aw",%nobits
+ 959              		.align	2
+ 960              		.set	.LANCHOR7,. + 0
+ 963              	s_rcv_buffer:
+ 964 0000 00000000 		.space	512
+ 964      00000000 
+ 964      00000000 
+ 964      00000000 
+ 964      00000000 
+ 965              		.section	.bss.s_rcv_sync,"aw",%nobits
+ 966              		.align	2
+ 967              		.set	.LANCHOR6,. + 0
+ 970              	s_rcv_sync:
+ 971 0000 00000000 		.space	4
+ 972              		.section	.data.BeepCloudControl,"aw",%progbits
+ 973              		.align	2
+ 974              		.set	.LANCHOR2,. + 0
+ 977              	BeepCloudControl:
+ 978 0000 01000000 		.word	1
+ 979              		.section	.data.BeepEnable,"aw",%progbits
+ 980              		.align	2
+ 981              		.set	.LANCHOR0,. + 0
+ 984              	BeepEnable:
+ 985 0000 01000000 		.word	1
+ 986              		.section	.data.LogoFlag,"aw",%progbits
+ 987              		.align	2
+ 988              		.set	.LANCHOR5,. + 0
+ 991              	LogoFlag:
+ 992 0000 01000000 		.word	1
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 27
+
+
+ 993              		.section	.data.SmokeThreshold,"aw",%progbits
+ 994              		.align	1
+ 995              		.set	.LANCHOR8,. + 0
+ 998              	SmokeThreshold:
+ 999 0000 1400     		.short	20
+ 1000              		.section	.data.StatusFlag,"aw",%progbits
+ 1001              		.align	2
+ 1004              	StatusFlag:
+ 1005 0000 01000000 		.word	1
+ 1006              		.section	.rodata.Information_show.str1.1,"aMS",%progbits,1
+ 1007              	.LC5:
+ 1008 0000 42656570 		.ascii	"Beep Enable :\000"
+ 1008      20456E61 
+ 1008      626C6520 
+ 1008      3A00
+ 1009              	.LC6:
+ 1010 000e 42656570 		.ascii	"Beep Count:\000"
+ 1010      20436F75 
+ 1010      6E743A00 
+ 1011              	.LC7:
+ 1012 001a 42656570 		.ascii	"Beep State:\000"
+ 1012      20537461 
+ 1012      74653A00 
+ 1013              		.section	.rodata.app_cmd_task_entry.str1.1,"aMS",%progbits,1
+ 1014              	.LC0:
+ 1015 0000 536D6F6B 		.ascii	"Smoke_Control_Beep:msgid:%d mid:%d\000"
+ 1015      655F436F 
+ 1015      6E74726F 
+ 1015      6C5F4265 
+ 1015      65703A6D 
+ 1016              		.section	.rodata.app_msg_deal.str1.1,"aMS",%progbits,1
+ 1017              	.LC1:
+ 1018 0000 4F432072 		.ascii	"OC respond message received! \012\015\000"
+ 1018      6573706F 
+ 1018      6E64206D 
+ 1018      65737361 
+ 1018      67652072 
+ 1019              		.section	.rodata.app_report_task_entry.str1.1,"aMS",%progbits,1
+ 1020              	.LC2:
+ 1021 0000 39383662 		.ascii	"986b5e9238.st1.iotda-coaps.cn-north-4.myhuaweicloud"
+ 1021      35653932 
+ 1021      33382E73 
+ 1021      74312E69 
+ 1021      6F746461 
+ 1022 0033 2E636F6D 		.ascii	".com\000"
+ 1022      00
+ 1023              	.LC3:
+ 1024 0038 35363833 		.ascii	"5683\000"
+ 1024      00
+ 1025              	.LC4:
+ 1026 003d 42656172 		.ascii	"BearPi_0001\000"
+ 1026      50695F30 
+ 1026      30303100 
+ 1027              		.section	.rodata.standard_app_demo_main.str1.1,"aMS",%progbits,1
+ 1028              	.LC8:
+ 1029 0000 6170705F 		.ascii	"app_collect\000"
+ 1029      636F6C6C 
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 28
+
+
+ 1029      65637400 
+ 1030              	.LC9:
+ 1031 000c 6170705F 		.ascii	"app_report\000"
+ 1031      7265706F 
+ 1031      727400
+ 1032              	.LC10:
+ 1033 0017 6170705F 		.ascii	"app_command\000"
+ 1033      636F6D6D 
+ 1033      616E6400 
+ 1034              	.LC11:
+ 1035 0023 6170705F 		.ascii	"app_keyscan\000"
+ 1035      6B657973 
+ 1035      63616E00 
+ 1036              	.LC12:
+ 1037 002f 6170705F 		.ascii	"app_beepcontrol\000"
+ 1037      62656570 
+ 1037      636F6E74 
+ 1037      726F6C00 
+ 1038              		.text
+ 1039              	.Letext0:
+ 1040              		.file 2 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1041              		.file 3 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1042              		.file 4 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1043              		.file 5 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1044              		.file 6 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-ea
+ 1045              		.file 7 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 1046              		.file 8 "../../iot_link/os/osal/osal_types.h"
+ 1047              		.file 9 "../../iot_link/oc/oc_lwm2m/oc_lwm2m_al/oc_lwm2m_al.h"
+ 1048              		.file 10 "../../iot_link/os/liteos/arch/arm/common/cmsis/core_cm4.h"
+ 1049              		.file 11 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/system_s
+ 1050              		.file 12 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l43
+ 1051              		.file 13 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/stm32l4x
+ 1052              		.file 14 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 1053              		.file 15 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 1054              		.file 16 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h"
+ 1055              		.file 17 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h"
+ 1056              		.file 18 "../../drivers/third_party/ST/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h"
+ 1057              		.file 19 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/E53
+ 1058              		.file 20 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/LCD
+ 1059              		.file 21 "../../iot_link/os/liteos/include/los_typedef.h"
+ 1060              		.file 22 "../../iot_link/os/liteos/include/los_config.h"
+ 1061              		.file 23 "../../iot_link/os/liteos/include/los_err.h"
+ 1062              		.file 24 "../../iot_link/os/liteos/arch/arm/arm-m/include/los_hwi.h"
+ 1063              		.file 25 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Inc/gpio.h"
+ 1064              		.file 26 "D:/File/bearpi_liteos/bearpi-iot_std_liteos-master/targets/STM32L431_BearPi/Hardware/Inc
+ 1065              		.file 27 "../../iot_link/os/osal/osal.h"
+ 1066              		.file 28 "c:\\bearpi\\developtools\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\inclu
+ 1067              		.file 29 "<built-in>"
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 29
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 oc_smoke_template.c
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:18     .text.BeepControl:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:24     .text.BeepControl:00000000 BeepControl
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:86     .text.BeepControl:00000040 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:94     .text.key_scan:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:100    .text.key_scan:00000000 key_scan
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:191    .text.key_scan:00000078 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:200    .text.app_cmd_task_entry:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:206    .text.app_cmd_task_entry:00000000 app_cmd_task_entry
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:337    .text.app_cmd_task_entry:000000c0 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:346    .text.app_msg_deal:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:352    .text.app_msg_deal:00000000 app_msg_deal
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:412    .text.app_msg_deal:00000034 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:419    .text.app_report_task_entry:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:425    .text.app_report_task_entry:00000000 app_report_task_entry
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:525    .text.app_report_task_entry:0000007c $d
+                            *COM*:00000004 ppm
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:535    .text.Information_show:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:542    .text.Information_show:00000000 Information_show
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:621    .text.Information_show:00000078 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:628    .text.app_collect_task_entry:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:634    .text.app_collect_task_entry:00000000 app_collect_task_entry
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:803    .text.app_collect_task_entry:00000108 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:814    .text.standard_app_demo_main:00000000 $t
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:821    .text.standard_app_demo_main:00000000 standard_app_demo_main
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:912    .text.standard_app_demo_main:0000008c $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:1004   .data.StatusFlag:00000000 StatusFlag
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:991    .data.LogoFlag:00000000 LogoFlag
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:998    .data.SmokeThreshold:00000000 SmokeThreshold
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:977    .data.BeepCloudControl:00000000 BeepCloudControl
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:984    .data.BeepEnable:00000000 BeepEnable
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:956    .bss.SmokeOverThreshold:00000000 SmokeOverThreshold
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:949    .bss.BeepStatus:00000000 BeepStatus
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:942    .bss.BeepCount:00000000 BeepCount
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:938    .bss.BeepCount:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:945    .bss.BeepStatus:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:952    .bss.SmokeOverThreshold:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:959    .bss.s_rcv_buffer:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:963    .bss.s_rcv_buffer:00000000 s_rcv_buffer
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:966    .bss.s_rcv_sync:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:970    .bss.s_rcv_sync:00000000 s_rcv_sync
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:973    .data.BeepCloudControl:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:980    .data.BeepEnable:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:987    .data.LogoFlag:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:994    .data.SmokeThreshold:00000000 $d
+C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s:1001   .data.StatusFlag:00000000 $d
+
+UNDEFINED SYMBOLS
+E53_SF1_Beep_Set
+E53_SF1_LED_Set
+osal_task_sleep
+HAL_GPIO_ReadPin
+hal_spi_flash_erase_write
+HAL_GPIO_WritePin
+osal_semp_pend
+printf
+ARM GAS  C:\Users\LuckyE\AppData\Local\Temp\ccCJzwLq.s 			page 30
+
+
+oc_lwm2m_report
+memcpy
+osal_semp_post
+memset
+oc_lwm2m_config
+lcd_show_chinese
+LCD_ShowString
+LCD_Init
+LCD_Clear
+E53_SF1_Read_Data
+LCD_ShowNum
+LCD_Show_Image
+E53_SF1_Init
+MX_GPIO_Init
+HAL_TIM_PWM_Start
+hal_spi_flash_read
+osal_semp_create
+osal_task_create
+htim16
